@@ -4,8 +4,9 @@ import "./index.css";
 import Router from "#/router.jsx";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import "#/config/firebase.js";
 
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(

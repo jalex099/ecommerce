@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "#/config/constants.js";
-import {startLoading, stopLoading} from "#/hooks/UIState.js";
+import { startLoading, stopLoading } from "#/hooks/UIState.js";
+import { removeKey } from "#/utils/localStorageHelper.js";
 
 const API = axios.create({
   baseURL: API_URL,
@@ -9,8 +10,8 @@ const API = axios.create({
 
 //* Set the interceptors
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
+  if (config?.secure) {
+    const token = localStorage.getItem("token") || "";
     config.headers.Authorization = `Bearer ${token}`;
   }
 
@@ -30,8 +31,13 @@ API.interceptors.response.use(
     return response?.data;
   },
   (error) => {
-    console.log(error);
-  }
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    const { status } = error?.response;
+    if(status === 401){
+      removeKey("token")
+      removeKey("refreshToken")
+    }
+  },
 );
 
 export default API;

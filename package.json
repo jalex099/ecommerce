@@ -13,6 +13,7 @@
     "@hookstate/core": "^4.0.1",
     "@tanstack/react-query": "^4.32.0",
     "axios": "^1.4.0",
+    "firebase": "^10.1.0",
     "framer-motion": "^10.15.0",
     "primeicons": "^6.0.1",
     "primereact": "^9.6.0",

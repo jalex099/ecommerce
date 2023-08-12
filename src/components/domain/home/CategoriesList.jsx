@@ -2,6 +2,7 @@ import DataService from "#/services/DataService.js";
 
 const CategoriesList = () => {
   const {categories } = DataService();
+  console.log(categories)
   return (
     <>
       {

@@ -8,37 +8,27 @@ const DataService = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["getData"],
     queryFn: getData,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
   const categories = useMemo(() => {
-    if (!data) return [];
-    const categories = data?.categories;
-    return categories;
+    return data?.data?.categories || [];
   }, [data]);
 
   const products = useMemo(() => {
-    if (!data) return [];
-    const products = data?.products;
-    return products;
+    return data?.data?.products || [];
   }, [data]);
 
   const company = useMemo(() => {
-    if (!data) return null;
-    const company = data?.company;
-    return company;
+    return data?.data?.company || [];
   }, [data]);
 
   const images = useMemo(() => {
-    if (!data) return [];
-    const images = data?.images;
-    return images;
+    return data?.data?.images || [];
   }, [data]);
 
   const carousel = useMemo(() => {
-    if (!data) return [];
-    const carousel = data?.images;
-    return carousel;
+    return data?.data?.carousel || [];
   }, [data]);
 
   return {

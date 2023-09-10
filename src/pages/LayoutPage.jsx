@@ -10,10 +10,11 @@ const LayoutPage = () => {
       <header>
         <TopBar />
       </header>
-      <main className="container p-2">
-        <section style={style.body}>
-          <Outlet />
-        </section>
+      <main
+        className="container p-4"
+        style={{ backgroundColor: "var(--surface-ground)" }}
+      >
+        <Outlet />
         {ui?.isLoadingForeground && <Loading />}
         {/* <Toaster
         toastOptions={{
@@ -31,10 +32,6 @@ const LayoutPage = () => {
       </main>
     </>
   );
-};
-
-const style = {
-  container: {},
 };
 
 export default LayoutPage;

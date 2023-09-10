@@ -61,8 +61,10 @@ const LoginDialog = () => {
             />
           </div>
         </form>
-
-        <div className='w-100 flex justify-center gap-3 mt-8 mb-2'>
+        <p className="text-sm mt-6">
+          O tambi&eacute;n puedes iniciar sesi&oacute;n con:
+        </p>
+        <div className="w-100 flex justify-center gap-3 mt-8 mb-2">
           <GoogleLoginButton />
         </div>
       </Dialog>

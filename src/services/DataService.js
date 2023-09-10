@@ -15,29 +15,24 @@ const DataService = () => {
     return data?.data?.categories || [];
   }, [data]);
 
-  const products = useMemo(() => {
-    return data?.data?.products || [];
+  const menu = useMemo(() => {
+    return data?.data?.menu || [];
   }, [data]);
 
   const company = useMemo(() => {
     return data?.data?.company || [];
   }, [data]);
 
-  const images = useMemo(() => {
-    return data?.data?.images || [];
-  }, [data]);
-
   const carousel = useMemo(() => {
-    return data?.data?.carousel || [];
+    return data?.data?.carousels || [];
   }, [data]);
 
   return {
     categories,
-    products,
+    menu,
     company,
-    images,
     carousel,
-    isLoading
+    isLoading,
   };
 };
 

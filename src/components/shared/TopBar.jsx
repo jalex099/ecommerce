@@ -13,7 +13,7 @@ const TopBar = () => {
 
   }, [ui?.isAuthenticated]);
   return (
-    <nav className="flex flex-row justify-between items-center w-full h-16 p-2">
+    <nav className="flex flex-row justify-between items-center w-full h-16 p-2" style={{ backgroundColor: "var(--surface-0)" }}>
       {pathname !== "/" && <GoBackButton />}
       <ThemeSwitch />
       {ui?.isAuthenticated ? (

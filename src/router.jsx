@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DynamicImport from "#/utils/DynamicImport.jsx";
-import HomePageSkeleton
-  from "#/components/shared/skeletons/HomePageSkeleton.jsx";
+import HomePageSkeleton from "#/components/shared/skeletons/HomePageSkeleton.jsx";
 
 export default function Router() {
   return (
@@ -19,7 +18,7 @@ const LayoutPage = () => (
 
 const HomePage = () => (
   <DynamicImport load={() => import("#/pages/HomePage.jsx")}>
-    {(Component) => (Component === null ? <HomePageSkeleton/> : <Component />)}
+    {(Component) => (Component === null ? <HomePageSkeleton /> : <Component />)}
   </DynamicImport>
 );
 

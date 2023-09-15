@@ -12,7 +12,7 @@ export default function Router() {
 
 const LayoutPage = () => (
   <DynamicImport load={() => import("#/pages/LayoutPage.jsx")}>
-    {(Component) => (Component === null ? <p>Loading</p> : <Component />)}
+    {(Component) => (Component === null ? <></> : <Component />)}
   </DynamicImport>
 );
 

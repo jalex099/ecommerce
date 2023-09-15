@@ -12,8 +12,8 @@ const GoogleLoginButton = () => {
     }
   };
   return (
-    <Button rounded onClick={handleGoogleLogin} className="w-full">
-      <img alt="logo" src={GooglePng} className="h-8"></img>
+    <Button rounded onClick={handleGoogleLogin} className="w-2/3 flex justify-center" severity="secondary" outlined>
+      <img alt="googleicon" src={GooglePng} className="h-6"></img>
     </Button>
   );
 };

@@ -27,11 +27,16 @@ const DataService = () => {
     return data?.data?.carousels || [];
   }, [data]);
 
+  const messages = useMemo(() => {
+    return data?.data?.messages || [];
+  }, [data]);
+
   return {
     categories,
     menu,
     company,
     carousel,
+    messages,
     isLoading,
   };
 };

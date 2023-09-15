@@ -1,6 +1,7 @@
-import { ToggleButton } from "primereact/togglebutton";
 import { useUIState } from "#/hooks/UIState.js";
 import { THEMES } from "#/config/constants.js";
+import { motion } from "framer-motion";
+import "#/components/shared/css/components.shared.css";
 const ThemeSwitch = () => {
 
   const ui = useUIState();
@@ -9,16 +10,19 @@ const ThemeSwitch = () => {
   };
 
   return (
-    <ToggleButton
-      checked={ui?.theme === THEMES.DARK}
-      onChange={handleChangeTheme}
-      onIcon="pi pi-moon"
-      offIcon="pi pi-sun"
-      onLabel=""
-      offLabel=""
-      className="rounded-full"
-    />
+    <div className="w-full flex gap-2 items-center justify-between">
+      <p className={"text-xs text-center"}>Dark mode</p>
+      <div className="switch" data-ison={ui?.theme === THEMES.DARK} onClick={handleChangeTheme}>
+        <motion.div className="handle" layout transition={spring} data-ison={ui?.theme === THEMES.DARK} />
+      </div>
+    </div>
   )
+};
+
+const spring = {
+  type: "spring",
+  stiffness: 700,
+  damping: 30
 };
 
 export default ThemeSwitch;

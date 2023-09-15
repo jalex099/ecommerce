@@ -11,7 +11,7 @@ const LayoutPage = () => {
         <TopBar />
       </header>
       <main
-        className="container p-4"
+        className="container p-4 relative"
         style={{ backgroundColor: "var(--surface-ground)" }}
       >
         <Outlet />

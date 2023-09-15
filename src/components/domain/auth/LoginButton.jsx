@@ -1,18 +1,29 @@
 import { useUIState } from "#/hooks/UIState";
 import { Button } from "primereact/button";
 
-const LoginButton = () => {
+const LoginButton = ({ handleClose }) => {
   const ui = useUIState();
 
+  const handleClick=(event)=>{
+    handleClose(event);
+    ui?.toogleLoginDialog();
+  }
+
   return (
-    <Button
-      onClick={ui?.toogleLoginDialog}
-      icon="pi pi-user"
-      rounded
-      text
-      raised
-      aria-label="GoogleSignIn"
-    />
+    <div className="w-full flex gap-2 items-center justify-between">
+      <p className="text-xs">
+        Identif&iacute;cate
+      </p>
+      <Button
+        onClick={handleClick}
+        icon="pi pi-sign-in"
+        rounded
+        text
+        raised
+        aria-label="login"
+        size="small"
+      />
+    </div>
   );
 };
 

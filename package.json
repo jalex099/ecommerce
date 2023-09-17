@@ -16,6 +16,7 @@
     "date-fns": "^2.30.0",
     "firebase": "^10.1.0",
     "framer-motion": "^10.15.0",
+    "popmotion": "^11.0.5",
     "primeicons": "^6.0.1",
     "primereact": "^9.6.0",
     "react": "^18.2.0",

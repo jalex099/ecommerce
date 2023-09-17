@@ -1,13 +1,20 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "primereact/button";
 
 const GoBackButton = () => {
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-1);
-  }
+  };
   return (
-    <button className="btn btn-primary" onClick={handleBack}>Go Back</button>
-  )
-}
+    <Button
+      onClick={handleBack}
+      icon="pi pi-chevron-left"
+      rounded
+      text
+      aria-label="back"
+    ></Button>
+  );
+};
 
 export default GoBackButton;

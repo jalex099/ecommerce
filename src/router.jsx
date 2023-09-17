@@ -22,11 +22,18 @@ const HomePage = () => (
   </DynamicImport>
 );
 
+const ProductPage = () => (
+  <DynamicImport load={() => import("#/pages/ProductPage.jsx")}>
+    {(Component) => (Component === null ? <HomePageSkeleton /> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   return (
     <Routes>
       <Route element={<LayoutPage />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
       </Route>
     </Routes>
   );

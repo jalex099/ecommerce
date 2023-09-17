@@ -10,10 +10,7 @@ const LayoutPage = () => {
       <header>
         <TopBar />
       </header>
-      <main
-        className="container p-4 relative"
-        style={{ backgroundColor: "var(--surface-ground)" }}
-      >
+      <main className="container relative">
         <Outlet />
         {ui?.isLoadingForeground && <Loading />}
         {/* <Toaster

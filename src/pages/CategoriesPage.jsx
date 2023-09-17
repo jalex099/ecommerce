@@ -1,6 +1,6 @@
 const CategoriesPage = () => {
   return (
-    <div>
+    <div className="p-4 ">
       <h1>Categories Page</h1>
     </div>
   );

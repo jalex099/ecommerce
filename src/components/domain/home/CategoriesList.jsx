@@ -21,7 +21,7 @@ const CategoriesList = () => {
                 FADE_ANIMATION?.transition?.duration * ((index + 1) / 3) || 0,
             }}
             exit={FADE_ANIMATION.exit}
-            className=" h-[64px] bg-red-500 px-8 py-2 rounded-2xl text-[12px] flex justify-center items-center flex-row gap-2 shadow"
+            className=" h-[64px] bg-red-500 px-8 py-2 rounded-2xl text-[12px] flex justify-center items-center flex-row gap-2 drop-shadow"
             style={{ backgroundColor: "var(--surface-card)" }}
           >
             <img

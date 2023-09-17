@@ -3,7 +3,7 @@ import CategoriesListSkeleton from "#/components/shared/skeletons/CategoriesList
 
 const HomePageSkeleton = () => {
   return (
-    <div style={style.container} className="container">
+    <div style={style.container} className="container p-4">
       <div className="flex justify-between items-center gap-2">
         <Skeleton width="75%" height="60px" borderRadius="6px" />
         <Skeleton width="20%" height="60px" borderRadius="6px" />

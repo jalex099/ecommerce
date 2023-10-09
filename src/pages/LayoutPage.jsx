@@ -1,18 +1,20 @@
 import { Outlet } from "react-router-dom";
-import TopBar from "#/components/shared/TopBar.jsx";
-import Loading from "#/components/shared/Loading.jsx";
 import { useUIState } from "#/hooks/UIState.js";
-import LoginDialog from "#/components/domain/auth/LoginDialog.jsx";
+import TopBarContainer from "#/components/shared/topbar/TopBarContainer.jsx";
+import BottomBarContainer from "#/components/shared/bottombar/BottomBarContainer.jsx";
 const LayoutPage = () => {
   const ui = useUIState();
   return (
     <>
       <header>
-        <TopBar />
+        <TopBarContainer />
       </header>
-      <main className="container relative">
+      <main
+        className="container relative"
+        style={{ height: "110vh", paddingBottom: "80px" }}
+      >
         <Outlet />
-        {ui?.isLoadingForeground && <Loading />}
+        {ui?.isLoadingForeground && <>lOADING</>}
         {/* <Toaster
         toastOptions={{
           style: {
@@ -24,9 +26,10 @@ const LayoutPage = () => {
         {/*
         DIALOGS GLOBALES
     */}
-
-        <LoginDialog />
       </main>
+      <footer>
+        <BottomBarContainer />
+      </footer>
     </>
   );
 };

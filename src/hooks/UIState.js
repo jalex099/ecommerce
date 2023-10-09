@@ -1,14 +1,13 @@
 import { hookstate, useHookstate } from "@hookstate/core";
 import { findKey, setKey } from "#/utils/localStorageHelper.js";
 import { THEMES, DEFAULT_THEME } from "#/config/constants.js";
-import PrimeReact from "primereact/api";
 import { useEffect } from "react";
 
 export const uiState = hookstate({
   loading: 0,
-  theme: "",
   showLoginDialog: false,
   isAuthenticated: false,
+  title: "",
 });
 
 export const startLoading = () => {
@@ -25,44 +24,14 @@ export const useUIState = () => {
   const state = useHookstate(uiState);
 
   useEffect(() => {
-    //* Si no es la primera vez que se carga la página, no se hace nada
-    if (state.theme.value) return;
-    //* Si es la primera vez que se carga la página, se obtiene el tema de la aplicación y se establece
-    const appTheme = findKey("theme");
-    //* Si existe un tema guardado en el local storage, se establece
-    if (appTheme) {
-      state.theme.set(appTheme);
-      if (appTheme !== THEMES[DEFAULT_THEME])
-        handleChangeTheme(THEMES[DEFAULT_THEME], appTheme);
-    }
-    //* Si no existe un tema guardado en el local storage, se establece el tema por defecto
-    else {
-      state.theme.set(THEMES[DEFAULT_THEME]);
-    }
-  }, [state.theme.value]);
-
-  useEffect(() => {
     const token = findKey("token");
     if (token) {
       state.isAuthenticated.set(true);
     }
   }, []);
 
-  const handleChangeTheme = (current, actual) => {
-    PrimeReact.changeTheme(current, actual, "theme-link");
-  };
-
   return {
     isLoadingForeground: state.loading.value > 0,
-    theme: state.theme.value,
-    toogleTheme: () => {
-      const currentTheme = state.theme.value;
-      const newTheme =
-        currentTheme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
-      handleChangeTheme(currentTheme, newTheme);
-      state.theme.set(newTheme);
-      setKey("theme", newTheme);
-    },
     showLoginDialog: state.showLoginDialog.value,
     toogleLoginDialog: () => {
       state.showLoginDialog.set(!state.showLoginDialog.value);
@@ -71,5 +40,9 @@ export const useUIState = () => {
       state.isAuthenticated.set(value);
     },
     isAuthenticated: state.isAuthenticated.value,
+    title: state.title.value,
+    setTitle: (title) => {
+      state.title.set(title);
+    },
   };
 };

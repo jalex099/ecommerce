@@ -6,9 +6,6 @@ import RedirectionService from "#/services/RedirectionService";
 import { useTemporalProductState } from "#/hooks/TemporalProductState";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
-import CarouselImagesProduct from "#/components/domain/product/CarouselImagesProduct";
-import "#/components/domain/product/css/product.components.css";
-import NewChipComponent from "#/components/domain/product/NewChipComponent";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
@@ -50,21 +47,7 @@ const ProductPage = () => {
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
-  return (
-    <div
-      className="flex flex-col gap-1"
-      style={{ backgroundColor: "var(--surface-0)" }}
-    >
-      <CarouselImagesProduct images={carouselImages} />
-      <div className="p-4 flex flex-col gap-3">
-        <p className="text-2xl font-semibold ">
-          {temp?.name}
-          {temp?.isNew && <NewChipComponent />}
-        </p>
-        <p className="text-justify">{temp?.description}</p>
-      </div>
-    </div>
-  );
+  return <div className="flex flex-col gap-1"></div>;
 };
 
 export default ProductPage;

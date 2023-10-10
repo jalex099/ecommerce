@@ -10,7 +10,7 @@ function DefaultTopBar({ title }) {
       <Fade in={true} timeout={300}>
         <Toolbar>
           <GoBackIcon />
-          <SemiBold18 className="text-center">{title}</SemiBold18>
+          {title && <SemiBold18 className="text-center">{title}</SemiBold18>}
         </Toolbar>
       </Fade>
     </Box>

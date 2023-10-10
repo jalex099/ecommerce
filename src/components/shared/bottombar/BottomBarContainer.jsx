@@ -7,12 +7,20 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import RestaurantMenuOutlinedIcon from "@mui/icons-material/RestaurantMenuOutlined";
 import HideOnScroll from "#/components/shared/HideOnScroll.jsx";
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function BottomBarContainer() {
   const value = useHookstate(0);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    if (pathname === "/") value.set(0);
+    else if (pathname.startsWith("/menu")) value.set(1);
+    else if (pathname.startsWith("/profile")) value.set(2);
+    else value.set(0);
+  }, [pathname]);
   const handleChange = (e, newValue) => {
     value.set(newValue);
     switch (newValue) {
@@ -42,7 +50,7 @@ function BottomBarContainer() {
           value={value.get()}
           onChange={handleChange}
           className="px-4"
-          sx={{ flexGrow: 1, height: '100%' }}
+          sx={{ flexGrow: 1, height: "100%" }}
         >
           <BottomNavigationAction label="Feed" icon={<HomeOutlinedIcon />} />
           <BottomNavigationAction

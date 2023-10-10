@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-function ExtraBold20({ children, className }) {
+function ExtraBold20({ children, className, styles }) {
   return (
     <Typography
       fontSize="20px"
@@ -8,6 +8,7 @@ function ExtraBold20({ children, className }) {
       className={className}
       fontFamily="Intro"
       fontWeight={400}
+      sx={styles}
     >
       {children}
     </Typography>

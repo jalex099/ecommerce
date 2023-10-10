@@ -1,6 +1,7 @@
 import { useUIState } from "#/hooks/UIState";
 import { useEffect } from "react";
 import Container from "@mui/material/Container";
+import CategoriesContainer from "#/components/domain/menu/CategoriesContainer";
 
 const CategoriesPage = () => {
   const ui = useUIState();
@@ -9,7 +10,7 @@ const CategoriesPage = () => {
   }, []);
   return (
     <Container>
-      <h1>Categories Page</h1>
+      <CategoriesContainer />
     </Container>
   );
 };

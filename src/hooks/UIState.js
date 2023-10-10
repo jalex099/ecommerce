@@ -5,8 +5,6 @@ import { useEffect } from "react";
 
 export const uiState = hookstate({
   loading: 0,
-  showLoginDialog: false,
-  isAuthenticated: false,
   title: "",
 });
 
@@ -23,23 +21,8 @@ export const stopLoading = () => {
 export const useUIState = () => {
   const state = useHookstate(uiState);
 
-  useEffect(() => {
-    const token = findKey("token");
-    if (token) {
-      state.isAuthenticated.set(true);
-    }
-  }, []);
-
   return {
     isLoadingForeground: state.loading.value > 0,
-    showLoginDialog: state.showLoginDialog.value,
-    toogleLoginDialog: () => {
-      state.showLoginDialog.set(!state.showLoginDialog.value);
-    },
-    setIsAuthenticated: (value) => {
-      state.isAuthenticated.set(value);
-    },
-    isAuthenticated: state.isAuthenticated.value,
     title: state.title.value,
     setTitle: (title) => {
       state.title.set(title);

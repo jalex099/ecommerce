@@ -1,14 +1,14 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDumaKMKq5md6xoqLdoE2K4NGaLzjpnUtU',
-  authDomain: 'mome-cloud.firebaseapp.com',
-  projectId: 'mome-cloud',
-  storageBucket: 'mome-cloud.appspot.com',
-  messagingSenderId: '171489193697',
-  appId: '1:171489193697:web:fe9df7ce7e4320183ed1a0',
-  measurementId: 'G-B057NGF65C'
+  apiKey: "AIzaSyAqNLAo2mPO1vwJov20YmhyDXACB6ZCU5A",
+  authDomain: "ale-art.firebaseapp.com",
+  projectId: "ale-art",
+  storageBucket: "ale-art.appspot.com",
+  messagingSenderId: "303695385557",
+  appId: "1:303695385557:web:1505385ba9d97c7192a35c",
+  measurementId: "G-Y5L57JRYBH",
 };
 
 const app = initializeApp(firebaseConfig);

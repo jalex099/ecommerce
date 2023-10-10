@@ -74,8 +74,9 @@ const components = {
   MuiInputBase: {
     styleOverrides: {
       root: {
-        backgroundColor: "#F3F3F3",
-        borderRadius: "16px",
+        // backgroundColor: "#F3F3F3",
+        // borderRadius: "16px",
+        padding: "8px 12px",
         border: "none",
         fontSize: "14px",
         "& .MuiOutlinedInput-notchedOutline": {
@@ -189,6 +190,13 @@ const components = {
           padding: "0px",
           fontWeight: "bold",
         },
+      },
+    },
+  },
+  MuiFormLabel: {
+    styleOverrides: {
+      root: {
+        fontSize: "14px",
       },
     },
   },

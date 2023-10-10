@@ -7,7 +7,13 @@ import Fade from "@mui/material/Fade";
 function DefaultTopBar({ title }) {
   return (
     <Box>
-      <Fade in={true} timeout={300}>
+      <Fade
+        in={true}
+        timeout={{
+          enter: 500,
+          exit: 0,
+        }}
+      >
         <Toolbar>
           <GoBackIcon />
           {title && <SemiBold18 className="text-center">{title}</SemiBold18>}

@@ -1,27 +1,17 @@
-import Box from "@mui/material/Box";
-import Regular12 from "#/components/shared/fonts/Regular12";
-import SemiBold32 from "#/components/shared/fonts/SemiBold32";
+import TemplateDetailsProfile from "#/components/domain/profile/TemplateDetailsProfile";
+import { useMemo } from "react";
 
-function AccountInfo() {
+function AccountInfo({ currentUser }) {
+  const displayName = useMemo(() => {
+    if (!currentUser?.displayName) return "";
+    const nameParts = currentUser?.displayName?.split(" ");
+    if (nameParts?.length <= 2) return currentUser?.displayName;
+    return nameParts[0] + " " + nameParts[2];
+  }, [currentUser?.displayName]);
+
   return (
-    <Box sx={style.container}>
-      <SemiBold32>Javier Morales</SemiBold32>
-      <Regular12 styles={style.email}>javiermoralesmelara@gmail.com</Regular12>
-    </Box>
+    <TemplateDetailsProfile title={displayName} subtitle={currentUser?.email} />
   );
 }
-
-const style = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "4px",
-  },
-  email: {
-    color: (theme) => theme.palette.neutral50.main,
-  },
-};
 
 export default AccountInfo;

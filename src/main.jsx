@@ -6,6 +6,7 @@ import "#/config/firebase.js";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "#/theme/index.js";
 import CssBaseline from "@mui/material/CssBaseline";
+import { HelmetProvider } from "react-helmet-async";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Router />
+        <HelmetProvider>
+          <Router />
+        </HelmetProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>

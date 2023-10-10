@@ -9,6 +9,7 @@ const DataService = () => {
     queryKey: ["getData"],
     queryFn: getData,
     refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 10,
   });
 
   const categories = useMemo(() => {

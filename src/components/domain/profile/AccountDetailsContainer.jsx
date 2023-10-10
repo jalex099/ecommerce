@@ -2,11 +2,12 @@ import Box from "@mui/material/Box";
 import ProfilePicture from "#/components/domain/profile/ProfilePicture";
 import AccountInfo from "#/components/domain/profile/AccountInfo";
 
-function AccountDetailsContainer() {
+function AccountDetailsContainer({ currentUser }) {
   return (
     <Box sx={style.container}>
-      <ProfilePicture src="https://i.pravatar.cc/300" alt="Profile Picture" />
-      <AccountInfo />
+      <ProfilePicture src={currentUser?.picture} alt="Profile Picture" />
+
+      <AccountInfo currentUser={currentUser} />
     </Box>
   );
 }
@@ -17,7 +18,7 @@ const style = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    // minHeight: "500px",
+    width: "100%",
   },
 };
 

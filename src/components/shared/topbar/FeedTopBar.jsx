@@ -8,7 +8,13 @@ import { Fade } from "@mui/material";
 function FeedTopBar({ title }) {
   return (
     <Box>
-      <Fade in={true} timeout={300}>
+      <Fade
+        in={true}
+        timeout={{
+          enter: 500,
+          exit: 0,
+        }}
+      >
         <Toolbar>
           <ShoppingBagOutlinedIcon fontSize="32px" />
           <SemiBold18 className="text-center">{title}</SemiBold18>

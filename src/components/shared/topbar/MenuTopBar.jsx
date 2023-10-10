@@ -9,14 +9,20 @@ import Toolbar from "@mui/material/Toolbar";
 function MenuTopBar() {
   return (
     <Box>
-      <Fade in={true} timeout={300}>
+      <Fade
+        in={true}
+        timeout={{
+          enter: 500,
+          exit: 0,
+        }}
+          >
         <Toolbar>
           {/* <GoBackIcon /> */}
           <ShoppingBagOutlinedIcon fontSize="32px" />
           <OutlinedInput
             size="small"
             placeholder="Buscar"
-            sx={{ padding: "4px 8px" }}
+            sx={{ backgroundColor: "#F3F3F3" }}
             endAdornment={
               <SearchOutlinedIcon
                 fontSize="32px"

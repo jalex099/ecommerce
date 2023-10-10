@@ -9,9 +9,7 @@ function OrdersAndMessages() {
 
   return (
     <Box sx={style.container} onClick={handleClick}>
-      <SemiBold14 className={"text-center"}>
-        Mis &oacute;rdenes y mensajes
-      </SemiBold14>
+      <SemiBold14 className={"text-center"}>Mis ordenes y mensajes</SemiBold14>
       <MarkChatUnreadOutlinedIcon />
     </Box>
   );

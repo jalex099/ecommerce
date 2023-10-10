@@ -2,8 +2,17 @@ import { Outlet } from "react-router-dom";
 import { useUIState } from "#/hooks/UIState.js";
 import TopBarContainer from "#/components/shared/topbar/TopBarContainer.jsx";
 import BottomBarContainer from "#/components/shared/bottombar/BottomBarContainer.jsx";
+import AuthService from "#/services/AuthService.js";
+import { useEffect } from "react";
+import Loading from "#/components/shared/Loading.jsx";
 const LayoutPage = () => {
   const ui = useUIState();
+  const { verifyAuth } = AuthService();
+
+  useEffect(() => {
+    verifyAuth();
+  }, []);
+
   return (
     <>
       <header>
@@ -14,7 +23,7 @@ const LayoutPage = () => {
         style={{ height: "110vh", paddingBottom: "80px" }}
       >
         <Outlet />
-        {ui?.isLoadingForeground && <>lOADING</>}
+        {ui?.isLoadingForeground && <Loading />}
         {/* <Toaster
         toastOptions={{
           style: {

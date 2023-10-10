@@ -3,14 +3,15 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { removeKey, setKey } from "#/utils/localStorageHelper";
-import { useUIState } from "#/hooks/UIState";
+import { useAuthState } from "#/hooks/AuthState";
 
 const AuthService = () => {
   const auth = getAuth();
-  const ui = useUIState();
+  const authState = useAuthState();
   const provider = new GoogleAuthProvider();
 
   const setAuthentication = (idToken, displayName, email, picture = null) => {
@@ -20,9 +21,7 @@ const AuthService = () => {
       email,
       picture,
     };
-    setKey("user", JSON.stringify(user));
-    ui?.setIsAuthenticated(true);
-    ui?.toogleLoginDialog();
+    authState.setCurrentUser(user);
   };
 
   const onError = (error) => {
@@ -35,7 +34,7 @@ const AuthService = () => {
       const credential = await signInWithEmailAndPassword(
         auth,
         email,
-        password,
+        password
       );
       const user = credential.user;
       const idToken = await user.getIdToken();
@@ -47,31 +46,51 @@ const AuthService = () => {
 
   const loginWithGoogle = async () => {
     try {
-      signInWithPopup(auth, provider)
-        .then(async (result) => {
-          const user = result.user;
-          const idToken = await user.getIdToken();
-          setAuthentication(idToken, user?.displayName, user?.email, user?.photoURL);
-        });
+      signInWithPopup(auth, provider).then(async (result) => {
+        const user = result.user;
+        const idToken = await user.getIdToken();
+        setAuthentication(
+          idToken,
+          user?.displayName,
+          user?.email,
+          user?.photoURL
+        );
+      });
     } catch (error) {
       onError(error);
     }
   };
 
   const logout = () => {
-    signOut(auth).then(() => {
-      removeKey("token");
-      removeKey("user");
-      ui?.setIsAuthenticated(false);
-    }).catch((error) => {
-      console.log(error);
+    signOut(auth)
+      .then(() => {
+        removeKey("token");
+        authState.setCurrentUser(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const verifyAuth = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      user.getIdToken().then((idToken) => {
+        setAuthentication(
+          idToken,
+          user?.displayName,
+          user?.email,
+          user?.photoURL
+        );
+      });
     });
-  }
+  };
 
   return {
     loginWithEmailAndPassword,
     loginWithGoogle,
     logout,
+    verifyAuth,
   };
 };
 

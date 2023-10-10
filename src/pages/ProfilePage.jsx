@@ -7,25 +7,41 @@ import OrdersAndMessages from "#/components/domain/profile/OrdersAndMessages";
 import Preferences from "#/components/domain/profile/Preferences";
 import Addresses from "#/components/domain/profile/Addresses";
 import Divider from "@mui/material/Divider";
+import HelmetMeta from "#/components/shared/HelmetMeta";
+import { useAuthState } from "#/hooks/AuthState";
+import SignInOptions from "#/components/domain/profile/SignInOptions";
+import GreetingProfile from "#/components/domain/profile/GreetingProfile";
 
 function ProfilePage() {
   const ui = useUIState();
+  const auth = useAuthState();
   useEffect(() => {
     ui?.setTitle("");
   }, []);
 
   return (
     <Container sx={style.container}>
-      <AccountDetailsContainer />
-      <FavoritesDialog />
+      <HelmetMeta page="profile" />
 
-      <Divider sx={style.divider} />
-      <OrdersAndMessages />
+      {auth?.isAuthenticated ? (
+        <>
+          <AccountDetailsContainer currentUser={auth.currentUser} />
+          <FavoritesDialog />
 
-      <Divider sx={style.divider} />
-      <Preferences />
-      <Divider sx={style.divider} />
-      <Addresses />
+          <Divider sx={style.divider} />
+          <OrdersAndMessages />
+
+          <Divider sx={style.divider} />
+          <Preferences />
+          <Divider sx={style.divider} />
+          <Addresses />
+        </>
+      ) : (
+        <>
+          <GreetingProfile />
+          <SignInOptions />
+        </>
+      )}
     </Container>
   );
 }

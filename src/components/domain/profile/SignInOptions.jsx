@@ -1,52 +1,25 @@
 import Box from "@mui/material/Box";
-import AuthService from "#/services/AuthService";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Input from "@mui/material/Input";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import GoogleImage from "#/assets/images/google.png";
+import Regular14 from "#/components/shared/fonts/Regular14";
+import { Divider } from "@mui/material";
+import RegisterAccessContainer from "#/components/domain/profile/RegisterAccessContainer";
+import GoogleLoginButton from "#/components/domain/profile/GoogleLoginButton";
+import EmailAndPasswordLoginForm from "#/components/domain/profile/EmailAndPasswordLoginForm";
+import ForgotPasswordAccessContainer from "#/components/domain/profile/ForgotPasswordAccessContainer";
 
 function SignInOptions() {
-  const { loginWithGoogle, loginWithEmailAndPassword } = AuthService();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data.get("email"), data.get("password"));
-    loginWithEmailAndPassword(data.get("email"), data.get("password"));
-  };
-
   return (
     <Box sx={style.container}>
-      <form style={style.form} onSubmit={handleSubmit}>
-        <Stack spacing={2}>
-          <FormControl>
-            <FormLabel>Correo electr&oacute;nico</FormLabel>
-            <Input name="email" />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Contrase&ntilde;a</FormLabel>
-            <Input
-              name="password"
-              slotProps={{
-                input: { type: "password" },
-              }}
-            />
-          </FormControl>
-          <Button variant="outlined" type="submit">
-            Iniciar sesi&oacute;n
-          </Button>
-        </Stack>
-      </form>
-      <Button
-        variant="outlined"
-        onClick={loginWithGoogle}
-        className="w-2/3"
-        startIcon={<img src={GoogleImage} alt="Google" className="w-6" />}
-      >
-        Continuar con Google
-      </Button>
+      <EmailAndPasswordLoginForm />
+      <Box sx={style.subcontainer}>
+        <ForgotPasswordAccessContainer />
+        <RegisterAccessContainer />
+      </Box>
+      <Box sx={style.o}>
+        <Divider />
+        <Regular14>o</Regular14>
+        <Divider />
+      </Box>
+      <GoogleLoginButton />
     </Box>
   );
 }
@@ -61,9 +34,23 @@ const style = {
     minHeight: "180px",
     gap: "24px",
   },
-  form: {
+  o: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     width: "100%",
-    padding: "32px",
+    gap: "24px",
+    "& hr": {
+      width: "100%",
+    },
+  },
+  subcontainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    gap: "8px",
   },
 };
 

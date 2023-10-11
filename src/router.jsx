@@ -39,6 +39,12 @@ const ProfilePage = () => (
   </DynamicImport>
 );
 
+const AddAddressPage = () => (
+  <DynamicImport load={() => import("#/pages/AddAddressPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   return (
     <Routes>
@@ -47,6 +53,7 @@ const RoutesApp = () => {
         <Route path="/menu" element={<CategoriesPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/add-address" element={<AddAddressPage />} />
       </Route>
     </Routes>
   );

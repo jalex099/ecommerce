@@ -10,24 +10,27 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import AuthService from "#/services/AuthService.js";
+import ConfirmDialog from "#/components/shared/ConfirmDialog";
+import { useHookstate } from "@hookstate/core";
 
 const ITEM_HEIGHT = 48;
 function ProfileTopBar() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const openConfirmDialog = useHookstate(false);
   const { logout } = AuthService();
 
   const options = [
     {
       name: "Ajustes",
       action: () => {
-        handleClose();
+        handleCloseMenu();
       },
     },
     {
       name: "Cerrar sesión",
       action: () => {
-        logout();
-        handleClose();
+        handleOpenConfirmDialog();
+        handleCloseMenu();
       },
     },
   ];
@@ -38,12 +41,32 @@ function ProfileTopBar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+
+  const handleOpenConfirmDialog = () => {
+    openConfirmDialog.set(true);
+  };
+
+  const handleCloseConfirmDialog = () => {
+    openConfirmDialog.set(false);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    handleCloseConfirmDialog();
   };
 
   return (
     <Box>
+      <ConfirmDialog
+        isOpen={openConfirmDialog?.value}
+        title="Cerrar sesión"
+        content="¿Estás seguro que deseas cerrar sesión?"
+        handleOk={handleLogout}
+        handleCancel={handleCloseConfirmDialog}
+      />
       <Fade
         in={true}
         timeout={{
@@ -72,7 +95,7 @@ function ProfileTopBar() {
               }}
               anchorEl={anchorEl}
               open={open}
-              onClose={handleClose}
+              onClose={handleCloseMenu}
               PaperProps={{
                 style: {
                   maxHeight: ITEM_HEIGHT * 4.5,

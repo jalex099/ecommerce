@@ -18,10 +18,7 @@ const LayoutPage = () => {
       <header>
         <TopBarContainer />
       </header>
-      <main
-        className="container relative"
-        style={{ height: "110vh", paddingBottom: "80px" }}
-      >
+      <main className="container relative" style={{ paddingBottom: "80px" }}>
         <Outlet />
         {ui?.isLoadingForeground && <Loading />}
         {/* <Toaster

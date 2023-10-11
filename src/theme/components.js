@@ -28,6 +28,13 @@ const components = {
       },
     ],
   },
+  MuiButtonBase: {
+    styleOverrides: {
+      root: {
+        textTransform: "none !important",
+      },
+    },
+  },
   MuiAppBar: {
     styleOverrides: {
       root: {
@@ -79,6 +86,7 @@ const components = {
         padding: "8px 12px",
         border: "none",
         fontSize: "14px",
+        margin: "0px",
         "& .MuiOutlinedInput-notchedOutline": {
           border: "none",
         },

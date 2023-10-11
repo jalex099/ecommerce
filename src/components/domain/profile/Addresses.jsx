@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Regular18 from "#/components/shared/fonts/Regular18";
 import Address from "#/components/domain/profile/Address";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const addresses = [
   {
@@ -17,6 +18,11 @@ const addresses = [
 ];
 
 function Addresses() {
+  const navigate = useNavigate();
+
+  const handleAddAddress = () => {
+    navigate("/profile/add-address");
+  };
   return (
     <Box sx={style.container}>
       <Regular18>Mis direcciones</Regular18>
@@ -29,10 +35,13 @@ function Addresses() {
             reference={reference}
           />
         ))}
-        <Button 
-          variant="outlined" 
+        <Button
+          variant="outlined"
           sx={{ width: "100%", maxWidth: "400px" }}
-        >Agregar dirección</Button>
+          onClick={handleAddAddress}
+        >
+          Agregar dirección
+        </Button>
       </Box>
     </Box>
   );

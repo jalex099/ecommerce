@@ -1,8 +1,10 @@
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
 import SemiBold12 from "#/components/shared/fonts/SemiBold12";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
+import Regular14 from "#/components/shared/fonts/Regular14";
 import { useHookstate } from "@hookstate/core";
 
 function FavoritesDialog() {
@@ -30,6 +32,9 @@ function FavoritesDialog() {
         <DialogTitle>
           <SemiBold14>10 Favoritos</SemiBold14>
         </DialogTitle>
+        <DialogContent>
+          <Regular14>10 Favoritos</Regular14>
+        </DialogContent>
       </Dialog>
     </>
   );

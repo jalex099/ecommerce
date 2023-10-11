@@ -38,6 +38,10 @@ export const PAGES = {
     title: "Perfil",
     desc: `Pagina de perfil de ${COMPANY}`,
   },
+  addAddress: {
+    title: "Agregar Dirección",
+    desc: `Pagina de agregar dirección de ${COMPANY}`,
+  },
   cart: {
     title: "Carrito",
     desc: `Pagina de carrito de ${COMPANY}`,

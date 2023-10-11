@@ -10,11 +10,17 @@ const CategoriesPage = () => {
     ui?.setTitle("Menú");
   }, []);
   return (
-    <Container>
+    <Container sx={style.container}>
       <HelmetMeta page="menu" />
       <CategoriesContainer />
     </Container>
   );
+};
+
+const style = {
+  container: {
+    padding: "16px 24px",
+  },
 };
 
 export default CategoriesPage;

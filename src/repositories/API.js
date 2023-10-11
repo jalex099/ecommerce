@@ -31,13 +31,13 @@ API.interceptors.response.use(
     return response?.data;
   },
   (error) => {
-    // eslint-disable-next-line no-unsafe-optional-chaining
-    const { status } = error?.response;
-    if(status === 401){
-      removeKey("token")
-      removeKey("refreshToken")
+    if (error.config?.background !== true) stopLoading();
+
+    if (error?.response?.status === 401 || error?.response?.status === 403) {
+      removeKey("token");
+      removeKey("refreshToken");
     }
-  },
+  }
 );
 
 export default API;

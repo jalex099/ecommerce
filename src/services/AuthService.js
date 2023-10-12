@@ -24,6 +24,10 @@ const AuthService = () => {
     authState.setCurrentUser(user);
   };
 
+  const setNullAuthentication = () => {
+    authState.setCurrentUser(-1);
+  };
+
   const onError = (error) => {
     console.log(error);
     removeKey("token");
@@ -65,7 +69,7 @@ const AuthService = () => {
     signOut(auth)
       .then(() => {
         removeKey("token");
-        authState.setCurrentUser(null);
+        authState.setCurrentUser(-1);
       })
       .catch((error) => {
         console.log(error);
@@ -74,7 +78,10 @@ const AuthService = () => {
 
   const verifyAuth = () => {
     onAuthStateChanged(auth, (user) => {
-      if (!user) return;
+      if (!user) {
+        setNullAuthentication();
+        return;
+      }
       user.getIdToken().then((idToken) => {
         setAuthentication(
           idToken,

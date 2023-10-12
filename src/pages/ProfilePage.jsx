@@ -11,6 +11,7 @@ import HelmetMeta from "#/components/shared/HelmetMeta";
 import { useAuthState } from "#/hooks/AuthState";
 import SignInOptions from "#/components/domain/profile/SignInOptions";
 import GreetingProfile from "#/components/domain/profile/GreetingProfile";
+import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";
 
 function ProfilePage() {
   const ui = useUIState();
@@ -23,7 +24,8 @@ function ProfilePage() {
     <Container sx={style.container}>
       <HelmetMeta page="profile" />
 
-      {auth?.isAuthenticated ? (
+      {!auth?.isVerified && <UnloggedSkeletonContainer />}
+      {auth?.isVerified && auth?.isAuthenticated === true && (
         <>
           <AccountDetailsContainer currentUser={auth.currentUser} />
           <FavoritesDialog />
@@ -36,7 +38,8 @@ function ProfilePage() {
           <Divider sx={style.divider} />
           <Addresses />
         </>
-      ) : (
+      )}
+      {auth?.isVerified && auth?.isAuthenticated === false && (
         <>
           <GreetingProfile />
           <SignInOptions />

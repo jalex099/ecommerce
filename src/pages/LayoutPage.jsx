@@ -33,7 +33,7 @@ const LayoutPage = () => {
         DIALOGS GLOBALES
     */}
       </main>
-      <footer>
+      <footer className="fixed bottom-0 left-0 right-0">
         <BottomBarContainer />
       </footer>
     </>

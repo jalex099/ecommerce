@@ -38,7 +38,6 @@ const style = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
     gap: "24px",
     "& hr": {
       width: "100%",

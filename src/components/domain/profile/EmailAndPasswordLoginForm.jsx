@@ -30,7 +30,7 @@ function EmailAndPasswordLoginForm() {
             }}
           />
         </FormControl>
-        <Button variant="outlined" type="submit">
+        <Button variant="contained" color="primary" type="submit">
           Iniciar sesi&oacute;n
         </Button>
       </Stack>

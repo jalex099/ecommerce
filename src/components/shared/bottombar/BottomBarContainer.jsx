@@ -41,7 +41,13 @@ function BottomBarContainer() {
   return (
     <HideOnScroll direction="up">
       <Paper
-        sx={{ position: "fixed", bottom: 0, left: 0, right: 0, height: "80px" }}
+        sx={{
+          position: "sticky",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "80px",
+        }}
         className="flex justify-around items-center grow"
         elevation={3}
       >

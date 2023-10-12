@@ -4,9 +4,14 @@ const components = {
       {
         props: { variant: "contained", color: "primary" },
         style: {
+          backgroundColor: "#E7E7E8",
+          fontWeight: "600",
+          color: "#0E0E10",
+          padding: "8px 32px",
           boxShadow: "none",
           "&:hover": {
             boxShadow: "none",
+            backgroundColor: "#E7E7E8",
           },
         },
       },
@@ -22,7 +27,6 @@ const components = {
           "&:hover": {
             boxShadow: "none",
             border: "1px solid #E7E7E8",
-            backgroundColor: "#F3F3F3",
           },
         },
       },

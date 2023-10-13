@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "#/config/constants.js";
 import { startLoading, stopLoading } from "#/hooks/UIState.js";
-import { removeKey } from "#/utils/localStorageHelper.js";
+import { findKey, removeKey } from "#/utils/localStorageHelper.js";
 
 const API = axios.create({
   baseURL: API_URL,
@@ -11,7 +11,7 @@ const API = axios.create({
 //* Set the interceptors
 API.interceptors.request.use((config) => {
   if (config?.secure) {
-    const token = localStorage.getItem("token") || "";
+    const token = findKey("token");
     config.headers.Authorization = `Bearer ${token}`;
   }
 

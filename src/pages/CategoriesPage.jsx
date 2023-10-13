@@ -19,7 +19,6 @@ const CategoriesPage = () => {
 
 const style = {
   container: {
-    padding: "16px 24px",
   },
 };
 

@@ -1,10 +1,13 @@
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Box from "@mui/material/Box";
 import MarkChatUnreadOutlinedIcon from "@mui/icons-material/MarkChatUnreadOutlined";
+import { useNavigate } from "react-router-dom";
 
 function OrdersAndMessages() {
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    console.log("click");
+    navigate("/profile/orders-and-messages");
   };
 
   return (
@@ -22,7 +25,6 @@ const style = {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 24px",
     margin: "24px 0",
   },
 };

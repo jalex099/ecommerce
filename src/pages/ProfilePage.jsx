@@ -12,10 +12,15 @@ import { useAuthState } from "#/hooks/AuthState";
 import SignInOptions from "#/components/domain/profile/SignInOptions";
 import GreetingProfile from "#/components/domain/profile/GreetingProfile";
 import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";
+import ClientAddressService from "#/services/ClientAddressService";
+import ClientPreferenceService from "#/services/ClientPreferenceService";
 
 function ProfilePage() {
   const ui = useUIState();
   const auth = useAuthState();
+  const { addresses, isLoading: isLoadingAddresses } = ClientAddressService();
+  const { preferences, isLoading: isLoadingPreferences } =
+    ClientPreferenceService();
   useEffect(() => {
     ui?.setTitle("");
   }, []);
@@ -34,9 +39,10 @@ function ProfilePage() {
           <OrdersAndMessages />
 
           <Divider sx={style.divider} />
-          <Preferences />
+          <Preferences items={preferences} isLoading={isLoadingPreferences} />
           <Divider sx={style.divider} />
-          <Addresses />
+
+          <Addresses items={addresses} isLoading={isLoadingAddresses} />
         </>
       )}
       {auth?.isVerified && auth?.isAuthenticated === false && (

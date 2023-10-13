@@ -28,23 +28,28 @@ export const COMPANY = "Ale Art";
 export const PAGES = {
   feed: {
     title: "Feed",
-    desc: `Pagina de inicio de ${COMPANY}`,
+    desc: `Pagina de inicio en ${COMPANY}`,
   },
   menu: {
     title: "Menú",
-    desc: `Pagina de menú de ${COMPANY}`,
+    desc: `Pagina de menú en ${COMPANY}`,
   },
   profile: {
     title: "Perfil",
-    desc: `Pagina de perfil de ${COMPANY}`,
+    desc: `Pagina de perfil en ${COMPANY}`,
   },
   addAddress: {
     title: "Agregar Dirección",
-    desc: `Pagina de agregar dirección de ${COMPANY}`,
+    desc: `Pagina de agregar dirección en ${COMPANY}`,
   },
+  ordersAndMessages: {
+    title: "Pedidos y Mensajes",
+    desc: `Pagina de pedidos y mensajes en ${COMPANY}`,
+  },
+
   cart: {
     title: "Carrito",
-    desc: `Pagina de carrito de ${COMPANY}`,
+    desc: `Pagina de carrito en ${COMPANY}`,
   },
   products: {
     title: "Productos",

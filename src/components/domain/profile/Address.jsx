@@ -5,12 +5,12 @@ import Regular12 from "#/components/shared/fonts/Regular12";
 import IconButton from "@mui/material/IconButton";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-function Address({ name, address, reference }) {
+function Address({ name, latitute, longitude, street, zone, reference }) {
   return (
     <Box sx={style.container}>
       <Box sx={style.address}>
         <SemiBold14 styles={{ marginBottom: "8px" }}>{name}</SemiBold14>
-        <Regular14>{address}</Regular14>
+        <Regular14>{`${street}, ${zone}`}</Regular14>
         <Regular12 styles={style.textMuted}>{reference}</Regular12>
       </Box>
       <IconButton variant="solid" sx={style.button}>

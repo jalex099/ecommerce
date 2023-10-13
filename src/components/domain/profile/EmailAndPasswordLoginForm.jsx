@@ -41,7 +41,7 @@ function EmailAndPasswordLoginForm() {
 const style = {
   container: {
     width: "100%",
-    padding: "32px 32px 0 32px",
+    marginTop: "24px",
   },
 };
 

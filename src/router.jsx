@@ -45,6 +45,18 @@ const AddAddressPage = () => (
   </DynamicImport>
 );
 
+const OrdersAndMessagesPage = () => (
+  <DynamicImport load={() => import("#/pages/OrdersAndMessagesPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
+const CartPage = () => (
+  <DynamicImport load={() => import("#/pages/CartPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   return (
     <Routes>
@@ -52,8 +64,17 @@ const RoutesApp = () => {
         <Route path="/" element={<FeedPage />} />
         <Route path="/menu" element={<CategoriesPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
+
+        {/* PROFILE */}
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/add-address" element={<AddAddressPage />} />
+        <Route
+          path="/profile/orders-and-messages"
+          element={<OrdersAndMessagesPage />}
+        />
+
+        {/* CART */}
+        <Route path="/cart" element={<CartPage />} />
       </Route>
     </Routes>
   );

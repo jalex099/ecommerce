@@ -1,12 +1,10 @@
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";
-import AddAddressContainer from "#/components/domain/profile/addAddress/AddAddressContainer";
 
-function AddAddressPage() {
+function CartPage() {
   return (
     <Container sx={style.container}>
-      <HelmetMeta page="addAddress" />
-      <AddAddressContainer />
+      <HelmetMeta page="cart" />
     </Container>
   );
 }
@@ -19,9 +17,6 @@ const style = {
     justifyContent: "center",
     gap: "16px",
   },
-  divider: {
-    width: "100%",
-  },
 };
 
-export default AddAddressPage;
+export default CartPage;

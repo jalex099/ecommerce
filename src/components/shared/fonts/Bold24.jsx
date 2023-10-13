@@ -1,17 +1,17 @@
 import Typography from "@mui/material/Typography";
 
-function ExtraBold14({ children, className }) {
+function Bold24({ children, className }) {
   return (
     <Typography
-      fontSize="14px"
-      lineHeight="24px"
       className={className}
+      fontSize="24px"
+      lineHeight="34px"
       fontFamily="Intro"
-      fontWeight={800}
+      fontWeight={700}
     >
       {children}
     </Typography>
   );
 }
 
-export default ExtraBold14;
+export default Bold24;

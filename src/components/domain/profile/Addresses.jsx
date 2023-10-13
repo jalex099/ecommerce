@@ -3,38 +3,35 @@ import Regular18 from "#/components/shared/fonts/Regular18";
 import Address from "#/components/domain/profile/Address";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import BadgePrimary from "#/components/shared/BadgePrimary";
+import AddressSkeleton from "#/components/domain/profile/skeletons/AddressSkeleton";
 
-const addresses = [
-  {
-    name: "Casa",
-    address: "Urb. Ciudad Real, Pasaje 9 #123",
-    reference: "Cerca de la escuela",
-  },
-  {
-    name: "Trabajo",
-    address: "Boulevard Merliot, Edificio 123, Local 1-A",
-    reference: "Al lado del parqueo general",
-  },
-];
-
-function Addresses() {
+function Addresses({ items = [], isLoading }) {
   const navigate = useNavigate();
 
   const handleAddAddress = () => {
     navigate("/profile/add-address");
   };
+  if (isLoading) return <AddressSkeleton />;
   return (
     <Box sx={style.container}>
       <Regular18>Mis direcciones</Regular18>
       <Box sx={style.subcontainer}>
-        {addresses?.map(({ name, address, reference }) => (
-          <Address
-            key={name}
-            address={address}
-            name={name}
-            reference={reference}
-          />
-        ))}
+        {items?.length === 0 && (
+          <BadgePrimary>Aún no tienes direcciones registradas</BadgePrimary>
+        )}
+        {items?.length > 0 &&
+          items?.map((address) => (
+            <Address
+              key={address?._id}
+              latitute={address?.latitute}
+              longitude={address?.longitude}
+              street={address?.street}
+              zone={address?.zone}
+              name={address?.name}
+              reference={address?.reference}
+            />
+          ))}
         <Button
           variant="outlined"
           sx={{ width: "100%", maxWidth: "400px" }}
@@ -48,7 +45,6 @@ function Addresses() {
 }
 const style = {
   container: {
-    padding: "0 24px",
     width: "100%",
     display: "flex",
     flexDirection: "column",

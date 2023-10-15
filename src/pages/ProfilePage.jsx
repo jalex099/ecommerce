@@ -14,6 +14,7 @@ import GreetingProfile from "#/components/domain/profile/GreetingProfile";
 import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";
 import ClientAddressService from "#/services/ClientAddressService";
 import ClientPreferenceService from "#/services/ClientPreferenceService";
+import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
 
 function ProfilePage() {
   const ui = useUIState();
@@ -21,6 +22,8 @@ function ProfilePage() {
   const { addresses, isLoading: isLoadingAddresses } = ClientAddressService();
   const { preferences, isLoading: isLoadingPreferences } =
     ClientPreferenceService();
+  const { favoriteProducts, isLoading: isLoadingFavoriteProducts } =
+    ClientFavoriteProductsService();
   useEffect(() => {
     ui?.setTitle("");
   }, []);
@@ -33,7 +36,10 @@ function ProfilePage() {
       {auth?.isVerified && auth?.isAuthenticated === true && (
         <>
           <AccountDetailsContainer currentUser={auth.currentUser} />
-          <FavoritesDialog />
+          <FavoritesDialog
+            items={favoriteProducts}
+            isLoading={isLoadingFavoriteProducts}
+          />
 
           <Divider sx={style.divider} />
           <OrdersAndMessages />

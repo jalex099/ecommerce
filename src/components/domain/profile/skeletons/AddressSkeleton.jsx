@@ -5,8 +5,8 @@ function AddressSkeleton() {
   return (
     <Box sx={style.container}>
       <Skeleton animation="wave" height={40} width="60%" />
-      {[1, 2]?.map(() => (
-        <>
+      {[1, 2]?.map((item, index) => (
+        <Box key={index}>
           <Skeleton
             animation="wave"
             height={30}
@@ -15,7 +15,7 @@ function AddressSkeleton() {
           />
           <Skeleton animation="wave" height={30} width="100%" />
           <Skeleton animation="wave" height={20} width="60%" />
-        </>
+        </Box>
       ))}
     </Box>
   );

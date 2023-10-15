@@ -4,14 +4,15 @@ const components = {
       {
         props: { variant: "contained", color: "primary" },
         style: {
-          backgroundColor: "#E7E7E8",
+          backgroundColor: "#614FE0",
           fontWeight: "600",
-          color: "#0E0E10",
-          padding: "8px 32px",
+          color: "#FFFFFF",
+          padding: "12px 32px",
           boxShadow: "none",
+          borderRadius: "12px",
           "&:hover": {
             boxShadow: "none",
-            backgroundColor: "#E7E7E8",
+            backgroundColor: "#614FE0",
           },
         },
       },
@@ -22,8 +23,8 @@ const components = {
           border: "1px solid #E7E7E8",
           color: "#0E0E10",
           textTransform: "none",
-          padding: "8px 32px",
-          borderRadius: "8px",
+          padding: "12px 32px",
+          borderRadius: "12px",
           "&:hover": {
             boxShadow: "none",
             border: "1px solid #E7E7E8",
@@ -169,13 +170,14 @@ const components = {
   MuiDialog: {
     styleOverrides: {
       paper: {
-        borderRadius: "16px 16px 0px 0px ",
+        borderRadius: "24px 24px 0px 0px ",
         position: "absolute",
         bottom: 0,
         left: 0,
         right: 0,
         margin: 0,
         minHeight: "200px",
+        padding: "8px 24px",
         "& .MuiDialogTitle-root": {
           minHeight: "70px",
           display: "flex",
@@ -184,6 +186,12 @@ const components = {
           fontSize: "16px",
           fontWeight: "regular",
           textAlign: "center",
+        },
+        "& .MuiDialogContent-root": {
+          padding: "0px",
+        },
+        "& .MuiDialogActions-root": {
+          padding: "24px 0px",
         },
       },
     },

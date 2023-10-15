@@ -6,7 +6,15 @@ import Button from "@mui/material/Button";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Regular14 from "#/components/shared/fonts/Regular14";
 
-const ConfirmDialog = ({ isOpen, title, content, handleOk, handleCancel }) => {
+const ConfirmDialog = ({
+  isOpen,
+  title,
+  content,
+  cancelText = "Cancelar",
+  confirmText = "Confirmar",
+  handleOk,
+  handleCancel,
+}) => {
   return (
     <Dialog open={isOpen} onClose={handleCancel}>
       <DialogTitle>
@@ -15,22 +23,18 @@ const ConfirmDialog = ({ isOpen, title, content, handleOk, handleCancel }) => {
       <DialogContent>
         <Regular14>{content}</Regular14>
       </DialogContent>
-      <DialogActions sx={{ gap: "12px" }}>
-        <Button
-          onClick={handleCancel}
-          variant="outlined"
-          sx={{ width: "100px" }}
-        >
-          No
+      <DialogActions className="flex flex-row " sx={{ gap: "4px" }}>
+        <Button onClick={handleCancel} variant="outlined" className="flex-grow">
+          {cancelText}
         </Button>
         <Button
           onClick={handleOk}
           variant="contained"
-          sx={{ width: "100px" }}
           color="primary"
           autoFocus
+          className="flex-grow"
         >
-          S&iacute;
+          {confirmText}
         </Button>
       </DialogActions>
     </Dialog>

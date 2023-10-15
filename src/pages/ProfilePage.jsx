@@ -12,18 +12,11 @@ import { useAuthState } from "#/hooks/AuthState";
 import SignInOptions from "#/components/domain/profile/SignInOptions";
 import GreetingProfile from "#/components/domain/profile/GreetingProfile";
 import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";
-import ClientAddressService from "#/services/ClientAddressService";
-import ClientPreferenceService from "#/services/ClientPreferenceService";
-import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
 
 function ProfilePage() {
   const ui = useUIState();
   const auth = useAuthState();
-  const { addresses, isLoading: isLoadingAddresses } = ClientAddressService();
-  const { preferences, isLoading: isLoadingPreferences } =
-    ClientPreferenceService();
-  const { favoriteProducts, isLoading: isLoadingFavoriteProducts } =
-    ClientFavoriteProductsService();
+
   useEffect(() => {
     ui?.setTitle("");
   }, []);
@@ -36,19 +29,16 @@ function ProfilePage() {
       {auth?.isVerified && auth?.isAuthenticated === true && (
         <>
           <AccountDetailsContainer currentUser={auth.currentUser} />
-          <FavoritesDialog
-            items={favoriteProducts}
-            isLoading={isLoadingFavoriteProducts}
-          />
+          <FavoritesDialog />
 
           <Divider sx={style.divider} />
           <OrdersAndMessages />
 
           <Divider sx={style.divider} />
-          <Preferences items={preferences} isLoading={isLoadingPreferences} />
+          <Preferences />
           <Divider sx={style.divider} />
 
-          <Addresses items={addresses} isLoading={isLoadingAddresses} />
+          <Addresses />
         </>
       )}
       {auth?.isVerified && auth?.isAuthenticated === false && (

@@ -1,11 +1,13 @@
 import Box from "@mui/material/Box";
 import Regular18 from "#/components/shared/fonts/Regular18";
 import Regular14 from "#/components/shared/fonts/Regular14";
+import Regular12 from "#/components/shared/fonts/Regular12";
 import { Chip } from "@mui/material";
 import PreferenceSkeleton from "#/components/domain/profile/skeletons/PreferenceSkeleton";
-import BadgePrimary from "#/components/shared/BadgePrimary";
+import ClientPreferenceService from "#/services/ClientPreferenceService";
 
-function Preferences({ items = [], isLoading }) {
+function Preferences() {
+  const { preferences, isLoading, isRefetching } = ClientPreferenceService();
   const getTitleOfCode = (code) => {
     switch (code) {
       case "OPT":
@@ -15,15 +17,17 @@ function Preferences({ items = [], isLoading }) {
     }
   };
 
-  if (isLoading) return <PreferenceSkeleton />;
+  if (isLoading || isRefetching) return <PreferenceSkeleton />;
   return (
     <Box sx={style.container}>
       <Regular18>Mis preferencias</Regular18>
-      {items?.length === 0 && (
-        <BadgePrimary>Sin registros de preferencia</BadgePrimary>
+      {preferences?.length === 0 && (
+        <Regular12 styles={{ color: (theme) => theme.palette.neutral60.main }}>
+          No tienes preferencias registradas
+        </Regular12>
       )}
-      {items?.length > 0 &&
-        items?.map((item, index) => (
+      {preferences?.length > 0 &&
+        preferences?.map((item, index) => (
           <Box key={index} sx={style.subcontainer}>
             <Box>
               <Regular14 styles={style.textMuted}>

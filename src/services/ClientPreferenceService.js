@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const ClientPreferenceService = () => {
   const { getPreferences } = ClientPreferenceRepository();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isRefetching } = useQuery({
     queryKey: ["getPreferences"],
     queryFn: getPreferences,
     refetchOnWindowFocus: false,
@@ -13,6 +13,7 @@ const ClientPreferenceService = () => {
   return {
     preferences: data?.data,
     isLoading,
+    isRefetching,
   };
 };
 

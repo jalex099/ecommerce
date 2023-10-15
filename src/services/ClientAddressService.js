@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const ClientAddressService = () => {
   const { getAddresses } = ClientAddressRepository();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isRefetching } = useQuery({
     queryKey: ["getAddresses"],
     queryFn: getAddresses,
     refetchOnWindowFocus: false,
@@ -13,6 +13,7 @@ const ClientAddressService = () => {
   return {
     addresses: data?.data,
     isLoading,
+    isRefetching,
   };
 };
 

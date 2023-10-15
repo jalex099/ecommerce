@@ -3,35 +3,32 @@ import Regular18 from "#/components/shared/fonts/Regular18";
 import Address from "#/components/domain/profile/Address";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import BadgePrimary from "#/components/shared/BadgePrimary";
 import AddressSkeleton from "#/components/domain/profile/skeletons/AddressSkeleton";
-import Link from "@mui/material/Link";
+import ClientAddressService from "#/services/ClientAddressService";
+import NoAddressesContainer from "#/components/domain/profile/NoAddressesContainer";
 
-function Addresses({ items = [], isLoading }) {
+function Addresses() {
+  const { addresses, isLoading, isRefetching } = ClientAddressService();
   const navigate = useNavigate();
 
   const handleAddAddress = () => {
     navigate("/profile/add-address");
   };
-  if (isLoading) return <AddressSkeleton />;
+  if (isLoading || isRefetching) return <AddressSkeleton />;
   return (
     <Box sx={style.container}>
       <Regular18>Mis direcciones</Regular18>
       <Box sx={style.subcontainer}>
-        {items?.length === 0 && (
-          <BadgePrimary>
-            Aún no tienes direcciones registradas <br />
-            <Link
-              onClick={handleAddAddress}
-              sx={{ color: (theme) => theme.palette.neutral80.main }}
-            >
-              ¡Agrega una ahora!
-            </Link>
-          </BadgePrimary>
+        {addresses?.length === 0 && (
+          <NoAddressesContainer
+            AddNewAddressButton={
+              <AddNewAddressButton handleClick={handleAddAddress} />
+            }
+          />
         )}
-        {items?.length > 0 && (
+        {addresses?.length > 0 && (
           <>
-            {items?.map((address) => (
+            {addresses?.map((address) => (
               <Address
                 key={address?._id}
                 latitute={address?.latitute}
@@ -42,19 +39,24 @@ function Addresses({ items = [], isLoading }) {
                 reference={address?.reference}
               />
             ))}
-            <Button
-              variant="outlined"
-              sx={{ width: "100%", maxWidth: "400px" }}
-              onClick={handleAddAddress}
-            >
-              Agregar dirección
-            </Button>
+            <AddNewAddressButton handleClick={handleAddAddress} />
           </>
         )}
       </Box>
     </Box>
   );
 }
+
+const AddNewAddressButton = ({ handleClick }) => (
+  <Button
+    variant="outlined"
+    sx={{ width: "100%", maxWidth: "400px" }}
+    onClick={handleClick}
+  >
+    Agregar dirección
+  </Button>
+);
+
 const style = {
   container: {
     width: "100%",

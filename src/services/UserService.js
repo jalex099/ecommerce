@@ -6,7 +6,7 @@ const UserService = () => {
   const { authGoogle, getOwnInfo: _getOwnInfo } = UserRepository();
 
   const { data: ownInfo } = useQuery({
-    queryKey: ["getOwnInfo"],
+    queryKey: ["secure-getOwnInfo"],
     queryFn: _getOwnInfo,
     refetchOnWindowFocus: false,
   });

@@ -7,12 +7,15 @@ import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import { useHookstate } from "@hookstate/core";
 import Skeleton from "@mui/material/Skeleton";
+import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
 
-function FavoritesDialog({ items, isLoading }) {
+function FavoritesDialog() {
+  const { favoriteProducts, isLoading, isRefetching } =
+    ClientFavoriteProductsService();
   const isOpen = useHookstate(false);
 
   const handleOpen = () => {
-    if (items?.length === 0) return;
+    if (favoriteProducts?.length === 0) return;
     isOpen.set(true);
   };
 
@@ -20,7 +23,7 @@ function FavoritesDialog({ items, isLoading }) {
     isOpen.set(false);
   };
 
-  if (isLoading)
+  if (isLoading || isRefetching)
     return (
       <Skeleton animation="wave" height={60} width={130} sx={{ margin: 0 }} />
     );
@@ -32,7 +35,7 @@ function FavoritesDialog({ items, isLoading }) {
         sx={style.button}
         onClick={handleOpen}
       >
-        <SemiBold12>{items?.length} Favoritos</SemiBold12>
+        <SemiBold12>{favoriteProducts?.length} Favoritos</SemiBold12>
       </Button>
       <Dialog onClose={handleClose} open={isOpen.get()} sx={style.dialog}>
         <DialogTitle>

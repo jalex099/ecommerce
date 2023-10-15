@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const ClientFavoriteProductsService = () => {
   const { getFavoriteProducts } = ClientFavoriteProductsRepository();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isRefetching } = useQuery({
     queryKey: ["getFavoriteProducts"],
     queryFn: getFavoriteProducts,
     refetchOnWindowFocus: false,
@@ -13,6 +13,7 @@ const ClientFavoriteProductsService = () => {
   return {
     favoriteProducts: data?.data,
     isLoading,
+    isRefetching,
   };
 };
 

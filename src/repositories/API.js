@@ -37,6 +37,7 @@ API.interceptors.response.use(
       removeKey("token");
       removeKey("refreshToken");
     }
+    return Promise.reject(error);
   }
 );
 

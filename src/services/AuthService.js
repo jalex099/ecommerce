@@ -8,11 +8,15 @@ import {
 } from "firebase/auth";
 import { removeKey, setKey } from "#/utils/localStorageHelper";
 import { useAuthState } from "#/hooks/AuthState";
+import { useQueryClient } from "@tanstack/react-query";
+
+const queryKeys = ["getPreferences", "getAddresses", "getFavoriteProducts"];
 
 const AuthService = () => {
   const auth = getAuth();
   const authState = useAuthState();
   const provider = new GoogleAuthProvider();
+  const queryClient = useQueryClient();
 
   const setAuthentication = (idToken, displayName, email, picture = null) => {
     setKey("token", idToken);
@@ -70,6 +74,10 @@ const AuthService = () => {
       .then(() => {
         removeKey("token");
         authState.setCurrentUser(-1);
+        queryClient.invalidateQueries(queryKeys, {
+          type: "inactive", // only invalidate inactive queries
+          refetchType: "none", // don't refetch until needed
+        });
       })
       .catch((error) => {
         console.log(error);

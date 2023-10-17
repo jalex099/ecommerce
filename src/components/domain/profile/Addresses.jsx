@@ -31,7 +31,7 @@ function Addresses() {
             {addresses?.map((address) => (
               <Address
                 key={address?._id}
-                latitute={address?.latitute}
+                latitude={address?.latitude}
                 longitude={address?.longitude}
                 street={address?.street}
                 zone={address?.zone}

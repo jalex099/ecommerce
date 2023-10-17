@@ -1,70 +1,59 @@
-import { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Map, { Marker } from "react-map-gl";
+import { useEffect, useRef } from "react";
+import Map, { Marker, NavigationControl } from "react-map-gl";
 import { MAPBOX_ZOOM, MAPBOX_ACCESS_TOKEN } from "#/config/constants.js";
-import PinImg from "#/assets/images/pin.png";
+import locationSvg from "#/assets/images/location.svg";
+import spanishLocaleMapbox from "#/utils/mapbox/es.js";
 
-function MapContainer() {
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
+function MapContainer({
+  latitude,
+  longitude,
+  isCentered = true,
+  handleLocationChange,
+}) {
+  const mapRef = useRef(null);
 
   useEffect(() => {
-    getLocation();
-  }, []);
-
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      console.log("Geolocation is not supported by your browser");
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLat(position.coords.latitude);
-          setLng(position.coords.longitude);
-        },
-        () => {
-          console.log("Unable to retrieve your location");
-        }
-      );
-    }
-  };
-
-  const handleClicked = ({ lngLat }) => {
-    const { lng, lat } = lngLat;
-    setLat(lat);
-    setLng(lng);
-  };
-
-  if (!lat && !lng) return <></>;
+    if (!isCentered) return;
+    mapRef?.current?.easeTo({
+      center: [longitude, latitude],
+      zoom: MAPBOX_ZOOM,
+    });
+  }, [latitude, longitude, isCentered]);
+  console.log(latitude, longitude, MAPBOX_ZOOM);
   return (
-    <Box sx={style.supercontainer}>
-      <Map
-        mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
-        initialViewState={{
-          longitude: lng,
-          latitude: lat,
-          zoom: MAPBOX_ZOOM,
-        }}
-        style={style.container}
-        mapStyle="mapbox://styles/mapbox/streets-v9"
-        onClick={handleClicked}
-      >
-        <Marker longitude={lng} latitude={lat} anchor="bottom">
-          <img src={PinImg} alt="pin" className="h-8" />
-        </Marker>
-      </Map>
-      ;
-    </Box>
+    <Map
+      ref={mapRef}
+      mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+      initialViewState={{
+        longitude: longitude,
+        latitude: latitude,
+        zoom: MAPBOX_ZOOM,
+      }}
+      style={style.mapContainer}
+      mapStyle="mapbox://styles/mapbox/streets-v12"
+      onClick={handleLocationChange}
+      locale={spanishLocaleMapbox}
+    >
+      <NavigationControl showCompass={false} />
+      <Marker longitude={longitude} latitude={latitude} anchor="bottom">
+        <img src={locationSvg} alt="location-pin" style={style.marker} />
+      </Marker>
+    </Map>
   );
 }
 
 const style = {
-  supercontainer: {
+  mapContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     width: "100%",
     height: "100%",
   },
-  container: {
-    width: "100%",
-    minHeight: "200px",
+  marker: {
+    height: "36px",
   },
 };
 

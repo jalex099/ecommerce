@@ -9,6 +9,7 @@ import HideOnScroll from "#/components/shared/HideOnScroll.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { NO_BOTTOM_BAR_URLS } from "#/config/constants.js";
 
 function BottomBarContainer() {
   const value = useHookstate(0);
@@ -38,6 +39,7 @@ function BottomBarContainer() {
     }
   };
 
+  if (NO_BOTTOM_BAR_URLS?.includes(pathname)) return <></>;
   return (
     <HideOnScroll direction="up">
       <Paper

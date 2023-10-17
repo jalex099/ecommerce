@@ -6,7 +6,7 @@ import DefaultTopBar from "#/components/shared/topbar/DefaultTopBar.jsx";
 import MenuTopBar from "#/components/shared/topbar/MenuTopBar.jsx";
 import { useUIState } from "#/hooks/UIState.js";
 import { useLocation } from "react-router-dom";
-import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx"; 
+import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
 
 function TopBarContainer(props) {
   const ui = useUIState();

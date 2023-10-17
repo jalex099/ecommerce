@@ -5,7 +5,7 @@ import Regular12 from "#/components/shared/fonts/Regular12";
 import IconButton from "@mui/material/IconButton";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-function Address({ name, latitute, longitude, street, zone, reference }) {
+function Address({ name, latitude, longitude, street, zone, reference }) {
   return (
     <Box sx={style.container}>
       <Box sx={style.address}>

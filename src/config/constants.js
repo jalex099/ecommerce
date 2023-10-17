@@ -6,7 +6,7 @@ export const OAUTH_API_CLIENT_ID =
 
 export const MAPBOX_ACCESS_TOKEN =
   "pk.eyJ1IjoianZycm1ybHMiLCJhIjoiY2xucnpyOHhmMDNkaDJyazR1c2lteXdiNCJ9.1ilke9VVwHOQX15P3OzuVg";
-export const MAPBOX_ZOOM = 14;
+export const MAPBOX_ZOOM = 16;
 
 export const THEMES = {
   LIGHT: "viva-light",
@@ -30,6 +30,8 @@ export const FADE_ANIMATION = {
 export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
+
+export const NO_BOTTOM_BAR_URLS = ["/profile/add-address"];
 
 export const PAGES = {
   feed: {

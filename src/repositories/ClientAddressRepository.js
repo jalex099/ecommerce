@@ -7,8 +7,16 @@ const ClientAddressRepository = () => {
     });
   };
 
+  const addAddress = async (address) => {
+    return await API.post("/client/addresses", address, {
+      secure: true,
+      await: true,
+    });
+  };
+
   return {
     getAddresses,
+    addAddress,
   };
 };
 

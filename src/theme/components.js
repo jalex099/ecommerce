@@ -21,6 +21,7 @@ const components = {
         style: {
           boxShadow: "none",
           border: "1px solid #E7E7E8",
+          backgroundColor: "#FFFFFF",
           color: "#0E0E10",
           textTransform: "none",
           padding: "12px 32px",
@@ -28,6 +29,21 @@ const components = {
           "&:hover": {
             boxShadow: "none",
             border: "1px solid #E7E7E8",
+          },
+        },
+      },
+      {
+        props: { variant: "contained", color: "secondary" },
+        style: {
+          backgroundColor: "#FF7C5A",
+          fontWeight: "600",
+          color: "#FFFFFF",
+          padding: "12px 32px",
+          boxShadow: "none",
+          borderRadius: "12px",
+          "&:hover": {
+            boxShadow: "none",
+            backgroundColor: "#FF7C5A",
           },
         },
       },

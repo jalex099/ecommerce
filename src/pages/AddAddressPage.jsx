@@ -4,17 +4,20 @@ import { useEffect } from "react";
 import { useUIState } from "#/hooks/UIState";
 import MapContainer from "#/components/shared/MapContainer.jsx";
 import Box from "@mui/material/Box";
-import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
+import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 import GeolocationService from "#/services/GeolocationService";
 import { useHookstate } from "@hookstate/core";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import FloatingGoBackButton from "#/components/shared/topbar/FloatingGoBackButton.jsx";
+import ClientAddressService from "#/services/ClientAddressService";
 
 function AddAddressPage() {
   const ui = useUIState();
   const { getLatLong } = GeolocationService();
   const location = useHookstate(null);
+  const { add } = ClientAddressService();
 
   useEffect(() => {
     ui?.setTitle("Agregar dirección");
@@ -28,9 +31,9 @@ function AddAddressPage() {
     try {
       const coords = await getLatLong();
       location.set((prev) => ({
-        lat: coords?.lat,
-        long: coords?.long,
-        ...prev,
+        latitude: coords?.lat,
+        longitude: coords?.long,
+        name: prev?.name || "",
       }));
     } catch (error) {
       console.log(error);
@@ -38,31 +41,39 @@ function AddAddressPage() {
   };
 
   const handleLocationChange = ({ lngLat }) => {
-    location.set((prev) => ({ lat: lngLat?.lat, long: lngLat?.lng, ...prev }));
+    location.set((prev) => ({
+      ...prev,
+      latitude: lngLat?.lat,
+      longitude: lngLat?.lng,
+    }));
   };
 
   const handleLocationNameChange = (e) => {
     location.set((prev) => ({ ...prev, name: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { lat, long, name } = location.value;
-    if (!lat || !long || !name) return;
-    console.log("submit", location.value);
+    const { latitude, longitude, name } = location.value;
+    if (!latitude || !longitude || !name) return;
+    await add.mutate(location?.value);
   };
 
   if (!location?.value) return <></>;
   return (
     <Container sx={style.container}>
       <HelmetMeta page="addAddress" />
+      <FloatingGoBackButton />
       <MapContainer
-        latitude={location?.value?.lat}
-        longitude={location?.value?.long}
+        latitude={location?.value?.latitude}
+        longitude={location?.value?.longitude}
         handleLocationChange={handleLocationChange}
       />
+
       <Box sx={style.popup}>
-        <SemiBold16>Ubicacion</SemiBold16>
+        <Box>
+          <SemiBold12>Agregar dirección</SemiBold12>
+        </Box>
         <Box
           component="form"
           sx={{ width: "100%" }}
@@ -70,7 +81,7 @@ function AddAddressPage() {
           noValidate
           autoComplete="off"
         >
-          <Stack spacing={2}>
+          <Stack spacing={2} className="flex items-center">
             <TextField
               label="Nombre"
               name="address-name"
@@ -79,14 +90,16 @@ function AddAddressPage() {
               value={location?.value?.name}
               onChange={handleLocationNameChange}
             />
-            <Button variant="contained" sx={{ width: "100%" }} type="submit">
-              Guardar
+            <Button
+              variant="outlined"
+              color="primary"
+              className="w-44 mx-auto"
+              type="submit"
+            >
+              Continuar
             </Button>
           </Stack>
         </Box>
-        {/* <Regular12>
-          {location?.value?.lat}, {location?.value?.long}
-        </Regular12> */}
       </Box>
     </Container>
   );
@@ -101,8 +114,11 @@ const style = {
     gap: "16px",
     padding: 0,
     width: "100%",
-    height: "calc(100vh - 70px)",
-    position: "relative",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   divider: {
     width: "100%",
@@ -122,6 +138,18 @@ const style = {
     alignItems: "center",
     justifyContent: "center",
     gap: "16px",
+  },
+  currentLocationButton: {
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    width: "48px",
+    height: "48px",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    "& img": {
+      width: "24px",
+    },
   },
 };
 

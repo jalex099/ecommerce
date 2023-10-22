@@ -8,12 +8,25 @@ import ClientAddressService from "#/services/ClientAddressService";
 import NoAddressesContainer from "#/components/domain/profile/NoAddressesContainer";
 
 function Addresses() {
-  const { addresses, isLoading, isRefetching } = ClientAddressService();
+  const { addresses, isLoading, isRefetching, remove } = ClientAddressService();
   const navigate = useNavigate();
 
   const handleAddAddress = () => {
     navigate("/profile/add-address");
   };
+
+  const handleMarkAsMain = (addressId) => {
+    console.log(addressId);
+  };
+
+  const handleEditAddress = (addressId) => {
+    console.log(addressId);
+  };
+
+  const handleDeleteAddress = async (addressId) => {
+    await remove.mutate(addressId);
+  };
+
   if (isLoading || isRefetching) return <AddressSkeleton />;
   return (
     <Box sx={style.container}>
@@ -31,12 +44,16 @@ function Addresses() {
             {addresses?.map((address) => (
               <Address
                 key={address?._id}
+                id={address?._id}
                 latitude={address?.latitude}
                 longitude={address?.longitude}
                 street={address?.street}
                 zone={address?.zone}
                 name={address?.name}
                 reference={address?.reference}
+                handleMarkAsMain={handleMarkAsMain}
+                handleEditAddress={handleEditAddress}
+                handleDeleteAddress={handleDeleteAddress}
               />
             ))}
             <AddNewAddressButton handleClick={handleAddAddress} />

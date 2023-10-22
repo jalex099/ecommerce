@@ -12,14 +12,26 @@ import { useAuthState } from "#/hooks/AuthState";
 import SignInOptions from "#/components/domain/profile/SignInOptions";
 import GreetingProfile from "#/components/domain/profile/GreetingProfile";
 import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";
+import { useNavigate } from "react-router-dom";
+import AuthService from "#/services/AuthService";
 
 function ProfilePage() {
   const ui = useUIState();
   const auth = useAuthState();
+  const navigate = useNavigate();
+  const { loginWithGoogle } = AuthService();
 
   useEffect(() => {
     ui?.setTitle("");
   }, []);
+
+  const handleRegister = () => {
+    navigate("/profile/register");
+  };
+
+  const handleGoogleLogin = async () => {
+    await loginWithGoogle();
+  };
 
   return (
     <Container sx={style.container}>
@@ -44,7 +56,10 @@ function ProfilePage() {
       {auth?.isVerified && auth?.isAuthenticated === false && (
         <>
           <GreetingProfile />
-          <SignInOptions />
+          <SignInOptions
+            handleRegister={handleRegister}
+            handleGoogleLogin={handleGoogleLogin}
+          />
         </>
       )}
     </Container>

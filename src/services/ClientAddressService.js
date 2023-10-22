@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const ClientAddressService = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { getAddresses, addAddress } = ClientAddressRepository();
+  const { getAddresses, addAddress, deleteAddress } = ClientAddressRepository();
   const { data, isLoading, isRefetching } = useQuery({
     queryKey: ["getAddresses"],
     queryFn: getAddresses,
@@ -13,13 +13,23 @@ const ClientAddressService = () => {
     staleTime: "Infinity",
   });
 
-  // Create the useMutation as promise
   const add = useMutation({
     mutationFn: addAddress,
     onSuccess: ({ data, status }) => {
       console.log(data, status);
-      queryClient.invalidateQueries("getAddresses");
+      queryClient.invalidateQueries(["getAddresses"], {});
       navigate(-1);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const remove = useMutation({
+    mutationFn: deleteAddress,
+    onSuccess: ({ data, status }) => {
+      console.log(data, status);
+      queryClient.invalidateQueries(["getAddresses"], {});
     },
     onError: (error) => {
       console.log(error);
@@ -31,6 +41,7 @@ const ClientAddressService = () => {
     isLoading,
     isRefetching,
     add,
+    remove,
   };
 };
 

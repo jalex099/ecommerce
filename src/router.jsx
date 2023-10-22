@@ -51,6 +51,12 @@ const OrdersAndMessagesPage = () => (
   </DynamicImport>
 );
 
+const RegisterPage = () => (
+  <DynamicImport load={() => import("#/pages/RegisterPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const CartPage = () => (
   <DynamicImport load={() => import("#/pages/CartPage.jsx")}>
     {(Component) => (Component === null ? <></> : <Component />)}
@@ -72,6 +78,7 @@ const RoutesApp = () => {
           path="/profile/orders-and-messages"
           element={<OrdersAndMessagesPage />}
         />
+        <Route path="/profile/register" element={<RegisterPage />} />
 
         {/* CART */}
         <Route path="/cart" element={<CartPage />} />

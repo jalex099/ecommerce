@@ -1,10 +1,7 @@
 import Box from "@mui/material/Box";
 import Regular14 from "#/components/shared/fonts/Regular14";
 
-function RegisterAccessContainer() {
-  const handleRegister = () => {
-    console.log("Register");
-  };
+function RegisterAccessContainer({ handleRegister }) {
   return (
     <Box sx={style.container}>
       <Regular14> &iquest; Sin cuenta a&uacute;n?</Regular14>

@@ -14,9 +14,16 @@ const ClientAddressRepository = () => {
     });
   };
 
+  const deleteAddress = async (addressId) => {
+    return await API.delete(`/client/addresses/${addressId}`, {
+      secure: true,
+    });
+  };
+
   return {
     getAddresses,
     addAddress,
+    deleteAddress,
   };
 };
 

@@ -2,20 +2,33 @@ import Box from "@mui/material/Box";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Regular12 from "#/components/shared/fonts/Regular12";
-import IconButton from "@mui/material/IconButton";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import ActionAddress from "#/components/domain/profile/ActionsAddress";
 
-function Address({ name, latitude, longitude, street, zone, reference }) {
+function Address({
+  id,
+  name,
+  latitude,
+  longitude,
+  street,
+  zone,
+  reference,
+  handleMarkAsMain,
+  handleEditAddress,
+  handleDeleteAddress,
+}) {
   return (
     <Box sx={style.container}>
       <Box sx={style.address}>
         <SemiBold14 styles={{ marginBottom: "8px" }}>{name}</SemiBold14>
-        <Regular14>{`${street}, ${zone}`}</Regular14>
+        <Regular14>{`${latitude}, ${longitude}`}</Regular14>
         <Regular12 styles={style.textMuted}>{reference}</Regular12>
       </Box>
-      <IconButton variant="solid" sx={style.button}>
-        <MoreHorizOutlinedIcon />
-      </IconButton>
+      <ActionAddress
+        id={id}
+        handleMarkAsMain={handleMarkAsMain}
+        handleEditAddress={handleEditAddress}
+        handleDeleteAddress={handleDeleteAddress}
+      />
     </Box>
   );
 }

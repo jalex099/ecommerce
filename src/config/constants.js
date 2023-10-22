@@ -54,6 +54,10 @@ export const PAGES = {
     title: "Pedidos y Mensajes",
     desc: `Pagina de pedidos y mensajes en ${COMPANY}`,
   },
+  register: {
+    title: "Registro",
+    desc: `Pagina de registro en ${COMPANY}`,
+  },
 
   cart: {
     title: "Carrito",

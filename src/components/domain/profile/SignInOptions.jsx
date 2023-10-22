@@ -6,20 +6,20 @@ import GoogleLoginButton from "#/components/domain/profile/GoogleLoginButton";
 import EmailAndPasswordLoginForm from "#/components/domain/profile/EmailAndPasswordLoginForm";
 import ForgotPasswordAccessContainer from "#/components/domain/profile/ForgotPasswordAccessContainer";
 
-function SignInOptions() {
+function SignInOptions({ handleRegister, handleGoogleLogin }) {
   return (
     <Box sx={style.container}>
       <EmailAndPasswordLoginForm />
       <Box sx={style.subcontainer}>
         <ForgotPasswordAccessContainer />
-        <RegisterAccessContainer />
+        <RegisterAccessContainer handleRegister={handleRegister} />
       </Box>
       <Box sx={style.o}>
         <Divider />
         <Regular14>o</Regular14>
         <Divider />
       </Box>
-      <GoogleLoginButton />
+      <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
     </Box>
   );
 }

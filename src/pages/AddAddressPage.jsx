@@ -3,21 +3,18 @@ import HelmetMeta from "#/components/shared/HelmetMeta";
 import { useEffect } from "react";
 import { useUIState } from "#/hooks/UIState";
 import MapContainer from "#/components/shared/MapContainer.jsx";
-import Box from "@mui/material/Box";
-import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 import GeolocationService from "#/services/GeolocationService";
 import { useHookstate } from "@hookstate/core";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import FloatingGoBackButton from "#/components/shared/topbar/FloatingGoBackButton.jsx";
 import ClientAddressService from "#/services/ClientAddressService";
+import FormAddressContainer from "../components/domain/profile/addAddress/FormAddressContainer";
 
 function AddAddressPage() {
   const ui = useUIState();
   const { getLatLong } = GeolocationService();
   const location = useHookstate(null);
   const { add } = ClientAddressService();
+  const isFormAddressOpen = useHookstate(false);
 
   useEffect(() => {
     ui?.setTitle("Agregar dirección");
@@ -30,77 +27,70 @@ function AddAddressPage() {
   const fillLocation = async () => {
     try {
       const coords = await getLatLong();
-      location.set((prev) => ({
+      location.set({
         latitude: coords?.lat,
         longitude: coords?.long,
-        name: prev?.name || "",
-      }));
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleLocationChange = ({ lngLat }) => {
-    location.set((prev) => ({
-      ...prev,
+    location.set({
       latitude: lngLat?.lat,
       longitude: lngLat?.lng,
-    }));
-  };
-
-  const handleLocationNameChange = (e) => {
-    location.set((prev) => ({ ...prev, name: e.target.value }));
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { latitude, longitude, name } = location.value;
-    if (!latitude || !longitude || !name) return;
-    await add.mutate(location?.value);
+    // Get the values from the form
+    const formData = new FormData(e?.target);
+    const data = Object.fromEntries(formData.entries());
+    // If some of the values is empty, return
+    if (Object.values(data).some((value) => !value)) return;
+    // Create the base address object
+    const address = {
+      latitude: data?.latitude,
+      longitude: data?.longitude,
+      street: data?.street,
+      houseNumber: data?.houseNumber,
+      name: data?.addressName,
+    };
+    await add.mutate(address);
+  };
+
+  const handleToogleFormAddress = () => {
+    isFormAddressOpen.set((prev) => !prev);
   };
 
   if (!location?.value) return <></>;
   return (
     <Container sx={style.container}>
       <HelmetMeta page="addAddress" />
-      <FloatingGoBackButton />
       <MapContainer
         latitude={location?.value?.latitude}
         longitude={location?.value?.longitude}
         handleLocationChange={handleLocationChange}
       />
 
-      <Box sx={style.popup}>
-        <Box>
-          <SemiBold12>Agregar dirección</SemiBold12>
-        </Box>
-        <Box
-          component="form"
-          sx={{ width: "100%" }}
-          onSubmit={handleSubmit}
-          noValidate
-          autoComplete="off"
-        >
-          <Stack spacing={2} className="flex items-center">
-            <TextField
-              label="Nombre"
-              name="address-name"
-              variant="standard"
-              sx={{ width: "100%" }}
-              value={location?.value?.name}
-              onChange={handleLocationNameChange}
-            />
-            <Button
-              variant="outlined"
-              color="primary"
-              className="w-44 mx-auto"
-              type="submit"
-            >
-              Continuar
-            </Button>
-          </Stack>
-        </Box>
-      </Box>
+      <Button
+        variant="outlined"
+        color="primary"
+        className="w-44 mx-auto"
+        onClick={handleToogleFormAddress}
+        sx={style.button}
+      >
+        Continuar
+      </Button>
+      <FormAddressContainer
+        isOpen={isFormAddressOpen.value}
+        latitude={location?.value?.latitude}
+        longitude={location?.value?.longitude}
+        handleSubmit={handleSubmit}
+        handleClose={handleToogleFormAddress}
+      />
     </Container>
   );
 }
@@ -123,21 +113,9 @@ const style = {
   divider: {
     width: "100%",
   },
-  popup: {
+  button: {
     position: "absolute",
-    bottom: "24px",
-    left: "24px",
-    right: "24px",
-    minHeight: "100px",
-    borderRadius: "24px",
-    padding: "16px 32px",
-    zIndex: "modal",
-    backgroundColor: (theme) => theme.palette.neutral0.main,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "16px",
+    bottom: "32px",
   },
   currentLocationButton: {
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",

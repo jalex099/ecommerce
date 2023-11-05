@@ -21,8 +21,8 @@ const FeedPage = () => (
   </DynamicImport>
 );
 
-const CategoriesPage = () => (
-  <DynamicImport load={() => import("#/pages/CategoriesPage.jsx")}>
+const MenuPage = () => (
+  <DynamicImport load={() => import("#/pages/MenuPage.jsx")}>
     {(Component) => (Component === null ? <></> : <Component />)}
   </DynamicImport>
 );
@@ -68,7 +68,7 @@ const RoutesApp = () => {
     <Routes>
       <Route element={<LayoutPage />}>
         <Route path="/" element={<FeedPage />} />
-        <Route path="/menu" element={<CategoriesPage />} />
+        <Route path="/menu" element={<MenuPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
 
         {/* PROFILE */}

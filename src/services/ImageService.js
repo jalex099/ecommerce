@@ -24,21 +24,25 @@ const ImageService = () => {
   };
 
   const findCollection = (id, type) => {
-    const collection = images?.filter( image => image?.reference == id && image?.type === type)
+    const collection = images?.filter(
+      (image) => image?.reference == id && image?.type === type
+    );
     return collection;
-  }
+  };
 
   const findLogo = () => {
-    const logo = images?.find( image => image?.type === 'LOG' && image?.reference == company?._id)
+    const logo = images?.find(
+      (image) => image?.type === "LOG" && image?.reference == company?._id
+    );
     return logo?.url;
-  }
+  };
 
   return {
     images,
     isLoading,
     findImage,
     findCollection,
-    findLogo
+    findLogo,
   };
 };
 

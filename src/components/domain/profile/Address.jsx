@@ -10,8 +10,9 @@ function Address({
   latitude,
   longitude,
   street,
-  zone,
+  houseNumber,
   reference,
+  isPrimary,
   handleMarkAsMain,
   handleEditAddress,
   handleDeleteAddress,
@@ -20,11 +21,12 @@ function Address({
     <Box sx={style.container}>
       <Box sx={style.address}>
         <SemiBold14 styles={{ marginBottom: "8px" }}>{name}</SemiBold14>
-        <Regular14>{`${latitude}, ${longitude}`}</Regular14>
+        <Regular14>{`${street}. #${houseNumber}`}</Regular14>
         <Regular12 styles={style.textMuted}>{reference}</Regular12>
       </Box>
       <ActionAddress
         id={id}
+        isPrimary={isPrimary}
         handleMarkAsMain={handleMarkAsMain}
         handleEditAddress={handleEditAddress}
         handleDeleteAddress={handleDeleteAddress}

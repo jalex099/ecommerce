@@ -48,7 +48,8 @@ function Addresses() {
                 latitude={address?.latitude}
                 longitude={address?.longitude}
                 street={address?.street}
-                zone={address?.zone}
+                houseNumber={address?.houseNumber}
+                isPrimary={address?.isPrimary}
                 name={address?.name}
                 reference={address?.reference}
                 handleMarkAsMain={handleMarkAsMain}

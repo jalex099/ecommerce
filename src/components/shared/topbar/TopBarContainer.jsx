@@ -11,7 +11,7 @@ import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
 function TopBarContainer(props) {
   const ui = useUIState();
   const { pathname } = useLocation();
-  if (pathname === "/profile/add-address") return null;
+  // if (pathname === "/profile/add-address") return null;
   return (
     <>
       <HideOnScroll {...props}>

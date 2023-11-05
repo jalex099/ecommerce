@@ -13,6 +13,7 @@ import Regular14 from "#/components/shared/fonts/Regular14";
 
 function ActionAddress({
   id,
+  isPrimary,
   handleMarkAsMain,
   handleEditAddress,
   handleDeleteAddress,
@@ -57,22 +58,27 @@ function ActionAddress({
         }}
         sx={style.menu}
       >
-        <MenuItem
-          onClick={() => {
-            handleMarkAsMain(id);
-            handleClose();
-          }}
-        >
-          <ListItemIcon>
-            <ListItemIcon>
-              <CheckIcon fontSize="small" />
-            </ListItemIcon>
-          </ListItemIcon>
-          <ListItemText>
-            <Regular14>Marcar como principal</Regular14>
-          </ListItemText>
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
+        {!isPrimary && (
+          <>
+            <MenuItem
+              onClick={() => {
+                handleMarkAsMain(id);
+                handleClose();
+              }}
+            >
+              <ListItemIcon>
+                <ListItemIcon>
+                  <CheckIcon fontSize="small" />
+                </ListItemIcon>
+              </ListItemIcon>
+              <ListItemText>
+                <Regular14>Marcar como principal</Regular14>
+              </ListItemText>
+            </MenuItem>
+            <Divider sx={{ my: 0.5 }} />
+          </>
+        )}
+
         <MenuItem
           onClick={() => {
             handleEditAddress(id);

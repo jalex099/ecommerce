@@ -6,11 +6,13 @@ import CategoriesList from "#/components/domain/menu/CategoriesList";
 import ProductsList from "#/components/domain/menu/ProductsList";
 import DataService from "#/services/DataService";
 import { useHookstate } from "@hookstate/core";
+import RedirectionService from "#/services/RedirectionService";
 
 const MenuPage = () => {
   const { categories, menu } = DataService();
   const selected = useHookstate(null);
   const ui = useUIState();
+  const { redirectToProduct } = RedirectionService();
 
   useEffect(() => {
     ui?.setTitle("Menú");
@@ -25,6 +27,10 @@ const MenuPage = () => {
     selected.set(value);
   };
 
+  const handleProductClick = (productId) => {
+    redirectToProduct(productId);
+  };
+
   return (
     <Container sx={style.container}>
       <HelmetMeta page="menu" />
@@ -35,7 +41,11 @@ const MenuPage = () => {
             selected={selected.get()}
             handleChange={handleChange}
           />
-          <ProductsList category={selected.get()} products={menu} />
+          <ProductsList
+            category={selected.get()}
+            products={menu}
+            handleClick={handleProductClick}
+          />
         </>
       )}
     </Container>

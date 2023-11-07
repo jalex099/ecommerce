@@ -33,6 +33,7 @@ export const useTemporalProductState = () => {
           _id: option?._id,
           label: option?.label,
           selected: option?.options[0]?._id,
+          options: option?.options,
         };
         acc.push(opt);
         return acc;

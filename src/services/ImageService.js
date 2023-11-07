@@ -16,19 +16,16 @@ const ImageService = () => {
     return data?.data;
   }, [data]);
 
-  const findImage = (id, type) => {
+  const findImage = (id, type, format = "jpg") => {
     const imageFound = images?.find(
-      (image) => image?.reference == id && image?.type === type
+      (image) =>
+        image?.reference == id &&
+        image?.type === type &&
+        image?.extension === format
     );
     return imageFound?.url;
   };
 
-  const findCollection = (id, type) => {
-    const collection = images?.filter(
-      (image) => image?.reference == id && image?.type === type
-    );
-    return collection;
-  };
 
   const findLogo = () => {
     const logo = images?.find(
@@ -41,7 +38,6 @@ const ImageService = () => {
     images,
     isLoading,
     findImage,
-    findCollection,
     findLogo,
   };
 };

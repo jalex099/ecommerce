@@ -7,11 +7,11 @@ function HelmetMeta({ page, ...props }) {
     <Helmet>
       <title>{`${
         category
-          ? // ? `Categoria ${category?.nombre}`
-            `${category?.nombre}`
+          ? // ? `Categoria ${category?.name}`
+            `${category?.name}`
           : product
-          ? // ? `Producto ${product?.N}`
-            `${product?.N}`
+          ? // ? `Producto ${product?.name}`
+            `${product?.name}`
           : PAGES[page].title
       } - ${COMPANY} `}</title>
       <meta name="description" content={PAGES[page].desc} />

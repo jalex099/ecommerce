@@ -5,15 +5,30 @@ import ImageService from "#/services/ImageService";
 import RedirectionService from "#/services/RedirectionService";
 import { useTemporalProductState } from "#/hooks/TemporalProductState";
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import Container from "@mui/material/Container";
+import HelmetMeta from "#/components/shared/HelmetMeta";
+import { useUIState } from "#/hooks/UIState";
+import SemiBold20 from "#/components/shared/fonts/SemiBold20";
+import Picture from "#/components/shared/Picture";
+import Bold18 from "#/components/shared/fonts/Bold18";
+import { formatCurrency } from "#/utils/currency";
+import Regular16 from "#/components/shared/fonts/Regular16";
+import Box from "@mui/material/Box";
+import ProductConfigContainer from "#/components/domain/product/ProductConfigContainer";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
   const { isLoading } = DataService();
-  const { findCollection } = ImageService();
+  const { findImage } = ImageService();
   const { temp, clear, fill } = useTemporalProductState();
   const { id } = useParams();
   const navigate = useNavigate();
+  const ui = useUIState();
+
+  useEffect(() => {
+    ui?.setTitle("");
+  }, []);
+
   useEffect(() => {
     clear();
     // If is loading the data from the API, then we don't need to do anything
@@ -32,22 +47,37 @@ const ProductPage = () => {
     };
   }, [isLoading]);
 
-  //* This is the arrays of urls for the carousel
-  const carouselImages = useMemo(() => {
-    if (!temp) return [];
-    const collection = findCollection(temp?._id, "PRD");
-    if (!collection) return [];
-
-    return collection?.reduce((acc, curr) => {
-      acc.push(curr?.url);
-      return acc;
-    }, []);
-  }, [temp?._id]);
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
+  if (isLoading || !temp) {
+    return <></>;
   }
-  return <div className="flex flex-col gap-1"></div>;
+  return (
+    <Container sx={style.container}>
+      <HelmetMeta page="product" product={temp} />
+      <Picture
+        webp={findImage(temp?._id, "webp")}
+        jpg={findImage(temp?._id, "jpg")}
+        alt={temp?.name}
+        imgStyle={{
+          borderRadius: "16px",
+        }}
+      />
+      <Box>
+        <SemiBold20>{temp?.name}</SemiBold20>
+        <Bold18>{formatCurrency(temp?.price)}</Bold18>
+      </Box>
+
+      <Regular16 className="opacity-75">{temp?.description || ""}</Regular16>
+      <ProductConfigContainer options={temp?.options} />
+    </Container>
+  );
+};
+
+const style = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
+  },
 };
 
 export default ProductPage;

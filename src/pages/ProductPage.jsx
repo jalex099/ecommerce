@@ -54,19 +54,21 @@ const ProductPage = () => {
     <Container sx={style.container}>
       <HelmetMeta page="product" product={temp} />
       <Picture
-        webp={findImage(temp?._id, "webp")}
-        jpg={findImage(temp?._id, "jpg")}
+        webp={findImage(temp?._id, "PRD", "webp")}
+        jpg={findImage(temp?._id, "PRD", "jpg")}
         alt={temp?.name}
         imgStyle={{
-          borderRadius: "16px",
+          width: "100%",
+          aspectRatio: "1/1",
         }}
       />
-      <Box>
+      <Box className="px-4">
         <SemiBold20>{temp?.name}</SemiBold20>
         <Bold18>{formatCurrency(temp?.price)}</Bold18>
       </Box>
-
-      <Regular16 className="opacity-75">{temp?.description || ""}</Regular16>
+      {temp?.description && (
+        <Regular16 className="opacity-75 px-4">{temp?.description}</Regular16>
+      )}
       <ProductConfigContainer options={temp?.options} />
     </Container>
   );
@@ -77,6 +79,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     gap: "16px",
+    p: 0,
   },
 };
 

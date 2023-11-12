@@ -34,8 +34,6 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
 
-export const NO_BOTTOM_BAR_URLS = ["/profile/add-address"];
-
 export const PAGES = {
   feed: {
     title: "Feed",

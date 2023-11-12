@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 
 const HorizontalScroller = ({ children }) => {
@@ -25,7 +24,8 @@ const HorizontalScroller = ({ children }) => {
             display: "none",
           },
           width: "100%",
-          gap: "8px",
+          gap: "16px",
+          padding: "0px 16px 16px 16px",
         }}
       >
         {children}

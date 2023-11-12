@@ -7,7 +7,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
 import CheckIcon from "@mui/icons-material/Check";
 import Regular14 from "#/components/shared/fonts/Regular14";
 
@@ -59,24 +58,21 @@ function ActionAddress({
         sx={style.menu}
       >
         {!isPrimary && (
-          <>
-            <MenuItem
-              onClick={() => {
-                handleMarkAsMain(id);
-                handleClose();
-              }}
-            >
+          <MenuItem
+            onClick={() => {
+              handleMarkAsMain(id);
+              handleClose();
+            }}
+          >
+            <ListItemIcon>
               <ListItemIcon>
-                <ListItemIcon>
-                  <CheckIcon fontSize="small" />
-                </ListItemIcon>
+                <CheckIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText>
-                <Regular14>Marcar como principal</Regular14>
-              </ListItemText>
-            </MenuItem>
-            <Divider sx={{ my: 0.5 }} />
-          </>
+            </ListItemIcon>
+            <ListItemText>
+              <Regular14>Marcar como principal</Regular14>
+            </ListItemText>
+          </MenuItem>
         )}
 
         <MenuItem

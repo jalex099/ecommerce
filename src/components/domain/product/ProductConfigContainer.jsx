@@ -1,19 +1,19 @@
+import OptionContainer from "#/components/domain/product/OptionContainer";
+import Box from "@mui/material/Box";
+
 function ProductConfigContainer({ options }) {
   return (
-    <div>
+    <Box className="flex flex-col gap-12 mt-4">
       {options?.map((option) => {
         return (
-          <div key={option._id}>
-            <h4>{option.label}</h4>
-            <ul>
-              {option?.options?.map((option) => {
-                return <li key={option?._id}>{option?.option?.name}</li>;
-              })}
-            </ul>
-          </div>
+          <OptionContainer
+            key={option?._id}
+            label={option?.label}
+            options={option?.options}
+          />
         );
       })}
-    </div>
+    </Box>
   );
 }
 

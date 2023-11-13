@@ -13,8 +13,8 @@ import Picture from "#/components/shared/Picture";
 import Bold18 from "#/components/shared/fonts/Bold18";
 import { formatCurrency } from "#/utils/currency";
 import Regular16 from "#/components/shared/fonts/Regular16";
-import Box from "@mui/material/Box";
 import ProductConfigContainer from "#/components/domain/product/ProductConfigContainer";
+import TextShowMore from "#/components/shared/TextShowMore";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
@@ -60,14 +60,14 @@ const ProductPage = () => {
         imgStyle={{
           width: "100%",
           aspectRatio: "1/1",
+          borderRadius: "16px",
         }}
       />
-      <Box className="px-4">
-        <SemiBold20>{temp?.name}</SemiBold20>
-        <Bold18>{formatCurrency(temp?.price)}</Bold18>
-      </Box>
+      <SemiBold20> {temp?.name}</SemiBold20>
+      <Bold18>{formatCurrency(temp?.price)}</Bold18>
+
       {temp?.description && (
-        <Regular16 className="opacity-75 px-4">{temp?.description}</Regular16>
+        <TextShowMore text={temp?.description} maxChars={100} />
       )}
       <ProductConfigContainer options={temp?.options} />
     </Container>
@@ -78,8 +78,7 @@ const style = {
   container: {
     display: "flex",
     flexDirection: "column",
-    gap: "16px",
-    p: 0,
+    gap: "24px",
   },
 };
 

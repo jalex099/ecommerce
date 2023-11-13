@@ -236,6 +236,30 @@ const components = {
       },
     },
   },
+  MuiAccordion: {
+    styleOverrides: {
+      root: {
+        boxShadow: "none",
+        padding: "0px !important",
+        "&.Mui-expanded": {
+          margin: "0px",
+          padding: "0px !important",
+        },
+        "&:before": {
+          display: "none",
+        },
+        "& .MuiAccordionSummary-root": {
+          padding: "0px !important",
+          "& .MuiAccordionSummary-content": {
+            margin: "0px !important",
+          },
+        },
+        "& .MuiAccordionDetails-root": {
+          padding: "0px !important",
+        },
+      },
+    },
+  },
 };
 
 export default components;

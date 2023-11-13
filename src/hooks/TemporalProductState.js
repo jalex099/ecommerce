@@ -42,9 +42,14 @@ export const useTemporalProductState = () => {
     state.isNew.set(isNew);
   };
 
+  const setSelectedOption = (optionIndex, selectionId) => {
+    state.options[optionIndex].selected.set(selectionId);
+  };
+
   return {
     clear,
     fill,
     temp: state?.get(),
+    setSelectedOption,
   };
 };

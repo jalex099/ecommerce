@@ -1,4 +1,5 @@
 import placeholderImg from "#/assets/images/placeholder.png";
+import { motion } from "framer-motion";
 
 const Picture = ({
   webp,
@@ -13,7 +14,7 @@ const Picture = ({
     <picture style={style} {...props}>
       <source srcSet={webp} type="image/webp" />
       <source srcSet={jpg} type="image/jpg" />
-      <img
+      <motion.img
         src={defaultImg}
         alt={alt}
         style={{
@@ -23,6 +24,7 @@ const Picture = ({
           objectPosition: "center",
           ...imgStyle,
         }}
+        whileTap={{ scale: 0.95 }}
       />
     </picture>
   );

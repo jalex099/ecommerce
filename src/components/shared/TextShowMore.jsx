@@ -26,7 +26,7 @@ const TextShowMore = ({ text, maxChars = 120 }) => {
           component="span"
           className="text-primary cursor-pointer text-sm lowercase ml-2"
           onClick={handleShowAll}
-          sx={{ color: (theme) => theme.palette.secondary.main }}
+          sx={{ color: (theme) => theme.palette.neutral50.main }}
         >
           Ver más
         </Box>

@@ -13,7 +13,7 @@ function ProductCardContainer({ product, handleClick }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       style={style.container}
-      className="rounded-md p-2  shadow-md relative"
+      className="rounded-md p-2  shadow-md relative select-none"
       onClick={() => handleClick(product?._id)}
     >
       <TouchRippleEffect className="flex flex-col items-start justify-start rounded-md min-h-[150px]">

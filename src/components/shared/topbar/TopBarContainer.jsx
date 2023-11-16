@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import FeedTopBar from "#/components/shared/topbar/FeedTopBar.jsx";
 import DefaultTopBar from "#/components/shared/topbar/DefaultTopBar.jsx";
 import MenuTopBar from "#/components/shared/topbar/MenuTopBar.jsx";
-import { useUIState } from "#/hooks/UIState.js";
+import { useUIState } from "#/stores/UIState";
 import { useLocation } from "react-router-dom";
 import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
 

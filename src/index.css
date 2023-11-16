@@ -65,3 +65,7 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+._primary-bg {
+  background-color: #604fe01f;
+}

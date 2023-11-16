@@ -1,7 +1,7 @@
 import { hookstate, useHookstate } from "@hookstate/core";
-import { findKey, setKey } from "#/utils/localStorageHelper.js";
-import { THEMES, DEFAULT_THEME } from "#/config/constants.js";
-import { useEffect } from "react";
+// import { findKey, setKey } from "#/utils/localStorageHelper.js";
+// import { THEMES, DEFAULT_THEME } from "#/config/constants.js";
+// import { useEffect } from "react";
 
 export const uiState = hookstate({
   loading: 0,

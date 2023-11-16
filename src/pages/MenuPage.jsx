@@ -1,4 +1,4 @@
-import { useUIState } from "#/hooks/UIState";
+import { useUIState } from "#/stores/UIState";
 import { useEffect } from "react";
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";

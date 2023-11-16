@@ -1,8 +1,8 @@
-import { useTemporalProductState } from "#/hooks/TemporalProductState";
+import { useTemporalProduct } from "#/stores/temporalProduct";
 import { useMemo } from "react";
 
 const ProductController = () => {
-  const { temp, setSelectedOption } = useTemporalProductState();
+  const { temp, setSelectedOption } = useTemporalProduct();
 
   const options = useMemo(
     () => temp?.options?.map((option) => option?._id),
@@ -36,10 +36,20 @@ const ProductController = () => {
     setSelectedOption(optionIndex, selectionId);
   };
 
+  const getSelectedOptionName = (optionIndex) => {
+    const selectedOptionId = getSelectedOption(optionIndex);
+    const option = temp?.options[optionIndex];
+    const selectedOption = option?.options?.find(
+      (option) => option?._id === selectedOptionId
+    );
+    return selectedOption?.option?.name;
+  };
+
   return {
     getIndexOptionRepeated,
     getSelectedOption,
     setSelection,
+    getSelectedOptionName,
   };
 };
 

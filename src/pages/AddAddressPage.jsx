@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";
 import { useEffect } from "react";
-import { useUIState } from "#/hooks/UIState";
+import { useUIState } from "#/stores/UIState";
 import MapContainer from "#/components/shared/MapContainer.jsx";
 import GeolocationService from "#/services/GeolocationService";
 import { useHookstate } from "@hookstate/core";

@@ -1,6 +1,6 @@
 import { hookstate, useHookstate } from "@hookstate/core";
 
-const temporalProductState = hookstate({
+const temporalProduct = hookstate({
   _id: "",
   name: "",
   description: "",
@@ -10,8 +10,8 @@ const temporalProductState = hookstate({
   imagesUrl: [],
 });
 
-export const useTemporalProductState = () => {
-  const state = useHookstate(temporalProductState);
+export const useTemporalProduct = () => {
+  const state = useHookstate(temporalProduct);
 
   const clear = () => {
     state._id.set("");
@@ -42,6 +42,23 @@ export const useTemporalProductState = () => {
     state.isNew.set(isNew);
   };
 
+  const preparedDataToServer = () => {
+    let options = state.options?.get()?.reduce((acc, option) => {
+      const opt = {
+        _id: option?._id,
+        selected: option?.selected,
+      };
+      acc.push(opt);
+      return acc;
+    }, []);
+    return {
+      _id: state._id?.get(),
+      quantity: 1,
+      order: 0,
+      options,
+    };
+  };
+
   const setSelectedOption = (optionIndex, selectionId) => {
     state.options[optionIndex].selected.set(selectionId);
   };
@@ -51,5 +68,6 @@ export const useTemporalProductState = () => {
     fill,
     temp: state?.get(),
     setSelectedOption,
+    preparedDataToServer,
   };
 };

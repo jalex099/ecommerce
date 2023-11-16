@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "#/config/constants.js";
-import { startLoading, stopLoading } from "#/hooks/UIState.js";
+import { startLoading, stopLoading } from "#/stores/UIState.js";
 import { findKey, removeKey } from "#/utils/localStorageHelper.js";
 
 const API = axios.create({

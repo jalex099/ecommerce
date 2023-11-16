@@ -8,10 +8,10 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { removeKey, setKey } from "#/utils/localStorageHelper";
-import { useAuthState } from "#/hooks/AuthState";
+import { useAuthState } from "#/stores/AuthState";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { startLoading, stopLoading } from "#/hooks/UIState.js";
+import { startLoading, stopLoading } from "#/stores/UIState.js";
 
 const queryKeys = ["getPreferences", "getAddresses", "getFavoriteProducts"];
 

@@ -3,24 +3,26 @@ import { useEffect } from "react";
 import DataService from "#/services/DataService";
 import ImageService from "#/services/ImageService";
 import RedirectionService from "#/services/RedirectionService";
-import { useTemporalProductState } from "#/hooks/TemporalProductState";
+import { useTemporalProduct } from "#/stores/temporalProduct";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";
-import { useUIState } from "#/hooks/UIState";
+import { useUIState } from "#/stores/UIState";
 import SemiBold20 from "#/components/shared/fonts/SemiBold20";
 import Picture from "#/components/shared/Picture";
 import Bold18 from "#/components/shared/fonts/Bold18";
 import { formatCurrency } from "#/utils/currency";
-import Regular16 from "#/components/shared/fonts/Regular16";
 import ProductConfigContainer from "#/components/domain/product/ProductConfigContainer";
 import TextShowMore from "#/components/shared/TextShowMore";
+import AddToCartButton from "#/components/domain/product/AddToCartButton";
+import CartService from "#/services/CartService";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
   const { isLoading } = DataService();
   const { findImage } = ImageService();
-  const { temp, clear, fill } = useTemporalProductState();
+  const { saveCart } = CartService();
+  const { temp, clear, fill, preparedDataToServer } = useTemporalProduct();
   const { id } = useParams();
   const navigate = useNavigate();
   const ui = useUIState();
@@ -47,6 +49,11 @@ const ProductPage = () => {
     };
   }, [isLoading]);
 
+  const handleClickAddToCart = () => {
+    // console.log(preparedDataToServer());
+    saveCart.mutate(preparedDataToServer());
+  };
+
   if (isLoading || !temp) {
     return <></>;
   }
@@ -70,6 +77,8 @@ const ProductPage = () => {
         <TextShowMore text={temp?.description} maxChars={100} />
       )}
       <ProductConfigContainer options={temp?.options} />
+
+      <AddToCartButton onClick={handleClickAddToCart} />
     </Container>
   );
 };
@@ -79,6 +88,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     gap: "24px",
+    position: "relative",
   },
 };
 

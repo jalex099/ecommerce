@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-function ExtraBold20({ children, className, styles }) {
+function Regular14({ children, className, styles }) {
   return (
     <Typography
       fontSize="14px"
@@ -14,4 +14,4 @@ function ExtraBold20({ children, className, styles }) {
   );
 }
 
-export default ExtraBold20;
+export default Regular14;

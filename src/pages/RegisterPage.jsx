@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";
 import Box from "@mui/material/Box";
-import { useUIState } from "#/hooks/UIState";
+import { useUIState } from "#/stores/UIState";
 import { useEffect, useRef } from "react";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import Regular14 from "#/components/shared/fonts/Regular14";

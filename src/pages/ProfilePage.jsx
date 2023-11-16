@@ -8,7 +8,7 @@ import Preferences from "#/components/domain/profile/Preferences";
 import Addresses from "#/components/domain/profile/Addresses";
 import Divider from "@mui/material/Divider";
 import HelmetMeta from "#/components/shared/HelmetMeta";
-import { useAuthState } from "#/storea/AuthState";
+import { useAuthState } from "#/stores/AuthState";
 import SignInOptions from "#/components/domain/profile/SignInOptions";
 import GreetingProfile from "#/components/domain/profile/GreetingProfile";
 import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";

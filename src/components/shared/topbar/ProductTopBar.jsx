@@ -4,8 +4,15 @@ import { Fade } from "@mui/material";
 import BookmarkOffIcon from "#/components/shared/icons/BookmarkOffIcon";
 import BookmarkOnIcon from "#/components/shared/icons/BookmarkOnIcon";
 import GoBackIcon from "#/components/shared/GoBackIcon";
+import { useHookstate } from "@hookstate/core";
 
-function ProductTopBar({ isFav = false }) {
+function ProductTopBar() {
+  const isFav = useHookstate(false);
+
+  const handleToggleFav = () => {
+    isFav.set(!isFav.get());
+  };
+
   return (
     <Box>
       <Fade
@@ -18,7 +25,11 @@ function ProductTopBar({ isFav = false }) {
         <Toolbar>
           <GoBackIcon />
           <Box />
-          {isFav ? <BookmarkOnIcon /> : <BookmarkOffIcon />}
+          {isFav?.get() ? (
+            <BookmarkOnIcon onClick={handleToggleFav} />
+          ) : (
+            <BookmarkOffIcon onClick={handleToggleFav} />
+          )}
         </Toolbar>
       </Fade>
     </Box>

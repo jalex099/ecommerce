@@ -8,6 +8,7 @@ const temporalProduct = hookstate({
   options: [],
   isNew: false,
   imagesUrl: [],
+  tags: [],
 });
 
 export const useTemporalProduct = () => {
@@ -20,9 +21,10 @@ export const useTemporalProduct = () => {
     state.price.set("");
     state.options.set([]);
     state.isNew.set(false);
+    state.tags.set([]);
   };
 
-  const fill = ({ _id, name, description, price, options, isNew }) => {
+  const fill = ({ _id, name, description, price, options, isNew, tags }) => {
     state._id.set(_id);
     state.name.set(name);
     state.description.set(description);
@@ -40,6 +42,7 @@ export const useTemporalProduct = () => {
       }, [])
     );
     state.isNew.set(isNew);
+    state.tags.set(tags);
   };
 
   const preparedDataToServer = () => {

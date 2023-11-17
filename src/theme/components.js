@@ -239,23 +239,14 @@ const components = {
   MuiAccordion: {
     styleOverrides: {
       root: {
-        boxShadow: "none",
-        padding: "0px !important",
-        "&.Mui-expanded": {
-          margin: "0px",
-          padding: "0px !important",
-        },
-        "&:before": {
-          display: "none",
-        },
+        padding: "24px 0px",
+        margin: 0,
         "& .MuiAccordionSummary-root": {
-          padding: "0px !important",
+          padding: "0px",
+          minHeight: "0px",
           "& .MuiAccordionSummary-content": {
-            margin: "0px !important",
+            margin: "0px",
           },
-        },
-        "& .MuiAccordionDetails-root": {
-          padding: "0px !important",
         },
       },
     },

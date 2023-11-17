@@ -13,9 +13,12 @@ import Picture from "#/components/shared/Picture";
 import Bold18 from "#/components/shared/fonts/Bold18";
 import { formatCurrency } from "#/utils/currency";
 import ProductConfigContainer from "#/components/domain/product/ProductConfigContainer";
-import TextShowMore from "#/components/shared/TextShowMore";
 import AddToCartButton from "#/components/domain/product/AddToCartButton";
 import CartService from "#/services/CartService";
+import ExtrasContainer from "#/components/domain/product/ExtrasContainer";
+import DetailsContainer from "#/components/domain/product/DetailsContainer";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
@@ -73,11 +76,14 @@ const ProductPage = () => {
       <SemiBold20> {temp?.name}</SemiBold20>
       <Bold18>{formatCurrency(temp?.price)}</Bold18>
 
-      {temp?.description && (
-        <TextShowMore text={temp?.description} maxChars={100} />
-      )}
       <ProductConfigContainer options={temp?.options} />
+      <Box>
+        <Divider />
+        <DetailsContainer details={temp?.description} />
 
+        <Divider />
+        <ExtrasContainer tags={temp?.tags} />
+      </Box>
       <AddToCartButton onClick={handleClickAddToCart} />
     </Container>
   );

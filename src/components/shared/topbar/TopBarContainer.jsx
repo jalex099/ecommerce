@@ -7,6 +7,7 @@ import MenuTopBar from "#/components/shared/topbar/MenuTopBar.jsx";
 import { useUIState } from "#/stores/UIState";
 import { useLocation } from "react-router-dom";
 import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
+import ProductTopBar from "#/components/shared/topbar/ProductTopBar.jsx";
 
 function TopBarContainer(props) {
   const ui = useUIState();
@@ -22,6 +23,8 @@ function TopBarContainer(props) {
             <MenuTopBar />
           ) : pathname === "/profile" ? (
             <ProfileTopBar />
+          ) : pathname?.startsWith("/product/") ? (
+            <ProductTopBar />
           ) : (
             <DefaultTopBar title={ui?.title} />
           )}

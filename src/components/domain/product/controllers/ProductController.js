@@ -12,6 +12,8 @@ const ProductController = () => {
   const getIndexOptionRepeated = (optionIndex) => {
     if (!options) return -1;
     const option = options[optionIndex];
+    // Remove the option from the array of options
+    options.splice(optionIndex, 1);
     // If the option is not repeated, then we return -1
     if (!options?.some((optionRepeated) => optionRepeated === option))
       return -1;

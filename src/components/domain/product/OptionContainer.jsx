@@ -34,7 +34,8 @@ function OptionContainer({ label, options, index }) {
   };
 
   const labelToShow = useMemo(() => {
-    return `${label} ${indexOptionRepeated} ` || "";
+    if (indexOptionRepeated === -1) return label;
+    return `${label} ${indexOptionRepeated}`;
   }, [options]);
 
   return (

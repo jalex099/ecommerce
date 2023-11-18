@@ -69,6 +69,28 @@ const ProductController = () => {
     );
   };
 
+  const processedDataToSaveOnCart = () => {
+    const options = temp?.options?.reduce((acc, option) => {
+      const selectedOption = option?.options?.find(
+        (subopt) => subopt?._id === option?.selected
+      );
+      if (!selectedOption) return acc;
+      return [
+        ...acc,
+        {
+          option: option?.option?._id,
+          selected: option?.selected,
+        },
+      ];
+    }, []);
+    return {
+      _id: temp?._id,
+      name: temp?.name,
+      price: getTotal(),
+      options,
+    };
+  };
+
   return {
     getIndexOptionRepeated,
     getSelectedOption,
@@ -76,6 +98,7 @@ const ProductController = () => {
     getSelectedOptionName,
     getTotal,
     getOptionsSubtotal,
+    processedDataToSaveOnCart,
   };
 };
 

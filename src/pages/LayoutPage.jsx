@@ -7,25 +7,15 @@ import { useEffect } from "react";
 import Loading from "#/components/shared/Loading.jsx";
 import mapboxgl from "mapbox-gl";
 import { MAPBOX_ACCESS_TOKEN } from "#/config/constants";
-import CartService from "#/services/CartService.js";
-import { useAuthState } from "#/stores/AuthState";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
   const ui = useUIState();
   const { verifyAuth } = AuthService();
-  const auth = useAuthState();
-  const { initCarts } = CartService();
 
   useEffect(() => {
     verifyAuth();
   }, []);
-
-  useEffect(() => {
-    if (auth?.isVerified && auth?.isAuthenticated) {
-      initCarts();
-    }
-  }, [auth?.isVerified, auth?.isAuthenticated]);
 
   return (
     <>

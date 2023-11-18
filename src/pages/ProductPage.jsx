@@ -14,24 +14,25 @@ import Bold18 from "#/components/shared/fonts/Bold18";
 import { formatCurrency } from "#/utils/currency";
 import ProductConfigContainer from "#/components/domain/product/ProductConfigContainer";
 import AddToCartButton from "#/components/domain/product/AddToCartButton";
-import CartService from "#/services/CartService";
 import ExtrasContainer from "#/components/domain/product/ExtrasContainer";
 import DetailsContainer from "#/components/domain/product/DetailsContainer";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import ProductController from "#/components/domain/product/controllers/ProductController";
 import Regular12 from "#/components/shared/fonts/Regular12";
+import { useCartState } from "#/stores/cart";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
   const { isLoading } = DataService();
   const { findImage } = ImageService();
-  const { saveCart } = CartService();
-  const { temp, clear, fill, preparedDataToServer } = useTemporalProduct();
+  // const { saveCart } = CartService();
+  const { add, addToLocalStorage } = useCartState();
+  const { temp, clear, fill } = useTemporalProduct();
   const { id } = useParams();
   const navigate = useNavigate();
   const ui = useUIState();
-  const { getTotal, getOptionsSubtotal } = ProductController();
+  const { getOptionsSubtotal, processedDataToSaveOnCart } = ProductController();
 
   useEffect(() => {
     ui?.setTitle("");
@@ -56,8 +57,9 @@ const ProductPage = () => {
   }, [isLoading]);
 
   const handleClickAddToCart = () => {
-    // console.log(preparedDataToServer());
-    saveCart.mutate(preparedDataToServer());
+    add(processedDataToSaveOnCart());
+    addToLocalStorage();
+    navigate(-1, { replace: true });
   };
 
   if (isLoading || !temp) {

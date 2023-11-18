@@ -17,14 +17,10 @@ const CartService = () => {
     },
   });
 
-  const initCarts = () => {
-    console.log(data?.data);
-  };
 
   return {
     carts: data,
     isLoading,
-    initCarts,
     saveCart,
   };
 };

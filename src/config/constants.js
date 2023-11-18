@@ -13,6 +13,8 @@ export const THEMES = {
   DARK: "viva-dark",
 };
 
+export const ENCRYPT_KEY = "aLeART";
+
 export const DEFAULT_THEME = "LIGHT";
 
 export const IMAGES_TYPES = {

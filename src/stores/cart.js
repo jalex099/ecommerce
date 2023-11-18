@@ -94,7 +94,7 @@ const addCart = (state) => ({
   },
 
   //   //* retorna los items del carrito
-  //   get: () => state.items.get(),
+  get: () => state.items.get(),
 
   //   isReadCart: () => state.isReadCart.get(),
 
@@ -114,39 +114,14 @@ const addCart = (state) => ({
   //   return cartCounter(items);
   // },
 
-  // //* retorna los IDPDS de los productos en carrito
-  // getIdpdsCarrito: () =>
-  //   state.items
-  //     .get()
-  //     .map((cartItem) => cartItem.idpds)
-  //     .join(","),
-
-  // getIdpds: () => {
-  //   const items = serializeState(state?.items.get());
-  //   return items
-  //     ?.reduce((acc, cur) => {
-  //       if (cur?.tipo === "PRD" && !cur?.IP && !cur?.TP) {
-  //         if (!cur?.isPromo && !acc?.includes(cur?.idpds)) acc.push(cur?.idpds);
-  //       }
-  //       if (["CMB", "ESF", "ESM", "ATP"].includes(cur?.tipo)) {
-  //         if (
-  //           cur?.list?.some((listItem) => !listItem[0]?.isPromo) &&
-  //           !acc?.includes(cur?.idpds)
-  //         )
-  //           acc.push(cur?.idpds);
-  //       }
-  //       return acc;
-  //     }, [])
-  //     .join(",");
-  // },
   //* Retorna el SUBTOTAL del carrito (valor de ITEMS)
-  // getSubTotal: () => state.subTotal.get(),
-  // getSubTotalFixed: () => state.subTotal.get()?.toFixed(2),
+  getSubTotal: () => state.subTotal.get(),
+  getSubTotalFixed: () => state.subTotal.get()?.toFixed(2),
   // getSubTotalHash: () => stateToString(state.subTotal.get()),
 
   // //* Retorna el TOTAL del carrito (valor de ITEMS - PROMOS)
-  // getTotal: () => state?.total?.get(),
-  // getTotalFixed: () => state?.total?.get()?.toFixed(2),
+  getTotal: () => state?.total?.get(),
+  getTotalFixed: () => state?.total?.get()?.toFixed(2),
   // getTotalHash: () => stateToString(state?.total?.get()),
 
   // //* Retorna el orden de agregado para mostrar por separado ITEMS del mismo IDPMN en diferentes selecciones y configuraciones

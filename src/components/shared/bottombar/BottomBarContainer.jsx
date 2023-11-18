@@ -39,7 +39,7 @@ function BottomBarContainer() {
   };
 
   const isHidden = useMemo(() => {
-    const hiddenPaths = ["/profile/add-address", "/product/"];
+    const hiddenPaths = ["/profile/add-address", "/product/", "/cart"];
     return hiddenPaths.some((path) => pathname.startsWith(path));
   }, [pathname]);
 

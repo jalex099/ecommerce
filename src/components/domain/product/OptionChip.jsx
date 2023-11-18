@@ -1,7 +1,7 @@
 import Regular14 from "#/components/shared/fonts/Regular14";
 import { motion } from "framer-motion";
 import { formatCurrency } from "#/utils/currency";
-import SemiBold14 from "#/components/shared/fonts/SemiBold14";
+import SemiBold12 from "#/components/shared/fonts/SemiBold12";
 import Box from "@mui/material/Box";
 import CheckSquareIcon from "#/components/shared/icons/CheckSquareIcon";
 
@@ -29,10 +29,10 @@ function OptionChip({ option, isSelected, onSelect }) {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <Box>
+      <Box className="flex flex-row gap-2 items-center justify-start">
         <Regular14>{option?.option?.name}</Regular14>
         {option?.aditionalPrice > 0 && (
-          <SemiBold14> +{formatCurrency(option?.aditionalPrice)}</SemiBold14>
+          <SemiBold12> +{formatCurrency(option?.aditionalPrice)}</SemiBold12>
         )}
       </Box>
 

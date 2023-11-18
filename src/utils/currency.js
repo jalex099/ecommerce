@@ -9,4 +9,5 @@ export function formatCurrency(value) {
   if (val.includes(".00")) {
     return val.replace(".00", "");
   }
+  return val;
 }

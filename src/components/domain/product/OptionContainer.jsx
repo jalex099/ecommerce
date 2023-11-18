@@ -44,11 +44,11 @@ function OptionContainer({ label, options, index }) {
         variant="outlined"
         color="primary"
         onClick={handleClickOption}
-        className="flex flex-col items-center justify-center "
+        className="flex flex-col items-center justify-center px-1"
       >
         <Regular14>{`${labelToShow} `}</Regular14>
-        <Regular12 styles={style.selectedOption}>
-          {getSelectedOptionName(index)}
+        <Regular12 styles={style.selectedOption} className="whitespace-nowrap">
+          {getSelectedOptionName(index, 20)}
         </Regular12>
       </Button>
       <Dialog

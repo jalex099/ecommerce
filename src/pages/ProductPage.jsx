@@ -19,6 +19,8 @@ import ExtrasContainer from "#/components/domain/product/ExtrasContainer";
 import DetailsContainer from "#/components/domain/product/DetailsContainer";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
+import ProductController from "#/components/domain/product/controllers/ProductController";
+import Regular12 from "#/components/shared/fonts/Regular12";
 
 const ProductPage = () => {
   const { findProductByUrlNameOrId } = RedirectionService();
@@ -29,6 +31,7 @@ const ProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const ui = useUIState();
+  const { getTotal, getOptionsSubtotal } = ProductController();
 
   useEffect(() => {
     ui?.setTitle("");
@@ -74,8 +77,14 @@ const ProductPage = () => {
         }}
       />
       <SemiBold20> {temp?.name}</SemiBold20>
-      <Bold18>{formatCurrency(temp?.price)}</Bold18>
-
+      <Box className="flex flex-col gap-0 ">
+        <Bold18>{formatCurrency(temp?.price)}</Bold18>
+        {getOptionsSubtotal() > 0 && (
+          <Regular12>
+            Monto extra por opciones: {formatCurrency(getOptionsSubtotal())}
+          </Regular12>
+        )}
+      </Box>
       <ProductConfigContainer options={temp?.options} />
       <Box>
         <Divider />

@@ -38,13 +38,35 @@ const ProductController = () => {
     setSelectedOption(optionIndex, selectionId);
   };
 
-  const getSelectedOptionName = (optionIndex) => {
+  const getSelectedOptionName = (optionIndex, maxLength = null) => {
     const selectedOptionId = getSelectedOption(optionIndex);
     const option = temp?.options[optionIndex];
     const selectedOption = option?.options?.find(
       (option) => option?._id === selectedOptionId
     );
+    if (!selectedOption) return "";
+    if (maxLength && selectedOption?.option?.name?.length > maxLength + 5) {
+      return `${selectedOption?.option?.name?.substring(0, maxLength)}...`;
+    }
     return selectedOption?.option?.name;
+  };
+
+  const getTotal = () => {
+    const basePrice = temp?.price;
+    const optionsPrice = getOptionsSubtotal();
+    return basePrice + optionsPrice;
+  };
+
+  const getOptionsSubtotal = () => {
+    return (
+      temp?.options?.reduce((acc, option) => {
+        const selectedOption = option?.options?.find(
+          (subopt) => subopt?._id === option?.selected
+        );
+        if (!selectedOption) return acc;
+        return acc + (selectedOption?.aditionalPrice || 0);
+      }, 0) || 0
+    );
   };
 
   return {
@@ -52,6 +74,8 @@ const ProductController = () => {
     getSelectedOption,
     setSelection,
     getSelectedOptionName,
+    getTotal,
+    getOptionsSubtotal,
   };
 };
 

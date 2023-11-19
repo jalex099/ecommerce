@@ -9,6 +9,7 @@ import HideOnScroll from "#/components/shared/HideOnScroll.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
+import { BOTTOM_BAR_HIDDEN_PATHS } from "#/config/constants";
 
 function BottomBarContainer() {
   const value = useHookstate(0);
@@ -39,8 +40,7 @@ function BottomBarContainer() {
   };
 
   const isHidden = useMemo(() => {
-    const hiddenPaths = ["/profile/add-address", "/product/", "/cart"];
-    return hiddenPaths.some((path) => pathname.startsWith(path));
+    return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));
   }, [pathname]);
 
   if (isHidden) return <></>;

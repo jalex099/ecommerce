@@ -78,7 +78,7 @@ const ProductController = () => {
       return [
         ...acc,
         {
-          option: option?.option?._id,
+          option: option?._id,
           selected: option?.selected,
         },
       ];

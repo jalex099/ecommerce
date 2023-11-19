@@ -36,6 +36,12 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
 
+export const BOTTOM_BAR_HIDDEN_PATHS = [
+  "/profile/add-address",
+  "/product/",
+  "/cart",
+];
+
 export const PAGES = {
   feed: {
     title: "Feed",

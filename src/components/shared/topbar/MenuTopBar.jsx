@@ -9,9 +9,11 @@ import { useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 function MenuTopBar() {
   const navigate = useNavigate();
+
   const handleClickGoToCart = () => {
     navigate("/cart");
   };
+
   return (
     <Box>
       <Fade

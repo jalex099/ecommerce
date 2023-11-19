@@ -8,6 +8,9 @@ import Regular14 from "#/components/shared/fonts/Regular14";
 import { useHookstate } from "@hookstate/core";
 import Skeleton from "@mui/material/Skeleton";
 import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
+import FavProductContainer from "#/components/domain/profile/FavProductContainer";
+import { motion } from "framer-motion";
+import Box from "@mui/material/Box";
 
 function FavoritesDialog() {
   const { favoriteProducts, isLoading, isRefetching } =
@@ -35,19 +38,56 @@ function FavoritesDialog() {
         sx={style.button}
         onClick={handleOpen}
       >
-        <SemiBold12>{favoriteProducts?.length} Favoritos</SemiBold12>
+        <SemiBold12>
+          {favoriteProducts?.length} Favorito
+          {favoriteProducts?.length > 1 ? "s" : ""}
+        </SemiBold12>
       </Button>
       <Dialog onClose={handleClose} open={isOpen.get()} sx={style.dialog}>
         <DialogTitle>
-          <SemiBold14>10 Favoritos</SemiBold14>
+          <SemiBold14>Favoritos</SemiBold14>
         </DialogTitle>
         <DialogContent>
-          <Regular14>10 Favoritos</Regular14>
+          {
+            //* If there are no favorites
+            favoriteProducts?.length === 0 && (
+              <Regular14>
+                No tienes productos favoritos. Agrega productos a favoritos para
+                verlos aquí.
+              </Regular14>
+            )
+          }
+          {
+            //* If there are favorites
+            favoriteProducts?.length > 0 && (
+              <Box className="w-full max-h-[400px] min-h-[150px]">
+                <motion.ul
+                  variants={variants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  className="w-full h-full overflow-y-auto "
+                >
+                  {favoriteProducts?.map((fav) => (
+                    <FavProductContainer key={fav?._id} id={fav?.product} />
+                  ))}
+                </motion.ul>
+              </Box>
+            )
+          }
         </DialogContent>
       </Dialog>
     </>
   );
 }
+const variants = {
+  open: {
+    transition: { staggerChildren: 0.03, delayChildren: 0.1 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.03, staggerDirection: -1 },
+  },
+};
 
 const style = {
   button: {},

@@ -7,8 +7,28 @@ const ClientFavoriteProductsRepository = () => {
     });
   };
 
+  const addFavoriteProduct = async (product) => {
+    return await API.post(
+      "/client/favorite-products",
+      {
+        product,
+      },
+      {
+        secure: true,
+      }
+    );
+  };
+
+  const removeFavoriteProduct = async (product) => {
+    return await API.delete("/client/favorite-products/" + product, {
+      secure: true,
+    });
+  };
+
   return {
     getFavoriteProducts,
+    addFavoriteProduct,
+    removeFavoriteProduct,
   };
 };
 

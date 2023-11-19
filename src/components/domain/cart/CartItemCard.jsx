@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Box from "@mui/material/Box";
 import { motion } from "framer-motion";
 import Regular16 from "#/components/shared/fonts/Regular16";
@@ -6,9 +7,18 @@ import ImageService from "#/services/ImageService.js";
 import CartDeleteItemButton from "#/components/domain/cart/CartDeleteItemButton";
 import { formatCurrency } from "#/utils/currency";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
+import CartController from "#/components/domain/cart/controllers/CartController";
+import { useMemo } from "react";
+import Regular12 from "#/components/shared/fonts/Regular12";
 
 function CartItemCard({ _id, name, price, options }) {
   const { findImage } = ImageService();
+  const { optionDetails } = CartController();
+
+  const optionsSelectedDetails = useMemo(() => {
+    return optionDetails(_id, options);
+  }, [_id, options]);
+
   return (
     <motion.li
       variants={variants}
@@ -26,17 +36,15 @@ function CartItemCard({ _id, name, price, options }) {
         <Regular16>{name}</Regular16>
       </Box>
       <Box className="flex flex-row justify-between items-center w-full">
-        <Box className="flex-1">
-          {/* {options?.map(({ option, selected }, index) => {
+        <Box className="flex-1 flex flex-row flex-wrap gap-1 opacity-80">
+          {optionsSelectedDetails?.map(({ name }, index) => {
             return (
-              <Box
-                key={index}
-                className="flex flex-row justify-start items-center gap-1"
-              >
-                Option {option}: {selected}
-              </Box>
+              <Regular12 key={index}>
+                {name}
+                {index < optionsSelectedDetails.length - 1 && ", "}
+              </Regular12>
             );
-          })} */}
+          })}
         </Box>
         <Box>
           <SemiBold14>{formatCurrency(price)}</SemiBold14>

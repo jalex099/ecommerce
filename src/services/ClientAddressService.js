@@ -10,7 +10,7 @@ const ClientAddressService = () => {
     queryKey: ["getAddresses"],
     queryFn: getAddresses,
     refetchOnWindowFocus: false,
-    staleTime: "Infinity",
+    staleTime: Infinity,
   });
 
   const add = useMutation({

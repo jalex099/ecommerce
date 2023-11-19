@@ -13,7 +13,6 @@ function NoAddressesContainer({ AddNewAddressButton }) {
         style={{ width: "100%", maxWidth: "200px" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
       />
       <SemiBold16>No encontramos direcciones</SemiBold16>
       <Regular14>

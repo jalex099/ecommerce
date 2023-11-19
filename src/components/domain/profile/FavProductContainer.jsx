@@ -5,7 +5,6 @@ import ImageService from "#/services/ImageService.js";
 import Picture from "#/components/shared/Picture";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import { motion } from "framer-motion";
-import Button from "@mui/material/Button";
 import RedirectionService from "#/services/RedirectionService";
 
 function FavProductContainer({ id }) {

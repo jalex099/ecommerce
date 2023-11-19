@@ -10,6 +10,7 @@ const ImageService = () => {
     queryKey: ["getImages"],
     queryFn: getImages,
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   const images = useMemo(() => {
@@ -25,7 +26,6 @@ const ImageService = () => {
     );
     return imageFound?.url;
   };
-
 
   const findLogo = () => {
     const logo = images?.find(

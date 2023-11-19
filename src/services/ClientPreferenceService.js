@@ -7,7 +7,7 @@ const ClientPreferenceService = () => {
     queryKey: ["getPreferences"],
     queryFn: getPreferences,
     refetchOnWindowFocus: false,
-    staleTime: "Infinity",
+    staleTime: Infinity,
   });
 
   return {

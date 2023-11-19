@@ -14,7 +14,7 @@ const CartController = () => {
         (option) => option?._id === optionSavedOnCart?.selected
       );
       let response = {
-        name: selectedDetail?.option?.name,
+        name: selectedDetail?.option?.cartName,
         aditionalPrice: selectedDetail?.aditionalPrice,
       };
       return [...acc, response];

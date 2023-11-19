@@ -8,6 +8,7 @@ import { useUIState } from "#/stores/UIState";
 import { useLocation } from "react-router-dom";
 import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
 import ProductTopBar from "#/components/shared/topbar/ProductTopBar.jsx";
+import CartTopBar from "./CartTopBar";
 
 function TopBarContainer(props) {
   const ui = useUIState();
@@ -16,11 +17,13 @@ function TopBarContainer(props) {
   return (
     <>
       <HideOnScroll {...props}>
-        <AppBar color="neutral0">
+        <AppBar color={pathname === "/cart" ? "neutral5" : "neutral0"}>
           {pathname === "/" ? (
             <FeedTopBar title={ui?.title} />
           ) : pathname === "/menu" ? (
             <MenuTopBar />
+          ) : pathname === "/cart" ? (
+            <CartTopBar title={ui?.title} />
           ) : pathname === "/profile" ? (
             <ProfileTopBar />
           ) : pathname?.startsWith("/product/") ? (

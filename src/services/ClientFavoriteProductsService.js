@@ -33,7 +33,7 @@ const ClientFavoriteProductsService = () => {
       queryClient.setQueryData(["getFavoriteProducts"], (oldData) => {
         return {
           ...oldData,
-          data: oldData.data.filter((product) => product.id !== data.id),
+          data: oldData.data.filter((product) => product?._id !== data?._id),
         };
       });
     },

@@ -6,19 +6,16 @@ import SemiBold12 from "#/components/shared/fonts/SemiBold12";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import { useHookstate } from "@hookstate/core";
-import Skeleton from "@mui/material/Skeleton";
 import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
 import FavProductContainer from "#/components/domain/profile/FavProductContainer";
 import { motion } from "framer-motion";
 import Box from "@mui/material/Box";
 
 function FavoritesDialog() {
-  const { favoriteProducts, isLoading, isRefetching } =
-    ClientFavoriteProductsService();
+  const { favoriteProducts, remove } = ClientFavoriteProductsService();
   const isOpen = useHookstate(false);
 
   const handleOpen = () => {
-    if (favoriteProducts?.length === 0) return;
     isOpen.set(true);
   };
 
@@ -26,10 +23,10 @@ function FavoritesDialog() {
     isOpen.set(false);
   };
 
-  if (isLoading || isRefetching)
-    return (
-      <Skeleton animation="wave" height={60} width={130} sx={{ margin: 0 }} />
-    );
+  const handleRemove = (id) => {
+    remove.mutate(id);
+  };
+
   return (
     <>
       <Button
@@ -51,10 +48,12 @@ function FavoritesDialog() {
           {
             //* If there are no favorites
             favoriteProducts?.length === 0 && (
-              <Regular14>
-                No tienes productos favoritos. Agrega productos a favoritos para
-                verlos aquí.
-              </Regular14>
+              <Box className="flex justify-center ">
+                <Regular14 className="text-center max-w-[300px]">
+                  No tienes productos favoritos. Agrega productos a favoritos
+                  para verlos aquí.
+                </Regular14>
+              </Box>
             )
           }
           {
@@ -69,7 +68,11 @@ function FavoritesDialog() {
                   className="w-full h-full overflow-y-auto "
                 >
                   {favoriteProducts?.map((fav) => (
-                    <FavProductContainer key={fav?._id} id={fav?.product} />
+                    <FavProductContainer
+                      key={fav?._id}
+                      id={fav?.product}
+                      onClick={handleRemove}
+                    />
                   ))}
                 </motion.ul>
               </Box>

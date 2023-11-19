@@ -40,8 +40,13 @@ function MenuTopBar() {
               />
             }
           />
-          <IconButton aria-label="cart" variant="contained" className="w-8 h-8">
-            <ShoppingCartOutlinedIcon onClick={handleClickGoToCart} />
+          <IconButton
+            aria-label="cart"
+            variant="contained"
+            className="w-8 h-8"
+            onClick={handleClickGoToCart}
+          >
+            <ShoppingCartOutlinedIcon />
           </IconButton>
         </Toolbar>
       </Fade>

@@ -1,12 +1,11 @@
 import BookmarkOnIconSvg from "#/assets/icons/bookmark-on.svg";
 import { motion } from "framer-motion";
 
-function BookmarkOnIcon({ className, ...props }) {
+function BookmarkOnIcon({ ...props }) {
   return (
     <motion.img
       src={BookmarkOnIconSvg}
       alt="bookmark-on"
-      className={`${className}`}
       {...props}
       initial={{ scale: 0.5 }}
       animate={{ scale: 1 }}
@@ -15,6 +14,7 @@ function BookmarkOnIcon({ className, ...props }) {
         stiffness: 260,
         damping: 20,
       }}
+      onContextMenu={(e) => e.preventDefault()}
     />
   );
 }

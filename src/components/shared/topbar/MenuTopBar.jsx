@@ -4,7 +4,7 @@ import { OutlinedInput } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-
+import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 function MenuTopBar() {
@@ -25,7 +25,9 @@ function MenuTopBar() {
       >
         <Toolbar>
           {/* <GoBackIcon /> */}
-          <ShoppingBagOutlinedIcon fontSize="32px" />
+          <IconButton aria-label="cart" variant="contained" className="w-8 h-8">
+            <ShoppingBagOutlinedIcon fontSize="32px" />
+          </IconButton>
           <OutlinedInput
             size="small"
             placeholder="Buscar"
@@ -38,10 +40,9 @@ function MenuTopBar() {
               />
             }
           />
-          <ShoppingCartOutlinedIcon
-            fontSize="32px"
-            onClick={handleClickGoToCart}
-          />
+          <IconButton aria-label="cart" variant="contained" className="w-8 h-8">
+            <ShoppingCartOutlinedIcon onClick={handleClickGoToCart} />
+          </IconButton>
         </Toolbar>
       </Fade>
     </Box>

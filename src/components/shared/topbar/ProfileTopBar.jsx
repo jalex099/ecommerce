@@ -1,4 +1,3 @@
-import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import GoBackIcon from "#/components/shared/GoBackIcon";
 import Toolbar from "@mui/material/Toolbar";
@@ -75,7 +74,13 @@ function ProfileTopBar() {
         }}
       >
         <Toolbar>
-          <GoBackIcon />
+          <IconButton
+            aria-label="go-back"
+            variant="contained"
+            className="w-8 h-8"
+          >
+            <GoBackIcon />
+          </IconButton>
           <p></p>
           <Box>
             <IconButton

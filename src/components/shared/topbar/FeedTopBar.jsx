@@ -4,6 +4,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { Fade } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
 function FeedTopBar({ title }) {
   return (
@@ -16,9 +17,21 @@ function FeedTopBar({ title }) {
         }}
       >
         <Toolbar>
-          <ShoppingBagOutlinedIcon fontSize="32px" />
+          <IconButton
+            aria-label="orders"
+            variant="contained"
+            className="w-8 h-8"
+          >
+            <ShoppingBagOutlinedIcon />
+          </IconButton>
           <SemiBold18 className="text-center">{title}</SemiBold18>
-          <SearchOutlinedIcon fontSize="32px" />
+          <IconButton
+            aria-label="search"
+            variant="contained"
+            className="w-8 h-8"
+          >
+            <SearchOutlinedIcon />
+          </IconButton>
         </Toolbar>
       </Fade>
     </Box>

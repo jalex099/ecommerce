@@ -25,6 +25,7 @@ const Picture = ({
           ...imgStyle,
         }}
         whileTap={{ scale: 0.95 }}
+        onContextMenu={(e) => e.preventDefault()}
       />
     </picture>
   );

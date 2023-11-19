@@ -7,7 +7,7 @@ import GoBackIcon from "#/components/shared/GoBackIcon";
 import { useTemporalProduct } from "#/stores/temporalProduct";
 import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
 import { useMemo } from "react";
-import TouchRippleEffect from "#/components/shared/TouchRippleEffect";
+import IconButton from "@mui/material/IconButton";
 
 function ProductTopBar() {
   const { favoriteProducts, add, remove, isLoading } =
@@ -35,7 +35,13 @@ function ProductTopBar() {
         }}
       >
         <Toolbar>
-          <GoBackIcon />
+          <IconButton
+            aria-label="go-back"
+            variant="contained"
+            className="w-8 h-8"
+          >
+            <GoBackIcon />
+          </IconButton>
           <Box />
           <FavIcon
             isFav={isFav}
@@ -51,19 +57,27 @@ function ProductTopBar() {
 const FavIcon = ({ isFav, handleToggleFav }) => {
   if (isFav)
     return (
-      <Box className="relative">
-        <TouchRippleEffect>
-          <BookmarkOnIcon onClick={handleToggleFav} />
-        </TouchRippleEffect>
-      </Box>
+      <IconButton
+        aria-label="fav"
+        variant="contained"
+        className="w-8 h-8"
+        sx={{ padding: "4px" }}
+        onClick={handleToggleFav}
+      >
+        <BookmarkOnIcon />
+      </IconButton>
     );
   else if (!isFav)
     return (
-      <Box className="relative">
-        <TouchRippleEffect>
-          <BookmarkOffIcon onClick={handleToggleFav} />
-        </TouchRippleEffect>
-      </Box>
+      <IconButton
+        aria-label="fav"
+        variant="contained"
+        className="w-8 h-8"
+        sx={{ padding: "4px" }}
+        onClick={handleToggleFav}
+      >
+        <BookmarkOffIcon />
+      </IconButton>
     );
   else return <></>;
 };

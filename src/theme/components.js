@@ -67,7 +67,7 @@ const components = {
     styleOverrides: {
       root: {
         display: "grid",
-        gridTemplateColumns: "24px 1fr 24px",
+        gridTemplateColumns: "32px 1fr 32px",
         gridGap: "24px",
         padding: "0 24px",
         height: "70px",
@@ -248,6 +248,14 @@ const components = {
             margin: "0px",
           },
         },
+      },
+    },
+  },
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        padding: "0px",
+        color: "#0E0E10",
       },
     },
   },

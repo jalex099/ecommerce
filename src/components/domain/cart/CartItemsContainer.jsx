@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
 import CartItem from "#/components/domain/cart/CartItem";
-import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 function CartItemsContainer({ products }) {
   return (
-    <Box className="w-full">
+    <Container className="w-full container">
       <motion.ul variants={variants} className="flex flex-col gap-4 w-full">
         {products.map((product, index) => {
           return (
             <CartItem
-              key={index}
+              key={product?._id + product?.name + index}
               _id={product?._id}
               name={product?.name}
               price={product?.price}
@@ -18,7 +18,7 @@ function CartItemsContainer({ products }) {
           );
         })}
       </motion.ul>
-    </Box>
+    </Container>
   );
 }
 

@@ -27,25 +27,12 @@ export const cartStore = hookstate(() => {
   };
 });
 
-// export const cartCounter = (items) => {
-//   return items?.reduce((acc, item) => {
-//     if (item?.tipo === "PRD") {
-//       acc += 1;
-//     }
-//     if (
-//       item?.tipo === "CMB" ||
-//       item?.tipo === "ESF" ||
-//       item?.tipo === "ESM" ||
-//       item?.tipo === "ATP"
-//     ) {
-//       acc += item?.list?.reduce((acc) => {
-//         acc += 1;
-//         return acc;
-//       }, 0);
-//     }
-//     return acc;
-//   }, 0);
-// };
+export const cartCounter = (items) => {
+  return items?.reduce((acc, item) => {
+    if (item?.tipo === "DESC") return acc;
+    return acc + 1;
+  }, 0);
+};
 
 // const existCuponFn = (items) => items?.some((item) => item?.TP);
 
@@ -99,12 +86,12 @@ const addCart = (state) => ({
   //   isReadCart: () => state.isReadCart.get(),
 
   //   //* limpia el estado
-  //   clean: () => {
-  //     state.items.set([]);
-  //     state.subTotal.set(0);
-  //     state.total.set(0);
-  //     state.orderAgregado.set(0);
-  //   },
+  clean: () => {
+    state.items.set([]);
+    state.subTotal.set(0);
+    state.total.set(0);
+    state.orderAgregado.set(0);
+  },
 
   // hash: () => stateToString(state.items.get()),
 
@@ -144,49 +131,8 @@ const addCart = (state) => ({
 
   // //* Añade un ITEM al carrito
   add: (item) => {
-    console.log(item);
     state.items.merge([item]);
   },
-
-  // //* Añade un ITEM a la LIST de un ITEM del carrito (tipos CMB,ATP,ESF,ESM)
-  // addToItemList: (idpmn, item, cantidadToAdd) => {
-  //   const items = state?.items;
-
-  //   items?.keys?.forEach((key) => {
-  //     if (
-  //       items[key]?.idpmn?.value === idpmn &&
-  //       items[key]?.tipo?.value !== "PRD"
-  //     ) {
-  //       for (let i = 0; i < cantidadToAdd; i++) {
-  //         items[key]?.list?.merge([item]);
-  //       }
-  //     }
-  //   });
-  // },
-
-  // //* Añade un ITEM a la LIST de un ITEM del carrito en ORDENES RECIENTES
-  // addToList: (idpmn, item, tipo, cantidad) => {
-  //   const items = serializeState(state.items.value);
-
-  //   const newItemList = items.reduce((acc, cur) => {
-  //     if (cur.idpmn === idpmn) {
-  //       if (
-  //         tipo === "CMB" ||
-  //         tipo === "ESF" ||
-  //         tipo === "ESM" ||
-  //         tipo === "P" ||
-  //         tipo === "ATP"
-  //       ) {
-  //         for (let i = 0; i < cantidad; i++) {
-  //           cur.list.push(item);
-  //         }
-  //       }
-  //     }
-  //     acc.push(cur);
-  //     return acc;
-  //   }, []);
-  //   state?.items?.set(newItemList);
-  // },
 
   // //* Recibe un arreglo para asignar al carrito como un nuevo carrito
   // setItems: (items) => state.items.set(items),
@@ -259,51 +205,53 @@ const addCart = (state) => ({
   // },
 
   // //* Actualiza el SUBTOTAL en carrito calculando sus items
-  // addSubTotal: () => {
-  //   const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
-  //     if (item?.tipo === "PRD") {
-  //       if (item?.TP) return acc; // Si es un cupon no se suma al subtotal del carrito
-  //       return acc + item?.precio;
-  //     } else if (
-  //       item?.tipo === "CMB" ||
-  //       item?.tipo === "ESF" ||
-  //       item?.tipo === "ESM" ||
-  //       item?.tipo === "ATP"
-  //     ) {
-  //       let CalcCMB = 0;
-  //       item?.list?.map((listItem) => {
-  //         CalcCMB += listItem[0]?.precio;
-  //       });
-  //       return acc + CalcCMB;
-  //     } else {
-  //       return acc;
-  //     }
-  //   }, 0);
-  //   state?.subTotal?.set(calcCartItemsSubTotal);
-  // },
+  addSubTotal: () => {
+    const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
+      return acc + item?.price;
+      // if (item?.tipo === "PRD") {
+      //   if (item?.TP) return acc; // Si es un cupon no se suma al subtotal del carrito
+      //   return acc + item?.precio;
+      // } else if (
+      //   item?.tipo === "CMB" ||
+      //   item?.tipo === "ESF" ||
+      //   item?.tipo === "ESM" ||
+      //   item?.tipo === "ATP"
+      // ) {
+      //   let CalcCMB = 0;
+      //   item?.list?.map((listItem) => {
+      //     CalcCMB += listItem[0]?.precio;
+      //   });
+      //   return acc + CalcCMB;
+      // } else {
+      //   return acc;
+      // }
+    }, 0);
+    state?.subTotal?.set(calcCartItemsSubTotal);
+  },
 
   // //* Actualiza el SUBTOTAL en carrito calculando sus items - DESCUENTOS
-  // addTotal: () => {
-  //   const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
-  //     if (item?.tipo === "PRD" || item?.tipo === "PROMO") {
-  //       return acc + item?.precio;
-  //     } else if (
-  //       item?.tipo === "CMB" ||
-  //       item?.tipo === "ESF" ||
-  //       item?.tipo === "ESM" ||
-  //       item?.tipo === "ATP"
-  //     ) {
-  //       let CalcCMB = 0;
-  //       item?.list?.map((listItem) => {
-  //         CalcCMB += listItem[0]?.precio;
-  //       });
-  //       return acc + CalcCMB;
-  //     } else {
-  //       return acc;
-  //     }
-  //   }, 0);
-  //   state?.total?.set(calcCartItemsSubTotal);
-  // },
+  addTotal: () => {
+    const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
+      return acc + item?.price || 0;
+      // if (item?.tipo === "PRD" || item?.tipo === "PROMO") {
+      //   return acc + item?.precio;
+      // } else if (
+      //   item?.tipo === "CMB" ||
+      //   item?.tipo === "ESF" ||
+      //   item?.tipo === "ESM" ||
+      //   item?.tipo === "ATP"
+      // ) {
+      //   let CalcCMB = 0;
+      //   item?.list?.map((listItem) => {
+      //     CalcCMB += listItem[0]?.precio;
+      //   });
+      //   return acc + CalcCMB;
+      // } else {
+      //   return acc;
+      // }
+    }, 0);
+    state?.total?.set(calcCartItemsSubTotal);
+  },
 
   // //* Se valida el carrito
   // validateCart: (props) => {

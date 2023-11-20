@@ -27,7 +27,7 @@ const ProductPage = () => {
   const { isLoading } = DataService();
   const { findImage } = ImageService();
   // const { saveCart } = CartService();
-  const { add, addToLocalStorage } = useCartState();
+  const { add, addToLocalStorage, addSubTotal, addTotal } = useCartState();
   const { temp, clear, fill } = useTemporalProduct();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -58,6 +58,8 @@ const ProductPage = () => {
 
   const handleClickAddToCart = () => {
     add(processedDataToSaveOnCart());
+    addSubTotal();
+    addTotal();
     addToLocalStorage();
     navigate(-1, { replace: true });
   };

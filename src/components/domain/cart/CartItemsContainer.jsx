@@ -12,6 +12,7 @@ function CartItemsContainer({ products, getDetails, onRemoveItem }) {
         className="flex flex-col gap-4 w-full "
       >
         {products?.map((product, index) => {
+          console.log("key" + product?._id + product?.orden);
           return (
             <CartItem
               key={product?._id + product?.orden}

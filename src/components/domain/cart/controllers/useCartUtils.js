@@ -8,6 +8,7 @@ export default function useCartUtils() {
   const getItemsToShow = () => {
     if (isLoading) return undefined;
     const items = cart?.get();
+    if (items?.length === 0) return undefined;
     return items;
   };
 

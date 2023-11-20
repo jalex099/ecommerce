@@ -6,18 +6,15 @@ import { useMemo } from "react";
 import CartItemsContainer from "#/components/domain/cart/CartItemsContainer";
 import CartResumeInfo from "#/components/domain/cart/CartResumeInfo";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Regular16 from "#/components/shared/fonts/Regular16";
-import Regular20 from "#/components/shared/fonts/Regular20";
 import { useNavigate } from "react-router-dom";
 import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 import DataService from "#/services/DataService";
+import EmptyCartContainer from "#/components/domain/cart/EmptyCartContainer";
 
 function CartPage() {
   const ui = useUIState();
   const cart = useCartState();
-  const { getItemsToShow, handleRemoveFromCart, getDetails } =
-    useCartUtils();
+  const { getItemsToShow, handleRemoveFromCart, getDetails } = useCartUtils();
   const navigate = useNavigate();
   const { isLoading } = DataService();
 
@@ -38,20 +35,7 @@ function CartPage() {
     <Box sx={style.container}>
       <HelmetMeta page="cart" />
       {itemsToShow == undefined && !isLoading && (
-        <Box className="flex flex-col items-center justify-center text-center gap-2 px-6 py-2">
-          <img
-            src="/images/empty-cart.svg"
-            alt="Carrito vacío"
-            className="w-48"
-          />
-          <Regular20>Tu carrito est&aacute; vac&iacute;o</Regular20>
-          <Regular16>
-            Agrega productos a tu carrito para continuar con la compra
-          </Regular16>
-          <Button variant="contained" color="primary" onClick={handleGoToMenu}>
-            Ver men&uacute;
-          </Button>
-        </Box>
+        <EmptyCartContainer onClick={handleGoToMenu} />
       )}
       {!!itemsToShow && itemsToShow?.length > 0 && (
         <>

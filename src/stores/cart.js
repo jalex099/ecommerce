@@ -1,9 +1,9 @@
 import { hookstate, useHookstate, none } from "@hookstate/core";
 import AES from "crypto-js/aes";
 import Utf8 from "crypto-js/enc-utf8";
-// import { stateToString } from "src/utils/adapterUtil";
-// import serializeState from "src/utils/serializeState";
-import { orderBy } from "lodash";
+import { stateToString } from "#/utils/adapterUtil";
+import serializeState from "#/utils/serializeState";
+// import { orderBy } from "lodash";
 import { ENCRYPT_KEY } from "#/config/constants";
 
 const getCartFromCrypt = () => {
@@ -94,13 +94,13 @@ const addCart = (state) => ({
     state.orderAgregado.set(0);
   },
 
-  // hash: () => stateToString(state.items.get()),
+  hash: () => stateToString(state.items.get()),
 
   // //* retorna el numero de ITEMS del carrito, numero de PRD + total de LIST ITEMS de otros tipos
-  // getItemsCounter: () => {
-  //   const items = serializeState(state?.items?.get()) || [];
-  //   return cartCounter(items);
-  // },
+  getItemsCounter: () => {
+    const items = serializeState(state?.items?.get()) || [];
+    return cartCounter(items);
+  },
 
   //* Retorna el SUBTOTAL del carrito (valor de ITEMS)
   getSubTotal: () => state.subTotal.get(),
@@ -113,7 +113,7 @@ const addCart = (state) => ({
   // getTotalHash: () => stateToString(state?.total?.get()),
 
   // //* Retorna el orden de agregado para mostrar por separado ITEMS del mismo IDPMN en diferentes selecciones y configuraciones
-  // getOrdenAgregado: () => state?.orderAgregado?.get(),
+  getOrdenAgregado: () => state?.orderAgregado?.get(),
 
   // //* Retorna si existe algun CUPON agregado en el carrito
   // getExistCupon: () => existCuponFn(state?.items?.get()),
@@ -135,7 +135,7 @@ const addCart = (state) => ({
   },
 
   // //* Recibe un arreglo para asignar al carrito como un nuevo carrito
-  // setItems: (items) => state.items.set(items),
+  setItems: (items) => state.items.set(items),
 
   // //* Funcion para guardar el carrito en local storage
   // // addToLocalStorage: () => state?.attach(Persistence('cart-state')),
@@ -157,7 +157,7 @@ const addCart = (state) => ({
   },
 
   // //* Actualiza el orden de agregado en el carrito
-  // updateOrdenAgregado: (value) => state?.orderAgregado?.set(value),
+  updateOrdenAgregado: (value) => state?.orderAgregado?.set(value),
 
   // //* recibe un ACTION para cambiar o eliminar el ITEM (prd) o LIST (otros tipos)
   // updateCantidad: (tipo, action, index, item) => {
@@ -201,31 +201,21 @@ const addCart = (state) => ({
   // },
 
   // //* Recibe una nueva lista para asignal al carrito
-  // removeFromCart: (newList) => {
-  //   state.items.set(newList);
-  // },
+  removeFromCart: (newList) => {
+    state.items.set(newList);
+  },
 
   // //* Actualiza el SUBTOTAL en carrito calculando sus items
   addSubTotal: () => {
     const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
-      return acc + item?.price;
-      // if (item?.tipo === "PRD") {
-      //   if (item?.TP) return acc; // Si es un cupon no se suma al subtotal del carrito
-      //   return acc + item?.precio;
-      // } else if (
-      //   item?.tipo === "CMB" ||
-      //   item?.tipo === "ESF" ||
-      //   item?.tipo === "ESM" ||
-      //   item?.tipo === "ATP"
-      // ) {
-      //   let CalcCMB = 0;
-      //   item?.list?.map((listItem) => {
-      //     CalcCMB += listItem[0]?.precio;
-      //   });
-      //   return acc + CalcCMB;
-      // } else {
-      //   return acc;
-      // }
+      // Recorrer las opciones si tienen precio adicional
+      if (item?.options?.length > 0) {
+        let aditionalPrice = item?.options?.reduce((acc, option) => {
+          return acc + option?.aditionalPrice || 0;
+        }, 0);
+        return acc + item?.basePrice + aditionalPrice;
+      }
+      return acc + item?.basePrice;
     }, 0);
     state?.subTotal?.set(calcCartItemsSubTotal);
   },
@@ -236,26 +226,16 @@ const addCart = (state) => ({
 
   // //* Actualiza el SUBTOTAL en carrito calculando sus items - DESCUENTOS
   addTotal: () => {
-    const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
-      return acc + item?.price || 0;
-      // if (item?.tipo === "PRD" || item?.tipo === "PROMO") {
-      //   return acc + item?.precio;
-      // } else if (
-      //   item?.tipo === "CMB" ||
-      //   item?.tipo === "ESF" ||
-      //   item?.tipo === "ESM" ||
-      //   item?.tipo === "ATP"
-      // ) {
-      //   let CalcCMB = 0;
-      //   item?.list?.map((listItem) => {
-      //     CalcCMB += listItem[0]?.precio;
-      //   });
-      //   return acc + CalcCMB;
-      // } else {
-      //   return acc;
-      // }
+    const calcCartItemsTotal = state?.items?.get()?.reduce((acc, item) => {
+      if (item?.options?.length > 0) {
+        let aditionalPrice = item?.options?.reduce((acc, option) => {
+          return acc + option?.aditionalPrice || 0;
+        }, 0);
+        return acc + item?.basePrice + aditionalPrice;
+      }
+      return acc + item?.basePrice;
     }, 0);
-    state?.total?.set(calcCartItemsSubTotal);
+    state?.total?.set(calcCartItemsTotal);
   },
 
   // //* Se valida el carrito

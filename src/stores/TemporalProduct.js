@@ -7,7 +7,6 @@ const temporalProduct = hookstate({
   price: "",
   options: [],
   isNew: false,
-  imagesUrl: [],
   tags: [],
 });
 

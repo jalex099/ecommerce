@@ -1,7 +1,7 @@
 import HelmetMeta from "#/components/shared/HelmetMeta";
 import { useEffect } from "react";
 import { useUIState } from "#/stores/UIState";
-import { useCartState, cartCounter } from "#/stores/cart";
+import { useCartState } from "#/stores/cart";
 import { useMemo } from "react";
 import CartItemsContainer from "#/components/domain/cart/CartItemsContainer";
 import CartResumeInfo from "#/components/domain/cart/CartResumeInfo";
@@ -10,45 +10,34 @@ import Button from "@mui/material/Button";
 import Regular16 from "#/components/shared/fonts/Regular16";
 import Regular20 from "#/components/shared/fonts/Regular20";
 import { useNavigate } from "react-router-dom";
+import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
+import DataService from "#/services/DataService";
 
 function CartPage() {
   const ui = useUIState();
-  const {
-    get,
-    getTotal,
-    getSubTotal,
-    getDescuento,
-    removeItem,
-    addToLocalStorage,
-  } = useCartState();
+  const cart = useCartState();
+  const { getItemsToShow, handleRemoveFromCart, getDetails, getProductTotal } =
+    useCartUtils();
   const navigate = useNavigate();
+  const { isLoading } = DataService();
 
   useEffect(() => {
     ui?.setTitle("Carrito");
   }, []);
 
-  const items = useMemo(() => {
-    return get();
-  }, []);
-
-  const numberOfItems = useMemo(() => {
-    return cartCounter(items);
-  }, [items]);
+  const itemsToShow = useMemo(
+    () => getItemsToShow(),
+    [cart?.getItemsCounter(), isLoading]
+  );
 
   const handleGoToMenu = () => {
     navigate("/menu", { replace: true });
   };
-  console.log(getDescuento());
 
-  const handleRemoveItem = (index) => {
-    console.log(index);
-    removeItem(index);
-    addToLocalStorage();
-  };
   return (
     <Box sx={style.container}>
       <HelmetMeta page="cart" />
-      {items?.length === 0 && (
+      {itemsToShow == undefined && !isLoading && (
         <Box className="flex flex-col items-center justify-center text-center gap-2 px-6 py-2">
           <img
             src="/images/empty-cart.svg"
@@ -64,18 +53,19 @@ function CartPage() {
           </Button>
         </Box>
       )}
-      {items?.length > 0 && (
+      {!!itemsToShow && itemsToShow?.length > 0 && (
         <>
           <CartItemsContainer
-            products={items}
-            onRemoveItem={handleRemoveItem}
+            products={itemsToShow}
+            getDetails={getDetails}
+            onRemoveItem={handleRemoveFromCart}
           />
           <CartResumeInfo
-            numberOfItems={numberOfItems}
-            products={items}
-            subtotal={getSubTotal()}
-            total={getTotal()}
-            discount={getDescuento()}
+            numberOfItems={cart?.getItemsCounter()}
+            products={itemsToShow}
+            subtotal={cart?.getSubTotal()}
+            discount={cart?.getDescuento()}
+            total={cart?.getTotal()}
           />
         </>
       )}

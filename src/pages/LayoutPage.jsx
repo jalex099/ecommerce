@@ -10,16 +10,27 @@ import { MAPBOX_ACCESS_TOKEN } from "#/config/constants";
 import { useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { BOTTOM_BAR_HIDDEN_PATHS } from "#/config/constants";
+import { useCartState } from "#/stores/cart.js";
+import DataService from "#/services/DataService.js";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
   const ui = useUIState();
   const { verifyAuth } = AuthService();
   const { pathname } = useLocation();
+  const cart = useCartState();
+  const { isSuccess } = DataService();
 
   useEffect(() => {
     verifyAuth();
   }, []);
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    cart?.addSubTotal();
+    cart?.addTotal();
+    cart?.addToLocalStorage();
+  }, [cart?.hash]);
 
   const isHidden = useMemo(() => {
     return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));

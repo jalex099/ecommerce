@@ -5,7 +5,7 @@ import { useMemo } from "react";
 const DataService = () => {
   const { getData } = DataRepository();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["getData"],
     queryFn: getData,
     refetchOnWindowFocus: false,
@@ -39,6 +39,7 @@ const DataService = () => {
     carousel,
     messages,
     isLoading,
+    isSuccess,
   };
 };
 

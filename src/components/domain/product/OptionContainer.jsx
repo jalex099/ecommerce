@@ -27,6 +27,7 @@ function OptionContainer({ label, options, index }) {
 
   const handleSelectOption = (optionId) => {
     setSelection(index, optionId);
+    isDialogOpen.set(false);
   };
 
   const handleClickOption = () => {

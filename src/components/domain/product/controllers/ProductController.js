@@ -1,13 +1,33 @@
 import { useTemporalProduct } from "#/stores/temporalProduct";
 import { useMemo } from "react";
+import useAddToCart from "#/components/domain/product/controllers/useAddToCart";
+import RedirectionService from "#/services/RedirectionService";
+import { useNavigate } from "react-router-dom";
 
 const ProductController = () => {
-  const { temp, setSelectedOption } = useTemporalProduct();
+  const { temp, setSelectedOption, clear, fill } = useTemporalProduct();
+  const { addToCart } = useAddToCart();
+  const { findProductByUrlNameOrId } = RedirectionService();
+  const navigate = useNavigate();
 
   const options = useMemo(
     () => temp?.options?.map((option) => option?._id),
     [temp?.options]
   );
+
+  const initTemp = (id) => {
+    // If the product is not in the menu, then we redirect to the home page
+    const productFromMenu = findProductByUrlNameOrId(id);
+    if (!productFromMenu) {
+      navigate("/");
+    }
+    // If the product is in the menu, then we fill the temporal state
+    fill(productFromMenu);
+  };
+
+  const clearTemp = () => {
+    clear();
+  };
 
   const getIndexOptionRepeated = (optionIndex) => {
     if (!options) return -1;
@@ -69,36 +89,21 @@ const ProductController = () => {
     );
   };
 
-  const processedDataToSaveOnCart = () => {
-    const options = temp?.options?.reduce((acc, option) => {
-      const selectedOption = option?.options?.find(
-        (subopt) => subopt?._id === option?.selected
-      );
-      if (!selectedOption) return acc;
-      return [
-        ...acc,
-        {
-          option: option?._id,
-          selected: option?.selected,
-        },
-      ];
-    }, []);
-    return {
-      _id: temp?._id,
-      name: temp?.name,
-      price: getTotal(),
-      options,
-    };
+  const handleAddToCart = () => {
+    addToCart();
   };
 
   return {
+    initTemp,
+    clearTemp,
+    temporal: temp,
     getIndexOptionRepeated,
     getSelectedOption,
     setSelection,
     getSelectedOptionName,
     getTotal,
     getOptionsSubtotal,
-    processedDataToSaveOnCart,
+    handleAddToCart,
   };
 };
 

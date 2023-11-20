@@ -1,15 +1,14 @@
-import { motion } from "framer-motion";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import Button from "@mui/material/Button";
 
-const AddToCartButton = ({ onClick }) => {
+const AddToCartButton = ({ ...props }) => {
   return (
     <Button
       sx={style?.container}
       variant="contained"
       disableElevation
       fullWidth
-      onClick={onClick}
+      {...props}
       className="flex justify-center items-center  cursor-pointer "
     >
       <Regular14>Agregar al carrito</Regular14>

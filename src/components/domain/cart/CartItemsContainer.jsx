@@ -2,19 +2,26 @@ import { motion } from "framer-motion";
 import CartItem from "#/components/domain/cart/CartItem";
 import Container from "@mui/material/Container";
 
-function CartItemsContainer({ products, onRemoveItem }) {
+function CartItemsContainer({ products, getDetails, onRemoveItem }) {
   return (
     <Container className="w-full container flex-grow">
-      <motion.ul variants={variants} className="flex flex-col gap-4 w-full ">
-        {products.map((product, index) => {
+      <motion.ul
+        variants={list}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-col gap-4 w-full "
+      >
+        {products?.map((product, index) => {
           return (
             <CartItem
-              key={product?._id + product?.name + index}
+              key={product?._id + product?.orden}
               index={index}
               _id={product?._id}
               name={product?.name}
-              price={product?.price}
+              basePrice={product?.basePrice}
+              aditionalPrice={product?.aditionalPrice}
               options={product?.options}
+              getDetails={getDetails}
               onRemoveItem={onRemoveItem}
             />
           );
@@ -23,14 +30,9 @@ function CartItemsContainer({ products, onRemoveItem }) {
     </Container>
   );
 }
-
-const variants = {
-  open: {
-    transition: { staggerChildren: 0.03, delayChildren: 0.1 },
-  },
-  closed: {
-    transition: { staggerChildren: 0.03, staggerDirection: -1 },
-  },
+const list = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
 };
 
 export default CartItemsContainer;

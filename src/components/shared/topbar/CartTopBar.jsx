@@ -24,7 +24,11 @@ function CartTopBar({ title }) {
           >
             <GoBackIcon />
           </IconButton>
-          {title && <SemiBold18 className="text-center">{title}</SemiBold18>}
+          {title ? (
+            <SemiBold18 className="text-center">{title}</SemiBold18>
+          ) : (
+            <Box />
+          )}
           <IconButton
             aria-label="share"
             variant="contained"

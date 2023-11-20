@@ -4,25 +4,25 @@ import { Fade } from "@mui/material";
 import BookmarkOffIcon from "#/components/shared/icons/BookmarkOffIcon";
 import BookmarkOnIcon from "#/components/shared/icons/BookmarkOnIcon";
 import GoBackIcon from "#/components/shared/GoBackIcon";
-import { useTemporalProduct } from "#/stores/temporalProduct";
 import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService";
 import { useMemo } from "react";
 import IconButton from "@mui/material/IconButton";
+import ProductController from "#/components/domain/product/controllers/ProductController";
 
 function ProductTopBar() {
   const { favoriteProducts, add, remove, isLoading } =
     ClientFavoriteProductsService();
-  const { temp } = useTemporalProduct();
+  const { temporal } = ProductController();
 
   const isFav = useMemo(() => {
-    if (!temp || favoriteProducts?.length === 0) return false;
-    return favoriteProducts?.find((fav) => fav?.product === temp?._id);
-  }, [favoriteProducts, temp]);
+    if (!temporal || favoriteProducts?.length === 0) return false;
+    return favoriteProducts?.find((fav) => fav?.product === temporal?._id);
+  }, [favoriteProducts, temporal]);
 
   //* Handle of set as fav or remove from fav
   const handleToggleFav = () => {
-    if (isFav) remove.mutate(temp?._id);
-    else add.mutate(temp?._id);
+    if (isFav) remove.mutate(temporal?._id);
+    else add.mutate(temporal?._id);
   };
 
   return (

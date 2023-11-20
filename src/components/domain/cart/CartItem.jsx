@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Box from "@mui/material/Box";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16";
 import Picture from "#/components/shared/Picture";
 import ImageService from "#/services/ImageService.js";
@@ -14,7 +14,7 @@ import Divider from "@mui/material/Divider";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import Button from "@mui/material/Button";
 
-function CartItem({ _id, name, price, options }) {
+function CartItem({ _id, index, name, price, options, onRemoveItem }) {
   const { findImage } = ImageService();
   const { optionDetails } = CartController();
 
@@ -23,8 +23,11 @@ function CartItem({ _id, name, price, options }) {
   }, [_id, options]);
 
   return (
-    <motion.li
-      variants={variants}
+    <motion.div
+      layout
+      initial={{ y: 200, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 0, opacity: 0 }}
       className="w-full min-h-[220px] flex flex-col gap-6 justify-start items-start p-5 rounded-md relative bg-white _shadow"
     >
       <Box className="flex flex-row justify-start items-center gap-4 w-full">
@@ -67,26 +70,9 @@ function CartItem({ _id, name, price, options }) {
         </Button>
       </Box>
 
-      <CartDeleteItemButton />
-    </motion.li>
+      <CartDeleteItemButton onClick={() => onRemoveItem(index)} />
+    </motion.div>
   );
 }
-
-const variants = {
-  open: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      // y: { stiffness: 1000, velocity: -100 },
-    },
-  },
-  closed: {
-    y: 20,
-    opacity: 0,
-    transition: {
-      // y: { stiffness: 1000 },
-    },
-  },
-};
 
 export default CartItem;

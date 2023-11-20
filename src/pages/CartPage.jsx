@@ -13,7 +13,14 @@ import { useNavigate } from "react-router-dom";
 
 function CartPage() {
   const ui = useUIState();
-  const { get, getTotal, getSubTotal, getDescuento } = useCartState();
+  const {
+    get,
+    getTotal,
+    getSubTotal,
+    getDescuento,
+    removeItem,
+    addToLocalStorage,
+  } = useCartState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,8 +38,13 @@ function CartPage() {
   const handleGoToMenu = () => {
     navigate("/menu", { replace: true });
   };
-  console.log(getTotal());
+  console.log(getDescuento());
 
+  const handleRemoveItem = (index) => {
+    console.log(index);
+    removeItem(index);
+    addToLocalStorage();
+  };
   return (
     <Box sx={style.container}>
       <HelmetMeta page="cart" />
@@ -54,13 +66,16 @@ function CartPage() {
       )}
       {items?.length > 0 && (
         <>
-          <CartItemsContainer products={items} />
+          <CartItemsContainer
+            products={items}
+            onRemoveItem={handleRemoveItem}
+          />
           <CartResumeInfo
             numberOfItems={numberOfItems}
             products={items}
             subtotal={getSubTotal()}
             total={getTotal()}
-            discount={0}
+            discount={getDescuento()}
           />
         </>
       )}

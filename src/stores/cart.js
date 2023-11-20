@@ -1,8 +1,9 @@
-import { hookstate, useHookstate } from "@hookstate/core";
+import { hookstate, useHookstate, none } from "@hookstate/core";
 import AES from "crypto-js/aes";
 import Utf8 from "crypto-js/enc-utf8";
 // import { stateToString } from "src/utils/adapterUtil";
 // import serializeState from "src/utils/serializeState";
+import { orderBy } from "lodash";
 import { ENCRYPT_KEY } from "#/config/constants";
 
 const getCartFromCrypt = () => {
@@ -52,14 +53,14 @@ export const cartCounter = (items) => {
 //   }, false);
 // };
 
-// const getDescuentoFn = (items) => {
-//   return items?.reduce((acc, cur) => {
-//     if (cur?.TP) {
-//       acc = cur?.precio * -1;
-//     }
-//     return acc;
-//   }, 0);
-// };
+const getDescuentoFn = (items) => {
+  return items?.reduce((acc, cur) => {
+    if (cur?.TP) {
+      acc = cur?.precio * -1;
+    }
+    return acc;
+  }, 0);
+};
 
 const addCart = (state) => ({
   getCartStorage: () => {
@@ -125,9 +126,8 @@ const addCart = (state) => ({
   //   state?.items?.value?.some((cartItem) => cartItem.ventaSugerida === 1),
 
   // //* Retorna el valor del DESCUENTO que se esta aplicando en la compra
-  // getDescuento: () => getDescuentoFn(serializeState(state?.items?.get())),
-  // getDescuentoFixed: () =>
-  //   getDescuentoFn(serializeState(state?.items?.get()))?.toFixed(2),
+  getDescuento: () => getDescuentoFn(state?.items?.get()),
+  getDescuentoFixed: () => getDescuentoFn(state?.items?.get())?.toFixed(2),
 
   // //* Añade un ITEM al carrito
   add: (item) => {
@@ -181,8 +181,9 @@ const addCart = (state) => ({
   //       state?.items[index]?.set(none);
   //     } else {
   //       const newList = orderBy(
-  //         serializeState(state?.get()?.items[index]?.list)
-  //           .flatMap((listItem) => listItem)
+  //         state
+  //           ?.get()
+  //           ?.items[index]?.list.flatMap((listItem) => listItem)
   //           ?.reduce((acc, cur, curIndex) => {
   //             if (curIndex !== item) {
   //               acc.push(cur);
@@ -227,6 +228,10 @@ const addCart = (state) => ({
       // }
     }, 0);
     state?.subTotal?.set(calcCartItemsSubTotal);
+  },
+
+  removeItem: (index) => {
+    state?.items[index]?.set(none);
   },
 
   // //* Actualiza el SUBTOTAL en carrito calculando sus items - DESCUENTOS

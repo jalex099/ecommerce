@@ -33,7 +33,7 @@ function CartResumeInfo({
         )}
       </SemiBold18>
       <Box className="flex flex-col gap-1">
-        {products?.map((product, index) => {
+        {/* {products?.map((product, index) => {
           return (
             <Box
               key={index}
@@ -43,7 +43,7 @@ function CartResumeInfo({
               <Regular14>{formatCurrency(product?.price)}</Regular14>
             </Box>
           );
-        })}
+        })} */}
         <Divider />
         {discount > 0 && (
           <>

@@ -22,7 +22,7 @@ const style = {
     width: "80vw",
     maxWidth: "400px",
     margin: "0 auto",
-    position: "fixed",
+    position: "sticky",
     bottom: "24px",
     left: 0,
     right: 0,

@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import { BOTTOM_BAR_HIDDEN_PATHS } from "#/config/constants";
 import { useCartState } from "#/stores/cart.js";
 import DataService from "#/services/DataService.js";
+import ErrorFetchPage from "#/pages/ErrorFetchPage.jsx";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -19,7 +20,8 @@ const LayoutPage = () => {
   const { verifyAuth } = AuthService();
   const { pathname } = useLocation();
   const cart = useCartState();
-  const { isSuccess } = DataService();
+  const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
+    DataService();
 
   useEffect(() => {
     verifyAuth();
@@ -38,21 +40,23 @@ const LayoutPage = () => {
 
   return (
     <>
-      <header>
-        <TopBarContainer />
-      </header>
-      <Box
-        component="main"
-        className="container relative"
-        sx={{
-          paddingBottom: !isHidden && "96px",
-          bgcolor: (theme) =>
-            pathname === "/cart" && theme.palette.neutral5.main,
-        }}
-      >
-        <Outlet />
-        {ui?.isLoadingForeground && <Loading />}
-        {/* <Toaster
+      {isSuccess && (
+        <>
+          <header>
+            <TopBarContainer />
+          </header>
+          <Box
+            component="main"
+            className="container relative"
+            sx={{
+              paddingBottom: !isHidden && "96px",
+              bgcolor: (theme) =>
+                pathname === "/cart" && theme.palette.neutral5.main,
+            }}
+          >
+            <Outlet />
+            {ui?.isLoadingForeground && <Loading />}
+            {/* <Toaster
         toastOptions={{
           style: {
             background: "var(--surface-100)",
@@ -60,13 +64,17 @@ const LayoutPage = () => {
           },
         }}
       /> */}
-        {/*
+            {/*
         DIALOGS GLOBALES
     */}
-      </Box>
-      <footer className="fixed bottom-0 left-0 right-0">
-        <BottomBarContainer />
-      </footer>
+          </Box>
+          <footer className="fixed bottom-0 left-0 right-0">
+            <BottomBarContainer />
+          </footer>
+        </>
+      )}
+      {!isRefetching && isLoading && isFetching && <Loading />}
+      {isError && <ErrorFetchPage refetch={refetch} />}
     </>
   );
 };

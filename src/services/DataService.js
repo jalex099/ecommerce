@@ -5,7 +5,15 @@ import { useMemo } from "react";
 const DataService = () => {
   const { getData } = DataRepository();
 
-  const { data, isLoading, isSuccess } = useQuery({
+  const {
+    data,
+    isLoading,
+    isSuccess,
+    isError,
+    isRefetching,
+    isFetching,
+    refetch,
+  } = useQuery({
     queryKey: ["getData"],
     queryFn: getData,
     refetchOnWindowFocus: false,
@@ -40,6 +48,10 @@ const DataService = () => {
     messages,
     isLoading,
     isSuccess,
+    isError,
+    isRefetching,
+    isFetching,
+    refetch,
   };
 };
 

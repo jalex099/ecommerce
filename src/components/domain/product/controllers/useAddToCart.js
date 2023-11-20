@@ -31,6 +31,7 @@ export default function useAddToCart() {
       name: temp?.name,
       basePrice: temp?.price,
       aditionalPrice,
+      orden: cart?.getOrdenAgregado(),
       options,
     });
 

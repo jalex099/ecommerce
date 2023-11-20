@@ -16,7 +16,7 @@ import DataService from "#/services/DataService";
 function CartPage() {
   const ui = useUIState();
   const cart = useCartState();
-  const { getItemsToShow, handleRemoveFromCart, getDetails, getProductTotal } =
+  const { getItemsToShow, handleRemoveFromCart, getDetails } =
     useCartUtils();
   const navigate = useNavigate();
   const { isLoading } = DataService();

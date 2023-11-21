@@ -59,12 +59,11 @@ function FavoritesDialog() {
           {
             //* If there are favorites
             favoriteProducts?.length > 0 && (
-              <Box className="w-full max-h-[400px] min-h-[150px]">
+              <Box className="w-full h-[300px]">
                 <motion.ul
-                  variants={variants}
-                  initial="closed"
-                  animate="open"
-                  exit="closed"
+                  variants={list}
+                  initial="hidden"
+                  animate="visible"
                   className="w-full h-full overflow-y-auto "
                 >
                   {favoriteProducts?.map((fav) => (
@@ -83,13 +82,9 @@ function FavoritesDialog() {
     </>
   );
 }
-const variants = {
-  open: {
-    transition: { staggerChildren: 0.03, delayChildren: 0.1 },
-  },
-  closed: {
-    transition: { staggerChildren: 0.03, staggerDirection: -1 },
-  },
+const list = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
 };
 
 const style = {

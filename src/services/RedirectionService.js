@@ -6,13 +6,13 @@ const RedirectionService = () => {
   const navigate = useNavigate();
   const { menu, categories } = DataService();
   const redirectToProduct = (id, replace = false) => {
-    const { _id, urlName } = menu?.find((product) => product._id === id);
-
-    if (!_id) return;
+    const prd = menu?.find((product) => product._id === id);
+    if (!prd) return;
+    if (!prd?._id) return;
     //* If there is a urlName defined, redirect to the product page with the urlName
-    if (urlName) return navigate(`/product/${urlName}`);
+    if (prd?.urlName) return navigate(`/product/${prd?.urlName}`);
     //* Else, redirect to the product page with the id
-    return navigate(`/product/${_id}`, { replace });
+    return navigate(`/product/${prd?._id}`, { replace });
   };
 
   const findProductByUrlNameOrId = (urlNameOrId) => {

@@ -27,7 +27,8 @@ function FavProductContainer({ id, onClick }) {
 
   return (
     <motion.li
-      variants={variants}
+      layout
+      variants={item}
       className="w-full h-16 mb-8 rounded-md cursor-pointer "
       // onClick={handleClick}
     >
@@ -58,21 +59,9 @@ function FavProductContainer({ id, onClick }) {
   );
 }
 
-const variants = {
-  open: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      // y: { stiffness: 1000, velocity: -100 },
-    },
-  },
-  closed: {
-    y: 20,
-    opacity: 0,
-    transition: {
-      // y: { stiffness: 1000 },
-    },
-  },
+const item = {
+  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 50 },
 };
 
 const style = {

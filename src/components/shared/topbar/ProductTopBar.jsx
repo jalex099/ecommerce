@@ -8,11 +8,13 @@ import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsServ
 import { useMemo } from "react";
 import IconButton from "@mui/material/IconButton";
 import ProductController from "#/components/domain/product/controllers/ProductController";
+import { useAuthState } from "#/stores/AuthState";
 
 function ProductTopBar() {
   const { favoriteProducts, add, remove, isLoading } =
     ClientFavoriteProductsService();
   const { temporal } = ProductController();
+  const auth = useAuthState();
 
   const isFav = useMemo(() => {
     if (!temporal || favoriteProducts?.length === 0) return false;
@@ -43,11 +45,13 @@ function ProductTopBar() {
             <GoBackIcon />
           </IconButton>
           <Box />
-          <FavIcon
-            isFav={isFav}
-            isLoading={isLoading}
-            handleToggleFav={handleToggleFav}
-          />
+          {auth?.isVerified && auth?.isAuthenticated === true && (
+            <FavIcon
+              isFav={isFav}
+              isLoading={isLoading}
+              handleToggleFav={handleToggleFav}
+            />
+          )}
         </Toolbar>
       </Fade>
     </Box>

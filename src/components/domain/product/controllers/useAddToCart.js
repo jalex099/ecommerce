@@ -1,12 +1,12 @@
 import { useCartState } from "#/stores/cart";
 import { useTemporalProduct } from "#/stores/temporalProduct";
 import serializeState from "#/utils/serializeState";
-import { useNavigate } from "react-router-dom";
+import RedirectionService from "#/services/RedirectionService";
 
 export default function useAddToCart() {
   const cart = useCartState();
   const { temp } = useTemporalProduct();
-  const navigate = useNavigate();
+  const { redirectTo } = RedirectionService();
 
   const addToCart = () => {
     const itemToAdd = serializeState(temp);
@@ -36,7 +36,7 @@ export default function useAddToCart() {
     });
 
     cart?.updateOrdenAgregado(cart?.getOrdenAgregado() + 1);
-    navigate("/menu");
+    redirectTo("category", temp?.category, true);
   };
 
   return {

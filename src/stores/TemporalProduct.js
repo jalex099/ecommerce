@@ -5,6 +5,7 @@ const temporalProduct = hookstate({
   name: "",
   description: "",
   price: "",
+  category: "",
   options: [],
   isNew: false,
   tags: [],
@@ -18,16 +19,18 @@ export const useTemporalProduct = () => {
     state.name.set("");
     state.description.set("");
     state.price.set("");
+    state.category.set("");
     state.options.set([]);
     state.isNew.set(false);
     state.tags.set([]);
   };
 
-  const fill = ({ _id, name, description, price, options, isNew, tags }) => {
+  const fill = ({ _id, name, description, price, category, options, isNew, tags }) => {
     state._id.set(_id);
     state.name.set(name);
     state.description.set(description);
     state.price.set(price);
+    state.category.set(category);
     state.options?.set(
       options?.reduce((acc, option) => {
         const opt = {

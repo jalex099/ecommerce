@@ -20,7 +20,7 @@ body {
 
 .swiper {
   width: 100%;
-  max-height: 180px;
+  aspect-ratio: 16/9;
   border-radius: 16px;
 }
 

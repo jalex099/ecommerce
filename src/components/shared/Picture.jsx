@@ -7,6 +7,7 @@ const Picture = ({
   alt = "",
   style = {},
   imgStyle = {},
+  blockAnimation = false,
   ...props
 }) => {
   const defaultImg = webp || jpg || placeholderImg;
@@ -24,7 +25,8 @@ const Picture = ({
           objectPosition: "center",
           ...imgStyle,
         }}
-        whileTap={{ scale: 0.95 }}
+        layout
+        whileTap={blockAnimation ? {} : { scale: 0.95 }}
         onContextMenu={(e) => e.preventDefault()}
       />
     </picture>

@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-creative";
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { FADE_ANIMATION } from "#/config/constants";
 
@@ -17,9 +16,10 @@ import {
 } from "swiper/modules";
 import ImageService from "#/services/ImageService.js";
 import { useNavigate } from "react-router-dom";
+import Picture from "#/components/shared/Picture";
 
 function SliderComponent() {
-  const { carousel, categories, isLoading } = DataService();
+  const { carousel, categories } = DataService();
   const { findImage } = ImageService();
   const navigate = useNavigate();
 
@@ -68,11 +68,12 @@ function SliderComponent() {
         {carousel?.map((item, index) => {
           return (
             <SwiperSlide key={index} onClick={() => handleClickSlide(item)}>
-              <img
-                src={findImage(item?._id, "BNR")}
-                alt={item?.url}
-                loading="lazy"
-                className="rounded-2xl"
+              <Picture
+                webp={findImage(item?._id, "BNR", "webp")}
+                jpg={findImage(item?._id, "BNR", "jpg")}
+                alt={`Imagen de ${name}`}
+                className="object-cover rounded-2xl"
+                blockAnimation
               />
             </SwiperSlide>
           );

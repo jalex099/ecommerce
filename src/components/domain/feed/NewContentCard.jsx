@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import { motion } from "framer-motion";
+import Regular16 from "#/components/shared/fonts/Regular16";
 
 function NewContentCard({ item, ...props }) {
   return (
@@ -15,7 +16,7 @@ function NewContentCard({ item, ...props }) {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       />
-      <Box sx={style.textContainer}>{item?.title} </Box>
+      <Regular16 sx={style.textContainer}>{item?.title} </Regular16>
     </Box>
   );
 }
@@ -23,7 +24,6 @@ function NewContentCard({ item, ...props }) {
 const style = {
   container: {
     minWidth: "200px",
-    height: "200px",
     borderRadius: "8px",
     overflow: "hidden",
     cursor: "pointer",

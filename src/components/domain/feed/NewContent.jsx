@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import Bold18 from "#/components/shared/fonts/Bold18";
+import Regular18 from "#/components/shared/fonts/Regular18";
 import HorizontalScroller from "#/components/shared/HorizontalScroller";
 import NewContentCard from "#/components/domain/feed/NewContentCard";
 
@@ -16,7 +16,7 @@ function NewContent({ news }) {
   if (!news) return null;
   return (
     <Box sx={style.container}>
-      <Bold18>Novedades</Bold18>
+      <Regular18>Novedades</Regular18>
       <HorizontalScroller>
         {tempNews?.map((item, index) => (
           <NewContentCard key={index} item={item} />

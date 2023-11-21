@@ -22,7 +22,11 @@ function ProductsList({ category, products, handleClick }) {
 const style = {
   container: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    gridTemplateColumns: {
+      xs: "1fr 1fr",
+      lg: "1fr 1fr 1fr",
+      xl: "1fr 1fr 1fr 1fr",
+    },
     gridGap: "8px",
   },
 };

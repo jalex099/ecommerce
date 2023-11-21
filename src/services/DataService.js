@@ -20,8 +20,19 @@ const DataService = () => {
     staleTime: 1000 * 60 * 10,
   });
 
+  //* Retorna las categorias que tienen productos
   const categories = useMemo(() => {
-    return data?.data?.categories || [];
+    const categoriesWithProducts = data?.data?.categories?.reduce(
+      (acc, cat) => {
+        // If the category almost has one product, add it to the list
+        if (data?.data?.menu?.some((prd) => prd?.category === cat?._id)) {
+          acc.push(cat);
+        }
+        return acc;
+      },
+      []
+    );
+    return categoriesWithProducts || [];
   }, [data]);
 
   const menu = useMemo(() => {

@@ -16,12 +16,12 @@ function ProductCardContainer({ product, handleClick }) {
       className="rounded-md p-2  shadow-md relative select-none"
       onClick={() => handleClick(product?._id)}
     >
-      <TouchRippleEffect className="flex flex-col items-start justify-start rounded-md min-h-[150px]">
+      <TouchRippleEffect className="flex flex-col items-start justify-start rounded-md min-h-[150px] ">
         <Picture
           webp={findImage(product?._id, "PRD", "webp")}
           jpg={findImage(product?._id, "PRD", "jpg")}
           alt={`Imagen de ${product?.name}`}
-          className="w-full h-32 object-cover rounded-md mb-3 overflow-hidden"
+          className="w-full aspect-square lg:h-64 object-cover rounded-md mb-3 overflow-hidden"
         />
         <Regular16>{product?.name}</Regular16>
         <Bold14>{formatCurrency(product?.price)}</Bold14>

@@ -10,11 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { BOTTOM_BAR_HIDDEN_PATHS } from "#/config/constants";
+import RedirectionService from "#/services/RedirectionService";
 
 function BottomBarContainer() {
   const value = useHookstate(0);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { redirectToFirstCategory } = RedirectionService();
 
   useEffect(() => {
     if (pathname === "/") value.set(0);
@@ -23,13 +25,15 @@ function BottomBarContainer() {
     else value.set(0);
   }, [pathname]);
   const handleChange = (e, newValue) => {
+    const isAllowedAction = value?.get() !== newValue;
+    if (!isAllowedAction) return;
     value.set(newValue);
     switch (newValue) {
       case 0:
         navigate("/");
         break;
       case 1:
-        navigate("/menu");
+        redirectToFirstCategory();
         break;
       case 2:
         navigate("/profile");

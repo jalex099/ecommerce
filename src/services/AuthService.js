@@ -11,7 +11,7 @@ import { removeKey, setKey } from "#/utils/localStorageHelper";
 import { useAuthState } from "#/stores/AuthState";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { startLoading, stopLoading } from "#/stores/UIState.js";
+import { startLoading, stopLoading, addToast } from "#/stores/UIState.js";
 
 const queryKeys = ["getPreferences", "getAddresses", "getFavoriteProducts"];
 
@@ -88,8 +88,10 @@ const AuthService = () => {
           type: "inactive", // only invalidate inactive queries
           refetchType: "none", // don't refetch until needed
         });
+        addToast("Nos vemos pronto", "success");
       })
       .catch((error) => {
+        addToast("Error al cerrar sesión", "error");
         console.log(error);
       })
       .finally(() => {

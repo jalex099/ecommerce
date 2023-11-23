@@ -8,6 +8,7 @@ import { useHookstate } from "@hookstate/core";
 import Button from "@mui/material/Button";
 import ClientAddressService from "#/services/ClientAddressService";
 import FormAddressContainer from "../components/domain/profile/addAddress/FormAddressContainer";
+import { addToast } from "#/stores/UIState.js";
 
 function AddAddressPage() {
   const ui = useUIState();
@@ -32,6 +33,7 @@ function AddAddressPage() {
         longitude: coords?.long,
       });
     } catch (error) {
+      addToast("No se pudo obtener tu ubicación", "error");
       console.log(error);
     }
   };

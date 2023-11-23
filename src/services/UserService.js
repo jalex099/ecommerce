@@ -14,12 +14,10 @@ const UserService = () => {
   const loginGoogle = useMutation({
     mutationFn: authGoogle,
     onSuccess: (data) => {
-      console.log(data)
       setKey("token", data?.id_token);
       setKey("refreshToken", data?.access_token);
     },
   });
-
 
   return {
     loginGoogle,

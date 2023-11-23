@@ -17,20 +17,15 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import ProductController from "#/components/domain/product/controllers/ProductController";
 import Regular12 from "#/components/shared/fonts/Regular12";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
   const { findImage } = ImageService();
   const { id } = useParams();
   const ui = useUIState();
-  const {
-    initTemp,
-    clearTemp,
-    temporal,
-    getOptionsSubtotal,
-    handleAddToCart,
-    areAllOptionsSelected,
-  } = ProductController();
+  const { initTemp, clearTemp, temporal, getOptionsSubtotal, handleAddToCart } =
+    ProductController();
 
   useEffect(() => {
     ui?.setTitle("");
@@ -64,13 +59,22 @@ const ProductPage = () => {
         }}
       />
       <SemiBold20> {temporal?.name}</SemiBold20>
-      <Box className="flex flex-col gap-0 ">
+      <Box className="flex flex-row justify-between gap-0 ">
         <Bold18>{formatCurrency(temporal?.price)}</Bold18>
-        {getOptionsSubtotal() > 0 && (
-          <Regular12>
-            Monto extra por opciones: {formatCurrency(getOptionsSubtotal())}
-          </Regular12>
-        )}
+        <AnimatePresence>
+          {getOptionsSubtotal() > 0 && (
+            <motion.div
+              key="extraAmount"
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 100, opacity: 0 }}
+            >
+              <Regular12>
+                Monto extra: {formatCurrency(getOptionsSubtotal())}
+              </Regular12>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Box>
       <ProductConfigContainer options={temporal?.options} />
       <Box>
@@ -80,10 +84,7 @@ const ProductPage = () => {
         <Divider />
         <ExtrasContainer tags={temporal?.tags} />
       </Box>
-      <AddToCartButton
-        onClick={handleAddToCart}
-        // disabled={!areAllOptionsSelected()}
-      />
+      <AddToCartButton onClick={handleAddToCart} />
     </Container>
   );
 };

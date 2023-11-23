@@ -13,6 +13,7 @@ import { BOTTOM_BAR_HIDDEN_PATHS } from "#/config/constants";
 import { useCartState } from "#/stores/cart.js";
 import DataService from "#/services/DataService.js";
 import ErrorFetchPage from "#/pages/ErrorFetchPage.jsx";
+import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -67,6 +68,7 @@ const LayoutPage = () => {
             {/*
         DIALOGS GLOBALES
     */}
+    <ToasterCustom />
           </Box>
           <footer className="fixed bottom-0 left-0 right-0">
             <BottomBarContainer />

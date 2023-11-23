@@ -1,6 +1,7 @@
 import ClientAddressRepository from "#/repositories/ClientAddressRepository";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { addToast } from "#/stores/UIState.js";
 
 const ClientAddressService = () => {
   const queryClient = useQueryClient();
@@ -15,23 +16,25 @@ const ClientAddressService = () => {
 
   const add = useMutation({
     mutationFn: addAddress,
-    onSuccess: ({ data, status }) => {
-      console.log(data, status);
+    onSuccess: () => {
+      addToast("Dirección agregada correctamente", "success");
       queryClient.invalidateQueries(["getAddresses"], {});
       navigate(-1);
     },
     onError: (error) => {
+      addToast("Hubo un error al agregar la dirección", "error");
       console.log(error);
     },
   });
 
   const remove = useMutation({
     mutationFn: deleteAddress,
-    onSuccess: ({ data, status }) => {
-      console.log(data, status);
+    onSuccess: () => {
+      addToast(`Dirección eliminada correctamente`, "success");
       queryClient.invalidateQueries(["getAddresses"], {});
     },
     onError: (error) => {
+      addToast("Hubo un error al eliminar la dirección", "error");
       console.log(error);
     },
   });

@@ -51,9 +51,14 @@ const DataService = () => {
     return data?.data?.messages || [];
   }, [data]);
 
+  const options = useMemo(() => {
+    return data?.data?.options || [];
+  }, [data]);
+
   return {
     categories,
     menu,
+    options,
     company,
     carousel,
     messages,

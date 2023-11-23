@@ -2,12 +2,19 @@ import Box from "@mui/material/Box";
 import Regular18 from "#/components/shared/fonts/Regular18";
 import Regular14 from "#/components/shared/fonts/Regular14";
 import Regular12 from "#/components/shared/fonts/Regular12";
-import { Chip } from "@mui/material";
+import Chip from "@mui/material/Chip";
 import PreferenceSkeleton from "#/components/domain/profile/skeletons/PreferenceSkeleton";
 import ClientPreferenceService from "#/services/ClientPreferenceService";
+import { useHookstate } from "@hookstate/core";
+import AddPreferenceDialog from "#/components/domain/profile/preferences/AddPreferenceDialog";
+import DataService from "#/services/DataService";
+import AddPreferenceButton from "#/components/domain/profile/preferences/AddPreferenceButton";
 
 function Preferences() {
-  const { preferences, isLoading, isRefetching } = ClientPreferenceService();
+  const { preferences, isLoading, isRefetching, add } =
+    ClientPreferenceService();
+  const { options } = DataService();
+  const isOpenDialog = useHookstate(false);
   const getTitleOfCode = (code) => {
     switch (code) {
       case "OPT":
@@ -17,10 +24,26 @@ function Preferences() {
     }
   };
 
+  const handleOpenDialog = () => {
+    isOpenDialog.set(true);
+  };
+
+  const handleCloseDialog = () => {
+    isOpenDialog.set(false);
+  };
+
+  const handleAddPreference = (value) => {
+    console.log(value);
+    add?.mutate({ code: "OPT", value });
+  };
+
   if (isLoading || isRefetching) return <PreferenceSkeleton />;
   return (
     <Box sx={style.container}>
-      <Regular18>Mis preferencias</Regular18>
+      <Box className="flex flex-row justify-between items-center w-full">
+        <Regular18>Mis preferencias</Regular18>
+        <AddPreferenceButton onClick={handleOpenDialog} />
+      </Box>
       {preferences?.length === 0 && (
         <Regular12 styles={{ color: (theme) => theme.palette.neutral60.main }}>
           No tienes preferencias registradas
@@ -34,13 +57,27 @@ function Preferences() {
                 {getTitleOfCode(item?.code)}
               </Regular14>
               <Regular14>
-                {item?.value?.map((value) => value).join(", ")}
+                {item?.value
+                  ?.map((value) => {
+                    const option = options?.find((item) => item?._id === value);
+                    return option?.name;
+                  })
+                  .join(", ")}
               </Regular14>
             </Box>
 
             <Chip label={item?.code?.charAt(0)} />
           </Box>
         ))}
+      <AddPreferenceDialog
+        open={isOpenDialog.get()}
+        handleAddPreference={handleAddPreference}
+        optionsList={options}
+        optionsActive={
+          preferences?.find((item) => item?.code === "OPT")?.value || []
+        }
+        onClose={handleCloseDialog}
+      />
     </Box>
   );
 }

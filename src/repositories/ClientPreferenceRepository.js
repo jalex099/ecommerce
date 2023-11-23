@@ -7,8 +7,15 @@ const ClientPreferenceRepository = () => {
     });
   };
 
+  const addPreference = async (preference) => {
+    return await API.post("/client/preferences", preference, {
+      secure: true,
+    });
+  };
+
   return {
     getPreferences,
+    addPreference,
   };
 };
 

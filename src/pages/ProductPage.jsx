@@ -82,7 +82,7 @@ const ProductPage = () => {
       </Box>
       <AddToCartButton
         onClick={handleAddToCart}
-        isDisabled={!areAllOptionsSelected()}
+        // disabled={!areAllOptionsSelected()}
       />
     </Container>
   );

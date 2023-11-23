@@ -1,14 +1,13 @@
 import Regular14 from "#/components/shared/fonts/Regular14";
 import Button from "@mui/material/Button";
 
-const AddToCartButton = ({ isDisabled, ...props }) => {
+const AddToCartButton = ({ ...props }) => {
   return (
     <Button
       sx={style?.container}
       variant="contained"
       disableElevation
       fullWidth
-      disabled={isDisabled}
       {...props}
       className="flex justify-center items-center  cursor-pointer "
     >

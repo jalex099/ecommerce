@@ -23,8 +23,14 @@ const ProductPage = () => {
   const { findImage } = ImageService();
   const { id } = useParams();
   const ui = useUIState();
-  const { initTemp, clearTemp, temporal, getOptionsSubtotal, handleAddToCart } =
-    ProductController();
+  const {
+    initTemp,
+    clearTemp,
+    temporal,
+    getOptionsSubtotal,
+    handleAddToCart,
+    areAllOptionsSelected,
+  } = ProductController();
 
   useEffect(() => {
     ui?.setTitle("");
@@ -74,7 +80,10 @@ const ProductPage = () => {
         <Divider />
         <ExtrasContainer tags={temporal?.tags} />
       </Box>
-      <AddToCartButton onClick={handleAddToCart} />
+      <AddToCartButton
+        onClick={handleAddToCart}
+        isDisabled={!areAllOptionsSelected()}
+      />
     </Container>
   );
 };

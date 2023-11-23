@@ -53,6 +53,11 @@ const components = {
     styleOverrides: {
       root: {
         textTransform: "none !important",
+        // disabled
+        "&.Mui-disabled": {
+          backgroundColor: "#E7E7E8 !important",
+          color: "#868687 !important",
+        },
       },
     },
   },

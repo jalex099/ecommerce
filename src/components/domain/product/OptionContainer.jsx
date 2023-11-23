@@ -10,7 +10,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useHookstate } from "@hookstate/core";
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
-import Regular12 from "#/components/shared/fonts/Regular12";
+import LabelSelected from "#/components/domain/product/LabelSelected";
+import LabelNoSelected from "#/components/domain/product/LabelNoSelected";
 
 function OptionContainer({ label, options, index }) {
   const isDialogOpen = useHookstate(false);
@@ -19,6 +20,7 @@ function OptionContainer({ label, options, index }) {
     getSelectedOption,
     setSelection,
     getSelectedOptionName,
+    isOptionSelected,
   } = ProductController();
 
   const indexOptionRepeated = useMemo(() => {
@@ -45,12 +47,13 @@ function OptionContainer({ label, options, index }) {
         variant="outlined"
         color="primary"
         onClick={handleClickOption}
-        className="flex flex-col items-center justify-center px-1"
+        className="flex flex-col items-center justify-center px-1 h-[60px]"
       >
-        <Regular14>{`${labelToShow} `}</Regular14>
-        <Regular12 styles={style.selectedOption} className="whitespace-nowrap">
-          {getSelectedOptionName(index, 20)}
-        </Regular12>
+        {isOptionSelected(index) ? (
+          <LabelSelected text={getSelectedOptionName(index)} />
+        ) : (
+          <LabelNoSelected text={labelToShow} />
+        )}
       </Button>
       <Dialog
         open={isDialogOpen.get()}
@@ -91,7 +94,7 @@ const style = {
     m: 0,
   },
   selectedOption: {
-    opacity: 0.75,
+    // opacity: 0.75,
   },
 };
 

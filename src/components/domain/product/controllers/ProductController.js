@@ -71,10 +71,17 @@ const ProductController = () => {
     return selectedOption?.option?.name;
   };
 
+  const isOptionSelected = (optionIndex) =>
+    temp?.options[optionIndex]?.selected !== null;
+
   const getTotal = () => {
     const basePrice = temp?.price;
     const optionsPrice = getOptionsSubtotal();
     return basePrice + optionsPrice;
+  };
+
+  const areAllOptionsSelected = () => {
+    return temp?.options?.every((option) => option?.selected !== null);
   };
 
   const getOptionsSubtotal = () => {
@@ -104,6 +111,8 @@ const ProductController = () => {
     getTotal,
     getOptionsSubtotal,
     handleAddToCart,
+    isOptionSelected,
+    areAllOptionsSelected,
   };
 };
 

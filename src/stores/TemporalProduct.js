@@ -25,7 +25,16 @@ export const useTemporalProduct = () => {
     state.tags.set([]);
   };
 
-  const fill = ({ _id, name, description, price, category, options, isNew, tags }) => {
+  const fill = ({
+    _id,
+    name,
+    description,
+    price,
+    category,
+    options,
+    isNew,
+    tags,
+  }) => {
     state._id.set(_id);
     state.name.set(name);
     state.description.set(description);
@@ -36,7 +45,7 @@ export const useTemporalProduct = () => {
         const opt = {
           _id: option?._id,
           label: option?.label,
-          selected: option?.options[0]?._id,
+          selected: null,
           options: option?.options,
         };
         acc.push(opt);

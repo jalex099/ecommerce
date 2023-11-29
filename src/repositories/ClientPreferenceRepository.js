@@ -13,9 +13,19 @@ const ClientPreferenceRepository = () => {
     });
   };
 
+  const removePreference = async (preference) => {
+    return await API.delete(
+      `/client/preferences/${preference?.id}/${preference?.value}`,
+      {
+        secure: true,
+      }
+    );
+  };
+
   return {
     getPreferences,
     addPreference,
+    removePreference,
   };
 };
 

@@ -37,7 +37,7 @@ function FavoritesDialog() {
       >
         <SemiBold12>
           {favoriteProducts?.length} Favorito
-          {favoriteProducts?.length > 1 ? "s" : ""}
+          {favoriteProducts?.length !== 1 ? "s" : ""}
         </SemiBold12>
       </Button>
       <Dialog onClose={handleClose} open={isOpen.get()} sx={style.dialog}>

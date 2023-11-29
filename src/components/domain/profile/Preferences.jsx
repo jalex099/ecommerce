@@ -6,12 +6,12 @@ import Chip from "@mui/material/Chip";
 import PreferenceSkeleton from "#/components/domain/profile/skeletons/PreferenceSkeleton";
 import ClientPreferenceService from "#/services/ClientPreferenceService";
 import { useHookstate } from "@hookstate/core";
-import AddPreferenceDialog from "#/components/domain/profile/preferences/AddPreferenceDialog";
+import ConfigPreferenceDialog from "#/components/domain/profile/preferences/ConfigPreferenceDialog";
 import DataService from "#/services/DataService";
-import AddPreferenceButton from "#/components/domain/profile/preferences/AddPreferenceButton";
+import ConfigPreferenceButton from "#/components/domain/profile/preferences/ConfigPreferenceButton";
 
 function Preferences() {
-  const { preferences, isLoading, isRefetching, add } =
+  const { preferences, isLoading, isRefetching, add, remove } =
     ClientPreferenceService();
   const { options } = DataService();
   const isOpenDialog = useHookstate(false);
@@ -33,8 +33,11 @@ function Preferences() {
   };
 
   const handleAddPreference = (value) => {
-    console.log(value);
     add?.mutate({ code: "OPT", value });
+  };
+
+  const handleRemovePreference = (value) => {
+    remove?.mutate(value);
   };
 
   if (isLoading || isRefetching) return <PreferenceSkeleton />;
@@ -42,7 +45,7 @@ function Preferences() {
     <Box sx={style.container}>
       <Box className="flex flex-row justify-between items-center w-full">
         <Regular18>Mis preferencias</Regular18>
-        <AddPreferenceButton onClick={handleOpenDialog} />
+        <ConfigPreferenceButton onClick={handleOpenDialog} />
       </Box>
       {preferences?.length === 0 && (
         <Regular12 styles={{ color: (theme) => theme.palette.neutral60.main }}>
@@ -69,9 +72,11 @@ function Preferences() {
             <Chip label={item?.code?.charAt(0)} />
           </Box>
         ))}
-      <AddPreferenceDialog
+      <ConfigPreferenceDialog
         open={isOpenDialog.get()}
         handleAddPreference={handleAddPreference}
+        id={preferences?.find((item) => item?.code === "OPT")?._id}
+        handleRemovePreference={handleRemovePreference}
         optionsList={options}
         optionsActive={
           preferences?.find((item) => item?.code === "OPT")?.value || []

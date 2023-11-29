@@ -1,15 +1,15 @@
 import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
+import SettingIcon from "#/components/shared/icons/SettingIcon";
 
-export default function AddPreferenceButton({ ...props }) {
+export default function ConfigPreferenceButton({ ...props }) {
   return (
     <IconButton
       {...props}
       variant="contained"
-      className="w-8 h-8"
+      className="w-6 h-6"
       aria-label="add"
     >
-      <AddIcon />
+      <SettingIcon />
     </IconButton>
   );
 }

@@ -1,27 +1,22 @@
 import Box from "@mui/material/Box";
 import Regular18 from "#/components/shared/fonts/Regular18";
-import Regular14 from "#/components/shared/fonts/Regular14";
 import Regular12 from "#/components/shared/fonts/Regular12";
-import Chip from "@mui/material/Chip";
 import PreferenceSkeleton from "#/components/domain/profile/skeletons/PreferenceSkeleton";
 import ClientPreferenceService from "#/services/ClientPreferenceService";
-import { useHookstate } from "@hookstate/core";
-import ConfigPreferenceDialog from "#/components/domain/profile/preferences/ConfigPreferenceDialog";
 import DataService from "#/services/DataService";
-import ConfigPreferenceButton from "#/components/domain/profile/preferences/ConfigPreferenceButton";
 import GroupOfOption from "#/components/domain/profile/preferences/GroupOfOption";
 
 function Preferences() {
-  const { preferences, isLoading, isRefetching, add, remove } =
+  const { preferences, isLoading, isRefetching, addOrRemove } =
     ClientPreferenceService();
   const { groupsOfOptions } = DataService();
 
   const handleAddPreference = (value) => {
-    add?.mutate({ code: "OPT", value });
+    addOrRemove?.mutate({ action: "add", value });
   };
 
   const handleRemovePreference = (value) => {
-    remove?.mutate(value);
+    addOrRemove?.mutate({ action: "remove", value });
   };
   if (isLoading || isRefetching) return <PreferenceSkeleton />;
   return (
@@ -29,15 +24,15 @@ function Preferences() {
       <Box className="flex flex-row justify-between items-center w-full">
         <Regular18>Mis preferencias</Regular18>
       </Box>
-      {!preferences && preferences?.value?.length === 0 && (
+      {!preferences && preferences?.values?.length === 0 && (
         <Regular12 styles={{ color: (theme) => theme.palette.neutral60.main }}>
           No tienes preferencias registradas
         </Regular12>
       )}
-      {groupsOfOptions?.map((group) => {
+      {groupsOfOptions?.map((group, index) => {
         return (
           <GroupOfOption
-            key={group?.name}
+            key={group?.name || index}
             group={group}
             preferences={preferences}
             handleAddPreference={handleAddPreference}
@@ -45,15 +40,6 @@ function Preferences() {
           />
         );
       })}
-      {/* <ConfigPreferenceDialog
-        open={isOpenDialog.get()}
-        handleAddPreference={handleAddPreference}
-        id={preferences?._id}
-        handleRemovePreference={handleRemovePreference}
-        optionsList={options}
-        optionsActive={preferences?.value || []}
-        onClose={handleCloseDialog}
-      /> */}
     </Box>
   );
 }

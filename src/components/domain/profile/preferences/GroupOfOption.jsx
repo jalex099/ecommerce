@@ -12,7 +12,7 @@ export default function GroupOfOption({
 }) {
   const isDialogOpen = useHookstate(false);
   const optionsWithPreferences = group?.options?.filter((option) => {
-    return preferences?.value?.includes(option?._id);
+    return preferences?.values?.includes(option?._id);
   });
 
   const handleOpenDialog = () => {
@@ -24,34 +24,39 @@ export default function GroupOfOption({
   };
 
   return (
-    <Box className=" flex flex-row items-center justify-between w-full my-1">
-      <Box onClick={handleOpenDialog}>
-        <Regular14 styles={style.textMuted}>
-          {group?.label?.charAt(0).toUpperCase() +
-            group?.label?.slice(1)?.toLowerCase()}
-        </Regular14>
-        <Box>
-          <Regular14>
-            {optionsWithPreferences?.length === 0 && "-"}
-            {optionsWithPreferences?.length > 0 &&
-              optionsWithPreferences
-                ?.map((option) => {
-                  return option?.name;
-                })
-                .join(", ")}
+    <>
+      <Box
+        className=" flex flex-row items-center justify-between w-full my-1"
+        onClick={handleOpenDialog}
+      >
+        <Box className="flex-1">
+          <Regular14 styles={style.textMuted}>
+            {group?.label?.charAt(0).toUpperCase() +
+              group?.label?.slice(1)?.toLowerCase()}
           </Regular14>
+          <Box>
+            <Regular14>
+              {optionsWithPreferences?.length === 0 && "-"}
+              {optionsWithPreferences?.length > 0 &&
+                optionsWithPreferences
+                  ?.map((option) => {
+                    return option?.name;
+                  })
+                  .join(", ")}
+            </Regular14>
+          </Box>
         </Box>
+        <Chip label={group?.label?.charAt(0)} />
       </Box>
-      <Chip label={group?.label?.charAt(0)} />
       <ConfigPreferenceDialog
         open={isDialogOpen.get()}
         onClose={handleCloseDialog}
         optionsList={group?.options}
-        optionsActive={preferences?.value}
+        optionsActive={preferences?.values}
         handleAddPreference={handleAddPreference}
         handleRemovePreference={handleRemovePreference}
       />
-    </Box>
+    </>
   );
 }
 

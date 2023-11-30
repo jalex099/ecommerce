@@ -4,7 +4,6 @@ import PreferenceItem from "#/components/domain/profile/preferences/PreferenceIt
 const ConfigPreferenceDialog = ({
   open,
   onClose,
-  id,
   optionsList,
   optionsActive,
   handleAddPreference,
@@ -18,7 +17,7 @@ const ConfigPreferenceDialog = ({
           <PreferenceItem
             onClick={() => {
               if (optionsActive?.includes(item?._id)) {
-                handleRemovePreference({ id, value: item?._id });
+                handleRemovePreference({ id: "CODE", value: item?._id });
               } else {
                 handleAddPreference(item?._id);
               }

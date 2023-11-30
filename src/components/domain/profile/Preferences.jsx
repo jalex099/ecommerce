@@ -9,28 +9,12 @@ import { useHookstate } from "@hookstate/core";
 import ConfigPreferenceDialog from "#/components/domain/profile/preferences/ConfigPreferenceDialog";
 import DataService from "#/services/DataService";
 import ConfigPreferenceButton from "#/components/domain/profile/preferences/ConfigPreferenceButton";
+import GroupOfOption from "#/components/domain/profile/preferences/GroupOfOption";
 
 function Preferences() {
   const { preferences, isLoading, isRefetching, add, remove } =
     ClientPreferenceService();
-  const { options } = DataService();
-  const isOpenDialog = useHookstate(false);
-  const getTitleOfCode = (code) => {
-    switch (code) {
-      case "OPT":
-        return "Opciones";
-      default:
-        return "Sin definir";
-    }
-  };
-
-  const handleOpenDialog = () => {
-    isOpenDialog.set(true);
-  };
-
-  const handleCloseDialog = () => {
-    isOpenDialog.set(false);
-  };
+  const { groupsOfOptions } = DataService();
 
   const handleAddPreference = (value) => {
     add?.mutate({ code: "OPT", value });
@@ -39,50 +23,37 @@ function Preferences() {
   const handleRemovePreference = (value) => {
     remove?.mutate(value);
   };
-
   if (isLoading || isRefetching) return <PreferenceSkeleton />;
   return (
     <Box sx={style.container}>
       <Box className="flex flex-row justify-between items-center w-full">
         <Regular18>Mis preferencias</Regular18>
-        <ConfigPreferenceButton onClick={handleOpenDialog} />
       </Box>
-      {preferences?.length === 0 && (
+      {!preferences && preferences?.value?.length === 0 && (
         <Regular12 styles={{ color: (theme) => theme.palette.neutral60.main }}>
           No tienes preferencias registradas
         </Regular12>
       )}
-      {preferences?.length > 0 &&
-        preferences?.map((item, index) => (
-          <Box key={index} sx={style.subcontainer}>
-            <Box>
-              <Regular14 styles={style.textMuted}>
-                {getTitleOfCode(item?.code)}
-              </Regular14>
-              <Regular14>
-                {item?.value
-                  ?.map((value) => {
-                    const option = options?.find((item) => item?._id === value);
-                    return option?.name;
-                  })
-                  .join(", ")}
-              </Regular14>
-            </Box>
-
-            <Chip label={item?.code?.charAt(0)} />
-          </Box>
-        ))}
-      <ConfigPreferenceDialog
+      {groupsOfOptions?.map((group) => {
+        return (
+          <GroupOfOption
+            key={group?.name}
+            group={group}
+            preferences={preferences}
+            handleAddPreference={handleAddPreference}
+            handleRemovePreference={handleRemovePreference}
+          />
+        );
+      })}
+      {/* <ConfigPreferenceDialog
         open={isOpenDialog.get()}
         handleAddPreference={handleAddPreference}
-        id={preferences?.find((item) => item?.code === "OPT")?._id}
+        id={preferences?._id}
         handleRemovePreference={handleRemovePreference}
         optionsList={options}
-        optionsActive={
-          preferences?.find((item) => item?.code === "OPT")?.value || []
-        }
+        optionsActive={preferences?.value || []}
         onClose={handleCloseDialog}
-      />
+      /> */}
     </Box>
   );
 }

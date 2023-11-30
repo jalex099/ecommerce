@@ -55,6 +55,34 @@ const DataService = () => {
     return data?.data?.options || [];
   }, [data]);
 
+  const groupsOfOptions = useMemo(() => {
+    return options
+      ?.reduce((acc, item) => {
+        const group = item?.group;
+        const label = group || "N/A";
+        // Verificar si ya existe el grupo
+        const groupExists = acc?.find((item) => item?.value === group);
+        if (groupExists) return acc;
+        return [
+          ...acc,
+          {
+            value: group,
+            index: !group ? 0 : 1,
+            label: label,
+            options: options?.filter((item) => item?.group === group),
+          },
+        ];
+      }, [])
+      ?.sort((a, b) => {
+        // por index y luego por label
+        if (a?.index < b?.index) return -1;
+        if (a?.index > b?.index) return 1;
+        if (a?.label < b?.label) return -1;
+        if (a?.label > b?.label) return 1;
+        return 0;
+      });
+  }, [options]);
+
   return {
     categories,
     menu,
@@ -68,6 +96,7 @@ const DataService = () => {
     isRefetching,
     isFetching,
     refetch,
+    groupsOfOptions,
   };
 };
 

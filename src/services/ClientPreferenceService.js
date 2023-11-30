@@ -4,11 +4,11 @@ import { addToast } from "#/stores/UIState.js";
 
 const ClientPreferenceService = () => {
   const queryClient = useQueryClient();
-  const { getPreferences, addPreference, removePreference } =
+  const { getPreferencesByOpt, addPreference, removePreference } =
     ClientPreferenceRepository();
   const { data, isLoading, isRefetching } = useQuery({
-    queryKey: ["getPreferences"],
-    queryFn: getPreferences,
+    queryKey: ["getPreferencesByOpt"],
+    queryFn: getPreferencesByOpt,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   });
@@ -16,25 +16,9 @@ const ClientPreferenceService = () => {
   const add = useMutation({
     mutationFn: addPreference,
     onSuccess: ({ data }) => {
-      // queryClient.invalidateQueries(["getPreferences"], {});
-      queryClient.setQueryData(["getPreferences"], (oldData) => {
-        // Buscar si existe la preferencia con code igual a la nueva preferencia
-        const preference = oldData?.data?.find(
-          (preference) => preference?.code === data?.code
-        );
-        if (!preference) {
-          return {
-            data: [...oldData.data, data],
-          };
-        }
-        // Si existe, actualizarla
+      queryClient.setQueryData(["getPreferencesByOpt"], () => {
         return {
-          data: oldData.data.map((preference) => {
-            if (preference?.code === data?.code) {
-              return data;
-            }
-            return preference;
-          }),
+          data,
         };
       });
     },
@@ -47,11 +31,9 @@ const ClientPreferenceService = () => {
   const remove = useMutation({
     mutationFn: removePreference,
     onSuccess: ({ data }) => {
-      // queryClient.invalidateQueries(["getPreferences"], {});
-      queryClient.setQueryData(["getPreferences"], (oldData) => {
+      queryClient.setQueryData(["getPreferencesByOpt"], (oldData) => {
         // Buscar si en la data, el value es un array vacio, eliminarlo
         if (data?.value?.length === 0) {
-          console.log(oldData?.data);
           return {
             data: oldData?.data?.filter(
               (preference) => preference?.code !== data?.code

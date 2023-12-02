@@ -1,5 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import PreferenceItem from "#/components/domain/profile/preferences/PreferenceItem";
+import { useMemo } from "react";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 
 const ConfigPreferenceDialog = ({
   open,
@@ -9,9 +11,15 @@ const ConfigPreferenceDialog = ({
   handleAddPreference,
   handleRemovePreference,
 }) => {
+  const group = useMemo(() => {
+    return optionsList[0]?.group || "";
+  }, [optionsList]);
+
   return (
     <Dialog open={open} onClose={onClose} PaperProps={{ sx: style.dialog }}>
-      <DialogTitle>Configurar preferencias</DialogTitle>
+      <DialogTitle>
+        <SemiBold14>{group}</SemiBold14>
+      </DialogTitle>
       <DialogContent sx={style?.content}>
         {optionsList?.map((item) => (
           <PreferenceItem

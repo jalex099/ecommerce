@@ -23,7 +23,7 @@ export default function TouchRippleEffect({ children, styles, ...props }) {
         center={false}
         sx={(theme) => ({
           "& .MuiTouchRipple-child": {
-            backgroundColor: `${theme.palette.opacity60.main} !important`,
+            backgroundColor: `${theme.palette.opacity40.main} !important`,
           },
         })}
       />

@@ -3,6 +3,7 @@ import Regular14 from "#/components/shared/fonts/Regular14";
 import Chip from "@mui/material/Chip";
 import ConfigPreferenceDialog from "#/components/domain/profile/preferences/ConfigPreferenceDialog";
 import { useHookstate } from "@hookstate/core";
+import TouchRippleEffect from "#/components/shared/TouchRippleEffect";
 
 export default function GroupOfOption({
   group,
@@ -26,26 +27,28 @@ export default function GroupOfOption({
   return (
     <>
       <Box
-        className=" flex flex-row items-center justify-between w-full my-1"
+        className=" flex flex-row items-center justify-between w-full relative"
         onClick={handleOpenDialog}
       >
-        <Box className="flex-1">
-          <Regular14 styles={style.textMuted}>
-            {group?.label?.charAt(0).toUpperCase() +
-              group?.label?.slice(1)?.toLowerCase()}
-          </Regular14>
-          <Box>
-            <Regular14>
-              {optionsWithPreferences?.length === 0 && "-"}
-              {optionsWithPreferences?.length > 0 &&
-                optionsWithPreferences
-                  ?.map((option) => {
-                    return option?.name;
-                  })
-                  .join(", ")}
+        <TouchRippleEffect className="w-full py-1">
+          <Box className="flex-1">
+            <Regular14 styles={style.textMuted}>
+              {group?.label?.charAt(0).toUpperCase() +
+                group?.label?.slice(1)?.toLowerCase()}
             </Regular14>
+            <Box>
+              <Regular14>
+                {optionsWithPreferences?.length === 0 && "-"}
+                {optionsWithPreferences?.length > 0 &&
+                  optionsWithPreferences
+                    ?.map((option) => {
+                      return option?.name;
+                    })
+                    .join(", ")}
+              </Regular14>
+            </Box>
           </Box>
-        </Box>
+        </TouchRippleEffect>
         <Chip label={group?.label?.charAt(0)} />
       </Box>
       <ConfigPreferenceDialog

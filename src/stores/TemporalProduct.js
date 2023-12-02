@@ -1,4 +1,6 @@
 import { hookstate, useHookstate } from "@hookstate/core";
+import ClientPreferenceService from "#/services/ClientPreferenceService";
+import { orderBy } from "lodash";
 
 const temporalProduct = hookstate({
   _id: "",
@@ -13,6 +15,7 @@ const temporalProduct = hookstate({
 
 export const useTemporalProduct = () => {
   const state = useHookstate(temporalProduct);
+  const { preferences } = ClientPreferenceService();
 
   const clear = () => {
     state._id.set("");
@@ -46,7 +49,18 @@ export const useTemporalProduct = () => {
           _id: option?._id,
           label: option?.label,
           selected: null,
-          options: option?.options,
+          options: orderBy(
+            option?.options?.reduce((acc, suboption) => {
+              const opt = {
+                ...suboption,
+                suggest: preferences?.values?.includes(suboption?.option?._id),
+              };
+              acc.push(opt);
+              return acc;
+            }, []),
+            ["suggest"],
+            ["desc"]
+          ),
         };
         acc.push(opt);
         return acc;

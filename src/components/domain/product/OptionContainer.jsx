@@ -12,6 +12,8 @@ import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import LabelSelected from "#/components/domain/product/LabelSelected";
 import LabelNoSelected from "#/components/domain/product/LabelNoSelected";
+import Box from "@mui/material/Box";
+import Regular12 from "#/components/shared/fonts/Regular12";
 
 function OptionContainer({ label, options, index }) {
   const isDialogOpen = useHookstate(false);
@@ -68,6 +70,21 @@ function OptionContainer({ label, options, index }) {
           <Regular14>{labelToShow}</Regular14>
         </DialogTitle>
         <DialogContent sx={style.dialogContent}>
+          {options?.some((opt) => opt?.suggest) && (
+            <Box
+              className="w-full flex  items-center gap-2 justify-center py-1"
+              sx={{ bgcolor: (theme) => theme.palette.opacity5.main }}
+            >
+              <Regular12>
+                Tus preferencias se ver&aacute;n con el distintivo:
+              </Regular12>{" "}
+              <Box
+                className="w-2 h-2 rounded-full"
+                sx={{ bgcolor: (theme) => theme.palette.green100.main }}
+              />
+            </Box>
+          )}
+
           <Stack spacing={0}>
             {options?.map((opt) => {
               return (

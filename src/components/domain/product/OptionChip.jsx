@@ -30,7 +30,16 @@ function OptionChip({ option, isSelected, onSelect }) {
       whileTap={{ scale: 0.95 }}
     >
       <Box className="flex flex-row gap-2 items-center justify-start">
-        <Regular14>{option?.option?.name}</Regular14>
+        <Box className="flex gap-2 items-center">
+          {option?.suggest && (
+            <Box
+              className="w-2 h-2 rounded-full"
+              sx={{ bgcolor: (theme) => theme.palette.green100.main }}
+            />
+          )}
+
+          <Regular14>{option?.option?.name}</Regular14>
+        </Box>
         {option?.aditionalPrice > 0 && (
           <SemiBold12> +{formatCurrency(option?.aditionalPrice)}</SemiBold12>
         )}

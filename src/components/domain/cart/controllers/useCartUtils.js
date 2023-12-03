@@ -48,10 +48,15 @@ export default function useCartUtils() {
     );
   };
 
+  const handleRemoveAllFromCart = () => {
+    cart?.removeAllFromCart();
+  };
+
   return {
     getItemsToShow,
     handleRemoveFromCart,
     getDetails,
     getProductTotal,
+    handleRemoveAllFromCart,
   };
 }

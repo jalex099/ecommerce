@@ -224,6 +224,11 @@ const addCart = (state) => ({
     state?.items[index]?.set(none);
   },
 
+  // //* Elimina todos los items del carrito
+  removeAllFromCart: () => {
+    state?.items?.set([]);
+  },
+
   // //* Actualiza el SUBTOTAL en carrito calculando sus items - DESCUENTOS
   addTotal: () => {
     const calcCartItemsTotal = state?.items?.get()?.reduce((acc, item) => {

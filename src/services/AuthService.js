@@ -13,8 +13,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { startLoading, stopLoading, addToast } from "#/stores/UIState.js";
 
-const queryKeys = ["getPreferences", "getAddresses", "getFavoriteProducts"];
-
 const AuthService = () => {
   const auth = getAuth();
   const authState = useAuthState();
@@ -84,10 +82,7 @@ const AuthService = () => {
       .then(() => {
         removeKey("token");
         authState.setCurrentUser(-1);
-        queryClient.invalidateQueries(queryKeys, {
-          type: "inactive", // only invalidate inactive queries
-          refetchType: "none", // don't refetch until needed
-        });
+        queryClient.resetQueries(/^auth_/);
         addToast("Nos vemos pronto", "success");
       })
       .catch((error) => {

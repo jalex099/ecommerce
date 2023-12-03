@@ -6,7 +6,7 @@ const ClientFavoriteProductsService = () => {
     ClientFavoriteProductsRepository();
   const queryClient = useQueryClient();
   const { data, isLoading, isRefetching } = useQuery({
-    queryKey: ["getFavoriteProducts"],
+    queryKey: ["auth_getFavoriteProducts"],
     queryFn: getFavoriteProducts,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60,
@@ -15,7 +15,7 @@ const ClientFavoriteProductsService = () => {
   const add = useMutation({
     mutationFn: addFavoriteProduct,
     onSuccess: ({ data }) => {
-      queryClient.setQueryData(["getFavoriteProducts"], (oldData) => {
+      queryClient.setQueryData(["auth_getFavoriteProducts"], (oldData) => {
         return {
           ...oldData,
           data: [...oldData.data, data],
@@ -30,7 +30,7 @@ const ClientFavoriteProductsService = () => {
   const remove = useMutation({
     mutationFn: removeFavoriteProduct,
     onSuccess: ({ data }) => {
-      queryClient.setQueryData(["getFavoriteProducts"], (oldData) => {
+      queryClient.setQueryData(["auth_getFavoriteProducts"], (oldData) => {
         return {
           ...oldData,
           data: oldData.data.filter((product) => product?._id !== data?._id),

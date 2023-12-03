@@ -15,7 +15,7 @@ const ClientPreferenceService = () => {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["getPreferences"],
+    queryKey: ["auth_getPreferences"],
     queryFn: getPreferences,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
@@ -24,7 +24,7 @@ const ClientPreferenceService = () => {
   const addOrRemove = useMutation({
     mutationFn: addOrRemovePreferences,
     onSuccess: ({ data }) => {
-      queryClient.setQueryData(["getPreferences"], (oldData) => {
+      queryClient.setQueryData(["auth_getPreferences"], (oldData) => {
         return {
           ...oldData,
           data: data,

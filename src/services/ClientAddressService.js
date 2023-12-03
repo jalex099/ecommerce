@@ -8,7 +8,7 @@ const ClientAddressService = () => {
   const navigate = useNavigate();
   const { getAddresses, addAddress, deleteAddress } = ClientAddressRepository();
   const { data, isLoading, isRefetching } = useQuery({
-    queryKey: ["getAddresses"],
+    queryKey: ["auth_getAddresses"],
     queryFn: getAddresses,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
@@ -18,7 +18,7 @@ const ClientAddressService = () => {
     mutationFn: addAddress,
     onSuccess: () => {
       addToast("Dirección agregada correctamente", "success");
-      queryClient.invalidateQueries(["getAddresses"], {});
+      queryClient.invalidateQueries(["auth_getAddresses"], {});
       navigate(-1);
     },
     onError: (error) => {
@@ -31,7 +31,7 @@ const ClientAddressService = () => {
     mutationFn: deleteAddress,
     onSuccess: () => {
       addToast(`Dirección eliminada correctamente`, "success");
-      queryClient.invalidateQueries(["getAddresses"], {});
+      queryClient.invalidateQueries(["auth_getAddresses"], {});
     },
     onError: (error) => {
       addToast("Hubo un error al eliminar la dirección", "error");

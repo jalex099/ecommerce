@@ -59,7 +59,7 @@ const ProductPage = () => {
         }}
       />
       <SemiBold20> {temporal?.name}</SemiBold20>
-      <Box className="flex flex-row justify-between gap-0 ">
+      <Box className="flex flex-row justify-between gap-0 w-full overflow-hidden">
         <Bold18>{formatCurrency(temporal?.price)}</Bold18>
         <AnimatePresence>
           {getOptionsSubtotal() > 0 && (

@@ -49,6 +49,11 @@ function OptionContainer({ label, options, index }) {
     isDialogOpen.set(false);
   };
 
+  const isSomePrefered = useMemo(
+    () => options?.some((opt) => opt?.suggest),
+    [options]
+  );
+
   return (
     <>
       <Button
@@ -88,7 +93,7 @@ function OptionContainer({ label, options, index }) {
           <CloseIcon className="w-6 h-6" />
         </IconButton>
         <DialogContent sx={style.dialogContent}>
-          {options?.some((opt) => opt?.suggest) && (
+          {isSomePrefered && (
             <Box
               className="w-full flex  items-center gap-2 justify-center py-1"
               sx={{ bgcolor: (theme) => theme.palette.opacity5.main }}

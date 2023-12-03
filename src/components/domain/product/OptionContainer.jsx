@@ -14,6 +14,8 @@ import LabelSelected from "#/components/domain/product/LabelSelected";
 import LabelNoSelected from "#/components/domain/product/LabelNoSelected";
 import Box from "@mui/material/Box";
 import Regular12 from "#/components/shared/fonts/Regular12";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "#/components/shared/icons/CloseIcon";
 
 function OptionContainer({ label, options, index }) {
   const isDialogOpen = useHookstate(false);
@@ -31,7 +33,7 @@ function OptionContainer({ label, options, index }) {
 
   const handleSelectOption = (optionId) => {
     setSelection(index, optionId);
-    isDialogOpen.set(false);
+    // isDialogOpen.set(false);
   };
 
   const handleClickOption = () => {
@@ -42,6 +44,10 @@ function OptionContainer({ label, options, index }) {
     if (indexOptionRepeated === -1) return label;
     return `${label} ${indexOptionRepeated}`;
   }, [options]);
+
+  const handleCloseDialog = () => {
+    isDialogOpen.set(false);
+  };
 
   return (
     <>
@@ -69,6 +75,18 @@ function OptionContainer({ label, options, index }) {
         <DialogTitle>
           <Regular14>{labelToShow}</Regular14>
         </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleCloseDialog}
+          sx={{
+            position: "absolute",
+            right: 16,
+            top: 16,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon className="w-6 h-6" />
+        </IconButton>
         <DialogContent sx={style.dialogContent}>
           {options?.some((opt) => opt?.suggest) && (
             <Box

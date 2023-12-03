@@ -16,7 +16,6 @@ const temporalProduct = hookstate({
 export const useTemporalProduct = () => {
   const state = useHookstate(temporalProduct);
   const { preferences } = ClientPreferenceService();
-  console.log(preferences);
 
   const clear = () => {
     state._id.set("");

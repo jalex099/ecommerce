@@ -77,7 +77,7 @@ function OptionContainer({ label, options, index }) {
             >
               <Regular12>
                 Tus preferencias se ver&aacute;n con el distintivo:
-              </Regular12>{" "}
+              </Regular12>
               <Box
                 className="w-2 h-2 rounded-full"
                 sx={{ bgcolor: (theme) => theme.palette.green100.main }}

@@ -6,7 +6,15 @@ const ClientPreferenceService = () => {
   const queryClient = useQueryClient();
   const { getPreferences, addOrRemovePreferences } =
     ClientPreferenceRepository();
-  const { data, isLoading, isRefetching } = useQuery({
+  const {
+    data,
+    isSuccess,
+    isLoading,
+    isRefetching,
+    isFetched,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ["getPreferences"],
     queryFn: getPreferences,
     refetchOnWindowFocus: false,
@@ -32,8 +40,12 @@ const ClientPreferenceService = () => {
   return {
     preferences: data?.data,
     addOrRemove,
+    isSuccess,
     isLoading,
     isRefetching,
+    isFetched,
+    isError,
+    refetch,
   };
 };
 

@@ -5,8 +5,9 @@ import RegisterAccessContainer from "#/components/domain/profile/RegisterAccessC
 import GoogleLoginButton from "#/components/domain/profile/GoogleLoginButton";
 import EmailAndPasswordLoginForm from "#/components/domain/profile/EmailAndPasswordLoginForm";
 import ForgotPasswordAccessContainer from "#/components/domain/profile/ForgotPasswordAccessContainer";
+import FacebookLoginButton from "#/components/domain/profile/FacebookLoginButton";
 
-function SignInOptions({ handleRegister, handleGoogleLogin }) {
+function SignInOptions({ handleRegister, handleGoogleLogin, handleFacebookLogin }) {
   return (
     <Box sx={style.container}>
       <EmailAndPasswordLoginForm />
@@ -20,6 +21,7 @@ function SignInOptions({ handleRegister, handleGoogleLogin }) {
         <Divider />
       </Box>
       <GoogleLoginButton handleGoogleLogin={handleGoogleLogin} />
+      <FacebookLoginButton handleFacebookLogin={handleFacebookLogin} />
     </Box>
   );
 }

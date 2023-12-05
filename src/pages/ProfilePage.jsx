@@ -19,7 +19,7 @@ function ProfilePage() {
   const ui = useUIState();
   const auth = useAuthState();
   const navigate = useNavigate();
-  const { loginWithGoogle } = AuthService();
+  const { loginWithGoogle, loginWithFacebook } = AuthService();
 
   useEffect(() => {
     ui?.setTitle("");
@@ -32,6 +32,10 @@ function ProfilePage() {
   const handleGoogleLogin = async () => {
     await loginWithGoogle();
   };
+
+  const handleFacebookLogin = async () => {
+    await loginWithFacebook();
+  }
 
   return (
     <Container sx={style.container}>
@@ -59,6 +63,7 @@ function ProfilePage() {
           <SignInOptions
             handleRegister={handleRegister}
             handleGoogleLogin={handleGoogleLogin}
+            handleFacebookLogin={handleFacebookLogin}
           />
         </>
       )}

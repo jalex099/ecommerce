@@ -1,6 +1,7 @@
 import {
   getAuth,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -17,6 +18,7 @@ const AuthService = () => {
   const auth = getAuth();
   const authState = useAuthState();
   const provider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const setAuthentication = (idToken, displayName, email, picture = null) => {
@@ -60,6 +62,26 @@ const AuthService = () => {
     try {
       startLoading();
       signInWithPopup(auth, provider).then(async (result) => {
+        const user = result.user;
+        const idToken = await user.getIdToken();
+        setAuthentication(
+          idToken,
+          user?.displayName,
+          user?.email,
+          user?.photoURL
+        );
+      });
+    } catch (error) {
+      onError(error);
+    } finally {
+      stopLoading();
+    }
+  };
+
+  const loginWithFacebook = async () => {
+    try {
+      startLoading();
+      signInWithPopup(auth, facebookProvider).then(async (result) => {
         const user = result.user;
         const idToken = await user.getIdToken();
         setAuthentication(
@@ -133,6 +155,7 @@ const AuthService = () => {
   return {
     loginWithEmailAndPassword,
     loginWithGoogle,
+    loginWithFacebook,
     logout,
     verifyAuth,
     registerWithEmailAndPassword,

@@ -1,6 +1,5 @@
 import Button from "@mui/material/Button";
 import GoogleImage from "#/assets/images/google.png";
-import AuthService from "#/services/AuthService";
 
 function GoogleLoginButton({handleGoogleLogin}) {
   return (

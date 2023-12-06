@@ -23,8 +23,9 @@ const AuthService = () => {
   const navigate = useNavigate();
   const setAuthentication = (idToken, displayName, email, picture = null) => {
     setKey("token", idToken);
+    // If the displayName is null, we set the email as displayName without the domain
     const user = {
-      displayName,
+      displayName: displayName ?? email?.split("@")[0]?.slice(0, 15),
       email,
       picture,
     };

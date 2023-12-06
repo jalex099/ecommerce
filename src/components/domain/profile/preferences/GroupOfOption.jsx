@@ -28,7 +28,7 @@ export default function GroupOfOption({
   return (
     <>
       <motion.li
-        className=" flex flex-row items-center justify-between w-full relative"
+        className=" flex flex-row items-center justify-between w-full relative gap-2"
         onClick={handleOpenDialog}
         layout
         variants={item}

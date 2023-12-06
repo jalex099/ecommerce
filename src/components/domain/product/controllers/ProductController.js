@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import useAddToCart from "#/components/domain/product/controllers/useAddToCart";
 import RedirectionService from "#/services/RedirectionService";
 import { useNavigate } from "react-router-dom";
+import serializeState from "#/utils/serializeState";
 
 const ProductController = () => {
   const { temp, setSelectedOption, clear, fill } = useTemporalProduct();
@@ -33,21 +34,18 @@ const ProductController = () => {
     if (!options) return -1;
     const option = options[optionIndex];
     // Remove the option from the array of options
-    options.splice(optionIndex, 1);
+    const optionsEval = serializeState(options);
+    optionsEval.splice(optionIndex, 1);
     // If the option is not repeated, then we return -1
-    if (!options?.some((optionRepeated) => optionRepeated === option))
+    if (!optionsEval?.some((optionRepeated) => optionRepeated === option))
       return -1;
-    // Options repeated
-    const optionsRepeated = options.filter((opt) => opt === option);
-    if (!optionsRepeated) return -1;
-
-    let index = 0;
-    // We look for the index of the option in the repeated options
-    optionsRepeated?.map((opt, i) => {
-      if (i < optionIndex) index++;
-    });
-    // We return the index + 1 because the index starts at 0
-    return index + 1;
+    // Find the index of the option inside the repeated
+    let indexOfRepeated = options?.reduce((acc, item, index) => {
+      if (item !== option) return acc;
+      if (item === option && index < optionIndex) return acc + 1;
+      return acc;
+    }, 1);
+    return indexOfRepeated;
   };
 
   const getSelectedOption = (optionIndex) => {

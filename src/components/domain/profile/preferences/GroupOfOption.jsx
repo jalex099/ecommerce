@@ -4,6 +4,7 @@ import Chip from "@mui/material/Chip";
 import ConfigPreferenceDialog from "#/components/domain/profile/preferences/ConfigPreferenceDialog";
 import { useHookstate } from "@hookstate/core";
 import TouchRippleEffect from "#/components/shared/TouchRippleEffect";
+import { motion } from "framer-motion";
 
 export default function GroupOfOption({
   group,
@@ -26,9 +27,11 @@ export default function GroupOfOption({
 
   return (
     <>
-      <Box
+      <motion.li
         className=" flex flex-row items-center justify-between w-full relative"
         onClick={handleOpenDialog}
+        layout
+        variants={item}
       >
         <TouchRippleEffect className="w-full py-1">
           <Box className="flex-1">
@@ -50,7 +53,7 @@ export default function GroupOfOption({
           </Box>
         </TouchRippleEffect>
         <Chip label={group?.label?.charAt(0)} />
-      </Box>
+      </motion.li>
       <ConfigPreferenceDialog
         open={isDialogOpen.get()}
         onClose={handleCloseDialog}
@@ -88,4 +91,9 @@ const style = {
   textMuted: {
     color: (theme) => theme.palette.neutral60.main,
   },
+};
+
+const item = {
+  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 50 },
 };

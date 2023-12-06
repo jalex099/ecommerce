@@ -5,11 +5,19 @@ import PreferenceSkeleton from "#/components/domain/profile/skeletons/Preference
 import ClientPreferenceService from "#/services/ClientPreferenceService";
 import DataService from "#/services/DataService";
 import GroupOfOption from "#/components/domain/profile/preferences/GroupOfOption";
+import { useHookstate } from "@hookstate/core";
+import Button from "@mui/material/Button";
+import { motion } from "framer-motion";
 
 function Preferences() {
   const { preferences, isLoading, isRefetching, addOrRemove } =
     ClientPreferenceService();
   const { groupsOfOptions } = DataService();
+  const showAll = useHookstate(false);
+
+  const handleShowAll = () => {
+    showAll.set(!showAll.get());
+  };
 
   const handleAddPreference = (value) => {
     addOrRemove?.mutate({ action: "add", value });
@@ -29,17 +37,31 @@ function Preferences() {
           No tienes preferencias registradas
         </Regular12>
       )}
-      {groupsOfOptions?.map((group, index) => {
-        return (
-          <GroupOfOption
-            key={group?.name || index}
-            group={group}
-            preferences={preferences}
-            handleAddPreference={handleAddPreference}
-            handleRemovePreference={handleRemovePreference}
-          />
-        );
-      })}
+      <motion.ul
+        variants={list}
+        initial="hidden"
+        animate="visible"
+        className="w-full h-full overflow-y-auto "
+      >
+        {groupsOfOptions
+          ?.slice(0, showAll?.get() ? groupsOfOptions?.length : 2)
+          ?.map((group, index) => {
+            return (
+              <GroupOfOption
+                key={group?.name || index}
+                group={group}
+                preferences={preferences}
+                handleAddPreference={handleAddPreference}
+                handleRemovePreference={handleRemovePreference}
+              />
+            );
+          })}
+      </motion.ul>
+      {!showAll?.get() && (
+        <Button variant="outlined" onClick={handleShowAll}>
+          Ver todo
+        </Button>
+      )}
     </Box>
   );
 }
@@ -49,7 +71,7 @@ const style = {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: "16px",
   },
   subcontainer: {
@@ -69,6 +91,10 @@ const style = {
   textMuted: {
     color: (theme) => theme.palette.neutral60.main,
   },
+};
+const list = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
 };
 
 export default Preferences;

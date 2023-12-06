@@ -60,7 +60,7 @@ const ConfigPreferenceDialog = ({
 const style = {
   button: {},
   dialog: {
-    minHeight: "250px",
+    // minHeight: "250px",
     width: "100%",
     position: "absolute",
     bottom: 0,

@@ -1,7 +1,7 @@
 import { hookstate, useHookstate, none } from "@hookstate/core";
 import AES from "crypto-js/aes";
 import Utf8 from "crypto-js/enc-utf8";
-import { stateToString } from "#/utils/adapterUtil";
+import { stateToString } from "#/utils/adapterUtil/index";
 import serializeState from "#/utils/serializeState";
 // import { orderBy } from "lodash";
 import { ENCRYPT_KEY } from "#/config/constants";
@@ -18,13 +18,16 @@ const getCartFromCrypt = () => {
 };
 
 export const cartStore = hookstate(() => {
+  const cart = getCartFromCrypt();
   return {
-    items: getCartFromCrypt()?.items || [],
+    items: cart?.items || [],
     subTotal: 0,
     total: 0,
-    orderAgregado: 0,
+    orderAgregado: cart?.orderAgregado || 0,
     isPedidoFuturoOpen: false,
     isReadCart: false,
+    _id: cart?._id || null,
+    code: cart?.code || null,
   };
 });
 
@@ -77,9 +80,23 @@ const addCart = (state) => ({
         isPedidoFuturoOpen: false,
         isReadCart: true,
         error: true,
+        _id: null,
+        code: null,
       });
     }
   },
+
+  //* Setea el ID del carrito
+  setCartId: (id) => state._id.set(id),
+
+  //* Retorna el ID del carrito
+  getCartId: () => state._id.get(),
+
+  //* Setea el CODE del carrito
+  setCartCode: (code) => state.code.set(code),
+
+  //* Retorna el CODE del carrito
+  getCartCode: () => state.code.get(),
 
   //   //* retorna los items del carrito
   get: () => state.items.get(),
@@ -136,6 +153,9 @@ const addCart = (state) => ({
 
   // //* Recibe un arreglo para asignar al carrito como un nuevo carrito
   setItems: (items) => state.items.set(items),
+
+  // //* Funcion para retornar los items del carrito en un arreglo
+  getItems: () => serializeState(state?.items?.get()),
 
   // //* Funcion para guardar el carrito en local storage
   // // addToLocalStorage: () => state?.attach(Persistence('cart-state')),

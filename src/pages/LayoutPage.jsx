@@ -15,6 +15,8 @@ import DataService from "#/services/DataService.js";
 import ErrorFetchPage from "#/pages/ErrorFetchPage.jsx";
 import ClientPreferenceService from "#/services/ClientPreferenceService.js";
 import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
+import CartService from "#/services/CartService.js";
+import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -25,6 +27,7 @@ const LayoutPage = () => {
   const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
     DataService();
   const { isSuccess: isSuccessPreferences } = ClientPreferenceService();
+  const { saveCart } = CartService();
 
   useEffect(() => {
     verifyAuth();
@@ -40,6 +43,20 @@ const LayoutPage = () => {
     cart?.addTotal();
     cart?.addToLocalStorage();
   }, [cart?.hash]);
+
+  useEffect(() => {
+    if (cart?.getItemsCounter() <= 0) {
+      //* delete cart
+      return;
+    }
+    const menu = parseMenu(cart?.getItems());
+    saveCart?.mutate({
+      _id: cart?.getCartId(),
+      status: "ACT",
+      visibility: "PUBLIC",
+      menu,
+    });
+  }, [cart?.getItemsCounter()]);
 
   const isHidden = useMemo(() => {
     return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));

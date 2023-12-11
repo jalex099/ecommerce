@@ -128,14 +128,14 @@ function CartTopBar({ title }) {
                 </MenuItem>
 
                 {cart?.getItemsCounter() > 0 && (
-                  <>
-                    <MenuItem onClick={handleShareCart}>
-                      <Regular14>Compartir</Regular14>
-                    </MenuItem>
-                    <MenuItem onClick={handleEmptyCart}>
-                      <Regular14>Vaciar</Regular14>
-                    </MenuItem>
-                  </>
+                  <MenuItem onClick={handleShareCart}>
+                    <Regular14>Compartir</Regular14>
+                  </MenuItem>
+                )}
+                {cart?.getItemsCounter() > 0 && (
+                  <MenuItem onClick={handleEmptyCart}>
+                    <Regular14>Vaciar</Regular14>
+                  </MenuItem>
                 )}
               </Menu>
             </Box>

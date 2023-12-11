@@ -8,9 +8,16 @@ import Box from "@mui/material/Box";
 import useLongPress from "#/hooks/useLongPress";
 import { addToast } from "#/stores/UIState.js";
 import Regular12 from "#/components/shared/fonts/Regular12";
+import { useCartState } from "#/stores/cart";
+import { useEffect } from "react";
 
 export default function ShareCartContainer({ isOpen, handleClose }) {
-  const code = useHookstate("123456");
+  const cart = useCartState();
+  const code = useHookstate(null);
+
+  useEffect(() => {
+    code?.set(cart?.getCartCode());
+  }, [cart?.getCartCode()]);
 
   const handleLongPress = () => {
     navigator.clipboard.writeText(code.get());
@@ -29,7 +36,7 @@ export default function ShareCartContainer({ isOpen, handleClose }) {
         <SemiBold14>Compartir carrito</SemiBold14>
       </DialogTitle>
       <DialogContent>
-        <Box className="flex flex-col gap-6 mb-8 w-full justify-center items-center">
+        <Box className="flex flex-col gap-10 mb-8 w-full justify-center items-center">
           <Regular16>
             Comparte el c&oacute;digo de tu carrito para que puedan agregar tus
             productos a su carrito.
@@ -40,11 +47,15 @@ export default function ShareCartContainer({ isOpen, handleClose }) {
               whileTap={{ scale: 0.9 }}
               {...backspaceLongPress}
             >
-              <SemiBold24 className="select-none">{code.get()}</SemiBold24>
+              {code?.get() && (
+                <SemiBold24 className="select-none text-center ">
+                  {code.get()}
+                </SemiBold24>
+              )}
             </motion.div>
           </Box>
           <Regular12
-            className="w-2/3  text-center"
+            className="w-full  text-center"
             styles={{ color: (theme) => theme.palette.opacity60.main }}
           >
             Mant&eacute;n presionado el c&oacute;digo para copiarlo al

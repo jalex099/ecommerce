@@ -1,28 +1,32 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import CartRepository from "#/repositories/CartRepository";
-import { useCartState } from "#/stores/cart";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuthState } from "#/stores/AuthState";
 
 const CartService = () => {
   const { getCarts: _getCarts, saveCart: _saveCart } = CartRepository();
-  const cart = useCartState();
+  const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const auth = useAuthState();
+
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["getCarts"],
     queryFn: _getCarts,
     refetchOnWindowFocus: false,
+    enabled: auth?.isAuthenticated && auth?.isVerified,
   });
 
   const saveCart = useMutation({
     mutationFn: _saveCart,
-    onSuccess: ({ data }) => {
-      cart?.setCartId(data?._id);
-      cart?.setCartCode(data?.code);
+    onSuccess: () => {
+      queryClient.invalidateQueries("getCarts");
     },
   });
 
   return {
     carts: data?.data,
     isLoading,
+    isSuccess,
     saveCart,
   };
 };

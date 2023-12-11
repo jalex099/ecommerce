@@ -17,6 +17,7 @@ import ClientPreferenceService from "#/services/ClientPreferenceService.js";
 import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
 import CartService from "#/services/CartService.js";
 import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil";
+import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -24,10 +25,18 @@ const LayoutPage = () => {
   const { verifyAuth } = AuthService();
   const { pathname } = useLocation();
   const cart = useCartState();
-  const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
-    DataService();
+  const {
+    isError,
+    isLoading,
+    isRefetching,
+    isFetching,
+    isSuccess,
+    refetch,
+    menu,
+  } = DataService();
   const { isSuccess: isSuccessPreferences } = ClientPreferenceService();
-  const { saveCart } = CartService();
+  const { carts, saveCart, isSuccess: isSuccessCart } = CartService();
+  const { fillFromApi } = useCartUtils();
 
   useEffect(() => {
     verifyAuth();
@@ -45,18 +54,19 @@ const LayoutPage = () => {
   }, [cart?.hash]);
 
   useEffect(() => {
-    if (cart?.getItemsCounter() <= 0) {
-      //* delete cart
-      return;
-    }
-    const menu = parseMenu(cart?.getItems());
+    if (!isSuccessCart || cart?.getItemsCounter() <= 0) return;
     saveCart?.mutate({
       _id: cart?.getCartId(),
       status: "ACT",
       visibility: "PUBLIC",
-      menu,
+      menu: parseMenu(cart?.getItems()),
     });
   }, [cart?.getItemsCounter()]);
+
+  useEffect(() => {
+    if (!carts || carts?.length <= 0 || !menu) return;
+    fillFromApi(carts[0]);
+  }, [carts?.length, menu?.length]);
 
   const isHidden = useMemo(() => {
     return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));

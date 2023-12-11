@@ -14,7 +14,7 @@ function CartItemsContainer({ products, getDetails, onRemoveItem }) {
         {products?.map((product, index) => {
           return (
             <CartItem
-              key={product?._id + product?.orden}
+              key={product?._id + product?.orden || "0" + index}
               index={index}
               _id={product?._id}
               name={product?.name}

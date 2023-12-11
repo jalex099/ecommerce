@@ -10,7 +10,7 @@ const CartService = () => {
   const auth = useAuthState();
 
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ["getCarts"],
+    queryKey: ["auth_getCarts"],
     queryFn: _getCarts,
     refetchOnWindowFocus: false,
     enabled: auth?.isAuthenticated && auth?.isVerified,
@@ -19,7 +19,7 @@ const CartService = () => {
   const saveCart = useMutation({
     mutationFn: _saveCart,
     onSuccess: () => {
-      queryClient.invalidateQueries("getCarts");
+      queryClient.invalidateQueries(["auth_getCarts"], {});
     },
   });
 

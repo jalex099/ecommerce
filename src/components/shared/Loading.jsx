@@ -1,10 +1,15 @@
 import Box from "@mui/material/Box";
-import LoadingGif from "#/assets/images/loading.gif";
+// import LoadingGif from "#/assets/images/loading.gif";
 
 function Loading() {
   return (
     <Box sx={style.container}>
-      <Box component={"img"} src={LoadingGif} alt="Loading..." sx={style.img} />
+      <div className="three-body">
+        <div className="three-body__dot"></div>
+        <div className="three-body__dot"></div>
+        <div className="three-body__dot"></div>
+      </div>
+      {/* <Box component={"img"} src={LoadingGif} alt="Loading..." sx={style.img} /> */}
     </Box>
   );
 }

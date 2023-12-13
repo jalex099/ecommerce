@@ -14,9 +14,10 @@ const ConfirmDialog = ({
   confirmText = "Confirmar",
   handleOk,
   handleCancel,
+  ...props
 }) => {
   return (
-    <Dialog open={isOpen} onClose={handleCancel}>
+    <Dialog open={isOpen} {...props}>
       <DialogTitle>
         <SemiBold14>{title}</SemiBold14>
       </DialogTitle>

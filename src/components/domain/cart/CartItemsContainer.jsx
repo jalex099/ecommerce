@@ -11,21 +11,22 @@ function CartItemsContainer({ products, getDetails, onRemoveItem }) {
         animate="visible"
         className="flex flex-col gap-4 w-full "
       >
-        {products?.map((product, index) => {
-          return (
-            <CartItem
-              key={product?._id + product?.orden || "0" + index}
-              index={index}
-              _id={product?._id}
-              name={product?.name}
-              basePrice={product?.basePrice}
-              aditionalPrice={product?.aditionalPrice}
-              options={product?.options}
-              getDetails={getDetails}
-              onRemoveItem={onRemoveItem}
-            />
-          );
-        })}
+        {products?.length > 0 &&
+          products?.map((product, index) => {
+            return (
+              <CartItem
+                key={product?._id + product?.orden || "0" + index}
+                index={index}
+                _id={product?._id}
+                name={product?.name}
+                basePrice={product?.basePrice}
+                aditionalPrice={product?.aditionalPrice}
+                options={product?.options}
+                getDetails={getDetails}
+                onRemoveItem={onRemoveItem}
+              />
+            );
+          })}
       </motion.ul>
     </Container>
   );

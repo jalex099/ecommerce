@@ -13,6 +13,7 @@ import { useAuthState } from "#/stores/AuthState";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { startLoading, stopLoading, addToast } from "#/stores/UIState.js";
+import { useCartState } from "#/stores/cart";
 
 const AuthService = () => {
   const auth = getAuth();
@@ -21,6 +22,7 @@ const AuthService = () => {
   const facebookProvider = new FacebookAuthProvider();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const cart = useCartState();
   const setAuthentication = (idToken, displayName, email, picture = null) => {
     setKey("token", idToken);
     // If the displayName is null, we set the email as displayName without the domain
@@ -106,6 +108,8 @@ const AuthService = () => {
         removeKey("token");
         authState.setCurrentUser(-1);
         queryClient.resetQueries(/^auth_/);
+        // Remove the identifiers of the cart
+        cart?.setOrphanCart();
         addToast("Nos vemos pronto", "success");
       })
       .catch((error) => {

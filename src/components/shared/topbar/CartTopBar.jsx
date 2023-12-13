@@ -75,6 +75,7 @@ function CartTopBar({ title }) {
         cancelText="Cancelar"
         handleOk={handleRemoveAllFromCartThis}
         handleCancel={handleCloseConfirmDialog}
+        onClose={handleCloseConfirmDialog}
       />
       <Box>
         <Fade

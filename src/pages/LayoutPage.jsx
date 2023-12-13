@@ -17,7 +17,7 @@ import ClientPreferenceService from "#/services/ClientPreferenceService.js";
 import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
 import CartService from "#/services/CartService.js";
 import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil";
-import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
+import OverwriteCartContainer from "#/components/domain/cart/OverwriteCartContainer.jsx";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -25,18 +25,10 @@ const LayoutPage = () => {
   const { verifyAuth } = AuthService();
   const { pathname } = useLocation();
   const cart = useCartState();
-  const {
-    isError,
-    isLoading,
-    isRefetching,
-    isFetching,
-    isSuccess,
-    refetch,
-    menu,
-  } = DataService();
+  const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
+    DataService();
   const { isSuccess: isSuccessPreferences } = ClientPreferenceService();
-  const { carts, saveCart, isSuccess: isSuccessCart } = CartService();
-  const { fillFromApi } = useCartUtils();
+  const { saveCart, isSuccess: isSuccessCart } = CartService();
 
   useEffect(() => {
     verifyAuth();
@@ -62,11 +54,6 @@ const LayoutPage = () => {
       menu: parseMenu(cart?.getItems()),
     });
   }, [cart?.getItemsCounter()]);
-
-  useEffect(() => {
-    if (!carts || carts?.length <= 0 || !menu) return;
-    fillFromApi(carts[0]);
-  }, [carts?.length, menu?.length]);
 
   const isHidden = useMemo(() => {
     return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));
@@ -101,6 +88,7 @@ const LayoutPage = () => {
             {/*
         DIALOGS GLOBALES
     */}
+            <OverwriteCartContainer />
             <ToasterCustom />
           </Box>
           <footer className="fixed bottom-0 left-0 right-0">

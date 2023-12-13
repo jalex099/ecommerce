@@ -65,6 +65,7 @@ function ProfileTopBar() {
         content="¿Estás seguro que deseas cerrar sesión?"
         handleOk={handleLogout}
         handleCancel={handleCloseConfirmDialog}
+        onClose={handleCloseConfirmDialog}
       />
       <Fade
         in={true}

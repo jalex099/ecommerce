@@ -262,6 +262,18 @@ const addCart = (state) => ({
     state?.total?.set(calcCartItemsTotal);
   },
 
+  // //* Elimina la identificacion del carrito (ID, CODE)
+  setOrphanCart: () => {
+    state._id.set(null);
+    state.code.set(null);
+  },
+
+  // //* Setea el carrito con dueño
+  setOwnerCart: (id, code) => {
+    state._id.set(id);
+    state.code.set(code);
+  },
+
   // //* Se valida el carrito
   // validateCart: (props) => {
   //   const { MM } = props;

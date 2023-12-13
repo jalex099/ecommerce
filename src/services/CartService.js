@@ -2,10 +2,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import CartRepository from "#/repositories/CartRepository";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthState } from "#/stores/AuthState";
+import useCartState from "#/stores/cart";
 
 const CartService = () => {
   const { getCarts: _getCarts, saveCart: _saveCart } = CartRepository();
   const queryClient = useQueryClient();
+  const cart = useCartState();
 
   const auth = useAuthState();
 
@@ -18,7 +20,8 @@ const CartService = () => {
 
   const saveCart = useMutation({
     mutationFn: _saveCart,
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
+      cart?.setOwnerCart(data?._id, data?.code);
       queryClient.invalidateQueries(["auth_getCarts"], {});
     },
   });

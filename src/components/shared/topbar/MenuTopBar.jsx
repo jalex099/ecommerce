@@ -1,4 +1,4 @@
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+// import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { OutlinedInput } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -7,6 +7,7 @@ import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
+import GoBackIcon from "#/components/shared/GoBackIcon";
 function MenuTopBar() {
   const navigate = useNavigate();
 
@@ -24,10 +25,10 @@ function MenuTopBar() {
         }}
       >
         <Toolbar>
-          {/* <GoBackIcon /> */}
-          <IconButton aria-label="cart" variant="contained" className="w-8 h-8">
+          <GoBackIcon />
+          {/* <IconButton aria-label="cart" variant="contained" className="w-8 h-8">
             <ShoppingBagOutlinedIcon fontSize="32px" />
-          </IconButton>
+          </IconButton> */}
           <OutlinedInput
             size="small"
             placeholder="Buscar"

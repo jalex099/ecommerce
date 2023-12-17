@@ -26,8 +26,6 @@ function TopBarContainer(props) {
             <CartTopBar title={ui?.title} />
           ) : pathname === "/profile" ? (
             <ProfileTopBar />
-          ) : pathname?.startsWith("/product/") ? (
-            <ProductTopBar />
           ) : (
             <DefaultTopBar title={ui?.title} />
           )}

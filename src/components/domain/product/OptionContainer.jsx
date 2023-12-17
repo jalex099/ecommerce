@@ -17,7 +17,7 @@ import Regular12 from "#/components/shared/fonts/Regular12";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "#/components/shared/icons/CloseIcon";
 
-function OptionContainer({ label, options, index }) {
+function OptionContainer({ label, options, index, className }) {
   const isDialogOpen = useHookstate(false);
   const {
     getIndexOptionRepeated,
@@ -60,7 +60,7 @@ function OptionContainer({ label, options, index }) {
         variant="outlined"
         color="primary"
         onClick={handleClickOption}
-        className="flex flex-col items-center justify-center px-1 h-[60px]"
+        className={`flex flex-col items-center justify-center px-1 h-[60px] ${className}`}
       >
         {isOptionSelected(index) ? (
           <LabelSelected text={getSelectedOptionName(index)} />

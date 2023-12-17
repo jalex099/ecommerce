@@ -1,4 +1,4 @@
-import Regular14 from "#/components/shared/fonts/Regular14";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Button from "@mui/material/Button";
 
 const AddToCartButton = ({ ...props }) => {
@@ -11,21 +11,21 @@ const AddToCartButton = ({ ...props }) => {
       {...props}
       className="flex justify-center items-center  cursor-pointer "
     >
-      <Regular14>Agregar al carrito</Regular14>
+      <SemiBold14>Agregar al carrito</SemiBold14>
     </Button>
   );
 };
 
 const style = {
   container: {
-    minHeight: "56px",
+    minHeight: "32px",
     width: "80vw",
     maxWidth: "400px",
     margin: "0 auto",
-    position: "sticky",
-    bottom: "24px",
-    left: 0,
-    right: 0,
+    // position: "sticky",
+    // bottom: "24px",
+    // left: 0,
+    // right: 0,
   },
 };
 

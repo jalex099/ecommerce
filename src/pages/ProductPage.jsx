@@ -5,9 +5,9 @@ import ImageService from "#/services/ImageService";
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";
 import { useUIState } from "#/stores/UIState";
-import SemiBold20 from "#/components/shared/fonts/SemiBold20";
+import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import Picture from "#/components/shared/Picture";
-import Bold18 from "#/components/shared/fonts/Bold18";
+import Bold16 from "#/components/shared/fonts/Bold16";
 import { formatCurrency } from "#/utils/currency";
 import ProductConfigContainer from "#/components/domain/product/ProductConfigContainer";
 import AddToCartButton from "#/components/domain/product/AddToCartButton";
@@ -18,6 +18,7 @@ import Box from "@mui/material/Box";
 import ProductController from "#/components/domain/product/controllers/ProductController";
 import Regular12 from "#/components/shared/fonts/Regular12";
 import { motion, AnimatePresence } from "framer-motion";
+import FavoriteToogleContainer from "#/components/domain/product/FavoriteToogleContainer";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
@@ -58,25 +59,30 @@ const ProductPage = () => {
           borderRadius: "16px",
         }}
       />
-      <SemiBold20> {temporal?.name}</SemiBold20>
-      <Box className="flex flex-row justify-between gap-0 w-full overflow-hidden">
-        <Bold18>{formatCurrency(temporal?.price)}</Bold18>
-        <AnimatePresence>
-          {getOptionsSubtotal() > 0 && (
-            <motion.div
-              key="extraAmount"
-              initial={{ x: 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 100, opacity: 0 }}
-            >
-              <Regular12>
-                Monto extra: {formatCurrency(getOptionsSubtotal())}
-              </Regular12>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <Box className="flex flex-col gap-1 relative">
+        <SemiBold18> {temporal?.name}</SemiBold18>
+        <Box className="flex flex-row justify-between gap-0 w-full overflow-hidden">
+          <Bold16>{formatCurrency(temporal?.price)}</Bold16>
+          <AnimatePresence>
+            {getOptionsSubtotal() > 0 && (
+              <motion.div
+                key="extraAmount"
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 100, opacity: 0 }}
+              >
+                <Regular12>
+                  Monto extra: {formatCurrency(getOptionsSubtotal())}
+                </Regular12>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Box>
+        <FavoriteToogleContainer />
       </Box>
       <ProductConfigContainer options={temporal?.options} />
+
+      <AddToCartButton onClick={handleAddToCart} />
       <Box>
         <Divider />
         <DetailsContainer details={temporal?.description} />
@@ -84,7 +90,6 @@ const ProductPage = () => {
         <Divider />
         <ExtrasContainer tags={temporal?.tags} />
       </Box>
-      <AddToCartButton onClick={handleAddToCart} />
     </Container>
   );
 };

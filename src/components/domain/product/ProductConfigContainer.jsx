@@ -4,13 +4,20 @@ import Box from "@mui/material/Box";
 function ProductConfigContainer({ options }) {
   return (
     <Box
-      className="grid grid-cols-2 gap-x-2 gap-y-4 md:grid-cols-3 lg:grid-cols-4"
+      className={`${
+        options?.length === 1
+          ? "flex justify-center items-center "
+          : "grid grid-cols-2 gap-x-2 gap-y-4 md:grid-cols-3 lg:grid-cols-4"
+      }`}
       sx={style.container}
     >
       {options?.map((option, index) => {
         return (
           <OptionContainer
             key={option?._id + index}
+            className={`${
+              options?.length === 1 ? "min-w-1/2 w-1/2 max-w-1/2" : ""
+            }`}
             label={option?.label}
             options={option?.options}
             index={index}

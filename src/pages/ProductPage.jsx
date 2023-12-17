@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import DataService from "#/services/DataService";
 import ImageService from "#/services/ImageService";
 import Container from "@mui/material/Container";
@@ -17,7 +17,7 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import ProductController from "#/components/domain/product/controllers/ProductController";
 import Regular12 from "#/components/shared/fonts/Regular12";
-import { motion, AnimatePresence } from "framer-motion";
+// import { motion, AnimatePresence } from "framer-motion";
 import FavoriteToogleContainer from "#/components/domain/product/FavoriteToogleContainer";
 
 const ProductPage = () => {
@@ -43,6 +43,11 @@ const ProductPage = () => {
     };
   }, [isLoading]);
 
+  const optionsSubtotal = useMemo(() => {
+    console.log("Ent4ro");
+    return getOptionsSubtotal();
+  }, [temporal]);
+
   if (isLoading || !temporal) {
     return <></>;
   }
@@ -61,9 +66,11 @@ const ProductPage = () => {
       />
       <Box className="flex flex-col gap-1 relative">
         <SemiBold18> {temporal?.name}</SemiBold18>
-        <Box className="flex flex-row justify-between gap-0 w-full overflow-hidden">
-          <Bold16>{formatCurrency(temporal?.price)}</Bold16>
-          <AnimatePresence>
+        <Bold16>
+          {formatCurrency(temporal?.price + optionsSubtotal)}
+          {optionsSubtotal > 0 && <span>*</span>}
+        </Bold16>
+        {/* <AnimatePresence>
             {getOptionsSubtotal() > 0 && (
               <motion.div
                 key="extraAmount"
@@ -71,18 +78,21 @@ const ProductPage = () => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 100, opacity: 0 }}
               >
-                <Regular12>
-                  Monto extra: {formatCurrency(getOptionsSubtotal())}
-                </Regular12>
+                <Regular14>{formatCurrency(getOptionsSubtotal())}</Regular14>
               </motion.div>
             )}
-          </AnimatePresence>
-        </Box>
+          </AnimatePresence> */}
         <FavoriteToogleContainer />
       </Box>
       <ProductConfigContainer options={temporal?.options} />
 
       <AddToCartButton onClick={handleAddToCart} />
+      {optionsSubtotal > 0 && (
+        <Regular12 className="w-full opacity-70">
+          * Los precios pueden variar seg&uacute;n tu selecci&oacute;n de
+          opciones
+        </Regular12>
+      )}
       <Box>
         <Divider />
         <DetailsContainer details={temporal?.description} />

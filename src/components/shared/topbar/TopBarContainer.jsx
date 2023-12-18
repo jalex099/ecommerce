@@ -7,7 +7,6 @@ import MenuTopBar from "#/components/shared/topbar/MenuTopBar.jsx";
 import { useUIState } from "#/stores/UIState";
 import { useLocation } from "react-router-dom";
 import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
-import ProductTopBar from "#/components/shared/topbar/ProductTopBar.jsx";
 import CartTopBar from "./CartTopBar";
 
 function TopBarContainer(props) {
@@ -17,7 +16,7 @@ function TopBarContainer(props) {
   return (
     <>
       <HideOnScroll {...props}>
-        <AppBar color={pathname === "/cart" ? "neutral5" : "neutral0"}>
+        <AppBar color={"neutral0"}>
           {pathname === "/" ? (
             <FeedTopBar title={ui?.title} />
           ) : pathname?.startsWith("/menu/category") ? (

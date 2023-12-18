@@ -4,14 +4,12 @@ import { motion } from "framer-motion";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16";
 import Picture from "#/components/shared/Picture";
 import ImageService from "#/services/ImageService.js";
-import CartDeleteItemButton from "#/components/domain/cart/CartDeleteItemButton";
 import { formatCurrency } from "#/utils/currency";
-import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import { useMemo } from "react";
 import Regular12 from "#/components/shared/fonts/Regular12";
 import Divider from "@mui/material/Divider";
-import Regular14 from "#/components/shared/fonts/Regular14";
-import Button from "@mui/material/Button";
+import Regular16 from "#/components/shared/fonts/Regular16";
+import CartItemCounterContainer from "#/components/domain/cart/CartItemCounterContainer";
 
 function CartItem({
   _id,
@@ -22,6 +20,7 @@ function CartItem({
   options,
   getDetails,
   onRemoveItem,
+  isLastItem,
 }) {
   const { findImage } = ImageService();
 
@@ -30,53 +29,40 @@ function CartItem({
   }, [_id, options]);
 
   return (
-    <motion.li
-      layout
-      variants={item}
-      className="w-full min-h-[220px] flex flex-col gap-6 justify-start items-start p-5 rounded-md relative bg-white _shadow"
-    >
-      <Box className="flex flex-row justify-start items-center gap-4 w-full">
-        <Box className="w-[92px] aspect-square rounded-md overflow-hidden">
+    <>
+      <motion.li
+        layout
+        variants={item}
+        className="w-full min-h-[96px] flex flex-row gap-3 justify-start items-start"
+      >
+        <Box className="flex w-24 rounded-md overflow-hidden">
           <Picture
             webp={findImage(_id, "PRD", "webp")}
             jpg={findImage(_id, "PRD", "jpg")}
             alt={`Imagen de ${name}`}
-            className="w-4 h-4 object-cover rounded-md"
+            className="h-full aspect-square object-cover "
           />
         </Box>
-        <Box>
-          <SemiBold16>{name}</SemiBold16>
-          <Regular14>x1</Regular14>
-        </Box>
-      </Box>
-      <Box className="flex flex-row justify-between items-center w-full">
-        <Box className="flex-1 flex flex-row flex-wrap gap-1 opacity-80">
-          {optionsSelectedDetails?.map(({ name }, index) => {
-            return (
-              <>
-                <Regular12 key={index}>{name}</Regular12>
-                {index !== optionsSelectedDetails.length - 1 && (
-                  <Divider orientation="vertical" flexItem />
-                )}
-              </>
-            );
-          })}
-        </Box>
-        <Box className="flex flex-row gap-1">
-          <SemiBold14>{formatCurrency(basePrice + aditionalPrice)}</SemiBold14>
-        </Box>
-      </Box>
-      <Box className="w-full grid grid-cols-2 gap-2">
-        <Button variant="outlined" color="primary" aria-label="Editar">
-          Editar
-        </Button>
-        <Button variant="outlined" color="primary" aria-label="Editar">
-          Archivar
-        </Button>
-      </Box>
+        <Box className="flex-1 flex justify-between flex-col gap-2 ">
+          <Box className="flex flex-col">
+            <SemiBold16>{name}</SemiBold16>
+            <Regular12 className="opacity-80">
+              {optionsSelectedDetails?.map(({ name }, index) => {
+                return index !== optionsSelectedDetails.length - 1
+                  ? `${name} / `
+                  : name;
+              })}
+            </Regular12>
+          </Box>
 
-      <CartDeleteItemButton onClick={() => onRemoveItem(_id, index)} />
-    </motion.li>
+          <CartItemCounterContainer />
+        </Box>
+
+        <Regular16>{formatCurrency(basePrice + aditionalPrice)}</Regular16>
+        {/* <CartDeleteItemButton onClick={() => onRemoveItem(_id, index)} /> */}
+      </motion.li>
+      {!isLastItem && <Divider />}
+    </>
   );
 }
 

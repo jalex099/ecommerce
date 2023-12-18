@@ -71,8 +71,6 @@ const LayoutPage = () => {
             className="container relative"
             sx={{
               paddingBottom: !isHidden && "96px",
-              bgcolor: (theme) =>
-                pathname === "/cart" && theme.palette.neutral5.main,
             }}
           >
             <Outlet />

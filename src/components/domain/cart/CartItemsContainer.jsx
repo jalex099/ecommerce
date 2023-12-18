@@ -9,7 +9,7 @@ function CartItemsContainer({ products, getDetails, onRemoveItem }) {
         variants={list}
         initial="hidden"
         animate="visible"
-        className="flex flex-col gap-4 w-full "
+        className="flex flex-col gap-6 w-full "
       >
         {products?.length > 0 &&
           products?.map((product, index) => {
@@ -24,6 +24,7 @@ function CartItemsContainer({ products, getDetails, onRemoveItem }) {
                 options={product?.options}
                 getDetails={getDetails}
                 onRemoveItem={onRemoveItem}
+                isLastItem={index === products?.length - 1}
               />
             );
           })}

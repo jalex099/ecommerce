@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import CartCheckoutButton from "#/components/domain/cart/CartCheckoutButton";
 import Box from "@mui/material/Box";
 import Regular14 from "#/components/shared/fonts/Regular14";
+import Regular16 from "#/components/shared/fonts/Regular16";
 import { formatCurrency } from "#/utils/currency";
 import Divider from "@mui/material/Divider";
 
@@ -21,20 +22,20 @@ function CartResumeInfo({ subtotal = 0, discount = 0, total = 0 }) {
         {discount > 0 && subtotal !== total && (
           <>
             <Box className="flex flex-row justify-between items-center">
-              <Regular14>Subtotal</Regular14>
-              <Regular14>{formatCurrency(subtotal)}</Regular14>
+              <Regular16>Subtotal</Regular16>
+              <Regular16>{formatCurrency(subtotal)}</Regular16>
             </Box>
             <Box className="flex flex-row justify-between items-center">
-              <Regular14>Descuento</Regular14>
-              <Regular14>{formatCurrency(discount)}</Regular14>
+              <Regular16>Descuento</Regular16>
+              <Regular16>{formatCurrency(discount)}</Regular16>
             </Box>
             <Divider />
           </>
         )}
 
         <Box className="flex flex-row justify-between items-center">
-          <Regular14>Total</Regular14>
-          <Regular14>{formatCurrency(total)}</Regular14>
+          <Regular16>Total</Regular16>
+          <Regular16>{formatCurrency(total)}</Regular16>
         </Box>
       </Box>
       <CartCheckoutButton />

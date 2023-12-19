@@ -14,7 +14,7 @@ import EmptyCartContainer from "#/components/domain/cart/EmptyCartContainer";
 function CartPage() {
   const ui = useUIState();
   const cart = useCartState();
-  const { getItemsToShow, handleRemoveFromCart, getDetails } = useCartUtils();
+  const { getItemsToShow, getDetails } = useCartUtils();
   const navigate = useNavigate();
   const { isLoading } = DataService();
 
@@ -39,11 +39,7 @@ function CartPage() {
       )}
       {!!itemsToShow && itemsToShow?.length > 0 && (
         <>
-          <CartItemsContainer
-            products={itemsToShow}
-            getDetails={getDetails}
-            onRemoveItem={handleRemoveFromCart}
-          />
+          <CartItemsContainer products={itemsToShow} getDetails={getDetails} />
           <CartResumeInfo
             numberOfItems={cart?.getItemsCounter()}
             products={itemsToShow}

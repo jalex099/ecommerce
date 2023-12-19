@@ -178,46 +178,29 @@ const addCart = (state) => ({
   // //* Actualiza el orden de agregado en el carrito
   updateOrdenAgregado: (value) => state?.orderAgregado?.set(value),
 
-  // //* recibe un ACTION para cambiar o eliminar el ITEM (prd) o LIST (otros tipos)
-  // updateCantidad: (tipo, action, index, item) => {
-  //   const addItem = () => {
-  //     if (tipo === "PRD") {
-  //       state?.items?.merge([item]);
-  //     } else {
-  //       const newList = serializeState(state?.get()?.items[index]?.list);
-  //       newList.push(item);
-  //       const newListToAdd = orderBy(
-  //         newList?.flatMap((listItem) => listItem),
-  //         "ordenAgregado",
-  //         "asc"
-  //       )?.map((item) => [item]);
-
-  //       state?.items[index]?.list?.set(newListToAdd);
-  //     }
-  //   };
-  //   const removeItem = () => {
-  //     if (tipo === "PRD") {
-  //       state?.items[index]?.set(none);
-  //     } else {
-  //       const newList = orderBy(
-  //         state
-  //           ?.get()
-  //           ?.items[index]?.list.flatMap((listItem) => listItem)
-  //           ?.reduce((acc, cur, curIndex) => {
-  //             if (curIndex !== item) {
-  //               acc.push(cur);
-  //             }
-  //             return acc;
-  //           }, []),
-  //         "ordenAgregado",
-  //         "asc"
-  //       )?.map((item) => [item]);
-
-  //       state?.items[index]?.list?.set(newList);
-  //     }
-  //   };
-  //   action === "add" ? addItem() : removeItem();
-  // },
+  // //* recibe un ACTION para cambiar o eliminar el ITEM
+  updateQuantity: (action, index) => {
+    const addItem = () => {
+      const items = serializeState(state?.items.get());
+      const item = items[index];
+      const newItem = { ...item, quantity: item?.quantity + 1 };
+      items[index] = newItem;
+      state.items.set(items);
+    };
+    const removeItem = () => {
+      const items = serializeState(state?.items.get());
+      const item = items[index];
+      // Si la cantidad es 1 no hace nada
+      if (item?.quantity === 1) {
+        return;
+      }
+      // Si la cantidad es mayor a 1 se resta 1
+      const newItem = { ...item, quantity: item?.quantity - 1 };
+      items[index] = newItem;
+      state.items.set(items);
+    };
+    action === "add" ? addItem() : removeItem();
+  },
 
   // //* Recibe una nueva lista para asignal al carrito
   removeFromCart: (newList) => {
@@ -232,9 +215,9 @@ const addCart = (state) => ({
         let aditionalPrice = item?.options?.reduce((acc, option) => {
           return acc + option?.aditionalPrice || 0;
         }, 0);
-        return acc + item?.basePrice + aditionalPrice;
+        return acc + ((item?.basePrice + aditionalPrice) * item?.quantity);
       }
-      return acc + item?.basePrice;
+      return acc + (item?.basePrice * item?.quantity);
     }, 0);
     state?.subTotal?.set(calcCartItemsSubTotal);
   },
@@ -255,9 +238,9 @@ const addCart = (state) => ({
         let aditionalPrice = item?.options?.reduce((acc, option) => {
           return acc + option?.aditionalPrice || 0;
         }, 0);
-        return acc + item?.basePrice + aditionalPrice;
+        return acc + ((item?.basePrice + aditionalPrice) * item?.quantity);
       }
-      return acc + item?.basePrice;
+      return acc + (item?.basePrice * item?.quantity);
     }, 0);
     state?.total?.set(calcCartItemsTotal);
   },

@@ -22,6 +22,10 @@ export default function useCartUtils() {
     cart?.removeFromCart(serializeState(itemsToKeep));
   };
 
+  const handleUpdateQuantity = (action, index) => {
+    cart?.updateQuantity(action, index);
+  };
+
   const getDetails = (idProduct, optionsSavedOnCart) => {
     const product = menu?.find((product) => product?._id === idProduct);
     if (!product) return [];
@@ -104,6 +108,7 @@ export default function useCartUtils() {
   return {
     getItemsToShow,
     handleRemoveFromCart,
+    handleUpdateQuantity,
     getDetails,
     getProductTotal,
     handleRemoveAllFromCart,

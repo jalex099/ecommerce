@@ -11,8 +11,6 @@ import Regular12 from "#/components/shared/fonts/Regular12";
 import { useCartState } from "#/stores/cart";
 import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 
 export default function ShareCartContainer({
   isOpen,
@@ -22,6 +20,7 @@ export default function ShareCartContainer({
   const cart = useCartState();
   const auth = useAuthState();
   const code = useHookstate(null);
+  const isCopied = useHookstate(false);
 
   useEffect(() => {
     code?.set(cart?.getCartCode());
@@ -29,7 +28,8 @@ export default function ShareCartContainer({
 
   const handleLongPress = () => {
     navigator.clipboard.writeText(code.get());
-    addToast("Código copiado al portapapeles", "success");
+    isCopied.set(true);
+    // addToast("Código copiado al portapapeles", "success");
   };
 
   const backspaceLongPress = useLongPress(handleLongPress, 500);
@@ -51,7 +51,15 @@ export default function ShareCartContainer({
           </Regular16>
           {auth?.isAuthenticated && (
             <>
-              <Box className="w-full flex flex-row items-center justify-center gap-4 ">
+              <Box
+                className="w-full flex flex-col items-center justify-center gap-4 "
+                sx={{
+                  color: (theme) =>
+                    isCopied?.get()
+                      ? theme.palette.primary120.main
+                      : theme.palette.neutral100.main,
+                }}
+              >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}

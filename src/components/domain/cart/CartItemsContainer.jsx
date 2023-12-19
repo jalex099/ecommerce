@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import CartItem from "#/components/domain/cart/CartItem";
 import Container from "@mui/material/Container";
 
-function CartItemsContainer({ products, getDetails, onRemoveItem }) {
+function CartItemsContainer({ products, getDetails }) {
   return (
     <Container className="w-full container flex-grow">
       <motion.ul
@@ -20,10 +20,10 @@ function CartItemsContainer({ products, getDetails, onRemoveItem }) {
                 _id={product?._id}
                 name={product?.name}
                 basePrice={product?.basePrice}
+                quantity={product?.quantity}
                 aditionalPrice={product?.aditionalPrice}
                 options={product?.options}
                 getDetails={getDetails}
-                onRemoveItem={onRemoveItem}
                 isLastItem={index === products?.length - 1}
               />
             );

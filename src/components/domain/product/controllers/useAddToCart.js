@@ -34,6 +34,7 @@ export default function useAddToCart() {
       _id: temp?._id,
       name: temp?.name,
       basePrice: temp?.price,
+      quantity: temp?.quantity || 1,
       aditionalPrice,
       orden: cart?.getOrdenAgregado(),
       options,

@@ -42,50 +42,52 @@ function CartItem({
       <motion.li
         layout
         variants={item}
-        className="w-full min-h-[96px] flex flex-row gap-3 justify-start items-start"
+        className="w-full flex flex-col gap-4 justify-start items-start"
       >
-        <Box className="flex w-24 rounded-md overflow-hidden">
-          <Picture
-            webp={findImage(_id, "PRD", "webp")}
-            jpg={findImage(_id, "PRD", "jpg")}
-            alt={`Imagen de ${name}`}
-            className="h-full aspect-square object-cover "
-          />
-        </Box>
-        <Box className="flex-1 flex justify-between flex-col gap-2 ">
-          <Box className="flex flex-col">
-            <SemiBold16>{name}</SemiBold16>
-            <Regular12 className="opacity-80">
-              {optionsSelectedDetails?.map(({ name }, index) => {
-                return index !== optionsSelectedDetails.length - 1
-                  ? `${name} / `
-                  : name;
-              })}
-            </Regular12>
+        <Box className="w-full min-h-[96px] flex flex-row gap-3 justify-start items-start">
+          <Box className="flex w-24 rounded-md overflow-hidden">
+            <Picture
+              webp={findImage(_id, "PRD", "webp")}
+              jpg={findImage(_id, "PRD", "jpg")}
+              alt={`Imagen de ${name}`}
+              className="h-full aspect-square object-cover "
+            />
+          </Box>
+          <Box className="flex-1 flex justify-between flex-col gap-2 ">
+            <Box className="flex flex-col">
+              <SemiBold16>{name}</SemiBold16>
+              <Regular12 className="opacity-80">
+                {optionsSelectedDetails?.map(({ name }, index) => {
+                  return index !== optionsSelectedDetails.length - 1
+                    ? `${name} / `
+                    : name;
+                })}
+              </Regular12>
+            </Box>
+
+            <CartItemCounterContainer
+              _id={_id}
+              index={index}
+              quantity={quantity}
+            />
           </Box>
 
-          <CartItemCounterContainer
-            _id={_id}
-            index={index}
-            quantity={quantity}
-          />
+          <Regular16>{formatCurrency(individualPrice)}</Regular16>
         </Box>
-
-        <Regular16>{formatCurrency(individualPrice)}</Regular16>
+        {!!subtotal && (
+          <Box className="w-full flex justify-center items-center gap-2">
+            <Regular12>Subtotal </Regular12>
+            <motion.div
+              key={subtotal}
+              variants={variants}
+              animate="show"
+              initial="hide"
+            >
+              <SemiBold12>{formatCurrency(subtotal)}</SemiBold12>
+            </motion.div>
+          </Box>
+        )}
       </motion.li>
-      {!!subtotal && (
-        <Box className="w-full flex justify-center items-center gap-2">
-          <Regular12>Subtotal </Regular12>
-          <motion.div
-            key={subtotal}
-            variants={variants}
-            animate="show"
-            initial="hide"
-          >
-            <SemiBold12>{formatCurrency(subtotal)}</SemiBold12>
-          </motion.div>
-        </Box>
-      )}
 
       {!isLastItem && <Divider />}
     </>

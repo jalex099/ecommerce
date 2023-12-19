@@ -12,7 +12,7 @@ function CartResumeInfo({ subtotal = 0, discount = 0, total = 0 }) {
       className="sticky bottom-0 left-0 right-0 z-10 p-6 flex flex-col gap-4 w-full"
       style={{
         backdropFilter: "blur(8px)",
-        backgroundColor: "#F3F3F3",
+        backgroundColor: "rgba(243, 243, 243, 0.8)",
       }}
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}

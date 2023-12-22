@@ -4,17 +4,10 @@ import { OutlinedInput } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import IconButton from "@mui/material/IconButton";
-import { useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
+import GoToCartTopBarButtonContainer from "#/components/shared/topbar/components/GoToCartTopBarButtonContainer";
 import GoBackIcon from "#/components/shared/GoBackIcon";
 function MenuTopBar() {
-  const navigate = useNavigate();
-
-  const handleClickGoToCart = () => {
-    navigate("/cart");
-  };
-
   return (
     <Box>
       <Fade
@@ -41,14 +34,7 @@ function MenuTopBar() {
               />
             }
           />
-          <IconButton
-            aria-label="cart"
-            variant="contained"
-            className="w-8 h-8"
-            onClick={handleClickGoToCart}
-          >
-            <ShoppingCartOutlinedIcon />
-          </IconButton>
+          <GoToCartTopBarButtonContainer />
         </Toolbar>
       </Fade>
     </Box>

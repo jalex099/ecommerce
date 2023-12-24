@@ -19,14 +19,15 @@ function ShippingAndReturnPolicy({ ...props }) {
       </AccordionSummary>
       <AccordionDetails>
         <Regular16>
-          El env&iacute;o se realiza a trav&eacute;s de Correo Argentino, con un
-          costo de $400 para CABA y GBA, y $500 para el resto del pa&iacute;s.
+          El env&iacute;o se realiza a trav&eacute;s de TransExpress hasta la
+          puerta de su casa con hasta 3 intentos de entrega, y tiene un costo de
+          $4.00 para todos los municipios de El Salvador.
           <br />
           <br />
-          El tiempo de entrega es de 7 d&iacute;as h&aacute;biles.
+          El tiempo de entrega es de 3 d&iacute;as h&aacute;biles.
           <br />
           <br />
-          El producto se puede devolver en un plazo de 10 d&iacute;as
+          El producto se puede devolver en un plazo de 5 d&iacute;as
           h&aacute;biles desde la recepci&oacute;n del mismo. El costo de
           env&iacute;o corre por cuenta del comprador.
         </Regular16>

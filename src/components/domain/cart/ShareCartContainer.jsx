@@ -85,7 +85,13 @@ export default function ShareCartContainer({
             <>
               <Regular12>
                 Para compartir tu carrito debes{" "}
-                <span onClick={handleGoToProfile}>iniciar sesi&oacute;n</span>
+                <Box
+                  component={"span"}
+                  onClick={handleGoToProfile}
+                  sx={style.link}
+                >
+                  iniciar sesi&oacute;n
+                </Box>
               </Regular12>
             </>
           )}
@@ -98,5 +104,9 @@ export default function ShareCartContainer({
 const style = {
   dialog: {
     minHeight: "200px",
+  },
+  link: {
+    color: (theme) => theme.palette.primary120.main,
+    cursor: "pointer",
   },
 };

@@ -53,6 +53,7 @@ export default function useCartUtils() {
   };
 
   const fillFromApi = (cartItem) => {
+    if (!cartItem) return;
     const { _id: cartId, code: cartCode, menu: cartMenu } = cartItem;
     const menuItems = cartMenu?.reduce((acc, cartItemProduct) => {
       const product = menu?.find(

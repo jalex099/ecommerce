@@ -15,11 +15,13 @@ import ConfirmDialog from "#/components/shared/ConfirmDialog";
 import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 import { useCartState } from "#/stores/cart";
 import { useNavigate } from "react-router-dom";
+import ImportCartContainer from "#/components/domain/cart/ImportCartContainer";
 
 const ITEM_HEIGHT = 48;
 function CartTopBar({ title }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpenShareDialog = useHookstate(false);
+  const isOpenImportDialog = useHookstate(false);
   const openConfirmDialog = useHookstate(false);
   const { handleRemoveAllFromCart } = useCartUtils();
   const cart = useCartState();
@@ -42,7 +44,11 @@ function CartTopBar({ title }) {
 
   const handleImportCart = () => {
     handleCloseMenu();
-    console.log("import cart");
+    isOpenImportDialog.set(true);
+  };
+
+  const handleCloseImportDialog = () => {
+    isOpenImportDialog.set(false);
   };
 
   const handleShareCart = () => {
@@ -69,6 +75,7 @@ function CartTopBar({ title }) {
 
   const handleGoToProfile = () => {
     handleCloseShareDialog();
+    handleCloseImportDialog();
     handleCloseMenu();
     navigate("/perfil");
   };
@@ -154,6 +161,11 @@ function CartTopBar({ title }) {
       <ShareCartContainer
         isOpen={isOpenShareDialog.get()}
         handleClose={handleCloseShareDialog}
+        handleGoToProfile={handleGoToProfile}
+      />
+      <ImportCartContainer
+        isOpen={isOpenImportDialog.get()}
+        handleClose={handleCloseImportDialog}
         handleGoToProfile={handleGoToProfile}
       />
     </>

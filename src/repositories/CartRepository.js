@@ -13,9 +13,21 @@ const CartRepository = () => {
     });
   };
 
+  const cloneCart = async (code) => {
+    return await API.post(
+      `/carts/clone/${code}`,
+      {},
+      {
+        secure: true,
+        await: true,
+      }
+    );
+  };
+
   return {
     getCarts,
     saveCart,
+    cloneCart,
   };
 };
 

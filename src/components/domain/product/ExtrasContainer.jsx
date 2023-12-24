@@ -7,7 +7,6 @@ function ExtrasContainer({ tags = [] }) {
   const expanded = useHookstate(null);
 
   const handleChange = (panel) => (event, newExpanded) => {
-    console.log("panel", panel);
     expanded?.set(newExpanded ? panel : false);
   };
 

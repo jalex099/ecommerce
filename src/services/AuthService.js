@@ -110,7 +110,7 @@ const AuthService = () => {
         queryClient.resetQueries(/^auth_/);
         // Remove the identifiers of the cart
         cart?.setOrphanCart();
-        addToast("Nos vemos pronto", "success");
+        // addToast("Nos vemos pronto", "success");
       })
       .catch((error) => {
         addToast("Error al cerrar sesión", "error");

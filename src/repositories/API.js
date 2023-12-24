@@ -1,11 +1,6 @@
 import axios from "axios";
 import { API_URL } from "#/config/constants.js";
-import {
-  startLoading,
-  stopLoading,
-  startSyncingCart,
-  stopSyncingCart,
-} from "#/stores/UIState.js";
+import { startLoading, stopLoading } from "#/stores/UIState.js";
 import { findKey, removeKey } from "#/utils/localStorageHelper.js";
 
 const API = axios.create({
@@ -25,10 +20,6 @@ API.interceptors.request.use((config) => {
     startLoading();
   }
 
-  //* If config?.isCartSync is true, then the request will be awaited
-  if (config?.isCartSync) {
-    startSyncingCart();
-  }
   return config;
 });
 
@@ -37,9 +28,6 @@ API.interceptors.response.use(
     const { config } = response;
     if (config?.await) {
       stopLoading();
-    }
-    if (config?.isCartSync) {
-      stopSyncingCart();
     }
     return response?.data;
   },

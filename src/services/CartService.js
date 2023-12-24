@@ -3,15 +3,17 @@ import CartRepository from "#/repositories/CartRepository";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthState } from "#/stores/AuthState";
 import useCartState from "#/stores/cart";
+import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 
 const CartService = () => {
   const { getCarts: _getCarts, saveCart: _saveCart } = CartRepository();
+  const { fillFromApi } = useCartUtils();
   const queryClient = useQueryClient();
   const cart = useCartState();
 
   const auth = useAuthState();
 
-  const { data, isLoading, isSuccess } = useQuery({
+  const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ["auth_getCarts"],
     queryFn: _getCarts,
     refetchOnWindowFocus: false,
@@ -22,7 +24,8 @@ const CartService = () => {
     mutationFn: _saveCart,
     onSuccess: ({ data }) => {
       cart?.setOwnerCart(data?._id, data?.code);
-      queryClient.invalidateQueries(["auth_getCarts"], {});
+      fillFromApi(data);
+      // queryClient.invalidateQueries(["auth_getCarts"], {});
     },
   });
 
@@ -30,6 +33,7 @@ const CartService = () => {
     carts: data?.data,
     isLoading,
     isSuccess,
+    isError,
     saveCart,
   };
 };

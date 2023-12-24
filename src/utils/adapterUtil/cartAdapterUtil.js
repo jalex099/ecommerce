@@ -2,7 +2,7 @@ export const parseMenu = (menu) => {
   return menu?.reduce((acc, item) => {
     const product = {
       product: item?._id,
-      quantity: 1,
+      quantity: item?.quantity,
       order: item?.orden,
       options: item?.options?.reduce((accOpt, opt) => {
         return [

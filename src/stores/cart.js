@@ -34,7 +34,7 @@ export const cartStore = hookstate(() => {
 export const cartCounter = (items) => {
   return items?.reduce((acc, item) => {
     if (item?.tipo === "DESC") return acc;
-    return acc + 1;
+    return acc + item?.quantity || 0;
   }, 0);
 };
 
@@ -215,9 +215,9 @@ const addCart = (state) => ({
         let aditionalPrice = item?.options?.reduce((acc, option) => {
           return acc + option?.aditionalPrice || 0;
         }, 0);
-        return acc + ((item?.basePrice + aditionalPrice) * item?.quantity);
+        return acc + (item?.basePrice + aditionalPrice) * item?.quantity;
       }
-      return acc + (item?.basePrice * item?.quantity);
+      return acc + item?.basePrice * item?.quantity;
     }, 0);
     state?.subTotal?.set(calcCartItemsSubTotal);
   },
@@ -238,9 +238,9 @@ const addCart = (state) => ({
         let aditionalPrice = item?.options?.reduce((acc, option) => {
           return acc + option?.aditionalPrice || 0;
         }, 0);
-        return acc + ((item?.basePrice + aditionalPrice) * item?.quantity);
+        return acc + (item?.basePrice + aditionalPrice) * item?.quantity;
       }
-      return acc + (item?.basePrice * item?.quantity);
+      return acc + item?.basePrice * item?.quantity;
     }, 0);
     state?.total?.set(calcCartItemsTotal);
   },

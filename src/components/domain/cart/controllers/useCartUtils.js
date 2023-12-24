@@ -60,27 +60,33 @@ export default function useCartUtils() {
       );
       if (!product) return acc;
       let aditionalPrice = 0;
-      const options = product?.options?.reduce((accOption, productOption) => {
-        // Encontrar la opcion seleccionada dentro del cartItemProduct
-        const selectedOption = cartItemProduct?.options?.find(
-          (cartItemOption) => cartItemOption?.option === productOption?._id
-        );
-        // Detalles de la opcion seleccionada
-        const selectedDetail = productOption?.options?.find(
-          (option) => option?._id === selectedOption?.selected
-        );
+      const options = product?.options?.reduce(
+        (accOption, productOption, indexProductOption) => {
+          console.log(productOption, cartItemProduct);
+          // Encontrar la opcion seleccionada dentro del cartItemProduct
+          const selectedOption = cartItemProduct?.options?.find(
+            (cartItemOption, index) =>
+              cartItemOption?.option === productOption?._id &&
+              indexProductOption === index
+          );
+          // Detalles de la opcion seleccionada
+          const selectedDetail = productOption?.options?.find(
+            (option) => option?._id === selectedOption?.selected
+          );
 
-        if (!selectedOption) return accOption;
-        aditionalPrice += selectedDetail?.aditionalPrice || 0;
-        return [
-          ...accOption,
-          {
-            option: productOption?._id,
-            selected: selectedOption?.selected,
-            aditionalPrice: selectedDetail?.aditionalPrice,
-          },
-        ];
-      }, []);
+          if (!selectedOption) return accOption;
+          aditionalPrice += selectedDetail?.aditionalPrice || 0;
+          return [
+            ...accOption,
+            {
+              option: productOption?._id,
+              selected: selectedOption?.selected,
+              aditionalPrice: selectedDetail?.aditionalPrice,
+            },
+          ];
+        },
+        []
+      );
       // Verifica si, la cantidad de opciones mapeadas es igual a la cantidad de opciones del producto
       if (options?.length !== product?.options?.length) return acc;
       return [
@@ -91,6 +97,7 @@ export default function useCartUtils() {
           basePrice: product?.price,
           aditionalPrice,
           orden: cartItemProduct?.order,
+          quantity: cartItemProduct?.quantity,
           options,
         },
       ];

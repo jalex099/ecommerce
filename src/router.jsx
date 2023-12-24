@@ -69,7 +69,7 @@ const RoutesApp = () => {
       <Route element={<LayoutPage />}>
         <Route path="/" element={<FeedPage />} />
         <Route path="/menu" element={<MenuPage />} />
-        <Route path="/menu/category/:cat" element={<MenuPage />} />
+        <Route path="/menu/categorias/:cat" element={<MenuPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
 
         {/* PROFILE */}

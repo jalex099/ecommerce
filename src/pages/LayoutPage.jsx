@@ -28,7 +28,7 @@ const LayoutPage = () => {
   const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
     DataService();
   const { isSuccess: isSuccessPreferences } = ClientPreferenceService();
-  const { saveCart, isSuccess: isSuccessCart } = CartService();
+  const { saveCart, isLoading: isLoadingCart } = CartService();
 
   useEffect(() => {
     verifyAuth();
@@ -46,7 +46,7 @@ const LayoutPage = () => {
   }, [cart?.hash]);
 
   useEffect(() => {
-    if (!isSuccessCart || cart?.getItemsCounter() <= 0) return;
+    if (isLoadingCart || cart?.getItemsCounter() < 0) return;
     saveCart?.mutate({
       _id: cart?.getCartId(),
       status: "ACT",

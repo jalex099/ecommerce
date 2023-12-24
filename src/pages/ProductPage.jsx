@@ -44,7 +44,6 @@ const ProductPage = () => {
   }, [isLoading]);
 
   const optionsSubtotal = useMemo(() => {
-    console.log("Ent4ro");
     return getOptionsSubtotal();
   }, [temporal]);
 

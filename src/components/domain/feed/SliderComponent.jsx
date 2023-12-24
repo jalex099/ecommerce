@@ -28,7 +28,7 @@ function SliderComponent() {
     const selectedCategory = categories.find((item) => item?.id === reference);
     if (!selectedCategory) return;
     const { id, name } = selectedCategory;
-    navigate(`/category/${id}/${name}`);
+    navigate(`/categorias/${id}/${name}`);
   };
 
   if (carousel?.length === 0) return <></>;

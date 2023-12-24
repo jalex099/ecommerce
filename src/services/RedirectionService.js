@@ -27,13 +27,13 @@ const RedirectionService = () => {
   const redirectToFirstCategory = () => {
     const firstCat = categories?.sort((a, b) => a?.order - b?.order)?.[0];
     if (!firstCat) return;
-    return navigate(`/menu/category${getRoute(firstCat?.name)}`);
+    return navigate(`/menu/categorias${getRoute(firstCat?.name)}`);
   };
 
   const redirectToCategory = (id, replace = false) => {
     const category = categories?.find((cat) => cat?._id === id);
     if (!category) return;
-    return navigate(`/menu/category${getRoute(category?.name)}`, { replace });
+    return navigate(`/menu/categorias${getRoute(category?.name)}`, { replace });
   };
 
   const redirectTo = (type, id, replace = false) => {

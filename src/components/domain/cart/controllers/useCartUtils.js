@@ -62,7 +62,6 @@ export default function useCartUtils() {
       let aditionalPrice = 0;
       const options = product?.options?.reduce(
         (accOption, productOption, indexProductOption) => {
-          console.log(productOption, cartItemProduct);
           // Encontrar la opcion seleccionada dentro del cartItemProduct
           const selectedOption = cartItemProduct?.options?.find(
             (cartItemOption, index) =>

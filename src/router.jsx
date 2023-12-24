@@ -1,5 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import DynamicImport from "#/utils/DynamicImport.jsx";
+import { useAuthState } from "#/stores/AuthState";
 
 export default function Router() {
   return (
@@ -63,7 +64,14 @@ const CartPage = () => (
   </DynamicImport>
 );
 
+const LoginPage = () => (
+  <DynamicImport load={() => import("#/pages/LoginPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
+  const auth = useAuthState();
   return (
     <Routes>
       <Route element={<LayoutPage />}>
@@ -71,19 +79,45 @@ const RoutesApp = () => {
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/menu/categorias/:cat" element={<MenuPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
-
+        {/* AUTHENTICATION AND REGISTER */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/registro" element={<RegisterPage />} />
         {/* PROFILE */}
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/add-address" element={<AddAddressPage />} />
         <Route
-          path="/profile/orders-and-messages"
-          element={<OrdersAndMessagesPage />}
+          path="/perfil"
+          element={
+            <ProtectedAuthRoute auth={auth}>
+              <ProfilePage />
+            </ProtectedAuthRoute>
+          }
         />
-        <Route path="/profile/register" element={<RegisterPage />} />
+        <Route
+          path="/perfil/add-address"
+          element={
+            <ProtectedAuthRoute auth={auth}>
+              <AddAddressPage />
+            </ProtectedAuthRoute>
+          }
+        />
+        <Route
+          path="/perfil/orders-and-messages"
+          element={
+            <ProtectedAuthRoute auth={auth}>
+              <OrdersAndMessagesPage />
+            </ProtectedAuthRoute>
+          }
+        />
 
         {/* CART */}
         <Route path="/cart" element={<CartPage />} />
       </Route>
     </Routes>
   );
+};
+
+const ProtectedAuthRoute = ({ auth, children }) => {
+  if (auth?.isVerified && auth?.isAuthenticated === false) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
 };

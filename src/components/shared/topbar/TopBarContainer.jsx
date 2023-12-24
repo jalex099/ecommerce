@@ -23,7 +23,7 @@ function TopBarContainer(props) {
             <MenuTopBar />
           ) : pathname === "/cart" ? (
             <CartTopBar title={ui?.title} />
-          ) : pathname === "/profile" ? (
+          ) : pathname === "/perfil" ? (
             <ProfileTopBar />
           ) : (
             <DefaultTopBar title={ui?.title} />

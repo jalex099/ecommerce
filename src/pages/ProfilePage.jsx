@@ -9,64 +9,30 @@ import Addresses from "#/components/domain/profile/Addresses";
 import Divider from "@mui/material/Divider";
 import HelmetMeta from "#/components/shared/HelmetMeta";
 import { useAuthState } from "#/stores/AuthState";
-import SignInOptions from "#/components/domain/profile/SignInOptions";
-import GreetingProfile from "#/components/domain/profile/GreetingProfile";
-import UnloggedSkeletonContainer from "#/components/domain/profile/skeletons/UnloggedSkeletonContainer";
-import { useNavigate } from "react-router-dom";
-import AuthService from "#/services/AuthService";
 
 function ProfilePage() {
   const ui = useUIState();
   const auth = useAuthState();
-  const navigate = useNavigate();
-  const { loginWithGoogle, loginWithFacebook } = AuthService();
 
   useEffect(() => {
     ui?.setTitle("");
   }, []);
 
-  const handleRegister = () => {
-    navigate("/profile/register");
-  };
-
-  const handleGoogleLogin = async () => {
-    await loginWithGoogle();
-  };
-
-  const handleFacebookLogin = async () => {
-    await loginWithFacebook();
-  }
-
   return (
     <Container sx={style.container}>
       <HelmetMeta page="profile" />
 
-      {!auth?.isVerified && <UnloggedSkeletonContainer />}
-      {auth?.isVerified && auth?.isAuthenticated === true && (
-        <>
-          <AccountDetailsContainer currentUser={auth.currentUser} />
-          <FavoritesDialog />
+      <AccountDetailsContainer currentUser={auth.currentUser} />
+      <FavoritesDialog />
 
-          <Divider sx={style.divider} />
-          <OrdersAndMessages />
+      <Divider sx={style.divider} />
+      <OrdersAndMessages />
 
-          <Divider sx={style.divider} />
-          <Preferences />
-          <Divider sx={style.divider} />
+      <Divider sx={style.divider} />
+      <Preferences />
+      <Divider sx={style.divider} />
 
-          <Addresses />
-        </>
-      )}
-      {auth?.isVerified && auth?.isAuthenticated === false && (
-        <>
-          <GreetingProfile />
-          <SignInOptions
-            handleRegister={handleRegister}
-            handleGoogleLogin={handleGoogleLogin}
-            handleFacebookLogin={handleFacebookLogin}
-          />
-        </>
-      )}
+      <Addresses />
     </Container>
   );
 }

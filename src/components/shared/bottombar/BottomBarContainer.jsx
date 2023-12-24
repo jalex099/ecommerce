@@ -21,7 +21,12 @@ function BottomBarContainer() {
   useEffect(() => {
     if (pathname === "/") value.set(0);
     else if (pathname.startsWith("/menu")) value.set(1);
-    else if (pathname.startsWith("/profile")) value.set(2);
+    else if (
+      pathname.startsWith("/perfil") ||
+      pathname.startsWith("/login") ||
+      pathname.startsWith("/registro")
+    )
+      value.set(2);
     else value.set(0);
   }, [pathname]);
   const handleChange = (e, newValue) => {
@@ -36,7 +41,7 @@ function BottomBarContainer() {
         redirectToFirstCategory();
         break;
       case 2:
-        navigate("/profile");
+        navigate("/perfil");
         break;
       default:
         break;

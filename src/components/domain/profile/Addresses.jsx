@@ -12,7 +12,7 @@ function Addresses() {
   const navigate = useNavigate();
 
   const handleAddAddress = () => {
-    navigate("/profile/add-address");
+    navigate("/perfil/add-address");
   };
 
   const handleMarkAsMain = (addressId) => {

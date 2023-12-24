@@ -70,7 +70,7 @@ function CartTopBar({ title }) {
   const handleGoToProfile = () => {
     handleCloseShareDialog();
     handleCloseMenu();
-    navigate("/profile");
+    navigate("/perfil");
   };
 
   return (

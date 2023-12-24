@@ -67,7 +67,7 @@ const AuthService = () => {
       signInWithPopup(auth, provider).then(async (result) => {
         const user = result.user;
         const idToken = await user.getIdToken();
-        setAuthentication(
+        await setAuthentication(
           idToken,
           user?.displayName,
           user?.email,
@@ -149,7 +149,7 @@ const AuthService = () => {
       const user = credential.user;
       const idToken = await user.getIdToken();
       setAuthentication(idToken, user.displayName ?? "", user.email);
-      navigate("/profile");
+      navigate("/perfil");
     } catch (error) {
       onError(error);
     } finally {

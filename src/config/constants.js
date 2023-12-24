@@ -37,7 +37,7 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 export const COMPANY = "Ale Art";
 
 export const BOTTOM_BAR_HIDDEN_PATHS = [
-  "/profile/add-address",
+  "/perfil/add-address",
   "/product/",
   "/cart",
 ];
@@ -54,6 +54,10 @@ export const PAGES = {
   profile: {
     title: "Perfil",
     desc: `Pagina de perfil en ${COMPANY}`,
+  },
+  login: {
+    title: "Iniciar Sesión",
+    desc: `Pagina de inicio de sesión en ${COMPANY}`,
   },
   addAddress: {
     title: "Agregar Dirección",
@@ -83,10 +87,6 @@ export const PAGES = {
   loading: {
     title: "Cargando",
     desc: `Pagina de carga de ${COMPANY}`,
-  },
-  login: {
-    title: "Iniciar Sesión",
-    desc: `Pagina de inicio de sesión de ${COMPANY}`,
   },
   checkout: {
     title: "Checkout",

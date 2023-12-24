@@ -18,6 +18,7 @@ import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
 import CartService from "#/services/CartService.js";
 import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil";
 import OverwriteCartContainer from "#/components/domain/cart/OverwriteCartContainer.jsx";
+import CartSyncIndicatorContainer from "../components/shared/CartSyncIndicatorContainer";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -88,6 +89,7 @@ const LayoutPage = () => {
     */}
             <OverwriteCartContainer />
             <ToasterCustom />
+            <CartSyncIndicatorContainer isSyncing={ui?.isSyncingCart} />
           </Box>
           <footer className="fixed bottom-0 left-0 right-0">
             <BottomBarContainer />

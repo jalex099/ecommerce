@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 export const uiState = hookstate({
   loading: 0,
+  syncingCart: false,
   title: "",
 });
 
@@ -17,6 +18,14 @@ export const stopLoading = () => {
   uiState.loading.set(
     uiState.loading.value > 0 ? uiState.loading.value - 1 : 0
   );
+};
+
+export const startSyncingCart = () => {
+  uiState.syncingCart.set(true);
+};
+
+export const stopSyncingCart = () => {
+  uiState.syncingCart.set(false);
 };
 
 export const addToast = (text, type = "success") => {
@@ -33,5 +42,6 @@ export const useUIState = () => {
     setTitle: (title) => {
       state.title.set(title);
     },
+    isSyncingCart: state.syncingCart.value,
   };
 };

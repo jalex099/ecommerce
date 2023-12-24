@@ -19,7 +19,7 @@ function TopBarContainer(props) {
         <AppBar color={"neutral0"}>
           {pathname === "/" ? (
             <FeedTopBar title={ui?.title} />
-          ) : pathname?.startsWith("/menu/category") ? (
+          ) : pathname?.startsWith("/menu/categorias") ? (
             <MenuTopBar />
           ) : pathname === "/cart" ? (
             <CartTopBar title={ui?.title} />

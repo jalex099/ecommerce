@@ -10,9 +10,9 @@ const RedirectionService = () => {
     if (!prd) return;
     if (!prd?._id) return;
     //* If there is a urlName defined, redirect to the product page with the urlName
-    if (prd?.urlName) return navigate(`/product/${prd?.urlName}`);
+    if (prd?.urlName) return navigate(`/producto/${prd?.urlName}`);
     //* Else, redirect to the product page with the id
-    return navigate(`/product/${prd?._id}`, { replace });
+    return navigate(`/producto/${prd?._id}`, { replace });
   };
 
   const findProductByUrlNameOrId = (urlNameOrId) => {

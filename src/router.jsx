@@ -78,7 +78,7 @@ const RoutesApp = () => {
         <Route path="/" element={<FeedPage />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/menu/categorias/:cat" element={<MenuPage />} />
-        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/producto/:id" element={<ProductPage />} />
         {/* AUTHENTICATION AND REGISTER */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
@@ -92,7 +92,7 @@ const RoutesApp = () => {
           }
         />
         <Route
-          path="/perfil/add-address"
+          path="/perfil/agregar-direccion"
           element={
             <ProtectedAuthRoute auth={auth}>
               <AddAddressPage />
@@ -100,7 +100,7 @@ const RoutesApp = () => {
           }
         />
         <Route
-          path="/perfil/orders-and-messages"
+          path="/perfil/ordenes-y-mensajes"
           element={
             <ProtectedAuthRoute auth={auth}>
               <OrdersAndMessagesPage />
@@ -109,7 +109,7 @@ const RoutesApp = () => {
         />
 
         {/* CART */}
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/carrito" element={<CartPage />} />
       </Route>
     </Routes>
   );

@@ -37,9 +37,9 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 export const COMPANY = "Ale Art";
 
 export const BOTTOM_BAR_HIDDEN_PATHS = [
-  "/perfil/add-address",
-  "/product/",
-  "/cart",
+  "/perfil/agregar-direccion",
+  "/producto/",
+  "/carrito",
 ];
 
 export const PAGES = {

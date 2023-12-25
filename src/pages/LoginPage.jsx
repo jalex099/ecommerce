@@ -26,7 +26,7 @@ export default function LoginPage() {
   }, [auth?.isVerified, auth?.isAuthenticated]);
 
   const handleRegister = () => {
-    navigate("/register");
+    navigate("/registro");
   };
 
   const handleGoogleLogin = async () => {

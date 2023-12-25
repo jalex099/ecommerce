@@ -7,7 +7,7 @@ function OrdersAndMessages() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/perfil/orders-and-messages");
+    navigate("/perfil/ordenes-y-mensajes");
   };
 
   return (

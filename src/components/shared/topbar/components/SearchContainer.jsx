@@ -4,16 +4,11 @@ import * as _ from "lodash";
 import DataService from "#/services/DataService";
 import { useRef } from "react";
 import { useHookstate } from "@hookstate/core";
-import { useEffect } from "react";
 
 export default function SearchContainer() {
   const { menu } = DataService();
   const results = useHookstate([]);
   const searchRef = useRef(null);
-
-  useEffect(() => {
-    console.log(results?.get());
-  }, [results?.get()]);
 
   const handleSearch = _.debounce(() => {
     const search = searchRef.current.value;

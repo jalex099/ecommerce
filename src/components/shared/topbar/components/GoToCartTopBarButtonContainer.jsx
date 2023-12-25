@@ -11,7 +11,7 @@ export default function GoToCartTopBarButton() {
   const cart = useCartState();
 
   const handleClickGoToCart = () => {
-    navigate("/cart");
+    navigate("/carrito");
   };
   const badgeContent = useMemo(() => {
     return cart?.getItemsCounter() || 0;

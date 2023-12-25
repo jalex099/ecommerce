@@ -21,7 +21,7 @@ function TopBarContainer(props) {
             <FeedTopBar title={ui?.title} />
           ) : pathname?.startsWith("/menu/categorias") ? (
             <MenuTopBar />
-          ) : pathname === "/cart" ? (
+          ) : pathname === "/carrito" ? (
             <CartTopBar title={ui?.title} />
           ) : pathname === "/perfil" ? (
             <ProfileTopBar />

@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import { useMemo } from "react";
 import ProductCardContainer from "#/components/domain/menu/ProductCardContainer";
 
-function ProductsList({ category, products, handleClick }) {
+function ProductsList({ category, products, offers, handleClick }) {
   const productsToShow = useMemo(() => {
     return products?.filter((product) => product.category === category);
   }, [category, products]);
@@ -12,6 +12,7 @@ function ProductsList({ category, products, handleClick }) {
         <ProductCardContainer
           key={product?._id}
           product={product}
+          offer={offers?.find((offer) => offer.product === product._id)}
           handleClick={handleClick}
         />
       ))}

@@ -11,6 +11,8 @@ const temporalProduct = hookstate({
   options: [],
   isNew: false,
   tags: [],
+  isOffer: false,
+  discount: 0,
 });
 
 export const useTemporalProduct = () => {
@@ -26,6 +28,8 @@ export const useTemporalProduct = () => {
     state.options.set([]);
     state.isNew.set(false);
     state.tags.set([]);
+    state.isOffer.set(false);
+    state.discount.set(0);
   };
 
   const fill = ({
@@ -91,11 +95,32 @@ export const useTemporalProduct = () => {
     state.options[optionIndex].selected.set(selectionId);
   };
 
+  const updatePriceFromOffer = (offer) => {
+    if (!offer) return;
+    switch (offer?.behavior) {
+      case "PRC":
+        state?.discount?.set(state?.price?.get() * (offer?.amount / 100));
+        state.isOffer.set(true);
+        state.price.set(
+          state.price?.get() - (state.price?.get() * offer?.amount) / 100
+        );
+        break;
+      case "MNT":
+        state?.discount?.set(offer?.amount);
+        state.isOffer.set(true);
+        state.price.set(state.price?.get() - offer?.amount);
+        break;
+      default:
+        return;
+    }
+  };
+
   return {
     clear,
     fill,
     temp: state?.get(),
     setSelectedOption,
     preparedDataToServer,
+    updatePriceFromOffer,
   };
 };

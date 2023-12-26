@@ -55,6 +55,10 @@ const DataService = () => {
     return data?.data?.options || [];
   }, [data]);
 
+  const offers = useMemo(() => {
+    return data?.data?.offers || [];
+  }, [data]);
+
   const groupsOfOptions = useMemo(() => {
     return options
       ?.reduce((acc, item) => {
@@ -90,6 +94,7 @@ const DataService = () => {
     company,
     carousel,
     messages,
+    offers,
     isLoading,
     isSuccess,
     isError,

@@ -4,11 +4,14 @@ import useAddToCart from "#/components/domain/product/controllers/useAddToCart";
 import RedirectionService from "#/services/RedirectionService";
 import { useNavigate } from "react-router-dom";
 import serializeState from "#/utils/serializeState";
+import DataService from "#/services/DataService";
 
 const ProductController = () => {
-  const { temp, setSelectedOption, clear, fill } = useTemporalProduct();
+  const { temp, setSelectedOption, clear, fill, updatePriceFromOffer } =
+    useTemporalProduct();
   const { addToCart } = useAddToCart();
   const { findProductByUrlNameOrId } = RedirectionService();
+  const { offers } = DataService();
   const navigate = useNavigate();
 
   const options = useMemo(
@@ -22,8 +25,14 @@ const ProductController = () => {
     if (!productFromMenu) {
       navigate("/");
     }
+
     // If the product is in the menu, then we fill the temporal state
     fill(productFromMenu);
+    // If the product is in the offers, then we update the price
+    const offer = offers?.find(
+      (offer) => offer?.product === productFromMenu?._id
+    );
+    if (offer) updatePriceFromOffer(offer);
   };
 
   const clearTemp = () => {

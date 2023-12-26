@@ -11,7 +11,7 @@ import { getCategory } from "#/utils/directoryUtils";
 import { useLocation } from "react-router-dom";
 
 const MenuPage = () => {
-  const { categories, menu } = DataService();
+  const { categories, menu, offers } = DataService();
   const selected = useHookstate(null);
   const ui = useUIState();
   const { redirectToProduct, redirectToFirstCategory, redirectTo } =
@@ -50,6 +50,7 @@ const MenuPage = () => {
           <ProductsList
             category={selected.get()}
             products={menu}
+            offers={offers}
             handleClick={handleProductClick}
           />
         </>

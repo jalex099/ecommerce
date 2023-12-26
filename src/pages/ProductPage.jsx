@@ -19,6 +19,7 @@ import ProductController from "#/components/domain/product/controllers/ProductCo
 import Regular12 from "#/components/shared/fonts/Regular12";
 // import { motion, AnimatePresence } from "framer-motion";
 import FavoriteToogleContainer from "#/components/domain/product/FavoriteToogleContainer";
+import DiscountChipContainer from "#/components/domain/product/DiscountChipContainer";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
@@ -69,6 +70,12 @@ const ProductPage = () => {
           {formatCurrency(temporal?.price + optionsSubtotal)}
           {optionsSubtotal > 0 && <span>*</span>}
         </Bold16>
+        {temporal?.isOffer && !!temporal?.discount && (
+          <DiscountChipContainer
+            price={temporal?.price}
+            amount={temporal?.discount}
+          />
+        )}
         {/* <AnimatePresence>
             {getOptionsSubtotal() > 0 && (
               <motion.div

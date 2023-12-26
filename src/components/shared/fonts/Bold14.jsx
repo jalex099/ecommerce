@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-function Bold14({ children, className }) {
+function Bold14({ children, className, styles }) {
   return (
     <Typography
       fontSize="14px"
@@ -8,6 +8,7 @@ function Bold14({ children, className }) {
       className={className}
       fontFamily="Intro"
       fontWeight={700}
+      sx={styles}
     >
       {children}
     </Typography>

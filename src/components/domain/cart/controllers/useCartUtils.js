@@ -3,7 +3,7 @@ import DataService from "#/services/DataService";
 import serializeState from "#/utils/serializeState";
 export default function useCartUtils() {
   const cart = useCartState();
-  const { menu, isLoading } = DataService();
+  const { menu, isLoading, offers } = DataService();
 
   const getItemsToShow = () => {
     if (isLoading) return undefined;
@@ -89,16 +89,34 @@ export default function useCartUtils() {
       );
       // Verifica si, la cantidad de opciones mapeadas es igual a la cantidad de opciones del producto
       if (options?.length !== product?.options?.length) return acc;
+      // Verifica si hay ofertas para ese producto
+      const offer = offers?.find((offer) => offer?.product === product?._id);
+      // Si hay oferta, se calcula el precio con la oferta
+      let discount = 0;
+      if (offer) {
+        const { amount, behavior } = offer;
+        switch (behavior) {
+          case "PRC":
+            discount = product?.price * (amount / 100);
+            break;
+          case "MNT":
+            discount = amount;
+            break;
+          default:
+            break;
+        }
+      }
       return [
         ...acc,
         {
           _id: product?._id,
           name: product?.name,
-          basePrice: product?.price,
+          basePrice: product?.price - discount,
           aditionalPrice,
           orden: cartItemProduct?.order,
           quantity: cartItemProduct?.quantity,
           options,
+          discount,
         },
       ];
     }, []);

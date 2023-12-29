@@ -23,6 +23,7 @@ function CartItemsContainer({ products, getDetails }) {
                 quantity={product?.quantity}
                 aditionalPrice={product?.aditionalPrice}
                 options={product?.options}
+                discount={product?.discount}
                 getDetails={getDetails}
                 isLastItem={index === products?.length - 1}
               />

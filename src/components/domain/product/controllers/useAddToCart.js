@@ -38,6 +38,7 @@ export default function useAddToCart() {
       aditionalPrice,
       orden: cart?.getOrdenAgregado(),
       options,
+      discount: Math.round(temp?.discount, 2),
     });
 
     cart?.updateOrdenAgregado(cart?.getOrdenAgregado() + 1);

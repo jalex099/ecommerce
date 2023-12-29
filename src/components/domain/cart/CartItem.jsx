@@ -20,6 +20,7 @@ function CartItem({
   aditionalPrice,
   quantity,
   options,
+  discount,
   getDetails,
   isLastItem,
 }) {
@@ -71,22 +72,28 @@ function CartItem({
               quantity={quantity}
             />
           </Box>
-
-          <Regular16>{formatCurrency(individualPrice)}</Regular16>
-        </Box>
-        {!!subtotal && (
-          <Box className="w-full flex justify-center items-center gap-2">
-            <Regular12>Subtotal </Regular12>
-            <motion.div
-              key={subtotal}
-              variants={variants}
-              animate="show"
-              initial="hide"
-            >
-              <SemiBold12>{formatCurrency(subtotal)}</SemiBold12>
-            </motion.div>
+          <Box className="flex flex-col justify-center items-center text-right gap-0">
+            <Regular16>{formatCurrency(individualPrice)}</Regular16>
+            <SemiBold12 className="w-full" styles={{ color: "#f25b5b" }}>
+              - {formatCurrency(discount)}
+            </SemiBold12>
           </Box>
-        )}
+        </Box>
+        <Box className="w-full flex flex-col gap-0">
+          {!!subtotal && (
+            <Box className="w-full flex justify-center items-center gap-2">
+              <Regular12>Subtotal </Regular12>
+              <motion.div
+                key={subtotal}
+                variants={variants}
+                animate="show"
+                initial="hide"
+              >
+                <SemiBold12>{formatCurrency(subtotal)}</SemiBold12>
+              </motion.div>
+            </Box>
+          )}
+        </Box>
       </motion.li>
 
       {!isLastItem && <Divider />}

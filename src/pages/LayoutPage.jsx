@@ -43,17 +43,23 @@ const LayoutPage = () => {
     cart?.addSubTotal();
     cart?.addTotal();
     cart?.addToLocalStorage();
-  }, [cart?.hash]);
+  }, [cart?.hash()]);
+
+  useEffect(() => {
+    cart?.setDirty(true);
+  }, [cart?.getItemsCounter()]);
 
   useEffect(() => {
     if (isLoadingCart || cart?.getItemsCounter() < 0) return;
+    if (pathname === "/carrito") return;
+    if (!cart?.getDirty()) return;
     saveCart?.mutate({
       _id: cart?.getCartId(),
       status: "ACT",
       visibility: "PUBLIC",
       menu: parseMenu(cart?.getItems()),
     });
-  }, [cart?.getItemsCounter()]);
+  }, [cart?.getItemsCounter(), pathname]);
 
   const isHidden = useMemo(() => {
     return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));

@@ -31,6 +31,7 @@ const CartService = () => {
     onSuccess: ({ data }) => {
       cart?.setOwnerCart(data?._id, data?.code);
       fillFromApi(data);
+      cart?.setDirty(false);
       // queryClient.invalidateQueries(["auth_getCarts"], {});
     },
     onError: (error) => {

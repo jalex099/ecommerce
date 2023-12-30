@@ -28,6 +28,7 @@ export const cartStore = hookstate(() => {
     isReadCart: false,
     _id: cart?._id || null,
     code: cart?.code || null,
+    isDirty: false,
   };
 });
 
@@ -259,6 +260,12 @@ const addCart = (state) => ({
     state._id.set(id);
     state.code.set(code);
   },
+
+  // //* Setea si la data del carrito fue modificada
+  setDirty: (value) => state.isDirty.set(value),
+
+  // //* Retorna si la data del carrito fue modificada
+  getDirty: () => state.isDirty.get(),
 
   // //* Se valida el carrito
   // validateCart: (props) => {

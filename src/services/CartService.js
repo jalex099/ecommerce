@@ -11,6 +11,7 @@ const CartService = () => {
     getCarts: _getCarts,
     saveCart: _saveCart,
     cloneCart: _cloneCart,
+    deleteCart: _deleteCart,
   } = CartRepository();
   const { fillFromApi } = useCartUtils();
   const queryClient = useQueryClient();
@@ -51,6 +52,17 @@ const CartService = () => {
     },
   });
 
+  const deleteCart = useMutation({
+    mutationFn: _deleteCart,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["auth_getCarts"], {});
+    },
+    onError: (error) => {
+      console.log(error?.response?.data);
+      addToast("Hubo un error al eliminar el carrito", "error");
+    },
+  });
+
   return {
     carts: data?.data,
     isLoading,
@@ -58,6 +70,7 @@ const CartService = () => {
     isError,
     saveCart,
     cloneCart,
+    deleteCart,
   };
 };
 

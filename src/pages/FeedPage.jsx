@@ -5,6 +5,7 @@ import SliderComponent from "#/components/domain/feed/SliderComponent.jsx";
 import HelmetMeta from "#/components/shared/HelmetMeta.jsx";
 import NewContent from "#/components/domain/feed/NewContent.jsx";
 import Box from "@mui/material/Box";
+import OffersContainer from "#/components/domain/feed/OffersContainer.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
@@ -16,6 +17,7 @@ const FeedPage = () => {
       <HelmetMeta page="feed" />
       <Box className="w-full">
         <SliderComponent />
+        <OffersContainer />
       </Box>
       <NewContent />
     </Container>
@@ -25,6 +27,7 @@ const FeedPage = () => {
 const style = {
   container: {
     width: "100%",
+    margin: "auto",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",

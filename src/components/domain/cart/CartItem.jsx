@@ -74,9 +74,11 @@ function CartItem({
           </Box>
           <Box className="flex flex-col justify-center items-center text-right gap-0">
             <Regular16>{formatCurrency(individualPrice)}</Regular16>
-            <SemiBold12 className="w-full" styles={{ color: "#f25b5b" }}>
-              - {formatCurrency(discount)}
-            </SemiBold12>
+            {!!discount && discount > 0 && (
+              <SemiBold12 className="w-full" styles={{ color: "#FF7C5A" }}>
+                - {formatCurrency(discount)}
+              </SemiBold12>
+            )}
           </Box>
         </Box>
         <Box className="w-full flex flex-col gap-0">

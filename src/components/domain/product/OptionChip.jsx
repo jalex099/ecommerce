@@ -26,7 +26,7 @@ function OptionChip({ option, isSelected, onSelect }) {
       }`}
       style={style.content}
       onClick={() => onSelect(option?._id)}
-      whileHover={{ scale: 1.05 }}
+      // whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       <Box className="flex flex-row gap-2 items-center justify-start">

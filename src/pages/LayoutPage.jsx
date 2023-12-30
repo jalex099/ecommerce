@@ -68,7 +68,7 @@ const LayoutPage = () => {
           </header>
           <Box
             component="main"
-            className="container relative"
+            className="container relative mx-auto"
             sx={{
               paddingBottom: !isHidden && "96px",
             }}

@@ -58,8 +58,8 @@ export const cartCounter = (items) => {
 
 const getDescuentoFn = (items) => {
   return items?.reduce((acc, cur) => {
-    if (cur?.TP) {
-      acc = cur?.precio * -1;
+    if (cur?.discount && cur?.discount > 0) {
+      acc += cur?.discount * cur?.quantity;
     }
     return acc;
   }, 0);
@@ -215,7 +215,10 @@ const addCart = (state) => ({
         let aditionalPrice = item?.options?.reduce((acc, option) => {
           return acc + option?.aditionalPrice || 0;
         }, 0);
-        return acc + (item?.basePrice + aditionalPrice) * item?.quantity;
+        return (
+          acc +
+          (item?.basePrice + aditionalPrice + item?.discount) * item?.quantity
+        );
       }
       return acc + item?.basePrice * item?.quantity;
     }, 0);

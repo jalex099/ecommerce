@@ -19,7 +19,7 @@ export default function OverwriteCartContainer() {
   const isOpen = useHookstate(false);
   const { menu } = DataService();
   const cart = useCartState();
-  const { carts, saveCart } = CartService();
+  const { carts, saveCart, deleteCart } = CartService();
   const { fillFromApi } = useCartUtils();
 
   useEffect(() => {
@@ -33,9 +33,14 @@ export default function OverwriteCartContainer() {
     // fillFromApi(carts[0]);
   }, [carts?.length, menu?.length]);
 
-  const handleKeepCurrent = () => {
+  const handleKeepCurrent = async () => {
     isOpen?.set(false);
-    saveCart?.mutate({
+    await Promise.all(
+      carts.map((element) => {
+        return deleteCart?.mutate(element._id);
+      })
+    );
+    await saveCart?.mutate({
       _id: null,
       status: "ACT",
       visibility: "PUBLIC",

@@ -5,11 +5,11 @@ import { useCartState } from "#/stores/cart";
 import { useMemo } from "react";
 import CartItemsContainer from "#/components/domain/cart/CartItemsContainer";
 import CartResumeInfo from "#/components/domain/cart/CartResumeInfo";
-import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 import DataService from "#/services/DataService";
 import EmptyCartContainer from "#/components/domain/cart/EmptyCartContainer";
+import Container from "@mui/material/Container";
 
 function CartPage() {
   const ui = useUIState();
@@ -32,7 +32,7 @@ function CartPage() {
   };
 
   return (
-    <Box sx={style.container}>
+    <Container sx={style.container}>
       <HelmetMeta page="cart" />
       {itemsToShow == undefined && !isLoading && (
         <EmptyCartContainer onClick={handleGoToMenu} />
@@ -49,7 +49,7 @@ function CartPage() {
           />
         </>
       )}
-    </Box>
+    </Container>
   );
 }
 
@@ -60,9 +60,10 @@ const style = {
     alignItems: "center",
     justifyContent: "flex-start",
     gap: "16px",
-    minHeight: "calc(100vh - 70px)",
+    minHeight: "calc(100dvh - 70px)",
     paddingTop: "16px",
     flexGrow: 1,
+    px: "0 !important",
   },
 };
 

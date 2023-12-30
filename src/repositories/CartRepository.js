@@ -24,10 +24,17 @@ const CartRepository = () => {
     );
   };
 
+  const deleteCart = async (_id) => {
+    return await API.delete(`/carts/${_id}`, {
+      secure: true,
+    });
+  };
+
   return {
     getCarts,
     saveCart,
     cloneCart,
+    deleteCart,
   };
 };
 

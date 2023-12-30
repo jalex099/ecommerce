@@ -31,14 +31,14 @@ export default function useAddToCart() {
       ];
     }, []);
     cart?.add({
-      _id: temp?._id,
-      name: temp?.name,
-      basePrice: temp?.price,
-      quantity: temp?.quantity || 1,
+      _id: itemToAdd?._id,
+      name: itemToAdd?.name,
+      basePrice: itemToAdd?.price,
+      quantity: itemToAdd?.quantity || 1,
       aditionalPrice,
       orden: cart?.getOrdenAgregado(),
       options,
-      discount: Math.round(temp?.discount, 2),
+      discount: itemToAdd?.discount,
     });
 
     cart?.updateOrdenAgregado(cart?.getOrdenAgregado() + 1);

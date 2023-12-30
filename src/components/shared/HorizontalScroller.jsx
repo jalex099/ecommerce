@@ -26,7 +26,7 @@ const HorizontalScroller = ({ children }) => {
           },
           width: "100%",
           gap: "16px",
-          padding: "0px",
+          padding: "0px 8px",
         }}
       >
         {children}

@@ -15,7 +15,7 @@ const FeedPage = () => {
   return (
     <Container sx={style.container}>
       <HelmetMeta page="feed" />
-      <Box className="w-full">
+      <Box className="w-full flex flex-col gap-6">
         <SliderComponent />
         <OffersContainer />
       </Box>

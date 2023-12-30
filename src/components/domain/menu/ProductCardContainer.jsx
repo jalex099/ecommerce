@@ -7,8 +7,15 @@ import Picture from "#/components/shared/Picture";
 import TouchRippleEffect from "#/components/shared/TouchRippleEffect";
 import { useMemo } from "react";
 import Box from "@mui/material/Box";
+import { hoursRemainingUntilDate } from "#/utils/datetimeUtils.js";
+import Regular12 from "#/components/shared/fonts/Regular12";
 
-function ProductCardContainer({ product, offer, handleClick }) {
+function ProductCardContainer({
+  product,
+  offer,
+  handleClick,
+  showOfferExpiration = false,
+}) {
   const { findImage } = ImageService();
   const priceAfterDiscount = useMemo(() => {
     if (!offer) return null;
@@ -21,20 +28,30 @@ function ProductCardContainer({ product, offer, handleClick }) {
         return null;
     }
   }, [offer]);
+
+  const legendOfferRemaining = useMemo(() => {
+    const hours = hoursRemainingUntilDate(offer?.to);
+    const days = Math.floor(hours / 24);
+    if (hours < 0) return "Oferta expirada";
+    if (hours === 0) return "Menos de una hora restante";
+    if (hours >= 1 && hours < 24) return `${hours} horas restantes`;
+    return `${days} días restantes`;
+  }, [offer]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       style={style.container}
-      className="rounded-md p-2  shadow-md relative select-none"
+      className="rounded-md p-2  shadow-md relative select-none h-full"
       onClick={() => handleClick(product?._id)}
     >
-      <TouchRippleEffect className="flex flex-col items-start justify-start rounded-md min-h-[150px] ">
+      <TouchRippleEffect className="flex flex-col gap-1 items-start justify-start rounded-md min-h-[150px] h-full">
         <Picture
           webp={findImage(product?._id, "PRD", "webp")}
           jpg={findImage(product?._id, "PRD", "jpg")}
           alt={`Imagen de ${product?.name}`}
-          className="w-full aspect-square lg:h-64 object-cover rounded-md mb-3 overflow-hidden"
+          className="w-full aspect-square lg:h-64 object-cover rounded-md mb-2 overflow-hidden"
         />
         <Regular16>{product?.name}</Regular16>
         <Box className="flex flex-row gap-2">
@@ -47,6 +64,9 @@ function ProductCardContainer({ product, offer, handleClick }) {
             </Bold14>
           )}
         </Box>
+        {!!showOfferExpiration && !!offer && (
+          <Regular12 className="opacity-60 ">{legendOfferRemaining}</Regular12>
+        )}
       </TouchRippleEffect>
     </motion.div>
   );

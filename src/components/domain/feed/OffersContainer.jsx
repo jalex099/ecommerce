@@ -1,13 +1,14 @@
 import Box from "@mui/material/Box";
-import Regular18 from "#/components/shared/fonts/Regular18";
 import HorizontalScroller from "#/components/shared/HorizontalScroller";
 import ProductCardContainer from "#/components/domain/menu/ProductCardContainer";
 import DataService from "#/services/DataService";
+import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import { useMemo } from "react";
+import RedirectionService from "#/services/RedirectionService";
 
 export default function OffersContainer() {
   const { menu, offers } = DataService();
-
+  const { redirectToProduct } = RedirectionService();
   const offeredProducts = useMemo(
     () =>
       menu?.filter((item) =>
@@ -16,21 +17,24 @@ export default function OffersContainer() {
     [menu, offers]
   );
 
-  const handleClick = (product) => {
-    console.log(product);
+  const handleProductClick = (productId) => {
+    redirectToProduct(productId);
   };
 
+  if (!offeredProducts?.length) return null;
   return (
     <Box sx={style.container}>
-      <Regular18>Ofertas</Regular18>
+      <SemiBold18>Productos en oferta</SemiBold18>
       <HorizontalScroller>
         {offeredProducts?.map((item) => (
-          <ProductCardContainer
-            key={item?._id}
-            product={item}
-            offer={offers?.find((offer) => offer?.product === item?._id)}
-            handleClick={handleClick}
-          />
+          <Box key={item?._id} className="min-w-[140px] h-[258px] my-1 ">
+            <ProductCardContainer
+              product={item}
+              offer={offers?.find((offer) => offer?.product === item?._id)}
+              handleClick={handleProductClick}
+              showOfferExpiration
+            />
+          </Box>
         ))}
       </HorizontalScroller>
     </Box>
@@ -43,6 +47,6 @@ const style = {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "32px",
+    gap: 0,
   },
 };

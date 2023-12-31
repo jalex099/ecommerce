@@ -65,7 +65,9 @@ function ProductCardContainer({
           )}
         </Box>
         {!!showOfferExpiration && !!offer && (
-          <Regular12 className="opacity-60 ">{legendOfferRemaining}</Regular12>
+          <Regular12 className="opacity-60 flex flex-1 justify-end items-end">
+            {legendOfferRemaining}
+          </Regular12>
         )}
       </TouchRippleEffect>
     </motion.div>

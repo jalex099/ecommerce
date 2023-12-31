@@ -5,11 +5,13 @@ import { CHECKOUT_STEPS } from "#/config/constants.js";
 
 export const checkoutState = hookstate({
   activeStep: CHECKOUT_STEPS?.ADDRESS,
+  deliveryMethod: null,
 });
 
 export const useCheckoutState = () => {
   const state = useHookstate(checkoutState);
 
+  //* Set active the next step
   const handleNextStep = () => {
     const activeStep = state.activeStep.get();
     const activeStepIndex = Object?.values(CHECKOUT_STEPS)?.findIndex(
@@ -21,6 +23,7 @@ export const useCheckoutState = () => {
     const nextStepIndex = activeStepIndex + 1;
     state.activeStep.set(Object?.values(CHECKOUT_STEPS)[nextStepIndex]);
   };
+  //* Set active the previous step
   const handlePreviousStep = () => {
     const activeStep = state.activeStep.get();
     const activeStepIndex = Object?.values(CHECKOUT_STEPS)?.findIndex(
@@ -38,5 +41,7 @@ export const useCheckoutState = () => {
     setActiveStep: (step) => state.activeStep.set(step),
     handleNextStep,
     handlePreviousStep,
+    deliveryMethod: state.deliveryMethod.get(),
+    setDeliveryMethod: (method) => state.deliveryMethod.set(method),
   };
 };

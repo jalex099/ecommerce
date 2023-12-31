@@ -49,6 +49,24 @@ export const CHECKOUT_STEPS = {
   REVIEW: 2,
 };
 
+export const DELIVERY_METHODS = [
+  {
+    label: "Delivery",
+    value: 0,
+    description: "Recibe tu pedido en la puerta de tu casa",
+  },
+  {
+    label: "Pickup",
+    value: 1,
+    description: "Recoge tu pedido en la tienda",
+  },
+  {
+    label: "Meetup",
+    value: 2,
+    description: "Encuentro en un lugar público",
+  },
+];
+
 export const PAGES = {
   feed: {
     title: "Feed",

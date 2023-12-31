@@ -6,6 +6,9 @@ import MuiCssBaseline from "#/theme/MuiCssBaseline";
 
 const theme = createTheme({
   palette,
+  shape: {
+    borderRadius: 8,
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: MuiCssBaseline,

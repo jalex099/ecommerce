@@ -40,11 +40,10 @@ const LayoutPage = () => {
 
   useEffect(() => {
     if (!isSuccess) return;
-    if (!cart?.getDirty()) return;
     cart?.addSubTotal();
     cart?.addTotal();
     cart?.addToLocalStorage();
-  }, [cart?.hash(), pathname]);
+  }, [cart?.hash()]);
 
   useEffect(() => {
     cart?.setDirty(true);

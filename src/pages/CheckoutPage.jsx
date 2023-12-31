@@ -4,22 +4,34 @@ import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta.jsx";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import { CHECKOUT_STEPS } from "#/config/constants";
-import ShippingAddressContainer from "#/components/domain/checkout/ShippingAddressContainer";
+import ShippingContainer from "#/components/domain/checkout/ShippingContainer";
 import PaymentContainer from "#/components/domain/checkout/PaymentContainer";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
+import { useCartState } from "#/stores/cart";
 
 const CheckoutPage = () => {
   const ui = useUIState();
   const checkoutState = useCheckoutState();
+  const cart = useCartState();
+  const navigate = useNavigate();
+
   useEffect(() => {
     ui?.setTitle("Pago");
   }, []);
+
+  useEffect(() => {
+    if (cart?.getItemsCounter() === 0) {
+      navigate(-1);
+    }
+  }, []);
+
   return (
     <Container sx={style.container}>
       <HelmetMeta page="checkout" />
       {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
-        <ShippingAddressContainer />
+        <ShippingContainer />
       )}
       {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (
         <PaymentContainer />

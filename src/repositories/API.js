@@ -5,7 +5,7 @@ import { findKey, removeKey } from "#/utils/localStorageHelper.js";
 
 const API = axios.create({
   baseURL: API_URL,
-  timeout: 5000,
+  timeout: 60000,
 });
 
 //* Set the interceptors

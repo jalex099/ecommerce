@@ -6,10 +6,13 @@ import Button from "@mui/material/Button";
 import AuthService from "#/services/AuthService";
 import TextField from "@mui/material/TextField";
 import { useRef } from "react";
+import { useHookstate } from "@hookstate/core";
+import SemiBold12 from "#/components/shared/fonts/SemiBold12";
 
 function EmailAndPasswordLoginForm() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const showPassword = useHookstate(false);
   const { loginWithEmailAndPassword } = AuthService();
 
   const handleSubmit = (event) => {
@@ -47,9 +50,21 @@ function EmailAndPasswordLoginForm() {
           label="Contraseña"
           name="password"
           variant="standard"
-          type="password"
+          type={showPassword.get() ? "text" : "password"}
           sx={{ width: "100%" }}
           inputRef={passwordRef}
+          InputProps={{
+            endAdornment: (
+              <Button
+                variant="text"
+                onClick={() => showPassword.set((prev) => !prev)}
+              >
+                <SemiBold12>
+                  {showPassword.get() ? "Ocultar" : "Mostrar"}
+                </SemiBold12>
+              </Button>
+            ),
+          }}
         />
         <Button variant="contained" color="primary" type="submit">
           Iniciar sesi&oacute;n

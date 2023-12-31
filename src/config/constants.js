@@ -40,7 +40,14 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/perfil/agregar-direccion",
   "/producto/",
   "/carrito",
+  "/pago",
 ];
+
+export const CHECKOUT_STEPS = {
+  ADDRESS: 0,
+  PAYMENT: 1,
+  REVIEW: 2,
+};
 
 export const PAGES = {
   feed: {
@@ -90,7 +97,7 @@ export const PAGES = {
   },
   checkout: {
     title: "Checkout",
-    desc: `Pagina de checkout de ${COMPANY}`,
+    desc: `Pagina de pago de ${COMPANY}`,
   },
   signup: {
     title: "Registro",

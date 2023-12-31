@@ -70,6 +70,12 @@ const LoginPage = () => (
   </DynamicImport>
 );
 
+const CheckoutPage = () => (
+  <DynamicImport load={() => import("#/pages/CheckoutPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -110,6 +116,8 @@ const RoutesApp = () => {
 
         {/* CART */}
         <Route path="/carrito" element={<CartPage />} />
+        {/* CHECKOUT */}
+        <Route path="/pago" element={<CheckoutPage />} />
       </Route>
     </Routes>
   );

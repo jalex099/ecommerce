@@ -20,6 +20,7 @@ const getCartFromCrypt = () => {
 export const cartStore = hookstate(() => {
   const cart = getCartFromCrypt();
   return {
+    name: cart?.name || null,
     items: cart?.items || [],
     subTotal: 0,
     total: 0,
@@ -29,6 +30,7 @@ export const cartStore = hookstate(() => {
     _id: cart?._id || null,
     code: cart?.code || null,
     isDirty: false,
+    IsSyncable: cart?.IsSyncable || false,
   };
 });
 
@@ -38,24 +40,6 @@ export const cartCounter = (items) => {
     return acc + item?.quantity || 0;
   }, 0);
 };
-
-// const existCuponFn = (items) => items?.some((item) => item?.TP);
-
-// const existPromoFn = (items) => {
-//   return items?.reduce((acc, item) => {
-//     if (item?.tipo === "PRD") {
-//       if (acc === false) {
-//         acc = item?.isPromo;
-//       }
-//     }
-//     if (["CMB", "ESF", "ESM", "ATP"].includes(item?.tipo)) {
-//       if (acc === false) {
-//         acc = item?.list?.some((item) => item[0]?.isPromo);
-//       }
-//     }
-//     return acc;
-//   }, false);
-// };
 
 const getDescuentoFn = (items) => {
   return items?.reduce((acc, cur) => {
@@ -82,6 +66,8 @@ const addCart = (state) => ({
         isPedidoFuturoOpen: false,
         isReadCart: true,
         error: true,
+        name: null,
+        isSyncable: false,
       });
     }
   },
@@ -105,10 +91,15 @@ const addCart = (state) => ({
 
   //   //* limpia el estado
   clean: () => {
+    state.name.set(null);
     state.items.set([]);
     state.subTotal.set(0);
     state.total.set(0);
     state.orderAgregado.set(0);
+    state._id.set(null);
+    state.code.set(null);
+    state.isDirty.set(false);
+    state.IsSyncable.set(false);
   },
 
   hash: () => stateToString(state.items.get()),
@@ -132,16 +123,6 @@ const addCart = (state) => ({
   // //* Retorna el orden de agregado para mostrar por separado ITEMS del mismo IDPMN en diferentes selecciones y configuraciones
   getOrdenAgregado: () => state?.orderAgregado?.get(),
 
-  // //* Retorna si existe algun CUPON agregado en el carrito
-  // getExistCupon: () => existCuponFn(state?.items?.get()),
-
-  // //* Retorna si existe PROMOCION agregada en el carrito
-  // getExistPromo: () => existPromoFn(state?.items?.get()),
-
-  // //* Retorna si algun ITEM del carrito fue agregado en VENTA SUGERIDA
-  // getExistVentaSugerida: () =>
-  //   state?.items?.value?.some((cartItem) => cartItem.ventaSugerida === 1),
-
   // //* Retorna el valor del DESCUENTO que se esta aplicando en la compra
   getDescuento: () => getDescuentoFn(state?.items?.get()),
   getDescuentoFixed: () => getDescuentoFn(state?.items?.get())?.toFixed(2),
@@ -158,11 +139,7 @@ const addCart = (state) => ({
   getItems: () => serializeState(state?.items?.get()),
 
   // //* Funcion para guardar el carrito en local storage
-  // // addToLocalStorage: () => state?.attach(Persistence('cart-state')),
   addToLocalStorage: () => {
-    // const key = CartKeyStore.get().key;
-    // const update = CartKeyStore.get().update;
-    // if (key !== "" && update) {
     const cart_enc = AES.encrypt(
       JSON.stringify(state?.value),
       ENCRYPT_KEY
@@ -173,7 +150,6 @@ const addCart = (state) => ({
     //   //******************** Comentar o descomentar para guardar un carrito sin cifrar ********************//
 
     window.localStorage.setItem("cart-state", cart_enc);
-    //   // }
   },
 
   // //* Actualiza el orden de agregado en el carrito
@@ -249,170 +225,23 @@ const addCart = (state) => ({
     state?.total?.set(calcCartItemsTotal);
   },
 
-  // //* Elimina la identificacion del carrito (ID, CODE)
-  setOrphanCart: () => {
-    state._id.set(null);
-    state.code.set(null);
-  },
-
-  // //* Setea el carrito con dueño
-  setOwnerCart: (id, code) => {
-    state._id.set(id);
-    state.code.set(code);
-  },
-
   // //* Setea si la data del carrito fue modificada
   setDirty: (value) => state.isDirty.set(value),
 
   // //* Retorna si la data del carrito fue modificada
   getDirty: () => state.isDirty.get(),
 
-  // //* Se valida el carrito
-  // validateCart: (props) => {
-  //   const { MM } = props;
-  //   const items = serializeState(state?.items.get());
-  //   const montoMinimo = Number(MM);
-  //   const existCupon = existCuponFn(items);
+  // //* Setea si el carrito es sincronizable
+  setSyncable: (value) => state.IsSyncable.set(value),
 
-  //   //* Si existe CUPON y es el unico ITEM del carrito se limpia el carrito
-  //   if (existCupon && items.length === 1) {
-  //     state?.items?.set([]);
-  //   }
+  // //* Retorna si el carrito es sincronizable
+  getSyncable: () => state.IsSyncable.get(),
 
-  //   if (existCupon && items.length > 1) {
-  //     const cupon = items.find((item) => item.TP);
-  //     const minimoValido =
-  //       cupon?.MC !== null && cupon?.MC > montoMinimo ? cupon?.MC : montoMinimo;
-  //     const descuento =
-  //       cupon?.TP === "MONTO"
-  //         ? cupon?.DSC
-  //         : cupon?.TP === "PORCENTAJE"
-  //         ? minimoValido * (cupon?.DSC / 100)
-  //         : 0;
-  //     const minimo = Number((minimoValido + descuento)?.toFixed(2));
+  // //* Retorna el nombre del carrito
+  getName: () => state.name.get(),
 
-  //     //*Si existe CUPON en carrito y el MINIMO DE COMPRA para su uso es mayor al SUBTOTAL se elimina el cupon
-  //     if (minimo > state.subTotal.get()) {
-  //       const newCart = items.reduce((acc, cur) => {
-  //         if (cur.TP) {
-  //           return acc;
-  //         } else {
-  //           acc.push(cur);
-  //         }
-  //         return acc;
-  //       }, []);
-  //       state?.items?.set(newCart);
-  //     }
-
-  //     if (minimo <= state.subTotal.get()) {
-  //       const newCart = items.reduce((acc, cur) => {
-  //         if (cur.TP) {
-  //           const newPrecio =
-  //             cur.TP === "PORCENTAJE"
-  //               ? -Number((state.subTotal.get() * (cur.DSC / 100))?.toFixed(2))
-  //               : cur.TP === "MONTO"
-  //               ? -cur.DSC
-  //               : cur.precio;
-  //           acc.push({ ...cur, precio: newPrecio });
-  //         } else {
-  //           acc.push(cur);
-  //         }
-  //         return acc;
-  //       }, []);
-  //       state?.items?.set(newCart);
-  //     }
-  //   }
-  // },
-
-  // //* Elimina el cupon del carrito
-  // removeCupon: () => {
-  //   const items = serializeState(state?.items.get());
-  //   const newCart = items.reduce((acc, cur) => {
-  //     if (cur.TP) {
-  //       return acc;
-  //     } else {
-  //       acc.push(cur);
-  //     }
-  //     return acc;
-  //   }, []);
-  //   state?.items?.set(newCart);
-  // },
-
-  // getIsPedidoFuturoOpen: () => serializeState(state?.isPedidoFuturoOpen.value),
-
-  // setIsPedidoFuturoOpen: (value) => state?.isPedidoFuturoOpen.set(value),
-
-  // //* Guarda la llave de cifrado en el estado
-  // setCK: (value) => state?.ck?.set(value),
-
-  // //* retorna la llave de cifrado
-  // getCK: () => state?.ck?.value,
-
-  // //* retorna el valor de un ITEM del carrito
-  // getItemPrice: (idpmn) => {
-  //   const item = state?.items
-  //     ?.get()
-  //     .find((cartItem) => cartItem?.idpmn === idpmn);
-  //   if (item?.tipo === "PRD") {
-  //     return item?.precio * item?.cantidad;
-  //   } else {
-  //     if (item?.list?.length > 0) {
-  //       return item?.list?.reduce((acc, cur) => {
-  //         if (cur[0]?.precio > 0) {
-  //           acc += cur[0]?.precio;
-  //         }
-  //         return acc;
-  //       }, 0);
-  //     } else {
-  //       return 0;
-  //     }
-  //   }
-  // },
-
-  // //* retorna el precio de un ITEM QUE SE MUESTRA EN EL CARRITO
-  // getPriceItemToShow: (idpmn, ordenAgregado) => {
-  //   const item = state?.items
-  //     ?.get()
-  //     .find((cartItem) => cartItem?.idpmn === idpmn);
-  //   if (item?.tipo === "PRD") {
-  //     const items = state?.items
-  //       ?.get()
-  //       .filter(
-  //         (cartItem) =>
-  //           cartItem?.idpmn === idpmn &&
-  //           cartItem?.ordenAgregado === ordenAgregado
-  //       );
-  //     return items[0]?.precio * items?.length;
-  //   } else {
-  //     if (item?.list?.length > 0) {
-  //       return item?.list?.reduce((acc, cur) => {
-  //         if (cur[0]?.precio > 0 && cur[0]?.ordenAgregado === ordenAgregado) {
-  //           acc += cur[0]?.precio;
-  //         }
-  //         return acc;
-  //       }, 0);
-  //     } else {
-  //       return 0;
-  //     }
-  //   }
-  // },
-
-  // cleanItemsLogout: () => {
-  //   const items = serializeState(state?.items?.get());
-
-  //   const newItems = items?.reduce((acc, cur) => {
-  //     if (cur?.TP) {
-  //       if (!cur?.cuponInput) return acc;
-  //     }
-  //     acc.push(cur);
-  //     return acc;
-  //   }, []);
-  //   state?.items?.set(newItems);
-  // },
-  // getProductCupon: () => {
-  //   const items = serializeState(state?.items.get());
-  //   return items?.find((item) => item?.tipo === "PRD" && item?.TP);
-  // },
+  // //* Setea el nombre del carrito
+  setName: (name) => state.name.set(name),
 });
 
 export const useCartState = () => {

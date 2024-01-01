@@ -19,20 +19,20 @@ const CartService = () => {
 
   const auth = useAuthState();
 
-  const { data, isLoading, isSuccess, isError } = useQuery({
-    queryKey: ["auth_getCarts"],
-    queryFn: _getCarts,
-    refetchOnWindowFocus: false,
-    enabled: auth?.isAuthenticated && auth?.isVerified,
-  });
+  const { data, isLoading, isSuccess, isRefetching, isError, refetch } =
+    useQuery({
+      queryKey: ["auth_getCarts"],
+      queryFn: _getCarts,
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      enabled: auth?.isAuthenticated && auth?.isVerified,
+    });
 
   const saveCart = useMutation({
     mutationFn: _saveCart,
     onSuccess: ({ data }) => {
-      cart?.setOwnerCart(data?._id, data?.code);
       fillFromApi(data);
       cart?.setDirty(false);
-      // queryClient.invalidateQueries(["auth_getCarts"], {});
     },
     onError: (error) => {
       console.log(error?.response?.data);
@@ -43,7 +43,6 @@ const CartService = () => {
   const cloneCart = useMutation({
     mutationFn: _cloneCart,
     onSuccess: ({ data }) => {
-      cart?.setOwnerCart(data?._id, data?.code);
       fillFromApi(data);
       queryClient.invalidateQueries(["auth_getCarts"], {});
     },
@@ -69,6 +68,8 @@ const CartService = () => {
     isLoading,
     isSuccess,
     isError,
+    isRefetching,
+    refetch,
     saveCart,
     cloneCart,
     deleteCart,

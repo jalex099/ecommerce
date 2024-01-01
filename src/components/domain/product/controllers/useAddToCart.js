@@ -4,6 +4,8 @@ import serializeState from "#/utils/serializeState";
 import RedirectionService from "#/services/RedirectionService";
 import { addToast } from "#/stores/UIState.js";
 import DataService from "#/services/DataService";
+import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil";
+import CartService from "#/services/CartService";
 
 export default function useAddToCart() {
   const cart = useCartState();

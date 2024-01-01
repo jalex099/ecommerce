@@ -16,8 +16,7 @@ import ErrorFetchPage from "#/pages/ErrorFetchPage.jsx";
 import ClientPreferenceService from "#/services/ClientPreferenceService.js";
 import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
 import CartService from "#/services/CartService.js";
-import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil";
-import OverwriteCartContainer from "#/components/domain/cart/OverwriteCartContainer.jsx";
+import useCartSyncUtils from "#/components/domain/cart/controllers/useCartSyncUtils.js";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -28,7 +27,8 @@ const LayoutPage = () => {
   const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
     DataService();
   const { isSuccess: isSuccessPreferences } = ClientPreferenceService();
-  const { saveCart, isLoading: isLoadingCart } = CartService();
+  const { isLoading: isLoadingCarts, isError: isErrorCarts } = CartService();
+  const { saveCartExisting } = useCartSyncUtils();
 
   useEffect(() => {
     verifyAuth();
@@ -50,14 +50,16 @@ const LayoutPage = () => {
   }, [cart?.getItemsCounter()]);
 
   useEffect(() => {
-    if (isLoadingCart || cart?.getItemsCounter() < 0) return;
+    if (isLoadingCarts || isErrorCarts || cart?.getItemsCounter() < 0) return;
+    if (!cart?.getSyncable()) return;
     if (pathname === "/carrito") return;
     if (!cart?.getDirty()) return;
-    saveCart?.mutate({
-      _id: cart?.getCartId(),
-      status: "ACT",
-      visibility: "PUBLIC",
-      menu: parseMenu(cart?.getItems()),
+    console.log("saveCart", cart?.getName());
+    saveCartExisting({
+      onSuccess: () => {
+        cart?.setDirty(false);
+        cart?.setSyncable(true);
+      },
     });
   }, [cart?.getItemsCounter(), pathname]);
 
@@ -92,7 +94,7 @@ const LayoutPage = () => {
             {/*
         DIALOGS GLOBALES
     */}
-            <OverwriteCartContainer />
+            {/* <OverwriteCartContainer /> */}
             <ToasterCustom />
           </Box>
           <footer className="fixed bottom-0 left-0 right-0">

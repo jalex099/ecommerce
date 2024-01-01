@@ -53,8 +53,18 @@ export default function useCartUtils() {
   };
 
   const fillFromApi = (cartItem) => {
-    if (!cartItem) return;
-    const { _id: cartId, code: cartCode, menu: cartMenu } = cartItem;
+    console.log(cartItem);
+    if (!cartItem || cartItem?.menu?.length === 0) {
+      cart?.clean();
+      cart?.addToLocalStorage();
+      return;
+    }
+    const {
+      _id: cartId,
+      code: cartCode,
+      name: cartName,
+      menu: cartMenu,
+    } = cartItem;
     const menuItems = cartMenu?.reduce((acc, cartItemProduct) => {
       const product = menu?.find(
         (product) => product?._id == cartItemProduct?.product
@@ -123,6 +133,7 @@ export default function useCartUtils() {
     cart?.setCartId(cartId);
     cart?.setCartCode(cartCode);
     cart?.setItems(menuItems);
+    cart?.setName(cartName);
     cart?.updateOrdenAgregado(menuItems?.length);
   };
 

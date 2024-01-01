@@ -33,7 +33,7 @@ function OptionContainer({ label, options, index, className }) {
 
   const handleSelectOption = (optionId) => {
     setSelection(index, optionId);
-    // isDialogOpen.set(false);
+    isDialogOpen.set(false);
   };
 
   const handleClickOption = () => {

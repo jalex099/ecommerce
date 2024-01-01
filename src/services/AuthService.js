@@ -108,8 +108,8 @@ const AuthService = () => {
         removeKey("token");
         authState.setCurrentUser(-1);
         queryClient.resetQueries(/^auth_/);
-        // Remove the identifiers of the cart
-        cart?.setOrphanCart();
+        // Remove the cart
+        cart?.clean();
         // addToast("Nos vemos pronto", "success");
       })
       .catch((error) => {

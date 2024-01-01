@@ -1,11 +1,11 @@
 import { hookstate, useHookstate } from "@hookstate/core";
-// import { findKey, setKey } from "#/utils/localStorageHelper.js";
 import { CHECKOUT_STEPS } from "#/config/constants.js";
-// import { useEffect } from "react";
 
 export const checkoutState = hookstate({
   activeStep: CHECKOUT_STEPS?.ADDRESS,
-  deliveryMethod: null,
+  paymentMethod: null,
+  date: null,
+  time: null,
 });
 
 export const useCheckoutState = () => {
@@ -36,12 +36,26 @@ export const useCheckoutState = () => {
     state.activeStep.set(Object?.values(CHECKOUT_STEPS)[previousStepIndex]);
   };
 
+  //* Set the date parsed
+  const setDate = (date) => {
+    state.date.set(date);
+  };
+
+  //* Set the time parsed
+  const setTime = (time) => {
+    state.time.set(time);
+  };
+
   return {
     activeStep: state.activeStep.get(),
     setActiveStep: (step) => state.activeStep.set(step),
     handleNextStep,
     handlePreviousStep,
-    deliveryMethod: state.deliveryMethod.get(),
-    setDeliveryMethod: (method) => state.deliveryMethod.set(method),
+    paymentMethod: state.paymentMethod.get(),
+    setPaymentMethod: (method) => state.paymentMethod.set(method),
+    date: state.date.get(),
+    setDate,
+    time: state.time.get(),
+    setTime,
   };
 };

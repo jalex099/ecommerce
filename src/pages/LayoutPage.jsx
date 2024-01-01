@@ -39,7 +39,7 @@ const LayoutPage = () => {
   }, [isSuccessPreferences]);
 
   useEffect(() => {
-    if (!isSuccess) return;
+    // if (!isSuccess) return;
     cart?.addSubTotal();
     cart?.addTotal();
     cart?.addToLocalStorage();

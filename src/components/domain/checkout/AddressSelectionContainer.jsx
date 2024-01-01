@@ -1,16 +1,21 @@
 import Box from "@mui/material/Box";
-import Regular16 from "#/components/shared/fonts/Regular16";
 import ClientAddressService from "#/services/ClientAddressService";
+import AddressCard from "#/components/domain/checkout/AddressCard";
 
-const AddressSelectionContainer = () => {
+const AddressSelectionContainer = ({ selected, handleSelection }) => {
   const { addresses } = ClientAddressService();
+  if (addresses?.length === 0) return null;
   return (
-    <Box classname="flex flex-col gap-2">
-      {addresses?.length === 0 && (
-        <Regular16>
-          No tienes direcciones registradas, ve y registra una
-        </Regular16>
-      )}
+    <Box className="grid grid-cols-2 gap-2">
+      {addresses?.length > 0 &&
+        addresses?.map((address) => (
+          <AddressCard
+            key={address?._id}
+            address={address}
+            isSelected={address?._id === selected?._id}
+            handleSelection={handleSelection}
+          />
+        ))}
     </Box>
   );
 };

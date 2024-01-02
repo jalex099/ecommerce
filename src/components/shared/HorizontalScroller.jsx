@@ -1,6 +1,10 @@
 import Box from "@mui/material/Box";
 
-const HorizontalScroller = ({ children }) => {
+const HorizontalScroller = ({
+  children,
+  separate = false,
+  showScrollbar = false,
+}) => {
   return (
     <Box
       sx={{
@@ -22,11 +26,18 @@ const HorizontalScroller = ({ children }) => {
           alignItems: "flex-start",
           scrollbarWidth: "none",
           "::-webkit-scrollbar": {
-            display: "none",
+            display: showScrollbar ? "auto" : "none",
+            height: "4px",
+            width: "4px",
+            backgroundColor: "transparent",
+          },
+          "::-webkit-scrollbar-thumb:horizontal": {
+            background: (theme) => theme.palette.neutral10.main,
+            borderRadius: (theme) => theme.shape.borderRadius,
           },
           width: "100%",
           gap: "16px",
-          padding: "0px 8px",
+          padding: separate ? "8px 16px" : "0px 8px",
         }}
       >
         {children}

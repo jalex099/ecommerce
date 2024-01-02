@@ -30,10 +30,36 @@ export const useLocationState = () => {
     state.addressRegister.set(data?.addressRegister || null);
   };
 
+  //* Funcion para setear el metodo de entrega
+  const setDeliveryMethod = (method) => {
+    state.deliveryMethod.set(method);
+    switch (method) {
+      case 0:
+        state.shop.set(null);
+        break;
+      case 1:
+        state.lat.set(null);
+        state.lng.set(null);
+        state.street.set(null);
+        state.houseNumber.set(null);
+        state.reference.set(null);
+        state.addressRegister.set(null);
+        break;
+      case 2:
+        state.shop.set(null);
+        state.street.set(null);
+        state.houseNumber.set(null);
+        state.addressRegister.set(null);
+        break;
+      default:
+        break;
+    }
+  };
+
   return {
     addToLocalStorage,
     deliveryMethod: state.deliveryMethod.get(),
-    setDeliveryMethod: (method) => state.deliveryMethod.set(method),
+    setDeliveryMethod,
     lat: state.lat.get(),
     lng: state.lng.get(),
     street: state.street.get(),

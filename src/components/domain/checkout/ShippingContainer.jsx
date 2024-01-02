@@ -9,7 +9,6 @@ import DeliverySelectionContainer from "#/components/domain/checkout/DeliverySel
 
 export default function ShippingContainer() {
   const location = useLocationState();
-
   useEffect(() => {
     if (location?.deliveryMethod === null) {
       location?.setDeliveryMethod(DELIVERY_METHODS[0]?.value);

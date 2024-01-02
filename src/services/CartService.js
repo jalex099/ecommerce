@@ -26,6 +26,11 @@ const CartService = () => {
       refetchOnWindowFocus: false,
       staleTime: Infinity,
       enabled: auth?.isAuthenticated && auth?.isVerified,
+      onSuccess: ({ data }) => {
+        const isValid = cart?.validateLocalWithSynced(data);
+        if (isValid) return;
+        cart?.clean();
+      },
     });
 
   const saveCart = useMutation({

@@ -104,6 +104,11 @@ const addCart = (state) => ({
 
   hash: () => stateToString(state.items.get()),
 
+  // //* funcion que valida si el carrito local que tiene identificacion existe en la lista de carritos del usuario
+  validateLocalWithSynced: (carts) => {
+    return carts?.some((cart) => cart?._id === state?.value?._id);
+  },
+
   // //* retorna el numero de ITEMS del carrito, numero de PRD + total de LIST ITEMS de otros tipos
   getItemsCounter: () => {
     const items = serializeState(state?.items?.get()) || [];

@@ -53,7 +53,6 @@ export default function useCartUtils() {
   };
 
   const fillFromApi = (cartItem) => {
-    console.log(cartItem);
     if (!cartItem || cartItem?.menu?.length === 0) {
       cart?.clean();
       cart?.addToLocalStorage();

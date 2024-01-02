@@ -104,6 +104,9 @@ const addCart = (state) => ({
 
   hash: () => stateToString(state.items.get()),
 
+  // //* retorna si el carrito tiene identificacion
+  isIdentified: () => state._id.get() !== null,
+
   // //* funcion que valida si el carrito local que tiene identificacion existe en la lista de carritos del usuario
   validateLocalWithSynced: (carts) => {
     return carts?.some((cart) => cart?._id === state?.value?._id);

@@ -8,15 +8,17 @@ import Regular14 from "#/components/shared/fonts/Regular14";
 import CartService from "#/services/CartService.js";
 import { IconButton } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 
-const ChangeSelectedCartDialog = ({
-  isOpen,
-  handleClose,
-  cart,
-  onCartChange,
-}) => {
+const ChangeSelectedCartDialog = ({ isOpen, handleClose }) => {
   const { carts, refetch, isError, isLoading, isRefetching, isSuccess } =
     CartService();
+
+  const { fillFromApi } = useCartUtils();
+  const handleChange = (cart) => {
+    fillFromApi(cart);
+  };
+
   return (
     <Dialog
       open={isOpen}
@@ -50,9 +52,10 @@ const ChangeSelectedCartDialog = ({
               return (
                 <Box
                   key={element._id}
-                  className="flex flex-row justify-between items-center w-full"
+                  className="flex flex-row justify-between items-center w-full px-4 py-2 rounded-md "
+                  onClick={() => handleChange(element)}
                 >
-                  <Regular14>{element?.menu?.length}</Regular14>
+                  <Regular14>{element?.name}</Regular14>
                 </Box>
               );
             })}

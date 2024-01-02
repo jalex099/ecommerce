@@ -133,6 +133,7 @@ export default function useCartUtils() {
     cart?.setCartCode(cartCode);
     cart?.setItems(menuItems);
     cart?.setName(cartName);
+    cart?.setSyncable(true);
     cart?.updateOrdenAgregado(menuItems?.length);
   };
 

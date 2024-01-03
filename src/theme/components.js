@@ -229,7 +229,7 @@ const components = {
         border: "1px solid #DBDBDB",
         "& .MuiChip-label": {
           padding: "0px",
-          fontWeight: "bold",
+          // fontWeight: "bold",
         },
       },
     },

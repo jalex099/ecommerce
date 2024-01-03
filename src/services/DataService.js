@@ -87,6 +87,10 @@ const DataService = () => {
       });
   }, [options]);
 
+  const shops = useMemo(() => {
+    return data?.data?.shops || [];
+  }, [data]);
+
   return {
     categories,
     menu,
@@ -95,6 +99,7 @@ const DataService = () => {
     carousel,
     messages,
     offers,
+    shops,
     isLoading,
     isSuccess,
     isError,

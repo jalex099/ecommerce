@@ -52,7 +52,15 @@ export default function GroupOfOption({
             </Box>
           </Box>
         </TouchRippleEffect>
-        <Chip label={group?.label?.charAt(0)} />
+        <Chip
+          label={group?.label?.charAt(0)}
+          sx={{
+            "& .MuiChip-label": {
+              padding: "0px",
+              fontWeight: "bold",
+            },
+          }}
+        />
       </motion.li>
       <ConfigPreferenceDialog
         open={isDialogOpen.get()}

@@ -4,8 +4,8 @@ export const locationState = hookstate({
   deliveryMethod: null,
   lat: null,
   lng: null,
-  street: null,
-  houseNumber: null,
+  street: "",
+  houseNumber: "",
   reference: null,
   shop: null,
   addressRegister: null,
@@ -24,8 +24,8 @@ export const useLocationState = () => {
   const fillFromDeliveryAddress = (data) => {
     state.lat.set(data?.lat);
     state.lng.set(data?.lng);
-    state.street.set(data?.street);
-    state.houseNumber.set(data?.houseNumber);
+    state.street.set(data?.street || "");
+    state.houseNumber.set(data?.houseNumber || "");
     state.reference.set(data?.reference);
     state.addressRegister.set(data?.addressRegister || null);
   };
@@ -40,20 +40,25 @@ export const useLocationState = () => {
       case 1:
         state.lat.set(null);
         state.lng.set(null);
-        state.street.set(null);
-        state.houseNumber.set(null);
+        state.street.set("");
+        state.houseNumber.set("");
         state.reference.set(null);
         state.addressRegister.set(null);
         break;
       case 2:
         state.shop.set(null);
-        state.street.set(null);
-        state.houseNumber.set(null);
+        state.street.set("");
+        state.houseNumber.set("");
         state.addressRegister.set(null);
         break;
       default:
         break;
     }
+  };
+
+  //* Funcion para llenar los campos desde shop
+  const fillFromShop = (data) => {
+    state.shop.set(data?.shop);
   };
 
   return {
@@ -70,5 +75,6 @@ export const useLocationState = () => {
     setStreet: (value) => state.street.set(value),
     setHouseNumber: (value) => state.houseNumber.set(value),
     fillFromDeliveryAddress,
+    fillFromShop,
   };
 };

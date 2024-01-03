@@ -16,7 +16,7 @@ const AddressCard = ({ address, isSelected, handleSelection }) => {
   };
   return (
     <Box
-      className="w-full  flex flex-row gap-0 shadow-sm p-2 rounded-md min-w-[180px] min-h-[60px]"
+      className="w-full  flex flex-row gap-2 shadow-sm p-2 rounded-md min-w-[180px] min-h-[60px]"
       sx={{
         backgroundColor: (theme) =>
           isSelected

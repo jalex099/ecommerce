@@ -9,6 +9,7 @@ function MapContainer({
   longitude,
   isCentered = true,
   handleLocationChange,
+  styles = {},
 }) {
   const mapRef = useRef(null);
 
@@ -28,7 +29,7 @@ function MapContainer({
         latitude,
         zoom: MAPBOX_ZOOM,
       }}
-      style={style.mapContainer}
+      style={{ ...style.mapContainer, ...styles }}
       mapStyle="mapbox://styles/mapbox/streets-v12"
       onClick={handleLocationChange}
       locale={spanishLocaleMapbox}

@@ -1,9 +1,10 @@
 import Box from "@mui/material/Box";
 import Regular12 from "#/components/shared/fonts/Regular12";
-import SemiBold16 from "#/components/shared/fonts/SemiBold16";
+import Radio from "@mui/material/Radio";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 
 const AddressCard = ({ address, isSelected, handleSelection }) => {
-  const handleClick = () => {
+  const handleChange = () => {
     const data = {
       lngLat: {
         lat: address?.latitude,
@@ -15,22 +16,29 @@ const AddressCard = ({ address, isSelected, handleSelection }) => {
   };
   return (
     <Box
-      className="w-full  flex flex-col gap-2 shadow-md p-4 rounded-md min-w-[180px] h-[120px]"
+      className="w-full  flex flex-row gap-0 shadow-sm p-2 rounded-md min-w-[180px] min-h-[60px]"
       sx={{
-        bgcolor: (theme) =>
+        backgroundColor: (theme) =>
           isSelected
-            ? theme.palette.secondary10.main
-            : theme.palette.background.default,
+            ? theme.palette.primary10.main
+            : theme.palette.neutral5.main,
       }}
-      onClick={handleClick}
+      onClick={handleChange}
     >
-      <SemiBold16>{address?.name}</SemiBold16>
-      <Box>
-        <Regular12>
+      <Box className="flex flex-col">
+        <SemiBold14>{address?.name}</SemiBold14>
+        <Regular12 className="overflow-ellipsis overflow-hidden w max-w-[120px]">
           {address?.street}. #{address?.houseNumber}
         </Regular12>
-        <Regular12>{address?.reference}</Regular12>
       </Box>
+      <Radio
+        checked={isSelected}
+        onChange={handleChange}
+        value={address?._id}
+        name="shipping-address"
+        inputProps={{ "aria-label": "shipping address" }}
+        size="small"
+      />
     </Box>
   );
 };

@@ -27,7 +27,7 @@ const CartService = () => {
       staleTime: Infinity,
       enabled: auth?.isAuthenticated && auth?.isVerified,
       onSuccess: ({ data }) => {
-        if (!cart?.isIdentified) return;
+        if (!cart?.isIdentified()) return;
         const isValid = cart?.validateLocalWithSynced(data);
         if (isValid) return;
         cart?.clean();

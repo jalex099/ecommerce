@@ -44,13 +44,9 @@ export default function useCartSyncUtils() {
     );
   };
 
-  const validateLocalCartWithSynced = (data) => {
-    console.log(data);
-  };
 
   return {
     saveCartFirstTime,
     saveCartExisting,
-    validateLocalCartWithSynced,
   };
 }

@@ -7,6 +7,12 @@ import GeolocationService from "#/services/GeolocationService.js";
 import { useEffect } from "react";
 import { useHookstate } from "@hookstate/core";
 import serializeState from "#/utils/serializeState";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Regular14 from "#/components/shared/fonts/Regular14";
+import { useMemo } from "react";
+import Regular12 from "#/components/shared/fonts/Regular12";
+import Skeleton from "@mui/material/Skeleton";
 
 const DeliveryMethodSelection = () => {
   const auth = useAuthState();
@@ -46,7 +52,7 @@ const DeliveryMethodSelection = () => {
     if (address) {
       addressSelected.set(address);
     }
-    //* Fill location state
+    // Fill location state
     location?.fillFromDeliveryAddress({
       lat: lngLat?.lat,
       lng: lngLat?.lng,
@@ -57,28 +63,115 @@ const DeliveryMethodSelection = () => {
     });
   };
 
+  const handleLocationChangeFromMap = ({ lngLat }) => {
+    // clear address selected
+    addressSelected.set(null);
+    tempLocation.set({
+      latitude: lngLat?.lat,
+      longitude: lngLat?.lng,
+    });
+    // Fill location state
+    location?.fillFromDeliveryAddress({
+      lat: lngLat?.lat,
+      lng: lngLat?.lng,
+      street: "",
+      houseNumber: "",
+      reference: null,
+      addressRegister: null,
+    });
+  };
+
+  const showAddressSelection = useMemo(() => {
+    return auth?.isAuthenticated && auth?.isVerified;
+  }, [auth]);
+
+  const showMap = useMemo(() => {
+    return tempLocation?.value?.latitude && tempLocation?.value?.longitude;
+  }, [tempLocation]);
+
   return (
-    <Box className="flex-1 w-full flex flex-col gap-6">
-      {auth?.isAuthenticated && auth?.isVerified && (
-        <AddressSelectionContainer
-          handleSelection={handleLocationChange}
-          selected={addressSelected?.get()}
-        />
+    <Box className="flex-1 w-full flex flex-col gap-8">
+      {showAddressSelection && (
+        <>
+          <AddressSelectionContainer
+            handleSelection={handleLocationChange}
+            selected={addressSelected?.get()}
+          />
+          <Regular14>
+            O{" "}
+            <Box
+              component="span"
+              sx={{ color: (theme) => theme?.palette?.primary?.main }}
+            >
+              selecciona
+            </Box>{" "}
+            una ubicación en el mapa
+          </Regular14>
+        </>
       )}
-      {tempLocation?.value?.latitude && tempLocation?.value?.longitude && (
-        <Box
-          sx={{
-            width: "100%",
-            height: "300px",
-          }}
-        >
+
+      <Box
+        sx={{
+          width: "100%",
+          height: showAddressSelection ? "150px" : "300px",
+        }}
+      >
+        {showMap && (
           <MapContainer
             latitude={tempLocation?.value?.latitude}
             longitude={tempLocation?.value?.longitude}
-            handleLocationChange={handleLocationChange}
+            styles={{
+              borderRadius: "8px",
+            }}
+            handleLocationChange={handleLocationChangeFromMap}
           />
-        </Box>
-      )}
+        )}
+        {!showMap && (
+          <Skeleton
+            variant="rectangular"
+            width="100%"
+            height="100%"
+            sx={{ borderRadius: "8px" }}
+          />
+        )}
+      </Box>
+
+      <Stack spacing={2}>
+        <TextField
+          label="Calle o Avenida"
+          name="street"
+          variant="standard"
+          autoComplete="street"
+          InputLabelProps={{ shrink: true }}
+          sx={{ width: "100%" }}
+          required
+          value={location?.street}
+          onChange={(e) => {
+            location?.setStreet(e.target.value);
+          }}
+        />
+        <TextField
+          label="Número de casa / piso"
+          name="houseNumber"
+          variant="standard"
+          autoComplete="houseNumber"
+          InputLabelProps={{ shrink: true }}
+          sx={{ width: "100%" }}
+          required
+          value={location?.houseNumber}
+          onChange={(e) => {
+            location?.setHouseNumber(e.target.value);
+          }}
+        />
+      </Stack>
+
+      <Regular12
+        styles={{
+          color: (theme) => theme?.palette?.opacity40?.main,
+        }}
+      >
+        * El env&iacute;o por delivery tiene un costo extra
+      </Regular12>
     </Box>
   );
 };

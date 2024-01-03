@@ -67,6 +67,8 @@ export const useLocationState = () => {
     reference: state.reference.get(),
     shop: state.shop.get(),
     addressRegister: state.addressRegister.get(),
+    setStreet: (value) => state.street.set(value),
+    setHouseNumber: (value) => state.houseNumber.set(value),
     fillFromDeliveryAddress,
   };
 };

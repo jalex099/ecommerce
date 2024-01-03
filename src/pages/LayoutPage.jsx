@@ -54,7 +54,6 @@ const LayoutPage = () => {
     if (!cart?.getSyncable()) return;
     if (pathname === "/carrito") return;
     if (!cart?.getDirty()) return;
-    console.log("saveCart", cart?.getName());
     saveCartExisting({
       onSuccess: () => {
         cart?.setDirty(false);

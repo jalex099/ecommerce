@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import { useMemo } from "react";
 import ProductCardContainer from "#/components/domain/menu/ProductCardContainer";
+import { isPast, parseISO } from "date-fns";
 
 function ProductsList({ category, products, offers, handleClick }) {
   const productsToShow = useMemo(() => {
@@ -12,7 +13,10 @@ function ProductsList({ category, products, offers, handleClick }) {
         <ProductCardContainer
           key={product?._id}
           product={product}
-          offer={offers?.find((offer) => offer.product === product._id)}
+          offer={offers?.find(
+            (offer) =>
+              offer.product === product._id && !isPast(parseISO(offer?.to))
+          )}
           handleClick={handleClick}
         />
       ))}

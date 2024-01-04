@@ -5,6 +5,7 @@ import RedirectionService from "#/services/RedirectionService";
 import { useNavigate } from "react-router-dom";
 import serializeState from "#/utils/serializeState";
 import DataService from "#/services/DataService";
+import { isPast, parseISO } from "date-fns";
 
 const ProductController = () => {
   const { temp, setSelectedOption, clear, fill, updatePriceFromOffer } =
@@ -30,7 +31,8 @@ const ProductController = () => {
     fill(productFromMenu);
     // If the product is in the offers, then we update the price
     const offer = offers?.find(
-      (offer) => offer?.product === productFromMenu?._id
+      (offer) =>
+        offer?.product === productFromMenu?._id && !isPast(parseISO(offer?.to))
     );
     if (offer) updatePriceFromOffer(offer);
   };

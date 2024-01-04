@@ -174,7 +174,7 @@ function CartTopBar({ title }) {
               >
                 {auth?.isAuthenticated && auth?.isVerified && (
                   <MenuItem onClick={handleChangeCart}>
-                    <Regular14>Cambiar carrito</Regular14>
+                    <Regular14>Carritos guardados</Regular14>
                   </MenuItem>
                 )}
                 {auth?.isAuthenticated &&

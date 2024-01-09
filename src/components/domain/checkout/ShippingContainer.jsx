@@ -6,6 +6,7 @@ import DeliveryMethodSelection from "#/components/domain/checkout/DeliveryMethod
 import PickupSelectionContainer from "#/components/domain/checkout/PickupSelectionContainer";
 import MeetupSelectionContainer from "#/components/domain/checkout/MeetupSelectionContainer";
 import DeliverySelectionContainer from "#/components/domain/checkout/DeliverySelectionContainer";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 
 export default function ShippingContainer() {
   const location = useLocationState();
@@ -22,6 +23,9 @@ export default function ShippingContainer() {
 
   return (
     <Box className="flex-1 w-full flex flex-col gap-4 items-start">
+      <SemiBold14>
+        Forma de entrega
+      </SemiBold14>
       <DeliveryMethodSelection
         selected={location?.deliveryMethod}
         handleSelection={handleSelection}

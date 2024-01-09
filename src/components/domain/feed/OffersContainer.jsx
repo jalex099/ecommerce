@@ -5,6 +5,7 @@ import DataService from "#/services/DataService";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import { useMemo } from "react";
 import RedirectionService from "#/services/RedirectionService";
+import { isPast, parseISO } from "date-fns";
 
 export default function OffersContainer() {
   const { menu, offers } = DataService();
@@ -12,7 +13,7 @@ export default function OffersContainer() {
   const offeredProducts = useMemo(
     () =>
       menu?.filter((item) =>
-        offers?.some((offer) => offer?.product == item?._id)
+        offers?.some((offer) => offer?.product == item?._id && !isPast(parseISO(offer?.to)))
       ),
     [menu, offers]
   );
@@ -27,7 +28,7 @@ export default function OffersContainer() {
       <SemiBold18>Productos en oferta</SemiBold18>
       <HorizontalScroller>
         {offeredProducts?.map((item) => (
-          <Box key={item?._id} className="min-w-[140px] h-[258px] my-1 ">
+          <Box key={item?._id} className="min-w-[140px] w-[140px] h-[258px] my-1 ">
             <ProductCardContainer
               product={item}
               offer={offers?.find((offer) => offer?.product === item?._id)}

@@ -6,6 +6,10 @@ export const checkoutState = hookstate({
   paymentMethod: null,
   date: null,
   time: null,
+  completeName: '',
+  email: '',
+  phone: '',
+  comments: '',
 });
 
 export const useCheckoutState = () => {
@@ -57,5 +61,13 @@ export const useCheckoutState = () => {
     setDate,
     time: state.time.get(),
     setTime,
+    completeName: state.completeName.get(),
+    setCompleteName: (name) => state.completeName.set(name),
+    email: state.email.get(),
+    setEmail: (email) => state.email.set(email),
+    phone: state.phone.get(),
+    setPhone: (phone) => state.phone.set(phone),
+    comments: state.comments.get(),
+    setComments: (comments) => state.comments.set(comments),
   };
 };

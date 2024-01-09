@@ -10,6 +10,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { useCartState } from "#/stores/cart";
+import GeneralInformationForm
+  from "#/components/domain/checkout/GeneralInformationForm.jsx";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -31,7 +33,10 @@ const CheckoutPage = () => {
     <Container sx={style.container}>
       <HelmetMeta page="checkout" />
       {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
-        <ShippingContainer />
+        <Box className={'flex flex-col gap-12 w-full'}>
+          <GeneralInformationForm />
+          <ShippingContainer />
+        </Box>
       )}
       {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (
         <PaymentContainer />

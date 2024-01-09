@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { startLoading, stopLoading, addToast } from "#/stores/UIState.js";
 import { useCartState } from "#/stores/cart";
+import { getMessageFromFirebaseAuthError } from "#/utils/firebaseUtils.js";
 
 const AuthService = () => {
   const auth = getAuth();
@@ -39,10 +40,12 @@ const AuthService = () => {
   };
 
   const onError = (error) => {
-    console.log(error);
+    const errorCode = error?.code;
+    addToast(getMessageFromFirebaseAuthError(errorCode), "error");
     removeKey("token");
     removeKey("user");
   };
+
   const loginWithEmailAndPassword = async (email, password) => {
     try {
       startLoading();

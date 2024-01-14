@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import { useLocationState } from "#/stores/LocationState.js";
 import { useEffect } from "react";
-import { DELIVERY_METHODS } from "#/config/constants";
-import DeliveryMethodSelection from "#/components/domain/checkout/DeliveryMethodSelection";
-import PickupSelectionContainer from "#/components/domain/checkout/PickupSelectionContainer";
-import MeetupSelectionContainer from "#/components/domain/checkout/MeetupSelectionContainer";
-import DeliverySelectionContainer from "#/components/domain/checkout/DeliverySelectionContainer";
+import { DELIVERY_METHODS } from "#/config/constants.js";
+import DeliveryMethodSelection from "#/components/domain/delivery/DeliveryMethodSelection.jsx";
+import PickupSelectionContainer from "#/components/domain/delivery/PickupSelectionContainer.jsx";
+import MeetupSelectionContainer from "#/components/domain/delivery/MeetupSelectionContainer.jsx";
+import DeliverySelectionContainer from "#/components/domain/delivery/DeliverySelectionContainer.jsx";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 
 export default function ShippingContainer() {

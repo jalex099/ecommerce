@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
+import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState.js";
 
@@ -38,7 +39,7 @@ const GeneralInformationForm = ()=> {
 
     return (
       <Box className={"w-full flex flex-col gap-4"}>
-        <SemiBold14>Datos personales</SemiBold14>
+        <SemiBold16>Datos personales</SemiBold16>
          <TextField
            label="Nombre completo"
            name="name"

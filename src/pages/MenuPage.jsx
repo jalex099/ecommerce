@@ -40,27 +40,28 @@ const MenuPage = () => {
   return (
     <Container sx={style.container}>
       <HelmetMeta page="menu" />
-      {categories?.length !== 0 && selected.get() !== null && (
-        <>
-          <CategoriesList
-            items={categories}
-            selected={selected.get()}
-            handleChange={handleChange}
-          />
-          <ProductsList
-            category={selected.get()}
-            products={menu}
-            offers={offers}
-            handleClick={handleProductClick}
-          />
-        </>
-      )}
+        {categories?.length !== 0 && selected.get() !== null && (
+          <>
+            <CategoriesList
+              items={categories}
+              selected={selected.get()}
+              handleChange={handleChange}
+            />
+            <ProductsList
+              category={selected.get()}
+              products={menu}
+              offers={offers}
+              handleClick={handleProductClick}
+            />
+          </>
+        )}
     </Container>
   );
 };
 
 const style = {
-  container: {},
+  container: {
+  },
 };
 
 export default MenuPage;

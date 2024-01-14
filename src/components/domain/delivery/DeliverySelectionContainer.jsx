@@ -1,17 +1,17 @@
 import Box from "@mui/material/Box";
 import { useAuthState } from "#/stores/AuthState.js";
-import AddressSelectionContainer from "#/components/domain/checkout/AddressSelectionContainer.jsx";
+import AddressSelectionContainer from "#/components/domain/delivery/AddressSelectionContainer.jsx";
 import { useLocationState } from "#/stores/LocationState.js";
 import MapContainer from "#/components/shared/MapContainer.jsx";
 import GeolocationService from "#/services/GeolocationService.js";
 import { useEffect } from "react";
 import { useHookstate } from "@hookstate/core";
-import serializeState from "#/utils/serializeState";
+import serializeState from "#/utils/serializeState.js";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import Regular14 from "#/components/shared/fonts/Regular14";
+import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import { useMemo } from "react";
-import Regular12 from "#/components/shared/fonts/Regular12";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import Skeleton from "@mui/material/Skeleton";
 
 const DeliveryMethodSelection = () => {

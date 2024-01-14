@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta.jsx";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import { CHECKOUT_STEPS } from "#/config/constants";
-import ShippingContainer from "#/components/domain/checkout/ShippingContainer";
+import ShippingContainer from "#/components/domain/delivery/ShippingContainer.jsx";
 import PaymentContainer from "#/components/domain/checkout/PaymentContainer";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { useCartState } from "#/stores/cart";
 import GeneralInformationForm
   from "#/components/domain/checkout/GeneralInformationForm.jsx";
+import DeliveryInfoContainer
+  from "#/components/domain/checkout/DeliveryInfoContainer.jsx";
+import Divider from "@mui/material/Divider";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -33,9 +36,10 @@ const CheckoutPage = () => {
     <Container sx={style.container}>
       <HelmetMeta page="checkout" />
       {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
-        <Box className={'flex flex-col gap-12 w-full'}>
+        <Box className={'flex flex-col gap-4 w-full'}>
+          <DeliveryInfoContainer />
+          <Divider />
           <GeneralInformationForm />
-          <ShippingContainer />
         </Box>
       )}
       {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (

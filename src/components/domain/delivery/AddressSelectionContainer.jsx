@@ -1,7 +1,7 @@
-import ClientAddressService from "#/services/ClientAddressService";
-import AddressCard from "#/components/domain/checkout/AddressCard";
-import HorizontalScroller from "#/components/shared/HorizontalScroller";
-import Regular16 from "#/components/shared/fonts/Regular16";
+import ClientAddressService from "#/services/ClientAddressService.js";
+import AddressCard from "#/components/domain/delivery/AddressCard.jsx";
+import HorizontalScroller from "#/components/shared/HorizontalScroller.jsx";
+import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 import Box from "@mui/material/Box";
 
 const AddressSelectionContainer = ({ selected, handleSelection }) => {

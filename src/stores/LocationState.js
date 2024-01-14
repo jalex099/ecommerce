@@ -9,6 +9,7 @@ export const locationState = hookstate({
   reference: null,
   shop: null,
   addressRegister: null,
+  meetup: null,
 });
 
 export const useLocationState = () => {
@@ -20,15 +21,6 @@ export const useLocationState = () => {
     //   // }
   };
 
-  //* Funcion para llenar los campos desde delivery
-  const fillFromDeliveryAddress = (data) => {
-    state.lat.set(data?.lat);
-    state.lng.set(data?.lng);
-    state.street.set(data?.street || "");
-    state.houseNumber.set(data?.houseNumber || "");
-    state.reference.set(data?.reference);
-    state.addressRegister.set(data?.addressRegister || null);
-  };
 
   //* Funcion para setear el metodo de entrega
   const setDeliveryMethod = (method) => {
@@ -36,6 +28,7 @@ export const useLocationState = () => {
     switch (method) {
       case 0:
         state.shop.set(null);
+        state.meetup.set(null);
         break;
       case 1:
         state.lat.set(null);
@@ -44,6 +37,7 @@ export const useLocationState = () => {
         state.houseNumber.set("");
         state.reference.set(null);
         state.addressRegister.set(null);
+        state.meetup.set(null);
         break;
       case 2:
         state.shop.set(null);
@@ -56,9 +50,26 @@ export const useLocationState = () => {
     }
   };
 
+  //* Funcion para llenar los campos desde delivery
+  const fillFromDeliveryAddress = (data) => {
+    state.lat.set(data?.lat);
+    state.lng.set(data?.lng);
+    state.street.set(data?.street || "");
+    state.houseNumber.set(data?.houseNumber || "");
+    state.reference.set(data?.reference);
+    state.addressRegister.set(data?.addressRegister || null);
+  };
+
   //* Funcion para llenar los campos desde shop
   const fillFromShop = (data) => {
     state.shop.set(data?.shop);
+  };
+
+  //* Funcion para llenar los campos desde meetup
+  const fillFromMeetup = (data) => {
+    state.lat.set(data?.lat);
+    state.lng.set(data?.lng);
+    state.meetup.set(data?.meetup);
   };
 
   return {
@@ -71,10 +82,12 @@ export const useLocationState = () => {
     houseNumber: state.houseNumber.get(),
     reference: state.reference.get(),
     shop: state.shop.get(),
+    meetup: state.meetup.get(),
     addressRegister: state.addressRegister.get(),
     setStreet: (value) => state.street.set(value),
     setHouseNumber: (value) => state.houseNumber.set(value),
     fillFromDeliveryAddress,
     fillFromShop,
+    fillFromMeetup,
   };
 };

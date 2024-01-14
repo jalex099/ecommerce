@@ -91,6 +91,10 @@ const DataService = () => {
     return data?.data?.shops || [];
   }, [data]);
 
+  const meetups = useMemo(() => {
+    return data?.data?.meetups || [];
+  }, [data]);
+
   return {
     categories,
     menu,
@@ -100,6 +104,7 @@ const DataService = () => {
     messages,
     offers,
     shops,
+    meetups,
     isLoading,
     isSuccess,
     isError,

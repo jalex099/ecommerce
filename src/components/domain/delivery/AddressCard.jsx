@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
-import Regular12 from "#/components/shared/fonts/Regular12";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import Radio from "@mui/material/Radio";
-import SemiBold14 from "#/components/shared/fonts/SemiBold14";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 
 const AddressCard = ({ address, isSelected, handleSelection }) => {
   const handleChange = () => {

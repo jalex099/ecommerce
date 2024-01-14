@@ -1,9 +1,9 @@
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import { createStyles, withStyles } from "@mui/styles";
-import { DELIVERY_METHODS } from "#/config/constants";
+import { DELIVERY_METHODS } from "#/config/constants.js";
 import Box from "@mui/material/Box";
-import SemiBold12 from "#/components/shared/fonts/SemiBold12";
+import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 
 export default function DeliveryMethodSelection({ selected, handleSelection }) {
   const handleClick = (event, newValue) => {

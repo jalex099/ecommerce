@@ -117,6 +117,10 @@ export const PAGES = {
     title: "Checkout",
     desc: `Pagina de pago de ${COMPANY}`,
   },
+  delivery: {
+    title: "Método de Entrega",
+    desc: `Pagina de método de entrega de ${COMPANY}`,
+  },
   signup: {
     title: "Registro",
     desc: `Pagina de registro de ${COMPANY}`,
@@ -128,10 +132,6 @@ export const PAGES = {
   coupons: {
     title: "Cupones y Gift Cards",
     desc: `Pagina de cupones de ${COMPANY}`,
-  },
-  delivery: {
-    title: "Delivery",
-    desc: `Pagina de delivery de ${COMPANY}`,
   },
   favorites: {
     title: "Favoritos",

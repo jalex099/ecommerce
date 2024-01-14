@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
-import Regular16 from "#/components/shared/fonts/Regular16";
-import DataService from "#/services/DataService";
-import ShopCard from "#/components/domain/checkout/ShopCard";
+import Regular16 from "#/components/shared/fonts/Regular16.jsx";
+import DataService from "#/services/DataService.js";
+import ShopCard from "#/components/domain/delivery/ShopCard.jsx";
 import { useLocationState } from "#/stores/LocationState.js";
 import Stack from "@mui/material/Stack";
-import Regular12 from "#/components/shared/fonts/Regular12";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 
 const PickupSelectionContainer = () => {
   const { shops } = DataService();

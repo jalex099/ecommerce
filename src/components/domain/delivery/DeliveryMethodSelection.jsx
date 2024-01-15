@@ -10,7 +10,7 @@ export default function DeliveryMethodSelection({ selected, handleSelection }) {
     if (typeof handleSelection === "function") handleSelection(newValue);
   };
   return (
-    <Box className="flex justify-center w-full">
+    <Box className="flex justify-center w-full mb-2">
       <ToggleButtonGroup
         color="primary"
         size="small"

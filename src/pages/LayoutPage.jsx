@@ -78,6 +78,7 @@ const LayoutPage = () => {
             className="container relative mx-auto"
             sx={{
               paddingBottom: !isHidden && "96px",
+              flex: 1
             }}
           >
             <Outlet />

@@ -10,22 +10,11 @@ import DataService from "#/services/DataService.js";
 
 const DeliveryInfoContainer = () => {
   const location = useLocationState()
-  const {shops, meetups } = DataService()
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/delivery')
+    navigate('/metodo-de-entrega')
   }
-
-  const shop = useMemo(()=>{
-      if(location?.shop === null) return null;
-      return shops?.find(shop => shop?._id === location?.shop)
-  }, [location?.shop])
-
-  const meetingPoint = useMemo(()=>{
-      if(location?.meetup === null) return null;
-      return meetups?.find(meetup => meetup?._id === location?.meetup)
-  }, [location?.meetup])
 
 
     return (
@@ -36,17 +25,17 @@ const DeliveryInfoContainer = () => {
         <Box className={"flex flex-row gap-2 justify-between"}>
           <Box className={"flex flex-col gap-1 flex-1"}>
             <Regular12>
-              {location?.deliveryMethod === 0 ? "Envío a domicilio" : location?.deliveryMethod === 1 ? "Recoger en tienda" : "Punto de encuentro"}
+              {location?.selected === 0 ? "Envío a domicilio" : location?.selected === 1 ? "Recoger en tienda" : location?.selected === 2 ? "Punto de encuentro" : "Sin método de entrega seleccionado"}
             </Regular12>
             <SemiBold14>
               {
-                location?.deliveryMethod === 0 && `${location?.street} #${location?.houseNumber}`
+                location?.selected === 0 && `${location?.delivery?.street} #${location?.delivery?.houseNumber}`
               }
               {
-                location?.deliveryMethod === 1 && `${shop?.name} - ${shop?.city}`
+                location?.selected === 1 && `${location?.shop?.name} - ${location?.shop?.city}`
               }
               {
-                location?.deliveryMethod === 2 && `${meetingPoint?.name} - ${meetingPoint?.city}`
+                location?.selected === 2 && `${location?.meetup?.name} - ${location?.meetup?.city}`
               }
             </SemiBold14>
           </Box>

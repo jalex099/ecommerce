@@ -41,6 +41,7 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/producto/",
   "/carrito",
   "/pago",
+  "/metodo-de-entrega"
 ];
 
 export const CHECKOUT_STEPS = {
@@ -114,7 +115,7 @@ export const PAGES = {
     desc: `Pagina de carga de ${COMPANY}`,
   },
   checkout: {
-    title: "Checkout",
+    title: "Pago",
     desc: `Pagina de pago de ${COMPANY}`,
   },
   delivery: {

@@ -91,7 +91,7 @@ const RoutesApp = () => {
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/menu/categorias/:cat" element={<MenuPage />} />
         <Route path="/producto/:id" element={<ProductPage />} />
-        <Route path="/delivery" element={<DeliveryPage />} />
+        <Route path="/metodo-de-entrega" element={<DeliveryPage />} />
         {/* AUTHENTICATION AND REGISTER */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />

@@ -20,39 +20,73 @@ import MeetupSelectionContainer
 import { useLocationState } from "#/stores/LocationState.js";
 import { useEffect } from "react";
 import { useUIState } from "#/stores/UIState.js";
+import { useHookstate } from "@hookstate/core";
+import DeliveryMethodSelectionContainer from "#/components/domain/delivery/DeliveryMethodSelectionContainer.jsx";
+import DeliveryDetailConfigurationContainer from "#/components/domain/delivery/DeliveryDetailConfigurationContainer.jsx";
 
 const DeliveryPage = ()=>{
   const location = useLocationState();
   const ui = useUIState();
+  const methodSelected = useHookstate(null)
   useEffect(() => {
     ui?.setTitle("Método de entrega");
   }, []);
   useEffect(() => {
-    if (location?.deliveryMethod === null) {
-      location?.setDeliveryMethod(DELIVERY_METHODS[0]?.value);
+    if (location?.selected != null) {
+      methodSelected?.set(location?.selected)
     }
+
   }, []);
 
-  const handleSelection = (value) => {
-    if (value === null) return;
-    location?.setDeliveryMethod(value);
-  };
+
+  const handleSelectMethod = (item) => {
+    methodSelected?.set(item)
+    location?.nextStep()
+  }
+
+
   return (
-    <Container sx={style.container}>
+    <Container sx={style.container} >
       <HelmetMeta page="delivery" />
-      <DeliveryMethodSelection
-        selected={location?.deliveryMethod}
-        handleSelection={handleSelection}
-      />
-      {location?.deliveryMethod === 0 && <DeliverySelectionContainer />}
-      {location?.deliveryMethod === 1 && <PickupSelectionContainer />}
-      {location?.deliveryMethod === 2 && <MeetupSelectionContainer />}
+      {/*<DeliveryMethodSelection*/}
+      {/*  selected={methodSelected?.value}*/}
+      {/*  handleSelection={handleSelection}*/}
+      {/*/>*/}
+      {/*{methodSelected?.value === 0 && <DeliverySelectionContainer />}*/}
+      {/*{methodSelected?.value === 1 && <PickupSelectionContainer />}*/}
+      {/*{methodSelected?.value === 2 && <MeetupSelectionContainer />}*/}
+      {/*<Box className={"flex flex-row gap-2 justify-between mt-4"}>*/}
+      {/*  <Button*/}
+      {/*    variant="contained"*/}
+      {/*    size="small"*/}
+      {/*    className={"w-full"}*/}
+      {/*    color={"primary"}*/}
+      {/*    onClick={() => ui?.setStep(CHECKOUT_STEPS[1]?.value)}*/}
+      {/*  >*/}
+      {/*    Continuar*/}
+      {/*  </Button>*/}
+      {/*</Box>*/}
+      {
+        location?.step === 0 && <DeliveryMethodSelectionContainer
+          prevSelected={location?.selected}
+          handleEvent={handleSelectMethod}
+        />
+      }
+      {
+        location?.step === 1 && <DeliveryDetailConfigurationContainer
+          method={methodSelected?.value}
+          isDisabledContinueButton={!location?.validateByMethod(methodSelected?.value)}
+          handleContinue={() => location?.nextStep()}
+        />
+      }
     </Container>
   )
 }
 
 const style= {
-  container: {}
+  container: {
+    height: '100%',
+  }
 }
 
 export default DeliveryPage;

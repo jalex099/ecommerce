@@ -5,14 +5,7 @@ import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 
 const AddressCard = ({ address, isSelected, handleSelection }) => {
   const handleChange = () => {
-    const data = {
-      lngLat: {
-        lat: address?.latitude,
-        lng: address?.longitude,
-      },
-      address: address,
-    };
-    handleSelection(data);
+    handleSelection(address);
   };
   return (
     <Box

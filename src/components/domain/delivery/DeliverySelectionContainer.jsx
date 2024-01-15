@@ -13,6 +13,8 @@ import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import { useMemo } from "react";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import Skeleton from "@mui/material/Skeleton";
+import Button from "@mui/material/Button";
+import ContinueButtonContainer from "#/components/domain/delivery/ContinueButtonContainer.jsx";
 
 const DeliveryMethodSelection = () => {
   const auth = useAuthState();
@@ -21,11 +23,11 @@ const DeliveryMethodSelection = () => {
   const addressSelected = useHookstate(null);
   const { getLatLong } = GeolocationService();
   useEffect(() => {
-    if (location?.addressRegister) {
+    if (location?.delivery?._id) {
       addressSelected.set(serializeState(location?.addressRegister));
     }
-    if (location?.lat && location?.lng) {
-      tempLocation.set({ latitude: location?.lat, longitude: location?.lng });
+    if (location?.delivery?.latitude && location?.delivery?.longitude) {
+      tempLocation.set({ latitude: location?.delivery?.latitude, longitude: location?.delivery?.longitude });
       return;
     }
     fillLocation();
@@ -38,31 +40,22 @@ const DeliveryMethodSelection = () => {
         latitude: coords?.lat,
         longitude: coords?.long,
       });
+      // Fill location state
+      location?.fillFromDeliveryAddress({ latitude: coords?.lat, longitude: coords?.long });
     } catch (error) {
       //   addToast("No se pudo obtener tu ubicación", "error");
       console.log(error);
     }
   };
 
-  const handleLocationChange = ({ lngLat, address = null }) => {
+  const handleLocationChange = (data) => {
     tempLocation.set({
-      latitude: lngLat?.lat,
-      longitude: lngLat?.lng,
+      latitude: data?.latitude,
+      longitude: data?.longitude
     });
-    if (address) {
-      addressSelected.set(address);
-    }
     // Fill location state
-    location?.fillFromDeliveryAddress({
-      lat: lngLat?.lat,
-      lng: lngLat?.lng,
-      street: address?.street || null,
-      houseNumber: address?.houseNumber || null,
-      reference: address?.reference || null,
-      addressRegister: address || null,
-    });
+    location?.fillFromDeliveryAddress(data);
   };
-
   const handleLocationChangeFromMap = ({ lngLat }) => {
     // clear address selected
     addressSelected.set(null);
@@ -72,12 +65,13 @@ const DeliveryMethodSelection = () => {
     });
     // Fill location state
     location?.fillFromDeliveryAddress({
-      lat: lngLat?.lat,
-      lng: lngLat?.lng,
+      latitude: lngLat?.lat,
+      longitude: lngLat?.lng,
       street: "",
       houseNumber: "",
       reference: null,
-      addressRegister: null,
+      city: null,
+      _id: null,
     });
   };
 
@@ -88,14 +82,13 @@ const DeliveryMethodSelection = () => {
   const showMap = useMemo(() => {
     return tempLocation?.value?.latitude && tempLocation?.value?.longitude;
   }, [tempLocation]);
-
   return (
-    <Box className="flex-1 w-full flex flex-col gap-8">
+    <Box className="flex-1 w-full h-full flex flex-col gap-8">
       {showAddressSelection && (
         <>
           <AddressSelectionContainer
             handleSelection={handleLocationChange}
-            selected={addressSelected?.get()}
+            selected={location?.delivery?._id || null}
           />
           <Regular14>
             O{" "}
@@ -145,9 +138,9 @@ const DeliveryMethodSelection = () => {
           InputLabelProps={{ shrink: true }}
           sx={{ width: "100%" }}
           required
-          value={location?.street}
+          value={location?.delivery?.street || ""}
           onChange={(e) => {
-            location?.setStreet(e.target.value);
+            location?.setStreetOnDelivery(e.target.value);
           }}
         />
         <TextField
@@ -158,9 +151,9 @@ const DeliveryMethodSelection = () => {
           InputLabelProps={{ shrink: true }}
           sx={{ width: "100%" }}
           required
-          value={location?.houseNumber}
+          value={location?.delivery?.houseNumber || ""}
           onChange={(e) => {
-            location?.setHouseNumber(e.target.value);
+            location?.setHouseNumberOnDelivery(e.target.value);
           }}
         />
       </Stack>

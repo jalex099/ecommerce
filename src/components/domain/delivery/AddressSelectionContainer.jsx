@@ -16,7 +16,7 @@ const AddressSelectionContainer = ({ selected, handleSelection }) => {
             <AddressCard
               key={address?._id}
               address={address}
-              isSelected={address?._id === selected?._id}
+              isSelected={address?._id === selected}
               handleSelection={handleSelection}
             />
           ))}

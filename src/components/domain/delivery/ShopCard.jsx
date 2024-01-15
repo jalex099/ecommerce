@@ -6,9 +6,7 @@ import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 
 const ShopCard = ({ shop, isSelected, handleSelection }) => {
   const handleChange = () => {
-    handleSelection({
-      shop: shop?._id,
-    });
+    handleSelection(shop);
   };
   return (
     <Box

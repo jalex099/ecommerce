@@ -60,8 +60,8 @@ export const useLocationState = () => {
   //* Funcion para ir al siguiente paso
   const nextStep = () => {
     if(state?.step.value === 1){
-      state?.step.set(0);
       navigate(-1, { replace: true })
+      state?.step.set(0);
       return
     }
     state.step.set(state.step.value + 1);
@@ -85,7 +85,6 @@ export const useLocationState = () => {
   const validateByMethod = (method) => {
     switch(method){
       case 0:
-        console.log(state?.delivery?.value)
         if(
           !state?.delivery?.value ||
           !state?.delivery?.value?.street ||

@@ -9,7 +9,7 @@ const AddressCard = ({ address, isSelected, handleSelection }) => {
   };
   return (
     <Box
-      className="w-full  flex flex-row gap-2 shadow-sm p-2 rounded-md min-w-[180px] min-h-[60px]"
+      className="w-full  flex flex-row gap-2 shadow-sm py-2 px-4 rounded-md min-w-[180px] min-h-[60px]"
       sx={{
         backgroundColor: (theme) =>
           isSelected
@@ -18,9 +18,9 @@ const AddressCard = ({ address, isSelected, handleSelection }) => {
       }}
       onClick={handleChange}
     >
-      <Box className="flex flex-col">
+      <Box className="flex flex-col w-full">
         <SemiBold14>{address?.name}</SemiBold14>
-        <Regular12 className="overflow-ellipsis overflow-hidden w max-w-[120px]">
+        <Regular12 className="overflow-ellipsis overflow-hidden max-w-[120px]">
           {address?.street}. #{address?.houseNumber}
         </Regular12>
       </Box>

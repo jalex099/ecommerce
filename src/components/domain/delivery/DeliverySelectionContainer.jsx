@@ -15,23 +15,35 @@ import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import Skeleton from "@mui/material/Skeleton";
 import Button from "@mui/material/Button";
 import ContinueButtonContainer from "#/components/domain/delivery/ContinueButtonContainer.jsx";
+import ClientAddressService from "#/services/ClientAddressService.js";
+import DeliverySelectionFromMapContainer
+  from "#/components/domain/delivery/DeliverySelectionFromMapContainer.jsx";
 
 const DeliveryMethodSelection = () => {
   const auth = useAuthState();
   const location = useLocationState();
   const tempLocation = useHookstate(null);
-  const addressSelected = useHookstate(null);
+  const selectFromMap = useHookstate(false);
+  const { addresses, isLoading } = ClientAddressService();
+  const errorOnGeolocation = useHookstate(false);
   const { getLatLong } = GeolocationService();
   useEffect(() => {
-    if (location?.delivery?._id) {
-      addressSelected.set(serializeState(location?.addressRegister));
-    }
-    if (location?.delivery?.latitude && location?.delivery?.longitude) {
-      tempLocation.set({ latitude: location?.delivery?.latitude, longitude: location?.delivery?.longitude });
+  }, []);
+
+  useEffect(() => {
+    if(!selectFromMap?.value){
       return;
     }
-    fillLocation();
-  }, []);
+    tempLocation.set(null)
+    fillLocation()
+  }, [selectFromMap?.value]);
+
+  useEffect(() => {
+    if(isLoading) return
+    if(addresses?.length === 0){
+      selectFromMap?.set(true)
+    }
+  }, [addresses, isLoading]);
 
   const fillLocation = async () => {
     try {
@@ -44,6 +56,7 @@ const DeliveryMethodSelection = () => {
       location?.fillFromDeliveryAddress({ latitude: coords?.lat, longitude: coords?.long });
     } catch (error) {
       //   addToast("No se pudo obtener tu ubicación", "error");
+      errorOnGeolocation.set(true);
       console.log(error);
     }
   };
@@ -57,8 +70,6 @@ const DeliveryMethodSelection = () => {
     location?.fillFromDeliveryAddress(data);
   };
   const handleLocationChangeFromMap = ({ lngLat }) => {
-    // clear address selected
-    addressSelected.set(null);
     tempLocation.set({
       latitude: lngLat?.lat,
       longitude: lngLat?.lng,
@@ -76,17 +87,15 @@ const DeliveryMethodSelection = () => {
   };
 
   const showAddressSelection = useMemo(() => {
-    return auth?.isAuthenticated && auth?.isVerified;
+    return auth?.isAuthenticated && auth?.isVerified && addresses?.length > 0;
   }, [auth]);
 
-  const showMap = useMemo(() => {
-    return tempLocation?.value?.latitude && tempLocation?.value?.longitude;
-  }, [tempLocation]);
   return (
     <Box className="flex-1 w-full h-full flex flex-col gap-8">
-      {showAddressSelection && (
+      {showAddressSelection && !selectFromMap?.value && (
         <>
           <AddressSelectionContainer
+            addresses={addresses}
             handleSelection={handleLocationChange}
             selected={location?.delivery?._id || null}
           />
@@ -95,76 +104,27 @@ const DeliveryMethodSelection = () => {
             <Box
               component="span"
               sx={{ color: (theme) => theme?.palette?.primary?.main }}
+              onClick={() => { selectFromMap?.set(true)}}
             >
-              selecciona
+              selecciona una ubicación
             </Box>{" "}
-            una ubicación en el mapa
+            en el mapa
           </Regular14>
         </>
       )}
-
-      <Box
-        sx={{
-          width: "100%",
-          height: showAddressSelection ? "150px" : "300px",
-        }}
-      >
-        {showMap && (
-          <MapContainer
+      {
+        !!selectFromMap?.value && (
+          <DeliverySelectionFromMapContainer
             latitude={tempLocation?.value?.latitude}
             longitude={tempLocation?.value?.longitude}
-            styles={{
-              borderRadius: "8px",
-            }}
-            handleLocationChange={handleLocationChangeFromMap}
+            handleChange={handleLocationChangeFromMap}
+            handleRetry={fillLocation}
           />
-        )}
-        {!showMap && (
-          <Skeleton
-            variant="rectangular"
-            width="100%"
-            height="100%"
-            sx={{ borderRadius: "8px" }}
-          />
-        )}
-      </Box>
+        )
+      }
 
-      <Stack spacing={2}>
-        <TextField
-          label="Calle o Avenida"
-          name="street"
-          variant="standard"
-          autoComplete="street"
-          InputLabelProps={{ shrink: true }}
-          sx={{ width: "100%" }}
-          required
-          value={location?.delivery?.street || ""}
-          onChange={(e) => {
-            location?.setStreetOnDelivery(e.target.value);
-          }}
-        />
-        <TextField
-          label="Número de casa / piso"
-          name="houseNumber"
-          variant="standard"
-          autoComplete="houseNumber"
-          InputLabelProps={{ shrink: true }}
-          sx={{ width: "100%" }}
-          required
-          value={location?.delivery?.houseNumber || ""}
-          onChange={(e) => {
-            location?.setHouseNumberOnDelivery(e.target.value);
-          }}
-        />
-      </Stack>
 
-      <Regular12
-        styles={{
-          color: (theme) => theme?.palette?.opacity40?.main,
-        }}
-      >
-        * El env&iacute;o por delivery tiene un costo extra
-      </Regular12>
+
     </Box>
   );
 };

@@ -3,14 +3,13 @@ import AddressCard from "#/components/domain/delivery/AddressCard.jsx";
 import HorizontalScroller from "#/components/shared/HorizontalScroller.jsx";
 import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
-const AddressSelectionContainer = ({ selected, handleSelection }) => {
-  const { addresses } = ClientAddressService();
-  if (addresses?.length === 0) return null;
+const AddressSelectionContainer = ({ addresses, selected, handleSelection }) => {
   return (
     <Box className="flex flex-col gap-2 ">
       <Regular16>Escoge una de tus direcciones</Regular16>
-      <HorizontalScroller showScrollbar separate>
+      <Stack spacing={2}>
         {addresses?.length > 0 &&
           addresses?.map((address) => (
             <AddressCard
@@ -20,7 +19,7 @@ const AddressSelectionContainer = ({ selected, handleSelection }) => {
               handleSelection={handleSelection}
             />
           ))}
-      </HorizontalScroller>
+      </Stack>
     </Box>
   );
 };

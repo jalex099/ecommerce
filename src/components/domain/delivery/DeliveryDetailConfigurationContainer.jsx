@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import ContinueButtonContainer
   from "#/components/domain/delivery/ContinueButtonContainer.jsx";
 
-const DeliveryDetailConfigurationContainer = ({method,isDisabledContinueButton, handleContinue}) => {
+const DeliveryDetailConfigurationContainer = ({method}) => {
 
   return (
     <Box className={" h-full flex flex-col pb-4"}>
@@ -17,10 +17,6 @@ const DeliveryDetailConfigurationContainer = ({method,isDisabledContinueButton, 
       {method === 1 && <PickupSelectionContainer />}
       {method === 2 && <MeetupSelectionContainer />}
 
-      <ContinueButtonContainer
-        isDisabled={isDisabledContinueButton}
-        onClick={handleContinue}
-      />
     </Box>
   )
 

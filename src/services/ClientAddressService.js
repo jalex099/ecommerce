@@ -2,9 +2,11 @@ import ClientAddressRepository from "#/repositories/ClientAddressRepository";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { addToast } from "#/stores/UIState.js";
+import { useAuthState } from "#/stores/AuthState";
 
 const ClientAddressService = () => {
   const queryClient = useQueryClient();
+  const auth = useAuthState();
   const navigate = useNavigate();
   const { getAddresses, addAddress, deleteAddress } = ClientAddressRepository();
   const { data, isLoading, isRefetching } = useQuery({
@@ -12,6 +14,7 @@ const ClientAddressService = () => {
     queryFn: getAddresses,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    enabled: auth?.isAuthenticated && auth?.isVerified,
   });
 
   const add = useMutation({

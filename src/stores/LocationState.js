@@ -1,12 +1,23 @@
 import { hookstate, useHookstate } from "@hookstate/core";
 import { useNavigate } from "react-router-dom";
+import { stateToString } from "#/utils/adapterUtil/index.js";
 
-export const locationState = hookstate({
-  step: 0,
-  delivery: null,
-  shop: null,
-  meetup: null,
+
+const getLocationFromLocalStorage = () => {
+  const location = window.localStorage.getItem("location_state");
+  if (!location) return null;
+  return JSON.parse(location);
+}
+export const locationState = hookstate(()=>{
+  const location = getLocationFromLocalStorage();
+  return {
+    delivery: location?.delivery || null,
+    shop: location?.shop || null,
+    meetup: location?.meetup || null,
+    step: 0
+  }
 });
+
 
 export const useLocationState = () => {
   const state = useHookstate(locationState);
@@ -17,6 +28,7 @@ export const useLocationState = () => {
     window.localStorage.setItem("location_state", JSON.stringify(state?.value));
     //   // }
   };
+
 
 
   //* Funcion para limpiar el estado
@@ -126,6 +138,7 @@ export const useLocationState = () => {
     prevStep,
     setStreetOnDelivery,
     setHouseNumberOnDelivery,
-    validateByMethod
+    validateByMethod,
+    hash: () => stateToString(state.get()),
   };
 };

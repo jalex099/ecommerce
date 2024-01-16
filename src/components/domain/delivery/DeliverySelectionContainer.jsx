@@ -22,21 +22,10 @@ import DeliverySelectionFromMapContainer
 const DeliveryMethodSelection = () => {
   const auth = useAuthState();
   const location = useLocationState();
-  const tempLocation = useHookstate(null);
   const selectFromMap = useHookstate(false);
   const { addresses, isLoading } = ClientAddressService();
-  const errorOnGeolocation = useHookstate(false);
-  const { getLatLong } = GeolocationService();
   useEffect(() => {
   }, []);
-
-  useEffect(() => {
-    if(!selectFromMap?.value){
-      return;
-    }
-    tempLocation.set(null)
-    fillLocation()
-  }, [selectFromMap?.value]);
 
   useEffect(() => {
     if(isLoading) return
@@ -45,84 +34,37 @@ const DeliveryMethodSelection = () => {
     }
   }, [addresses, isLoading]);
 
-  const fillLocation = async () => {
-    try {
-      const coords = await getLatLong();
-      tempLocation.set({
-        latitude: coords?.lat,
-        longitude: coords?.long,
-      });
-      // Fill location state
-      location?.fillFromDeliveryAddress({ latitude: coords?.lat, longitude: coords?.long });
-    } catch (error) {
-      //   addToast("No se pudo obtener tu ubicación", "error");
-      errorOnGeolocation.set(true);
-      console.log(error);
+  useEffect(()=>{
+    if(!auth?.isVerified || !auth?.isAuthenticated || addresses?.length === 0){
+      selectFromMap?.set(true);
     }
-  };
-
-  const handleLocationChange = (data) => {
-    tempLocation.set({
-      latitude: data?.latitude,
-      longitude: data?.longitude
-    });
-    // Fill location state
-    location?.fillFromDeliveryAddress(data);
-  };
-  const handleLocationChangeFromMap = ({ lngLat }) => {
-    tempLocation.set({
-      latitude: lngLat?.lat,
-      longitude: lngLat?.lng,
-    });
-    // Fill location state
-    location?.fillFromDeliveryAddress({
-      latitude: lngLat?.lat,
-      longitude: lngLat?.lng,
-      street: "",
-      houseNumber: "",
-      reference: null,
-      city: null,
-      _id: null,
-    });
-  };
+  }, [auth?.isVerified, auth?.isAuthenticated, isLoading])
 
   const showAddressSelection = useMemo(() => {
     return auth?.isAuthenticated && auth?.isVerified && addresses?.length > 0;
   }, [auth]);
 
+  const handleSelectFromMap = () => {
+    selectFromMap.set(true);
+  }
+
+
   return (
     <Box className="flex-1 w-full h-full flex flex-col gap-8">
       {showAddressSelection && !selectFromMap?.value && (
-        <>
           <AddressSelectionContainer
             addresses={addresses}
-            handleSelection={handleLocationChange}
-            selected={location?.delivery?._id || null}
+            isLoading={isLoading}
+            selected={location?.delivery}
+            handleSelectFromMap={handleSelectFromMap}
           />
-          <Regular14>
-            O{" "}
-            <Box
-              component="span"
-              sx={{ color: (theme) => theme?.palette?.primary?.main }}
-              onClick={() => { selectFromMap?.set(true)}}
-            >
-              selecciona una ubicación
-            </Box>{" "}
-            en el mapa
-          </Regular14>
-        </>
       )}
       {
-        !!selectFromMap?.value && (
+        selectFromMap?.value && (
           <DeliverySelectionFromMapContainer
-            latitude={tempLocation?.value?.latitude}
-            longitude={tempLocation?.value?.longitude}
-            handleChange={handleLocationChangeFromMap}
-            handleRetry={fillLocation}
           />
         )
       }
-
 
 
     </Box>

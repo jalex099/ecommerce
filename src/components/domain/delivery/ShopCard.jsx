@@ -10,15 +10,22 @@ const ShopCard = ({ shop, isSelected, handleSelection }) => {
   };
   return (
     <Box
-      className="w-full p-2 rounded-md cursor-pointer flex flex-row justify-between gap-2"
+      className="w-full  flex flex-row gap-2 py-2 px-4 rounded-md min-w-[180px] min-h-[60px]"
       sx={{
-        bgcolor: isSelected ? "primary10.main" : "neutral5.main",
+        color: (theme) =>
+          isSelected
+            ? theme.palette.primary140.main
+            : theme.palette.neutral70.main,
+        bgcolor: (theme) =>
+          isSelected
+            ? theme.palette.primary10.main
+            : theme.palette.neutral0.main,
       }}
+      onClick={handleChange}
     >
       <Box className="flex flex-col gap-2 flex-1">
         <Box>
-          <SemiBold14>{shop?.name}</SemiBold14>
-          <Regular14>{shop?.city}</Regular14>
+          <SemiBold14>{shop?.name} / {shop?.city}</SemiBold14>
         </Box>
         {shop?.description && shop?.description.length > 0 && (
           <Regular12

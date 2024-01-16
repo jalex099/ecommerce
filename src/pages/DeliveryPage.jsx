@@ -75,8 +75,6 @@ const DeliveryPage = ()=>{
       {
         location?.step === 1 && <DeliveryDetailConfigurationContainer
           method={methodSelected?.value}
-          isDisabledContinueButton={!location?.validateByMethod(methodSelected?.value)}
-          handleContinue={() => location?.nextStep()}
         />
       }
     </Container>

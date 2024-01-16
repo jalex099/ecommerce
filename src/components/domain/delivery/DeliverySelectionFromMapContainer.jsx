@@ -4,34 +4,108 @@ import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import { useLocationState } from "#/stores/LocationState.js";
+import { useHookstate } from "@hookstate/core";
+import GeolocationService from "#/services/GeolocationService.js";
+import ContinueButtonContainer
+  from "#/components/domain/delivery/ContinueButtonContainer.jsx";
+import serializeState from "#/utils/serializeState.js";
 
-const DeliverySelectionFromMapContainer = ({latitude, longitude, handleChange, handleRetry}) => {
+const DeliverySelectionFromMapContainer = () => {
 
   const location = useLocationState();
+  const tempLocation = useHookstate(null);
+  const errorOnGeolocation = useHookstate(false);
+  const { getLatLong } = GeolocationService();
 
-  const isValid =useMemo(()=>{
-    return latitude && longitude
-  }, [latitude, longitude])
+  useEffect(() => {
+    //* Si ya tiene una dirección de delivery, la usa
+    if(location?.delivery != null){
+      tempLocation.set(serializeState(location?.delivery));
+      return;
+    }
+    //* Si no tiene una dirección de delivery, intenta obtener la ubicación actual
+    fillLocation()
+  }, []);
+
+  const fillLocation = async () => {
+    try {
+      const coords = await getLatLong();
+      tempLocation.set({
+        latitude: coords?.lat,
+        longitude: coords?.long,
+      });
+    } catch (error) {
+      //   addToast("No se pudo obtener tu ubicación", "error");
+      errorOnGeolocation.set(true);
+      console.log(error);
+    }
+  };
+
+  const handleChange = ({lngLat}) => {
+    tempLocation.set({
+      latitude: lngLat?.lat,
+      longitude: lngLat?.lng,
+    });
+  }
+
+  const handleRetry = () => {
+    errorOnGeolocation.set(false);
+    fillLocation();
+  }
+
+  const handleChangeStreet = (e) => {
+    tempLocation.set((prev) => ({
+      ...prev,
+      street: e.target.value,
+    }));
+  }
+
+  const handleChangeHouseNumber = (e) => {
+    tempLocation.set((prev) => ({
+      ...prev,
+      houseNumber: e.target.value,
+    }));
+  }
+
+  const handleChangeReference = (e) => {
+    tempLocation.set((prev) => ({
+      ...prev,
+      reference: e.target.value,
+    }));
+  }
+
+const handleContinue = () => {
+    if(!validForm) return;
+    location?.fillFromDeliveryAddress(serializeState(tempLocation?.value));
+    location?.nextStep();
+}
+
+const validForm  = useMemo(() => {
+  return !(!tempLocation?.value?.longitude ||
+    !tempLocation?.value?.latitude ||
+    !tempLocation?.value?.street ||
+    !tempLocation?.value?.houseNumber);
+
+}, [tempLocation?.value])
 
   return (
     <Box className={"flex flex-col gap-4"}>
       {
-        isValid && (
+        !errorOnGeolocation?.value && (
           <>
-
             <Box
               sx={{
                 width: "100%",
                 height: "300px",
               }}
             >
-              {latitude && longitude && (
+              {tempLocation?.value?.longitude && tempLocation?.value?.latitude && (
                 <MapContainer
-                  latitude={latitude}
-                  longitude={longitude}
+                  latitude={tempLocation?.value?.latitude}
+                  longitude={tempLocation?.value?.longitude}
                   styles={{
                     borderRadius: "8px",
                   }}
@@ -43,29 +117,38 @@ const DeliverySelectionFromMapContainer = ({latitude, longitude, handleChange, h
             <Stack spacing={2}>
               <TextField
                 label="Calle o Avenida"
-                name="street"
+                name="address-street"
                 variant="standard"
-                autoComplete="street"
+                autoComplete="address-street"
                 InputLabelProps={{ shrink: true }}
                 sx={{ width: "100%" }}
                 required
-                value={location?.delivery?.street || ""}
-                onChange={(e) => {
-                  location?.setStreetOnDelivery(e.target.value);
-                }}
+                value={tempLocation?.value?.street || ""}
+                onChange={handleChangeStreet}
               />
               <TextField
                 label="Número de casa / piso"
-                name="houseNumber"
+                name="address-house-number"
                 variant="standard"
-                autoComplete="houseNumber"
+                autoComplete="address-house-number"
                 InputLabelProps={{ shrink: true }}
                 sx={{ width: "100%" }}
                 required
-                value={location?.delivery?.houseNumber || ""}
-                onChange={(e) => {
-                  location?.setHouseNumberOnDelivery(e.target.value);
-                }}
+                value={tempLocation?.value?.houseNumber || ""}
+                onChange={handleChangeHouseNumber}
+              />
+              <TextField
+                label="Referencia"
+                name="address-reference"
+                variant="standard"
+                autoComplete="address-reference"
+                InputLabelProps={{ shrink: true }}
+                multiline
+                minRows={1}
+                maxRows={3}
+                sx={{ width: "100%" }}
+                value={tempLocation?.value?.reference || ""}
+                onChange={handleChangeReference}
               />
             </Stack>
             <Regular12
@@ -75,12 +158,13 @@ const DeliverySelectionFromMapContainer = ({latitude, longitude, handleChange, h
             >
               * El env&iacute;o por delivery tiene un costo extra
             </Regular12>
+
+            <ContinueButtonContainer onClick={handleContinue} isDisabled={!validForm}/>
           </>
         )
       }
       {
-
-        !isValid && (
+        errorOnGeolocation?.value && (
           <Box className={"flex flex-col h-full w-full justify-center items-center gap-4"}>
             <Regular14>
               No se pudo obtener tu ubicación

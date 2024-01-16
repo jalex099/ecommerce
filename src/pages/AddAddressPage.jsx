@@ -50,18 +50,34 @@ function AddAddressPage() {
     // Get the values from the form
     const formData = new FormData(e?.target);
     const data = Object.fromEntries(formData.entries());
-    // If some of the values is empty, return
-    if (Object.values(data).some((value) => !value)) return;
+    // If some of the values is empty, return. Only the reference can be empty
+    if(!validateEntries(data)) {
+      addToast("Completa todos los campos", "error");
+      return;
+    }
     // Create the base address object
     const address = {
       latitude: data?.latitude,
       longitude: data?.longitude,
-      street: data?.street,
-      houseNumber: data?.houseNumber,
+      street: data?.addressStreet,
+      houseNumber: data?.addressHouseNumber,
       name: data?.addressName,
+      reference: data?.addressReference || ""
     };
     await add.mutate(address);
   };
+
+  const validateEntries = (data) => {
+    if(
+      !data?.addressStreet ||
+      !data?.addressHouseNumber ||
+      !data?.addressName ||
+      !data?.latitude ||
+      !data?.longitude
+    ) return false;
+    
+    return true;
+  }
 
   const handleToogleFormAddress = () => {
     isFormAddressOpen.set((prev) => !prev);

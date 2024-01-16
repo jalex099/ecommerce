@@ -42,7 +42,7 @@ const MeetupSelectionContainer = () => {
       console.log(data)
   }
   return (
-    <Box className="flex-1 w-full flex flex-col gap-8"
+    <Box className="flex-1 w-full flex flex-col gap-8 h-full"
       sx={{
         minHeight: "300px !important",
       }}>
@@ -51,10 +51,6 @@ const MeetupSelectionContainer = () => {
             latitude={tempLocation?.value?.latitude}
             longitude={tempLocation?.value?.longitude}
             markers={meetups}
-            styles={{
-              borderRadius: "8px",
-              height: '200px'
-            }}
             handleLocationChange={handleLocationChange}
           />
         )}

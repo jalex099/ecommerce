@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
-import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState.js";
@@ -17,7 +16,7 @@ const GeneralInformationForm = ()=> {
     if(checkoutState?.completeName === ''){
       checkoutState?.setCompleteName(auth?.currentUser?.displayName);
     }
-  }, []);
+  }, [auth?.currentUser?.email, auth?.currentUser?.displayName]);
 
 
   const handleChangeCompleteName = (e) => {

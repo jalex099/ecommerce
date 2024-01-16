@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import { useLocationState } from "#/stores/LocationState.js";
 import serializeState from "#/utils/serializeState.js";
 import AddressSelectionContainerSkeleton from "#/components/domain/delivery/AddressSelectionContainerSkeleton.jsx";
+import DeliveryExtraPaymentAdvise
+  from "#/components/domain/delivery/DeliveryExtraPaymentAdvise.jsx";
 
 const AddressSelectionContainer = ({ addresses, isLoading, selected, handleSelectFromMap }) => {
   const tempSelection = useHookstate(null);
@@ -32,9 +34,10 @@ const AddressSelectionContainer = ({ addresses, isLoading, selected, handleSelec
     <AddressSelectionContainerSkeleton />
   )
   return (
-    <Box className="flex flex-col gap-2 ">
-      <Regular16>Escoge una de tus direcciones</Regular16>
-      <Stack spacing={2}>
+    <Box className="flex flex-col gap-4 flex-1">
+      <Regular16>Escoge una de tus direcciones para el envío de tus producto
+      </Regular16>
+      <Stack spacing={1}>
         {addresses?.length > 0 &&
           addresses?.map((address) => (
             <AddressCard
@@ -57,6 +60,7 @@ const AddressSelectionContainer = ({ addresses, isLoading, selected, handleSelec
         en el mapa
       </Regular14>
 
+      <DeliveryExtraPaymentAdvise/>
       <ContinueButtonContainer onClick={handleContinue} isDisabled={tempSelection?.value === null} />
     </Box>
   );

@@ -38,19 +38,30 @@ function FormAddressContainer({
 
             <TextField
               label="Calle o Avenida"
-              name="street"
+              name="addressStreet"
               variant="standard"
-              autoComplete="street"
+              autoComplete="address-street"
               sx={{ width: "100%" }}
               required
             />
             <TextField
               label="Número de casa / piso"
-              name="houseNumber"
+              name="addressHouseNumber"
               variant="standard"
-              autoComplete="houseNumber"
+              autoComplete="address-house-number"
               sx={{ width: "100%" }}
               required
+            />
+
+            <TextField
+              label="Referencia o información adicional"
+              name="addressReference"
+              variant="standard"
+              autoComplete="address-reference"
+              sx={{ width: "100%" }}
+              multiline
+              minRows={1}
+              maxRows={3}
             />
             <TextField
               label="Nombre para la dirección"

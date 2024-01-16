@@ -12,6 +12,8 @@ import GeolocationService from "#/services/GeolocationService.js";
 import ContinueButtonContainer
   from "#/components/domain/delivery/ContinueButtonContainer.jsx";
 import serializeState from "#/utils/serializeState.js";
+import DeliveryExtraPaymentAdvise
+  from "#/components/domain/delivery/DeliveryExtraPaymentAdvise.jsx";
 
 const DeliverySelectionFromMapContainer = () => {
 
@@ -92,14 +94,13 @@ const validForm  = useMemo(() => {
 }, [tempLocation?.value])
 
   return (
-    <Box className={"flex flex-col gap-4"}>
+    <Box className={"flex flex-col gap-4 flex-1"}>
       {
         !errorOnGeolocation?.value && (
           <>
             <Box
               sx={{
-                width: "100%",
-                height: "300px",
+                width: "100%",flex:1,  minHeight: "200px",
               }}
             >
               {tempLocation?.value?.longitude && tempLocation?.value?.latitude && (
@@ -151,13 +152,7 @@ const validForm  = useMemo(() => {
                 onChange={handleChangeReference}
               />
             </Stack>
-            <Regular12
-              styles={{
-                color: (theme) => theme?.palette?.opacity40?.main,
-              }}
-            >
-              * El env&iacute;o por delivery tiene un costo extra
-            </Regular12>
+            <DeliveryExtraPaymentAdvise/>
 
             <ContinueButtonContainer onClick={handleContinue} isDisabled={!validForm}/>
           </>

@@ -4,18 +4,21 @@ import components from "#/theme/components";
 import typography from "#/theme/typography";
 import MuiCssBaseline from "#/theme/MuiCssBaseline";
 
-const theme = createTheme({
-  palette,
-  shape: {
-    borderRadius: 8,
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: MuiCssBaseline,
+
+const theme = createTheme(
+  {
+    palette,
+    shape: {
+      borderRadius: 8,
     },
-    ...components,
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: MuiCssBaseline,
+      },
+      ...components,
+    },
+    typography,
   },
-  typography,
-});
+  );
 
 export default theme;

@@ -3,6 +3,7 @@ export const stateToString = (object, level = 0) => {
   //if (level === 0) console.log(object)
   if (level > 7) return "";
   if (object === null || object === undefined) return "";
+  if (object instanceof Date) return object.toISOString();
   if (typeof object === "number") return object;
   if (typeof object === "boolean") return object ? "T" : "F";
   if (typeof object === "string") return object.charAt(0).toLocaleUpperCase();

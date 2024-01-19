@@ -36,12 +36,17 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
 
+export const DEFAULT_DAYS_TO_DELIVER = 5;
+export const MIN_TIME_HOUR = "08:00";
+export const MAX_TIME_HOUR = "18:00";
+
 export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/perfil/agregar-direccion",
   "/producto/",
   "/carrito",
   "/pago",
-  "/metodo-de-entrega"
+  "/metodo-de-entrega",
+  "/fecha-y-hora",
 ];
 
 export const CHECKOUT_STEPS = {
@@ -97,7 +102,10 @@ export const PAGES = {
     title: "Registro",
     desc: `Pagina de registro en ${COMPANY}`,
   },
-
+  dateAndTime: {
+    title: "Fecha y Hora",
+    desc: `Pagina de fecha y hora en ${COMPANY}`,
+  },
   cart: {
     title: "Carrito",
     desc: `Pagina de carrito en ${COMPANY}`,

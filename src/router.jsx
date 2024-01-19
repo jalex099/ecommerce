@@ -82,6 +82,12 @@ const DeliveryPage = () => (
   </DynamicImport>
 );
 
+const DateAndTimePage = () => (
+  <DynamicImport load={() => import("#/pages/DateAndTimePage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -92,6 +98,7 @@ const RoutesApp = () => {
         <Route path="/menu/categorias/:cat" element={<MenuPage />} />
         <Route path="/producto/:id" element={<ProductPage />} />
         <Route path="/metodo-de-entrega" element={<DeliveryPage />} />
+        <Route path="/fecha-y-hora" element={<DateAndTimePage />} />
         {/* AUTHENTICATION AND REGISTER */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />

@@ -47,7 +47,7 @@ const GeneralInformationForm = ()=> {
            // InputLabelProps={{ shrink: true }}
            sx={{ width: "100%" }}
            required
-           value={checkoutState?.completeName}
+           value={checkoutState?.completeName || ''}
            onChange={handleChangeCompleteName}
          />
         <TextField
@@ -58,7 +58,7 @@ const GeneralInformationForm = ()=> {
           // InputLabelProps={{ shrink: true }}
           sx={{ width: "100%" }}
           required
-          value={checkoutState?.email}
+          value={checkoutState?.email || ''}
           onChange={handleChangeEmail}
         />
         <TextField
@@ -69,7 +69,7 @@ const GeneralInformationForm = ()=> {
           // InputLabelProps={{ shrink: true }}
           sx={{ width: "100%" }}
           required
-          value={checkoutState?.phone}
+          value={checkoutState?.phone || ''}
           onChange={handleChangePhone}
         />
         <TextField
@@ -79,7 +79,7 @@ const GeneralInformationForm = ()=> {
           autoComplete="special_instructions"
           // InputLabelProps={{ shrink: true }}
           sx={{ width: "100%" }}
-          value={checkoutState?.comments}
+          value={checkoutState?.comments || ''}
           onChange={handleChangeComments}
           multiline
           minRows={1}

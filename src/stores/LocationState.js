@@ -1,6 +1,7 @@
 import { hookstate, useHookstate } from "@hookstate/core";
 import { useNavigate } from "react-router-dom";
 import { stateToString } from "#/utils/adapterUtil/index.js";
+import {format, parse, parseISO} from 'date-fns'
 
 
 const getLocationFromLocalStorage = () => {
@@ -14,6 +15,7 @@ export const locationState = hookstate(()=>{
     delivery: location?.delivery || null,
     shop: location?.shop || null,
     meetup: location?.meetup || null,
+    dateTime: location?.dateTime ? parseISO(location?.dateTime) : null,
     step: 0
   }
 });
@@ -31,11 +33,16 @@ export const useLocationState = () => {
 
 
 
-  //* Funcion para limpiar el estado
+  //* Funcion para limpiar el estado de delivery
   const clearState = () => {
     state?.delivery.set(null);
     state?.shop.set(null);
     state?.meetup.set(null);
+  }
+
+  //* Funcion para limpiar el estado de fecha y hora
+  const clearDateTime = () => {
+    state?.dateTime.set(null);
   }
 
   //* Funcion para llenar los campos desde delivery
@@ -84,6 +91,11 @@ export const useLocationState = () => {
     state.step.set(state.step.value - 1);
   };
 
+  //* Funcion continuar desde date time
+  const continueFromDateTime = () => {
+    navigate(-1, { replace: true })
+  };
+
   //* Funcion para llenar la calle desde el mapa
   const setStreetOnDelivery = (street) => {
     state?.delivery.street.set(street);
@@ -123,22 +135,38 @@ export const useLocationState = () => {
     return true
   }
 
+  const fillDateTime = (date) => {
+    state?.dateTime.set(date);
+  }
+
+  const formatedDateTime = () => {
+    if(!state?.dateTime?.value){
+      return null
+    }
+    return format(state?.dateTime?.value, 'dd/MM/yyyy hh:mm a')
+  }
+
   return {
     addToLocalStorage,
     clearState,
+    clearDateTime,
     delivery: state?.delivery.value,
     shop: state?.shop.value,
     meetup: state?.meetup.value,
+    dateTime: state?.dateTime.value,
     step: state?.step.value,
     selected: getSelected(),
     fillFromDeliveryAddress,
     fillFromShop,
     fillFromMeetup,
+    fillDateTime,
     nextStep,
     prevStep,
     setStreetOnDelivery,
     setHouseNumberOnDelivery,
     validateByMethod,
+    formatedDateTime,
+    continueFromDateTime,
     hash: () => stateToString(state.get()),
   };
 };

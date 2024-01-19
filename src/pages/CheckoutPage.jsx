@@ -15,6 +15,8 @@ import GeneralInformationForm
 import DeliveryInfoContainer
   from "#/components/domain/checkout/DeliveryInfoContainer.jsx";
 import Divider from "@mui/material/Divider";
+import DateAndTimeInfoContainer
+  from "#/components/domain/checkout/DateAndTimeInfoContainer.jsx";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -38,6 +40,8 @@ const CheckoutPage = () => {
       {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
         <Box className={'flex flex-col gap-4 w-full'}>
           <DeliveryInfoContainer />
+          <Divider />
+          <DateAndTimeInfoContainer />
           <Divider />
           <GeneralInformationForm />
         </Box>

@@ -5,8 +5,6 @@ import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import {format} from "date-fns";
-import es from 'date-fns/locale/es';
 import { useMemo } from "react";
 
 const DateAndTimeInfoContainer = () =>{
@@ -28,7 +26,7 @@ const DateAndTimeInfoContainer = () =>{
           <SemiBold16>
             Fecha y hora
           </SemiBold16>
-          <Box className={"flex flex-row gap-2 justify-between"}>
+          <Box className={"flex flex-row gap-2 justify-between items-center"}>
             <Regular12>
               {dateAndTime !== null ? dateAndTime : "Sin fecha y hora seleccionada"}
             </Regular12>

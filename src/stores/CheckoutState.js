@@ -50,6 +50,18 @@ export const useCheckoutState = () => {
     state.time.set(time);
   };
 
+  const isValidGeneralInformation = () => {
+    const completeName = state.completeName.get();
+    const email = state.email.get();
+    const phone = state.phone.get();
+
+    if (!completeName || !email || !phone) {
+      return false;
+    }
+
+    return true;
+  }
+
   return {
     activeStep: state.activeStep.get(),
     setActiveStep: (step) => state.activeStep.set(step),
@@ -69,5 +81,6 @@ export const useCheckoutState = () => {
     setPhone: (phone) => state.phone.set(phone),
     comments: state.comments.get(),
     setComments: (comments) => state.comments.set(comments),
+    isValidGeneralInformation,
   };
 };

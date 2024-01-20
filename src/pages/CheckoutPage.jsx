@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useUIState } from "#/stores/UIState.js";
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta.jsx";
@@ -17,10 +17,12 @@ import DeliveryInfoContainer
 import Divider from "@mui/material/Divider";
 import DateAndTimeInfoContainer
   from "#/components/domain/checkout/DateAndTimeInfoContainer.jsx";
+import { useLocationState } from "#/stores/LocationState.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
   const checkoutState = useCheckoutState();
+  const locationState = useLocationState();
   const cart = useCartState();
   const navigate = useNavigate();
 
@@ -33,6 +35,36 @@ const CheckoutPage = () => {
       navigate(-1);
     }
   }, []);
+
+  const isValidStep = useMemo(()=>{
+    let isValid = true;
+    //* Validar de acuerdo al paso activo
+    if(checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS){
+      //* Validar la fecha y hora
+      if(locationState?.dateTime === null) isValid = false;
+      //* Validar si se ha seleccionado una direccion, tienda o punto de entrega
+      switch (locationState?.selected){
+        case 0:
+          !locationState?.isValidAddress() && (isValid = false);
+          break;
+        case 1:
+          !locationState?.isValidShop() && (isValid = false);
+          break;
+        case 2:
+          !locationState?.isValidMeetup() && (isValid = false);
+          break;
+        default:
+          isValid = false;
+          break;
+      }
+      //* Validar los campos del formulario
+      !checkoutState?.isValidGeneralInformation() && (isValid = false);
+    }
+    // if(checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT){
+    //
+    // }
+    return isValid;
+  }, [checkoutState, locationState])
 
   return (
     <Container sx={style.container}>
@@ -49,11 +81,12 @@ const CheckoutPage = () => {
       {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (
         <PaymentContainer />
       )}
-      <Box className="sticky bottom-0 left-0 right-0 z-10 p-6 w-full">
+      <Box className="sticky bottom-0 left-0 right-0 z-10 w-full">
         <Button
           variant="contained"
           color="primary"
           fullWidth
+          disabled={!isValidStep}
           onClick={checkoutState?.handleNextStep}
         >
           Continuar

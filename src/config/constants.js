@@ -36,6 +36,8 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
 
+export const PHONE_REGEX = /^\([0-9]{3}\)\s[0-9]{4}-[0-9]{4}$/;
+
 export const DEFAULT_DAYS_TO_DELIVER = 5;
 export const MIN_TIME_HOUR = "08:00";
 export const MAX_TIME_HOUR = "18:00";

@@ -4,6 +4,8 @@ import { useCheckoutState } from "#/stores/CheckoutState.js";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState.js";
+import { PHONE_REGEX } from "#/config/constants.js";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 
 const GeneralInformationForm = ()=> {
   const auth = useAuthState();
@@ -63,6 +65,7 @@ const GeneralInformationForm = ()=> {
         />
         <TextField
           label="Teléfono"
+          type={"number"}
           name="phone"
           variant="standard"
           autoComplete="phone"
@@ -85,7 +88,9 @@ const GeneralInformationForm = ()=> {
           minRows={1}
           maxRows={3}
         />
-
+        <Regular12 className={"opacity-60"}>
+          * Campos obligatorios
+        </Regular12>
       </Box>
     )
 }

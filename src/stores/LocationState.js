@@ -146,6 +146,33 @@ export const useLocationState = () => {
     return format(state?.dateTime?.value, 'dd/MM/yyyy hh:mm a')
   }
 
+  const isValidAddress = () => {
+    if(
+      !state?.delivery?.value ||
+      !state?.delivery?.value?.street ||
+      !state?.delivery?.value?.houseNumber ||
+      !state?.delivery?.value?.latitude ||
+      !state?.delivery?.value?.longitude
+    ){
+      return false
+    }
+    return true
+  }
+
+  const isValidShop = () => {
+    if(!state?.shop.value || !state?.shop?.value?._id){
+      return false
+    }
+    return true
+  }
+
+  const isValidMeetup = () => {
+    if(!state?.meetup.value || !state?.meetup?.value?._id){
+      return false
+    }
+    return true
+  }
+
   return {
     addToLocalStorage,
     clearState,
@@ -168,5 +195,8 @@ export const useLocationState = () => {
     formatedDateTime,
     continueFromDateTime,
     hash: () => stateToString(state.get()),
+    isValidAddress,
+    isValidShop,
+    isValidMeetup
   };
 };

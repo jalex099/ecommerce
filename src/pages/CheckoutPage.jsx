@@ -18,11 +18,15 @@ import Divider from "@mui/material/Divider";
 import DateAndTimeInfoContainer
   from "#/components/domain/checkout/DateAndTimeInfoContainer.jsx";
 import { useLocationState } from "#/stores/LocationState.js";
+import useValidateCheckout
+  from "#/components/domain/checkout/controllers/useValidateCheckout.js";
+import ReviewContainer from "#/components/domain/checkout/ReviewContainer.jsx";
 
 const CheckoutPage = () => {
   const ui = useUIState();
   const checkoutState = useCheckoutState();
   const locationState = useLocationState();
+  const { isValidStep} = useValidateCheckout()
   const cart = useCartState();
   const navigate = useNavigate();
 
@@ -36,41 +40,11 @@ const CheckoutPage = () => {
     }
   }, []);
 
-  const isValidStep = useMemo(()=>{
-    let isValid = true;
-    //* Validar de acuerdo al paso activo
-    if(checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS){
-      //* Validar la fecha y hora
-      if(locationState?.dateTime === null) isValid = false;
-      //* Validar si se ha seleccionado una direccion, tienda o punto de entrega
-      switch (locationState?.selected){
-        case 0:
-          !locationState?.isValidAddress() && (isValid = false);
-          break;
-        case 1:
-          !locationState?.isValidShop() && (isValid = false);
-          break;
-        case 2:
-          !locationState?.isValidMeetup() && (isValid = false);
-          break;
-        default:
-          isValid = false;
-          break;
-      }
-      //* Validar los campos del formulario
-      !checkoutState?.isValidGeneralInformation() && (isValid = false);
-    }
-    // if(checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT){
-    //
-    // }
-    return isValid;
-  }, [checkoutState, locationState])
-
   return (
     <Container sx={style.container}>
       <HelmetMeta page="checkout" />
       {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
-        <Box className={'flex flex-col gap-4 w-full'}>
+        <Box className={'flex flex-col gap-4 w-full flex-1'}>
           <DeliveryInfoContainer />
           <Divider />
           <DateAndTimeInfoContainer />
@@ -81,12 +55,17 @@ const CheckoutPage = () => {
       {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (
         <PaymentContainer />
       )}
+      {
+        checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW && (
+          <ReviewContainer />
+        )
+      }
       <Box className="sticky bottom-0 left-0 right-0 z-10 w-full">
         <Button
           variant="contained"
           color="primary"
           fullWidth
-          disabled={!isValidStep}
+          disabled={!isValidStep()}
           onClick={checkoutState?.handleNextStep}
         >
           Continuar

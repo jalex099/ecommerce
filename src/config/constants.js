@@ -75,6 +75,12 @@ export const DELIVERY_METHODS = [
   },
 ];
 
+export const PAYMENT_METHODS = [
+  { label: "Efectivo", value: 0 },
+  // { label: "Tarjeta", value: 1 },
+  { label: "Transferencia Bancaria", value: 2 }
+]
+
 export const PAGES = {
   feed: {
     title: "Feed",

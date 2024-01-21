@@ -4,7 +4,6 @@ import { useCheckoutState } from "#/stores/CheckoutState.js";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState.js";
-import { PHONE_REGEX } from "#/config/constants.js";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 
 const GeneralInformationForm = ()=> {

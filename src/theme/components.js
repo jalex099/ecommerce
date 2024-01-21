@@ -264,6 +264,21 @@ const components = {
       },
     },
   },
+  MuiImageListItem: {
+    styleOverrides: {
+      root: {
+        borderRadius: "50%",
+        aspectRatio: "1",
+        filter: "brightness(100%)",
+        "-webkit-filter": "brightness(100%)",
+        border: "2px solid #FFFFFF",
+        "& .MuiImageListItem-img": {
+          borderRadius: "50%",
+          aspectRatio: "1",
+        },
+      },
+    },
+  }
 };
 
 export default components;

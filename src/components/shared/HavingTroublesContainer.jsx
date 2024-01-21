@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import { useMemo } from "react";
 import { Link } from "@mui/material";
@@ -25,9 +25,9 @@ const HavingTroublesContainer = ({situation = null}) => {
     >
       <ProblemIcon className={"w-10"}/>
      <Box className={"flex flex-1 gap-09 flex-col"}>
-       <SemiBold16>
+       <SemiBold14>
          {situationText}
-       </SemiBold16>
+       </SemiBold14>
        <Regular14>
          Contáctanos <Link href={`mailto:${SUPPORT_EMAIL}`} color={"secondary"}>aquí</Link>
        </Regular14>

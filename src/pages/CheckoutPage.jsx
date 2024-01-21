@@ -68,7 +68,9 @@ const CheckoutPage = () => {
           disabled={!isValidStep()}
           onClick={checkoutState?.handleNextStep}
         >
-          Continuar
+          {
+            checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW ? 'Confirmar y pagar' : 'Continuar'
+          }
         </Button>
       </Box>
     </Container>

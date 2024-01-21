@@ -1,19 +1,43 @@
 import { hookstate, useHookstate } from "@hookstate/core";
-import { CHECKOUT_STEPS } from "#/config/constants.js";
+import { CHECKOUT_STEPS, ENCRYPT_KEY } from "#/config/constants.js";
+import AES from "crypto-js/aes.js";
+import Utf8 from "crypto-js/enc-utf8.js";
+import { stateToString } from "#/utils/adapterUtil/index.js";
 
-export const checkoutState = hookstate({
-  activeStep: CHECKOUT_STEPS?.ADDRESS,
-  paymentMethod: null,
-  date: null,
-  time: null,
-  completeName: '',
-  email: '',
-  phone: '',
-  comments: '',
+
+const getCheckoutFromCrypt = () => {
+  const checkout = window.localStorage.getItem("checkout-state");
+  if (!checkout) return null;
+  var bytes = AES.decrypt(
+    window.localStorage.getItem("checkout-state"),
+    ENCRYPT_KEY
+  );
+  var checkoutText = bytes.toString(Utf8);
+  return JSON.parse(checkoutText);
+};
+export const checkoutState = hookstate(()=>{
+  const checkout = getCheckoutFromCrypt();
+  return {
+    activeStep: checkout?.activeStep || CHECKOUT_STEPS?.ADDRESS,
+    paymentMethod: checkout?.paymentMethod != null ? checkout?.paymentMethod : null,
+    completeName: checkout?.completeName || '',
+    email: checkout?.email || '',
+    phone: checkout?.phone || '',
+    discountCode: checkout?.discountCode || '',
+  }
 });
 
 export const useCheckoutState = () => {
   const state = useHookstate(checkoutState);
+
+  //* Funcion para guardar el estado en el localstorage
+  const addToLocalStorage = () => {
+    const checkout_enc = AES.encrypt(
+      JSON.stringify(state?.value),
+      ENCRYPT_KEY
+    ).toString();
+    window.localStorage.setItem("checkout-state", checkout_enc);
+  };
 
   //* Set active the next step
   const handleNextStep = () => {
@@ -40,27 +64,6 @@ export const useCheckoutState = () => {
     state.activeStep.set(Object?.values(CHECKOUT_STEPS)[previousStepIndex]);
   };
 
-  //* Set the date parsed
-  const setDate = (date) => {
-    state.date.set(date);
-  };
-
-  //* Set the time parsed
-  const setTime = (time) => {
-    state.time.set(time);
-  };
-
-  const isValidGeneralInformation = () => {
-    const completeName = state.completeName.get();
-    const email = state.email.get();
-    const phone = state.phone.get();
-
-    if (!completeName || !email || !phone) {
-      return false;
-    }
-
-    return true;
-  }
 
   return {
     activeStep: state.activeStep.get(),
@@ -69,18 +72,15 @@ export const useCheckoutState = () => {
     handlePreviousStep,
     paymentMethod: state.paymentMethod.get(),
     setPaymentMethod: (method) => state.paymentMethod.set(method),
-    date: state.date.get(),
-    setDate,
-    time: state.time.get(),
-    setTime,
     completeName: state.completeName.get(),
     setCompleteName: (name) => state.completeName.set(name),
     email: state.email.get(),
     setEmail: (email) => state.email.set(email),
     phone: state.phone.get(),
     setPhone: (phone) => state.phone.set(phone),
-    comments: state.comments.get(),
-    setComments: (comments) => state.comments.set(comments),
-    isValidGeneralInformation,
+    discountCode: state.discountCode.get(),
+    setDiscountCode: (code) => state.discountCode.set(code),
+    addToLocalStorage,
+    hash: () => stateToString(state.get()),
   };
 };

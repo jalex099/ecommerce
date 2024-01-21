@@ -18,6 +18,7 @@ import ToasterCustom from "#/components/shared/ToasterCustom.jsx";
 import CartService from "#/services/CartService.js";
 import useCartSyncUtils from "#/components/domain/cart/controllers/useCartSyncUtils.js";
 import { useLocationState } from "#/stores/LocationState.js";
+import { useCheckoutState } from "#/stores/CheckoutState.js";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -31,6 +32,7 @@ const LayoutPage = () => {
   const { isLoading: isLoadingCarts, isError: isErrorCarts } = CartService();
   const { saveCartExisting } = useCartSyncUtils();
   const location = useLocationState();
+  const checkout = useCheckoutState();
 
   useEffect(() => {
     verifyAuth();
@@ -50,6 +52,10 @@ const LayoutPage = () => {
   useEffect(() => {
     location?.addToLocalStorage();
   }, [location?.hash()])
+
+  useEffect(() => {
+    checkout?.addToLocalStorage();
+  }, [checkout?.hash()])
 
   useEffect(() => {
     cart?.setDirty(true);

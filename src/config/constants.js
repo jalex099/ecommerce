@@ -22,6 +22,8 @@ export const IMAGES_TYPES = {
   PRODUCT: "PRD",
 };
 
+export const SUPPORT_EMAIL = "javiermoralesmelara@gmail.com";
+
 export const FADE_ANIMATION = {
   initial: { opacity: 0, scale: 0.85 },
   animate: { opacity: 1, scale: 1 },

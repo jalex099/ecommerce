@@ -16,9 +16,7 @@ export default function useValidateCheckout(){
         isValid = isDeliveryValid && isDateTimeValid && isGeneralFormValid;
         break;
       case CHECKOUT_STEPS?.PAYMENT:
-        console.log("Entro")
         const isPaymentValid = validatePayment();
-        console.log(isPaymentValid)
         isValid = isPaymentValid;
         break;
       default:

@@ -8,9 +8,22 @@ import StepConnector, {
 import { styled } from "@mui/material/styles";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import { motion } from "framer-motion";
+import useValidateCheckout
+  from "#/components/domain/checkout/controllers/useValidateCheckout.js";
+import { addToast } from "#/stores/UIState.js";
 
 export default function StepperIndicator() {
   const checkoutState = useCheckoutState();
+  const { isValidStep } = useValidateCheckout();
+
+  const handleClick = (index) => {
+    if (!isValidStep()){
+      addToast("Debes completar los campos requeridos", "error");
+      return
+    }
+    checkoutState?.setActiveStep(index);
+  }
+
   return (
     <Stepper
       activeStep={checkoutState?.activeStep}
@@ -21,7 +34,7 @@ export default function StepperIndicator() {
         <Step key={value}>
           <StepLabel
             StepIconComponent={QontoStepIcon}
-            onClick={() => checkoutState?.setActiveStep(index)}
+            onClick={() => handleClick(index)}
           ></StepLabel>
         </Step>
       ))}

@@ -5,6 +5,7 @@ import PaymentMethodCard
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import HorizontalScroller from "#/components/shared/HorizontalScroller.jsx";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
+import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 
 const PaymentMethodSelectorContainer = ()=>{
   const checkoutState = useCheckoutState();
@@ -15,6 +16,9 @@ const PaymentMethodSelectorContainer = ()=>{
 
   return (
     <Box className={"w-full flex flex-col gap-4"}>
+      <SemiBold16>
+        M&eacute;todo de pago
+      </SemiBold16>
       <HorizontalScroller separate showScrollbar>
         {
           PAYMENT_METHODS?.map((paymentMethod)=>(
@@ -27,7 +31,7 @@ const PaymentMethodSelectorContainer = ()=>{
           ))
         }
       </HorizontalScroller>
-      <Regular12>
+      <Regular12 className={"opacity-60"}>
         * Por el momento, tu pago se confirmar&aacute; por medio de una llamada
       </Regular12>
     </Box>

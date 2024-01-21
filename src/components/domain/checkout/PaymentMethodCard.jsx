@@ -10,7 +10,7 @@ import BankIcon from "#/components/shared/icons/BankIcon.jsx";
 const PaymentMethodCard = ({ paymentMethod, isSelected, handleChange }) => (
 
   <Box
-    className="flex flex-col items-center gap-2 py-2 px-4 rounded-md w-[140px] h-[180px] cursor-pointer shadow-md"
+    className="flex flex-col items-center justify-around gap-2 py-2 px-4 rounded-md w-[120px] h-[160px] cursor-pointer shadow-md relative"
     sx={{
       color: (theme) =>
         isSelected
@@ -26,17 +26,27 @@ const PaymentMethodCard = ({ paymentMethod, isSelected, handleChange }) => (
     { paymentMethod?.value === 0 && (<CashIcon className={"w-12 "}/>) }
     { paymentMethod?.value === 1 && (<CardIcon className={"w-12 "}/>) }
     { paymentMethod?.value === 2 && (<BankIcon className={"w-12 "}/>) }
-
-    <Regular14 className={"flex-1 text-center"}>{paymentMethod?.label}</Regular14>
+    <Box className={"flex-1 flex justify-center items-center"}>
+        <SemiBold14 className={" text-center"}>{paymentMethod?.label}</SemiBold14>
+    </Box>
     <Radio
       checked={isSelected}
       onChange={()=>handleChange(paymentMethod?.value)}
       value={paymentMethod?.value}
       name="payment-type"
       inputProps={{ "aria-label": "payment-type" }}
+      sx={style?.radio}
       size="small"
     />
   </Box>
 )
+
+const style = {
+  radio: {
+    position: "absolute",
+    top: 0,
+    right: 0
+  }
+}
 
 export default PaymentMethodCard;

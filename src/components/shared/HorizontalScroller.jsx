@@ -4,6 +4,7 @@ const HorizontalScroller = ({
   children,
   separate = false,
   showScrollbar = false,
+  noSpacing = false,
 }) => {
   return (
     <Box
@@ -36,8 +37,8 @@ const HorizontalScroller = ({
             borderRadius: (theme) => theme.shape.borderRadius,
           },
           width: "100%",
-          gap: "16px",
-          padding: separate ? "8px 16px" : "0px 8px",
+          gap: noSpacing ? 0 : "16px",
+          padding: separate ? "8px 16px" : (noSpacing ? 0 : "0px 8px"),
         }}
       >
         {children}

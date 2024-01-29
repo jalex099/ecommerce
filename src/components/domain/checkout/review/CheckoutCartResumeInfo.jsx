@@ -6,20 +6,19 @@ import Divider from "@mui/material/Divider";
 import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 
 const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discount = 0, total = 0 }) => {
-  console.log(products)
   return (
     <Box className={"w-full"}>
 
       <Box className="flex flex-col gap-1">
-        {
-          products?.map((product, index) => (
-            <Box key={index} className="flex flex-row justify-between items-center">
-              <Regular14>{product?.name}</Regular14>
-              <Regular14>{formatCurrency(product?.basePrice + product?.aditionalPrice)}</Regular14>
-            </Box>
-          ))
-        }
-        <Divider sx={{borderStyle:'dashed'}}/>
+        {/*{*/}
+        {/*  products?.map((product, index) => (*/}
+        {/*    <Box key={index} className="flex flex-row justify-between items-center">*/}
+        {/*      <Regular14>{product?.name}</Regular14>*/}
+        {/*      <Regular14>{formatCurrency(product?.basePrice + product?.aditionalPrice)}</Regular14>*/}
+        {/*    </Box>*/}
+        {/*  ))*/}
+        {/*}*/}
+        {/*<Divider sx={{borderStyle:'dashed'}}/>*/}
         {!!discount && discount > 0 && subtotal !== total && (
           <>
             <Box className="flex flex-row justify-between items-center">

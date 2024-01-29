@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
-import ProductsImageView
-  from "#/components/domain/checkout/review/ProductsImageView.jsx";
+import ProductsView
+  from "#/components/domain/checkout/review/ProductsView.jsx";
 import { useMemo } from "react";
 import { useCartState } from "#/stores/cart";
 import useCartUtils from "#/components/domain/cart/controllers/useCartUtils.js";
@@ -9,10 +9,15 @@ import ProductsLabelView
   from "#/components/domain/checkout/review/ProductsLabelView.jsx";
 import CheckoutCartResumeInfo
   from "#/components/domain/checkout/review/CheckoutCartResumeInfo.jsx";
+import OrderInfo from "#/components/domain/checkout/review/OrderInfo.jsx";
+import { useCheckoutState } from "#/stores/CheckoutState.js";
+import { useLocationState } from "#/stores/LocationState.js";
 
 
 const ReviewContainer = () => {
   const cart = useCartState();
+  const checkout = useCheckoutState();
+  const location = useLocationState();
   const { getItemsToShow } = useCartUtils();
 
   const itemsToShow = useMemo(
@@ -22,10 +27,9 @@ const ReviewContainer = () => {
 
   return (
     <Box className={"w-full flex-1 flex flex-col gap-8"}>
-      <Box className={"flex gap-1 flex-col"}>
-        <ProductsImageView products={itemsToShow}/>
-        <ProductsLabelView products={itemsToShow}/>
-      </Box>
+      <ProductsView products={itemsToShow}/>
+      <Divider/>
+      <OrderInfo info={{ ...checkout, ...location }}/>
       <Divider/>
       <CheckoutCartResumeInfo
         numberOfItems={cart?.getItemsCounter()}

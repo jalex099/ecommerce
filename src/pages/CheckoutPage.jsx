@@ -40,6 +40,12 @@ const CheckoutPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    return () => {
+      checkoutState?.resetActiveStep();
+    }
+  }, []);
+
   return (
     <Container sx={style.container}>
       <HelmetMeta page="checkout" />

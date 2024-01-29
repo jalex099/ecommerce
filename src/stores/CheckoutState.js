@@ -18,7 +18,7 @@ const getCheckoutFromCrypt = () => {
 export const checkoutState = hookstate(()=>{
   const checkout = getCheckoutFromCrypt();
   return {
-    activeStep: checkout?.activeStep || CHECKOUT_STEPS?.ADDRESS,
+    activeStep: CHECKOUT_STEPS?.ADDRESS,
     paymentMethod: checkout?.paymentMethod != null ? checkout?.paymentMethod : null,
     completeName: checkout?.completeName || '',
     email: checkout?.email || '',
@@ -64,6 +64,11 @@ export const useCheckoutState = () => {
     state.activeStep.set(Object?.values(CHECKOUT_STEPS)[previousStepIndex]);
   };
 
+  //* Reset the active step
+  const resetActiveStep = () => {
+    state.activeStep.set(CHECKOUT_STEPS?.ADDRESS);
+  };
+
 
   return {
     activeStep: state.activeStep.get(),
@@ -82,5 +87,6 @@ export const useCheckoutState = () => {
     setDiscountCode: (code) => state.discountCode.set(code),
     addToLocalStorage,
     hash: () => stateToString(state.get()),
+    resetActiveStep
   };
 };

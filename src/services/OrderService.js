@@ -33,7 +33,10 @@ const OrderService = ()=>{
       location?.clearState();
       location?.clearDateTime();
       addToast("Tu orden se ha guardado correctamente", "success")
-      navigate(`/confirmacion-de-orden/${data._id}`)
+      if(data?._id)
+        navigate(`/confirmacion-de-orden/${data._id}`, {replace: true})
+      else
+        navigate(`/`, {replace: true})
     },
     onError: (error)=>{
       console.log(error?.response?.data);

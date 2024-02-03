@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { startLoading, stopLoading, addToast } from "#/stores/UIState.js";
 import { useCartState } from "#/stores/cart";
 import { getMessageFromFirebaseAuthError } from "#/utils/firebaseUtils.js";
+import { useLocationState } from "#/stores/LocationState.js";
+import { useCheckoutState } from "#/stores/CheckoutState.js";
 
 const AuthService = () => {
   const auth = getAuth();
@@ -24,6 +26,8 @@ const AuthService = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const cart = useCartState();
+  const checkout = useCheckoutState();
+  const location = useLocationState();
   const setAuthentication = (idToken, displayName, email, picture = null) => {
     setKey("token", idToken);
     // If the displayName is null, we set the email as displayName without the domain
@@ -113,6 +117,10 @@ const AuthService = () => {
         queryClient.resetQueries(/^auth_/);
         // Remove the cart
         cart?.clean();
+        // Clear checkout and location time
+        checkout?.clearState();
+        location?.clearState();
+        location?.clearDateTime();
         // addToast("Nos vemos pronto", "success");
       })
       .catch((error) => {

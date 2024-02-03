@@ -21,6 +21,8 @@ import { useLocationState } from "#/stores/LocationState.js";
 import useValidateCheckout
   from "#/components/domain/checkout/controllers/useValidateCheckout.js";
 import ReviewContainer from "#/components/domain/checkout/ReviewContainer.jsx";
+import useOrderParser
+  from "#/components/domain/checkout/controllers/useOrderParser.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -29,6 +31,7 @@ const CheckoutPage = () => {
   const { isValidStep} = useValidateCheckout()
   const cart = useCartState();
   const navigate = useNavigate();
+  const { parseOrder } = useOrderParser();
 
   useEffect(() => {
     ui?.setTitle("Pago");
@@ -45,6 +48,10 @@ const CheckoutPage = () => {
       checkoutState?.resetActiveStep();
     }
   }, []);
+
+  const handleConfirmOrder = () => {
+    console.log(parseOrder())
+  }
 
   return (
     <Container sx={style.container}>
@@ -72,7 +79,7 @@ const CheckoutPage = () => {
           color="primary"
           fullWidth
           disabled={!isValidStep()}
-          onClick={checkoutState?.handleNextStep}
+          onClick={ checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW ? handleConfirmOrder : checkoutState?.handleNextStep}
         >
           {
             checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW ? 'Confirmar y pagar' : 'Continuar'

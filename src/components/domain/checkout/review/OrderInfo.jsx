@@ -6,7 +6,7 @@ import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 import { format } from "date-fns";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 
-const OrderInfo = ({info}) => {console.log(info)
+const OrderInfo = ({info}) => {
   return (
     <Box className={"w-full flex flex-col gap-4"}>
       <SemiBold16>

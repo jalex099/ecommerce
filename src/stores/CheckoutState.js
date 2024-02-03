@@ -69,6 +69,15 @@ export const useCheckoutState = () => {
     state.activeStep.set(CHECKOUT_STEPS?.ADDRESS);
   };
 
+  //* Limpia el estado de checkout
+  const clearState = () => {
+    state?.paymentMethod.set(null);
+    state?.completeName.set('');
+    state?.email.set('');
+    state?.phone.set('');
+    state?.discountCode.set('');
+  }
+
 
   return {
     activeStep: state.activeStep.get(),
@@ -87,6 +96,7 @@ export const useCheckoutState = () => {
     setDiscountCode: (code) => state.discountCode.set(code),
     addToLocalStorage,
     hash: () => stateToString(state.get()),
-    resetActiveStep
+    resetActiveStep,
+    clearState
   };
 };

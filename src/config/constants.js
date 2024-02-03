@@ -78,9 +78,9 @@ export const DELIVERY_METHODS = [
 ];
 
 export const PAYMENT_METHODS = [
-  { label: "Efectivo", value: 0 },
-  // { label: "Tarjeta", value: 1 },
-  { label: "Transferencia Bancaria", value: 2 }
+  { label: "Efectivo", value: 0, code: "EFE" },
+  // { label: "Tarjeta", value: 1, code: "TAR" },
+  { label: "Transferencia Bancaria", value: 2, code: "TRA"}
 ]
 
 export const PAGES = {

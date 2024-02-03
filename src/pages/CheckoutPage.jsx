@@ -48,11 +48,7 @@ const CheckoutPage = () => {
 
   const handleConfirmOrder = () => {
     const order = parseOrder();
-    saveOrder?.mutate(order, {
-      onSuccess: () => {
-        navigate("/confirmacion-de-orden");
-      },
-    });
+    saveOrder?.mutate(order);
   };
 
   return (

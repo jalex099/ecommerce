@@ -4,6 +4,7 @@ import { useLocationState } from "#/stores/LocationState.js";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import useCartState from "#/stores/cart.js";
 import { addToast } from "#/stores/UIState.js";
+import { useNavigate } from "react-router-dom";
 
 const OrderService = ()=>{
   const {
@@ -12,7 +13,8 @@ const OrderService = ()=>{
   } = OrderRepository();
   const cart = useCartState();
   const checkout = useCheckoutState();
-  const location = useLocationState()
+  const location = useLocationState();
+  const navigate = useNavigate();
 
  const getOrder = useMutation({
     mutationFn: _getOrder,
@@ -31,6 +33,7 @@ const OrderService = ()=>{
       location?.clearState();
       location?.clearDateTime();
       addToast("Tu orden se ha guardado correctamente", "success")
+      navigate(`/confirmacion-de-orden/${data._id}`)
     },
     onError: (error)=>{
       console.log(error?.response?.data);

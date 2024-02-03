@@ -1,6 +1,7 @@
 import { useCartState } from "#/stores/cart";
 import DataService from "#/services/DataService";
 import serializeState from "#/utils/serializeState";
+import { isPast, parseISO } from "date-fns";
 export default function useCartUtils() {
   const cart = useCartState();
   const { menu, isLoading, offers } = DataService();
@@ -99,7 +100,10 @@ export default function useCartUtils() {
       // Verifica si, la cantidad de opciones mapeadas es igual a la cantidad de opciones del producto
       if (options?.length !== product?.options?.length) return acc;
       // Verifica si hay ofertas para ese producto
-      const offer = offers?.find((offer) => offer?.product === product?._id);
+      const offer = offers?.find(
+        (offer) =>
+          offer?.product === product?._id && !isPast(parseISO(offer?.to))
+      );
       // Si hay oferta, se calcula el precio con la oferta
       let discount = 0;
       if (offer) {

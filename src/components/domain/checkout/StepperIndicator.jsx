@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import useValidateCheckout
   from "#/components/domain/checkout/controllers/useValidateCheckout.js";
 import { addToast } from "#/stores/UIState.js";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 
 export default function StepperIndicator() {
   const checkoutState = useCheckoutState();
@@ -34,8 +35,10 @@ export default function StepperIndicator() {
         <Step key={value}>
           <StepLabel
             StepIconComponent={QontoStepIcon}
+            className={"flex-col"}
             onClick={() => handleClick(index)}
-          ></StepLabel>
+          >
+          </StepLabel>
         </Step>
       ))}
     </Stepper>
@@ -117,7 +120,7 @@ function QontoStepIcon(props) {
           animate={{ scale: 1 }}
         />
       ) : (
-        <div className="QontoStepIcon-circle">
+        <div className="QontoStepIcon-circle ">
           <span>
             <span />
           </span>

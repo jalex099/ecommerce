@@ -95,6 +95,10 @@ const DataService = () => {
     return data?.data?.meetups || [];
   }, [data]);
 
+  const parameters = useMemo(() => {
+    return data?.data?.parameters || [];
+  }, [data]);
+
   return {
     categories,
     menu,
@@ -105,6 +109,7 @@ const DataService = () => {
     offers,
     shops,
     meetups,
+    parameters,
     isLoading,
     isSuccess,
     isError,

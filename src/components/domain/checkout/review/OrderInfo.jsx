@@ -10,7 +10,7 @@ const OrderInfo = ({info}) => {
   return (
     <Box className={"w-full flex flex-col gap-4"}>
       <SemiBold16>
-        Informaci&oacute;n del pedido
+        Informaci&oacute;n general
       </SemiBold16>
       <Box className={"flex flex-row gap-2 justify-between"}>
         <Box>
@@ -56,6 +56,19 @@ const OrderInfo = ({info}) => {
           { info?.formatedDateTime()}
         </Regular12>
       </Box>
+      {
+        info?.comments && (
+          <Box>
+            <SemiBold14>
+              Comentarios adicionales
+            </SemiBold14>
+            <Regular14>
+              {info?.comments}
+            </Regular14>
+          </Box>
+        )
+      }
+
     </Box>
   )
 }

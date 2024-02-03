@@ -12,6 +12,9 @@ import CheckoutCartResumeInfo
 import OrderInfo from "#/components/domain/checkout/review/OrderInfo.jsx";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import { useLocationState } from "#/stores/LocationState.js";
+import SemiBold18 from "#/components/shared/fonts/SemiBold18.jsx";
+import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
+import PaymentInfo from "#/components/domain/checkout/review/PaymentInfo.jsx";
 
 
 const ReviewContainer = () => {
@@ -27,9 +30,14 @@ const ReviewContainer = () => {
 
   return (
     <Box className={"w-full flex-1 flex flex-col gap-8"}>
+      <SemiBold16>
+        Confirmaci&oacute;n de pedido
+      </SemiBold16>
       <ProductsView products={itemsToShow}/>
       <Divider/>
       <OrderInfo info={{ ...checkout, ...location }}/>
+      <Divider/>
+      <PaymentInfo paymentMethod={checkout?.paymentMethod}/>
       <Divider/>
       <CheckoutCartResumeInfo
         numberOfItems={cart?.getItemsCounter()}

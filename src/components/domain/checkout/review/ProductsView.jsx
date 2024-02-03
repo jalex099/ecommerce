@@ -18,9 +18,6 @@ const ProductsView = ({ products }) => {
   const {getDetails } = useCartUtils();
   return (
     <Box className={"w-full flex flex-col gap-4"}>
-      <SemiBold16>
-        Lista de productos
-      </SemiBold16>
       <Box className={"w-full flex justify-center flex-col gap-2"}>
         {
           products.map((prd, index) => (

@@ -278,6 +278,18 @@ const components = {
         },
       },
     },
+  },
+  MuiStep: {
+    styleOverrides: {
+      root: {
+        padding: "0px",
+        "& .MuiStepLabel-iconContainer": {
+          padding: "0px",
+
+        }
+      },
+    },
+
   }
 };
 

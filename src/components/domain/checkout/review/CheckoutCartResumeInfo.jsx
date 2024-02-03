@@ -4,11 +4,15 @@ import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 import Bold18 from "#/components/shared/fonts/Bold18.jsx";
 import Divider from "@mui/material/Divider";
 import Regular14 from "#/components/shared/fonts/Regular14.jsx";
+import Bold16 from "#/components/shared/fonts/Bold16.jsx";
+import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 
 const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discount = 0, total = 0 }) => {
   return (
-    <Box className={"w-full"}>
-
+    <Box className={"w-full  flex flex-col gap-4"}>
+      <SemiBold16>
+        Detalle de pago
+      </SemiBold16>
       <Box className="flex flex-col gap-1">
         {/*{*/}
         {/*  products?.map((product, index) => (*/}
@@ -22,8 +26,8 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discoun
         {!!discount && discount > 0 && subtotal !== total && (
           <>
             <Box className="flex flex-row justify-between items-center">
-              <Regular16>Subtotal</Regular16>
-              <Regular16>{formatCurrency(subtotal)}</Regular16>
+              <Regular14>Subtotal</Regular14>
+              <Regular14>{formatCurrency(subtotal)}</Regular14>
             </Box>
             <Box
               className="flex flex-row justify-between items-center"
@@ -31,15 +35,15 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discoun
                 color: (theme) => theme.palette.secondary.main,
               }}
             >
-              <Regular16>Ahorro</Regular16>
-              <Regular16>- {formatCurrency(discount)}</Regular16>
+              <Regular14>Ahorro</Regular14>
+              <Regular14>- {formatCurrency(discount)}</Regular14>
             </Box>
             <Divider sx={{borderStyle:'dashed'}}/>
           </>
         )}
         <Box className="flex flex-row justify-between items-center">
-          <Bold18>Total</Bold18>
-          <Bold18>{formatCurrency(total)}</Bold18>
+          <Bold16>Total a pagar</Bold16>
+          <Bold16>{formatCurrency(total)}</Bold16>
         </Box>
       </Box>
     </Box>

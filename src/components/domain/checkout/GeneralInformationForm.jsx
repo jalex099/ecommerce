@@ -5,6 +5,7 @@ import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState.js";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
+import InputMask from "react-input-mask";
 
 const GeneralInformationForm = ()=> {
   const auth = useAuthState();
@@ -62,18 +63,34 @@ const GeneralInformationForm = ()=> {
           value={checkoutState?.email || ''}
           onChange={handleChangeEmail}
         />
-        <TextField
-          label="Teléfono"
-          type={"number"}
-          name="phone"
-          variant="standard"
-          autoComplete="phone"
-          // InputLabelProps={{ shrink: true }}
-          sx={{ width: "100%" }}
-          required
-          value={checkoutState?.phone || ''}
-          onChange={handleChangePhone}
-        />
+        {/*<TextField*/}
+        {/*  label="Teléfono"*/}
+        {/*  // type={"number"}*/}
+        {/*  name="phone"*/}
+        {/*  variant="standard"*/}
+        {/*  autoComplete="phone"*/}
+        {/*  // InputLabelProps={{ shrink: true }}*/}
+        {/*  sx={{ width: "100%" }}*/}
+        {/*  required*/}
+        {/*  value={checkoutState?.phone || ''}*/}
+        {/*  onChange={handleChangePhone}*/}
+        {/*/>*/}
+       <Box className={"flex flex-col gap-0"}>
+         <InputMask
+           mask="(999) 9999-9999"
+           value={checkoutState?.phone || ''}
+           onChange={handleChangePhone}
+           maskChar=" "
+         >
+           {() => <TextField
+             label="Teléfono"
+             name="phone"
+             variant="standard" sx={{ width: "100%" }}
+             required
+             autoComplete="phone"/>}
+         </InputMask>
+         <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Formato requerido: (XXX) XXXX-XXXX</Regular12>
+       </Box>
         <TextField
           label="Instrucciones especiales"
           name="special_instructions"

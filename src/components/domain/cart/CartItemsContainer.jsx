@@ -19,6 +19,7 @@ function CartItemsContainer({ products, getDetails }) {
                 index={index}
                 _id={product?._id}
                 name={product?.name}
+                nonOfferPrice={product?.nonOfferPrice}
                 basePrice={product?.basePrice}
                 quantity={product?.quantity}
                 aditionalPrice={product?.aditionalPrice}

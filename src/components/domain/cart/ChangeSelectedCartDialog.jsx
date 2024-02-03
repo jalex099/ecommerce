@@ -12,14 +12,17 @@ import CloseIcon from "#/components/shared/icons/CloseIcon";
 import Skeleton from "@mui/material/Skeleton";
 import Button from "@mui/material/Button";
 import CartSavedSkeletonContainer from "#/components/domain/cart/CartSavedSkeletonContainer";
+import { useCartState } from "#/stores/cart";
 
 const ChangeSelectedCartDialog = ({ isOpen, handleClose }) => {
   const { carts, refetch, isError, isLoading, isRefetching, isSuccess } =
     CartService();
+  const cart = useCartState();
 
   const { fillFromApi } = useCartUtils();
-  const handleChange = (cart) => {
-    fillFromApi(cart);
+  const handleChange = (cartSelection) => {
+    if(cartSelection?._id === cart?.getCartId()) return;
+    fillFromApi(cartSelection);
   };
 
   return (
@@ -66,10 +69,13 @@ const ChangeSelectedCartDialog = ({ isOpen, handleClose }) => {
                 return (
                   <Box
                     key={element._id}
-                    className="flex flex-row justify-between items-center w-full px-4 py-2 rounded-md "
+                    className="flex flex-row justify-between items-center w-full px-4 py-2 rounded-md"
+                    sx={{
+                      color: theme => element._id === cart?.getCartId() && theme?.palette?.neutral40?.main
+                    }}
                     onClick={() => handleChange(element)}
                   >
-                    <Regular14>{element?.name}</Regular14>
+                    <Regular14>{element?.name} {element._id === cart?.getCartId() && '(Seleccionado)'}</Regular14>
                   </Box>
                 );
               })}

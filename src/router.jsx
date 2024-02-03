@@ -88,6 +88,12 @@ const DateAndTimePage = () => (
   </DynamicImport>
 );
 
+const OrderConfirmationPage = () => (
+  <DynamicImport load={() => import("#/pages/OrderConfirmationPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -132,6 +138,11 @@ const RoutesApp = () => {
         <Route path="/carrito" element={<CartPage />} />
         {/* CHECKOUT */}
         <Route path="/pago" element={<CheckoutPage />} />
+        {/* ORDER CONFIRMATION */}
+        <Route
+          path="/confirmacion-de-orden/:id"
+          element={<OrderConfirmationPage />}
+        />
       </Route>
     </Routes>
   );

@@ -51,6 +51,7 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/pago",
   "/metodo-de-entrega",
   "/fecha-y-hora",
+  "/confirmacion-de-orden",
 ];
 
 export const CHECKOUT_STEPS = {
@@ -78,10 +79,10 @@ export const DELIVERY_METHODS = [
 ];
 
 export const PAYMENT_METHODS = [
-  { label: "Efectivo", value: 0, code: "EFE" },
-  // { label: "Tarjeta", value: 1, code: "TAR" },
-  { label: "Transferencia Bancaria", value: 2, code: "TRA"}
-]
+  { label: "Efectivo", value: 0, code: "CASH" },
+  // { label: "Tarjeta", value: 1, code: "CARD" },
+  { label: "Transferencia Bancaria", value: 2, code: "TRANSFER" },
+];
 
 export const PAGES = {
   feed: {
@@ -115,6 +116,10 @@ export const PAGES = {
   dateAndTime: {
     title: "Fecha y Hora",
     desc: `Pagina de fecha y hora en ${COMPANY}`,
+  },
+  orderConfirmation: {
+    title: "Confirmación de Orden",
+    desc: `Pagina de confirmación de orden en ${COMPANY}`,
   },
   cart: {
     title: "Carrito",

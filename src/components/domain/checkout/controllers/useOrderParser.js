@@ -17,31 +17,58 @@ export default function useOrderParser() {
     const userGeneralData = {
       email: checkout?.email,
       name: checkout?.completeName,
-    }
+      phone: checkout?.phone,
+    };
     //* Datos de la dirección de entrega
     const deliveryData = {
-      deliveryMethod: location?.delivery ? "DEL" : location?.shop ? "SHP" : location?.meetup ? "MTP" : null,
+      deliveryMethod: location?.delivery
+        ? "DELIVERY"
+        : location?.shop
+        ? "PICKUP"
+        : location?.meetup
+        ? "MEETUP"
+        : null,
       latitude: location?.delivery?.latitude || null,
       longitude: location?.delivery?.longitude || null,
-      address: location?.delivery && location?.delivery?.street + " #" + location?.delivery?.houseNumber + ", " + location?.delivery?.reference,
-      store: location?.shop?._id || null,
+      address:
+        location?.delivery &&
+        location?.delivery?.street +
+          " #" +
+          location?.delivery?.houseNumber +
+          ", " +
+          location?.delivery?.reference,
+      shop: location?.shop?._id || null,
       meetup: location?.meetup?._id || null,
-    }
+    };
+
+    //* Datos de horario de entrega
+    const deliverySchedule = {
+      deliveryDate: location?.dateTime,
+    };
 
     //* Datos de pago
     const paymentData = {
-      paymentMethod: PAYMENT_METHODS?.find((method) => method?.value === checkout?.paymentMethod)?.code,
-    }
+      paymentMethod: PAYMENT_METHODS?.find(
+        (method) => method?.value === checkout?.paymentMethod
+      )?.code,
+    };
+
+    //* Comentarios extras de la orden
+    const extraComments = {
+      comments: checkout?.comments || null,
+    };
 
     return {
       menu,
       ...userGeneralData,
       ...deliveryData,
-      ...paymentData
-    }
-  }
+      ...deliverySchedule,
+      ...paymentData,
+      ...extraComments,
+    };
+  };
 
   return {
-    parseOrder
-  }
+    parseOrder,
+  };
 }

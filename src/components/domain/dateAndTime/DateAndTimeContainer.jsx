@@ -24,12 +24,17 @@ const DateAndTimeContainer = () => {
     minDate.set(date);
     minTime.set(parse(MIN_TIME_HOUR, "HH:mm", new Date()), "HH:mm");
     maxTime.set(parse(MAX_TIME_HOUR, "HH:mm", new Date()), "HH:mm");
-  }, []);
 
-  useEffect(() => {
+    // Si la fecha de entrega ya está establecida, la seteamos
     if (location?.dateTime === null) return;
+    // Valida que la fecha de entrega no sea menor a la fecha actual minima
+    if (location?.dateTime < minDate?.value) {
+      tempDate.set(minDate?.value);
+      return;
+    }
     tempDate.set(location?.dateTime);
   }, []);
+
 
   const handleChange = (date) => {
     tempDate.set( date );

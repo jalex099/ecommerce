@@ -2,6 +2,12 @@ import API from "#/repositories/API.js";
 
 const OrderRepository = () => {
 
+  const getOrdersPending = async () => {
+    return await API.get("/orders/pending", {
+      await: true,
+    });
+  }
+
   const getOrder = async (id) => {
     return await API.get(`/orders/${id}`, {
       await: true,
@@ -16,6 +22,7 @@ const OrderRepository = () => {
 
   return {
     getOrder,
+    getOrdersPending,
     saveOrder,
   }
 }

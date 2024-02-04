@@ -31,6 +31,12 @@ export const FADE_ANIMATION = {
   exit: { opacity: 0, scale: 0.85 },
 };
 
+export const SLIDE_UP_ANIMATION = {
+  initial: { y: 10, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  exit: { y: 10, opacity: 0 },
+};
+
 export const CURRENCY = "USD";
 export const LANGUAGE = "es-SV";
 

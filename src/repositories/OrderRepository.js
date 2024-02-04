@@ -3,8 +3,9 @@ import API from "#/repositories/API.js";
 const OrderRepository = () => {
 
   const getOrdersPending = async () => {
-    return await API.get("/orders/pending", {
+    return await API.get("/orders/pendings", {
       await: true,
+      secure: true
     });
   }
 
@@ -17,6 +18,7 @@ const OrderRepository = () => {
   const saveOrder = async (data) => {
     return await API.post("/orders", data, {
       await: true,
+      secure: true,
     });
   }
 

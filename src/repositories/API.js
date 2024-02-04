@@ -12,7 +12,9 @@ const API = axios.create({
 API.interceptors.request.use((config) => {
   if (config?.secure) {
     const token = findKey("token");
-    config.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
 
   //* If config?.await is true, then the request will be awaited

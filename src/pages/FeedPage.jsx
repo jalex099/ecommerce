@@ -8,10 +8,13 @@ import Box from "@mui/material/Box";
 import OffersContainer from "#/components/domain/feed/OffersContainer.jsx";
 import { useCartState } from "#/stores/cart";
 import CartAdvise from "#/components/domain/feed/CartAdvise.jsx";
+import OrderService from "#/services/OrderService.js";
+import PendingOrdersAdvise from "#/components/domain/feed/PendingOrdersAdvise.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
   const cart = useCartState();
+  const { pendingOrdersLength } = OrderService();
 
   useEffect(() => {
     ui?.setTitle("Feed");
@@ -21,6 +24,9 @@ const FeedPage = () => {
       <HelmetMeta page="feed" />
       <Box className="w-full flex flex-col gap-6">
         <SliderComponent />
+        {
+          pendingOrdersLength > 0 && <PendingOrdersAdvise />
+        }
         {
           cart?.getItemsCounter() > 0 && <CartAdvise />
         }

@@ -21,7 +21,7 @@ const OrderService = ()=>{
   const queryClient = useQueryClient();
 
  const getOrder = useMutation({
-   mutationKey: "specific-order",
+   mutationKey: ["specific-order"],
    cacheTime: 1000 * 60 * 10,
     mutationFn: _getOrder,
     onError: (error)=>{
@@ -31,7 +31,7 @@ const OrderService = ()=>{
  })
 
   const {data: pendingOrders, isLoading: isLoadingPendingOrders} = useQuery({
-    queryKey: "orders-pending",
+    queryKey: ["orders-pending"],
     queryFn: _getOrdersPending,
     staleTime: Infinity,
     enabled: auth?.isAuthenticated && auth?.isVerified,
@@ -67,6 +67,7 @@ const OrderService = ()=>{
     getOrder,
     saveOrder,
     pendingOrders,
+    pendingOrdersLength: pendingOrders?.data?.length || 0,
     isLoadingPendingOrders
   }
 }

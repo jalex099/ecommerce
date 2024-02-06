@@ -1,5 +1,6 @@
 // export const API_URL = "http://localhost:3001/apitest";
-export const API_URL = "https://ws-ecommerce.onrender.com/apitest";
+// export const API_URL = "https://ws-ecommerce.onrender.com/apitest";
+export const API_URL = "http://3.19.225.182:3000/apitest";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";
@@ -66,28 +67,24 @@ export const CHECKOUT_STEPS = {
   REVIEW: 2,
 };
 
-export const DELIVERY_METHODS = [
-  {
-    label: "Delivery",
-    value: 0,
-    description: "Recibe tu pedido en la puerta de tu casa",
-  },
-  {
-    label: "Pickup",
-    value: 1,
-    description: "Recoge tu pedido en la tienda",
-  },
-  {
-    label: "Meetup",
-    value: 2,
-    description: "Encuentro en un lugar público",
-  },
-];
+export const DELIVERY_METHODS = {
+  PENDING: 0,
+  PROCESSING: 1,
+  READY: 2,
+  FIN: 3
+}
 
 export const PAYMENT_METHODS = [
   { label: "Efectivo", value: 0, code: "CASH" },
   // { label: "Tarjeta", value: 1, code: "CARD" },
   { label: "Transferencia Bancaria", value: 2, code: "TRANSFER" },
+];
+
+export const ORDER_STEPS = [
+  { label: "Pendiente", value: "PENDING", msg: "Tu pedido está pendiente de aprobación" },
+  { label: "En Proceso", value: "PRO", msg: "Tu pedido está siendo elaborado" },
+  { label: "En Camino", value: "ONT", msg: "Tu pedido está en camino" },
+  { label: "Finalizada", value: "FIN", msg: "Tu pedido ha sido entregado" },
 ];
 
 export const PAGES = {

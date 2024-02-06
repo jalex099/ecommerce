@@ -53,6 +53,9 @@ const PaymentMethodSelectorContainer = ()=>{
                 <BankAccount  key={parameter?._id} bankAccount={parameter}/>
               ))
             }
+            <Regular12 styles={{color: theme => theme?.palette?.opacity40?.main}}>
+              Mantenga presionado el n&uacute;mero de cuenta para copiarlo
+            </Regular12>
           </motion.div>
         )
       }

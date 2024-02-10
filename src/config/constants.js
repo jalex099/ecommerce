@@ -1,6 +1,6 @@
 // export const API_URL = "http://localhost:3001/apitest";
 // export const API_URL = "https://ws-ecommerce.onrender.com/apitest";
-export const API_URL = "http://3.19.225.182:3000/apitest";
+export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";

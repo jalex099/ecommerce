@@ -11,13 +11,19 @@ import Picture from "#/components/shared/Picture.jsx";
 import { useMemo } from "react";
 import ImageService from "#/services/ImageService.js";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18.jsx";
+import { useNavigate } from "react-router-dom";
 
 const OrderCard = ({ order, isLastItem = false }) => {
   const { findImage } = ImageService();
+  const navigate = useNavigate();
 
   const productsIdsForImages = useMemo(()=>{
     return order?.menu?.map((prd) => prd?.product?._id)
   }, [order?.menu])
+
+  const handleClick = ()=>{
+    navigate(`/rastreo-de-orden/${order?._id}`)
+  }
 
   return (
     <>
@@ -25,6 +31,7 @@ const OrderCard = ({ order, isLastItem = false }) => {
         layout
         variants={item}
         className="w-full flex flex-col gap-4 justify-start items-start p-4 "
+        onClick={handleClick}
       >
        <Box className={"w-full flex flex-row gap-2"}>
          <Picture
@@ -36,7 +43,7 @@ const OrderCard = ({ order, isLastItem = false }) => {
          />
          <Box className={"flex-grow text-right"}>
            <SemiBold18>
-             Hace { formatDistance(parse(order?.date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", new Date()), new Date(), {locale: es})}
+             { formatDistance(parse(order?.date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", new Date()), new Date(), {locale: es})} atr&aacute;s
            </SemiBold18>
            <Regular12>
              {format(new Date(order?.date), "dd 'de' MMMM", {locale: es})}

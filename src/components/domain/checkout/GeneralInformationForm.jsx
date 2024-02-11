@@ -92,7 +92,7 @@ const GeneralInformationForm = ()=> {
          <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Formato requerido: (XXX) XXXX-XXXX</Regular12>
        </Box>
         <TextField
-          label="Instrucciones especiales"
+          label="Instrucciones especiales (opcional)"
           name="special_instructions"
           variant="standard"
           autoComplete="special_instructions"

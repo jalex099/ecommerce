@@ -88,8 +88,8 @@ const DateAndTimePage = () => (
   </DynamicImport>
 );
 
-const OrderConfirmationPage = () => (
-  <DynamicImport load={() => import("#/pages/OrderConfirmationPage.jsx")}>
+const OrderTrackingPage = () => (
+  <DynamicImport load={() => import("#/pages/OrderTrackingPage.jsx")}>
     {(Component) => (Component === null ? <></> : <Component />)}
   </DynamicImport>
 );
@@ -140,8 +140,8 @@ const RoutesApp = () => {
         <Route path="/pago" element={<CheckoutPage />} />
         {/* ORDER CONFIRMATION */}
         <Route
-          path="/confirmacion-de-orden/:id"
-          element={<OrderConfirmationPage />}
+          path="/rastreo-de-orden/:id"
+          element={<OrderTrackingPage />}
         />
       </Route>
     </Routes>

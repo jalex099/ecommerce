@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 import OrderStepper
-  from "#/components/domain/orderConfirmation/OrderStepper.jsx";
+  from "#/components/domain/orderTracking/OrderStepper.jsx";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18.jsx";
 import { ORDER_STEPS } from "#/config/constants.js";
 import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import { format } from "date-fns";
 import OrderGeneralDetails
-  from "#/components/domain/orderConfirmation/OrderGeneralDetails.jsx";
+  from "#/components/domain/orderTracking/OrderGeneralDetails.jsx";
 import Divider from "@mui/material/Divider";
 import { useMemo } from "react";
 

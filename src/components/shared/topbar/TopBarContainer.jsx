@@ -9,6 +9,8 @@ import { useLocation } from "react-router-dom";
 import ProfileTopBar from "#/components/shared/topbar/ProfileTopBar.jsx";
 import CartTopBar from "#/components/shared/topbar/CartTopBar.jsx";
 import CheckoutTopBar from "#/components/shared/topbar/CheckoutTopBar.jsx";
+import OrdersAndMessageTopBar
+  from "#/components/shared/topbar/OrdersAndMessageTopBar.jsx";
 
 function TopBarContainer(props) {
   const ui = useUIState();
@@ -28,7 +30,10 @@ function TopBarContainer(props) {
             <ProfileTopBar />
           ) : pathname === "/pago" ? (
             <CheckoutTopBar />
-          ) : (
+          ) : pathname === "/perfil/ordenes-y-mensajes" ? (
+            <OrdersAndMessageTopBar />
+          ) :
+          (
             <DefaultTopBar title={ui?.title} />
           )}
         </AppBar>

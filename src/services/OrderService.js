@@ -53,7 +53,7 @@ const OrderService = ()=>{
       queryClient.invalidateQueries(["orders-pending", "specific-order"], {});
       addToast("Tu orden se ha guardado correctamente", "success")
       if(data?._id)
-        navigate(`/confirmacion-de-orden/${data._id}`, {replace: true})
+        navigate(`/rastreo-de-orden/${data._id}`, {replace: true})
       else
         navigate(`/`, {replace: true})
     },
@@ -66,7 +66,7 @@ const OrderService = ()=>{
   return {
     getOrder,
     saveOrder,
-    pendingOrders,
+    pendingOrders: pendingOrders?.data || [],
     pendingOrdersLength: pendingOrders?.data?.length || 0,
     isLoadingPendingOrders
   }

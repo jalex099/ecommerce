@@ -58,7 +58,8 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/pago",
   "/metodo-de-entrega",
   "/fecha-y-hora",
-  "/confirmacion-de-orden",
+  "/rastreo-de-orden",
+  "/perfil/ordenes-y-mensajes"
 ];
 
 export const CHECKOUT_STEPS = {

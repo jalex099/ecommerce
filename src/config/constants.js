@@ -1,6 +1,6 @@
-// export const API_URL = "http://localhost:3001/apitest";
+export const API_URL = "http://localhost:3001/apitest";
 // export const API_URL = "https://ws-ecommerce.onrender.com/apitest";
-export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+// export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";
@@ -67,12 +67,12 @@ export const CHECKOUT_STEPS = {
   REVIEW: 2,
 };
 
-export const DELIVERY_METHODS = {
-  PENDING: 0,
-  PROCESSING: 1,
-  READY: 2,
-  FIN: 3
-}
+
+export const DELIVERY_METHODS = [
+  { label: "Recoger en tienda", value: "PICKUP" },
+  { label: "Entrega a domicilio", value: "DELIVERY" },
+  { label: "Punto de encuentro", value: "MEETUP" },
+]
 
 export const PAYMENT_METHODS = [
   { label: "Efectivo", value: 0, code: "CASH" },

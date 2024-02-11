@@ -14,7 +14,7 @@ import { addToast } from "#/stores/UIState.js";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import { useMemo } from "react";
 
-export default function StepperIndicator({steps, activeStep, handleClick}) {
+export default function StepperIndicator({steps, activeStep, handleClick = null}) {
 
   return (
     <Stepper
@@ -27,7 +27,7 @@ export default function StepperIndicator({steps, activeStep, handleClick}) {
           <StepLabel
             StepIconComponent={QontoStepIcon}
             className={"flex-col"}
-            onClick={() => handleClick(index)}
+            onClick={handleClick ? () => handleClick(index) : null}
           >
           </StepLabel>
         </Step>

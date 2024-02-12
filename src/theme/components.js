@@ -104,6 +104,31 @@ const components = {
       },
     },
   },
+  MuiFilledInput: {
+    styleOverrides: {
+      root: {
+        backgroundColor: "#F3F3F3", // Cambia el color de fondo
+        borderRadius: "16px", // Cambia el radio del borde
+        border: "none", // Elimina el borde
+        fontSize: "14px", // Cambia el tamaño de la fuente
+        "input": {
+          padding: "8px 12px",
+        }
+        // Agrega aquí los estilos adicionales que desees
+      },
+      underline: {
+        "&:before": {
+          borderBottom: "none !important", // Elimina la línea inferior en el estado normal
+        },
+        "&:after": {
+          borderBottom: "none", // Elimina la línea inferior en el estado de foco
+        },
+        "&:hover:before": {
+          borderBottom: "none", // Elimina la línea inferior en el estado de hover
+        },
+      },
+    },
+  },
   MuiInputBase: {
     styleOverrides: {
       root: {

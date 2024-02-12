@@ -35,11 +35,11 @@ const OrderCard = ({ order, isLastItem = false }) => {
       <motion.li
         layout
         variants={item}
-        className="w-full flex flex-col gap-4 justify-start items-start p-4 relative rounded-2xl overflow-hidden"
+        className="w-full relative rounded-2xl overflow-hidden"
         onClick={handleClick}
       >
-        <TouchRippleEffect className="w-full">
-       <Box className={"w-full flex flex-row gap-2 h-[100px] max-w-full"}>
+        <TouchRippleEffect className="w-full flex flex-col gap-4 justify-start items-start p-4 ">
+       <Box className={"w-full flex flex-row gap-2 h-[100px] "}>
          <Picture
            webp={findImage(productsIdsForImages[0], "PRD", "webp")}
            jpg={findImage(productsIdsForImages[0], "PRD", "jpg")}
@@ -49,7 +49,7 @@ const OrderCard = ({ order, isLastItem = false }) => {
            // onClick={() => redirectToProduct(productsIdsForImages[0])}
          />
          <Box className={"flex-grow text-right flex flex-col items-end justify-start gap-1 max-w-[60%]"}>
-           <SemiBold18 className={"capitalize text-ellipsis overflow-hidden whitespace-nowrap overflow-ellipsis"}>
+           <SemiBold18 className={"capitalize"}>
              { formatDistance(new Date(order?.date), new Date(), {locale: es})} atr&aacute;s
            </SemiBold18>
            {/*<Regular12>*/}

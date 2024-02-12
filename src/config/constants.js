@@ -82,9 +82,9 @@ export const PAYMENT_METHODS = [
 
 export const ORDER_STEPS = [
   { label: "Pendiente", value: "PENDING", msg: "Tu pedido está pendiente de aprobación" },
-  { label: "En Proceso", value: "PRO", msg: "Tu pedido está siendo elaborado" },
-  { label: "En Camino", value: "ONT", msg: "Tu pedido está en camino" },
-  { label: "Finalizada", value: "FIN", msg: "Tu pedido ha sido entregado" },
+  { label: "En Proceso", value: "INPROCESS", msg: "Tu pedido está siendo elaborado" },
+  { label: "En Camino", value: "ONTHEWAY", msg: "Tu pedido está en camino" },
+  { label: "Finalizada", value: "FINISHED", msg: "Tu pedido ha sido entregado" },
 ];
 
 export const PAGES = {

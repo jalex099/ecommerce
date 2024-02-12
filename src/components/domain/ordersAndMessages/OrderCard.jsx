@@ -12,6 +12,11 @@ import { useMemo } from "react";
 import ImageService from "#/services/ImageService.js";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18.jsx";
 import { useNavigate } from "react-router-dom";
+import Chip from "@mui/material/Chip";
+import { ORDER_STEPS } from "#/config/constants.js";
+import Bold12 from "#/components/shared/fonts/Bold12.jsx";
+import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
+import TouchRippleEffect from "#/components/shared/TouchRippleEffect.jsx";
 
 const OrderCard = ({ order, isLastItem = false }) => {
   const { findImage } = ImageService();
@@ -30,29 +35,44 @@ const OrderCard = ({ order, isLastItem = false }) => {
       <motion.li
         layout
         variants={item}
-        className="w-full flex flex-col gap-4 justify-start items-start p-4 "
+        className="w-full flex flex-col gap-4 justify-start items-start p-4 relative rounded-2xl overflow-hidden"
         onClick={handleClick}
       >
-       <Box className={"w-full flex flex-row gap-2"}>
+        <TouchRippleEffect className="w-full">
+       <Box className={"w-full flex flex-row gap-2 h-[100px] max-w-full"}>
          <Picture
            webp={findImage(productsIdsForImages[0], "PRD", "webp")}
            jpg={findImage(productsIdsForImages[0], "PRD", "jpg")}
            alt={`Imagen de ${'PRD'}`}
-           className="w-16 h-16 object-cover rounded-2xl overflow-hidden"
+           className="h-full aspect-square object-cover rounded-2xl overflow-hidden"
+           blockAnimation
            // onClick={() => redirectToProduct(productsIdsForImages[0])}
          />
-         <Box className={"flex-grow text-right"}>
-           <SemiBold18>
-             { formatDistance(parse(order?.date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", new Date()), new Date(), {locale: es})} atr&aacute;s
+         <Box className={"flex-grow text-right flex flex-col items-end justify-start gap-1 max-w-[60%]"}>
+           <SemiBold18 className={"capitalize text-ellipsis overflow-hidden whitespace-nowrap overflow-ellipsis"}>
+             { formatDistance(new Date(order?.date), new Date(), {locale: es})} atr&aacute;s
            </SemiBold18>
+           {/*<Regular12>*/}
+           {/*  {format(new Date(order?.date), "dd 'de' MMMM", {locale: es})}*/}
+           {/*</Regular12>*/}
            <Regular12>
-             {format(new Date(order?.date), "dd 'de' MMMM", {locale: es})}
+            {order?.code}
            </Regular12>
-           <Regular12>
-             {order?._id}
-           </Regular12>
+           <Box
+             sx={{
+               bgcolor: order?.status === "PENDING" ? 'green10.main' : "neutral40",
+             }}
+             className={"max-w-[120px] px-2 py-1 rounded-2xl"}
+           >
+             <SemiBold12 className={"uppercase"}>
+               {
+                 ORDER_STEPS?.find(step => step?.value === order?.status)?.label
+               }
+             </SemiBold12>
+           </Box>
          </Box>
        </Box>
+        </TouchRippleEffect>
         {/*<Regular14>*/}
         {/*  {order?.status}*/}
         {/*</Regular14>*/}

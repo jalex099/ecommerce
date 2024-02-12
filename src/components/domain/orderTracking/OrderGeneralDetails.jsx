@@ -64,10 +64,10 @@ const OrderGeneralDetails = ({ order }) => {
           <Box className={"w-full flex flex-col gap-2"}>
             <Box className={"flex flex-col justify-start w-full"}>
               <SemiBold14>
-                N&uacute;mero de pedido:
+                C&oacute;digo de pedido:
               </SemiBold14>
               <Regular14>
-                {order?._id}
+                {order?.code}
               </Regular14>
             </Box>
             <Box className={"flex flex-col justify-start w-full"}>

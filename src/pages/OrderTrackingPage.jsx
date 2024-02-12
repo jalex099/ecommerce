@@ -17,8 +17,9 @@ const OrderTrackingPage = () => {
   const order = useHookstate(null);
 
   useEffect(() => {
-    ui?.setTitle("Confirmación de pedido");
-  }, []);
+    if(order?.value?.code) ui?.setTitle(order?.value?.code)
+    else ui?.setTitle("Confirmación de pedido");
+  }, [order?.value?.code]);
 
   useEffect(() => {
     if(!id) {

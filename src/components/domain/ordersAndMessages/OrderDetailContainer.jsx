@@ -13,7 +13,7 @@ import { useMemo } from "react";
 const OrderDetailContainer = ({ order }) => {
 
   const activeStepIndex = useMemo(()=>{
-    return ORDER_STEPS.findIndex(step => step?.value === order?.status)
+    return ORDER_STEPS.findIndex(step => step?.value === order?.deliveryStatus)
   }, [order?.status])
 
   return (

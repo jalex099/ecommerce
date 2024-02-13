@@ -11,7 +11,8 @@ const OrderService = ()=>{
   const {
     getOrder: _getOrder,
     getOrdersPending: _getOrdersPending,
-    saveOrder: _saveOrder
+    saveOrder: _saveOrder,
+    getAllOrders: _getAllOrders
   } = OrderRepository();
   const cart = useCartState();
   const checkout = useCheckoutState();
@@ -41,6 +42,17 @@ const OrderService = ()=>{
     }
   })
 
+  const { data: allOrders, isLoading: isLoadingAllOrders } = useQuery({
+    queryKey: ["orders-all"],
+    queryFn: _getAllOrders,
+    staleTime: Infinity,
+    enabled: auth?.isAuthenticated && auth?.isVerified,
+    onError: (error)=>{
+      console.log(error?.response?.data);
+      addToast("Hubo un error al obtener las ordenes", "error")
+    }
+  })
+
   const saveOrder = useMutation({
     mutationFn: _saveOrder,
     onSuccess: ({data})=>{
@@ -67,7 +79,8 @@ const OrderService = ()=>{
     getOrder,
     saveOrder,
     pendingOrders: pendingOrders?.data || [],
-    pendingOrdersLength: pendingOrders?.data?.length || 0,
+    allOrders: allOrders?.data || [],
+    isLoadingAllOrders,
     isLoadingPendingOrders
   }
 }

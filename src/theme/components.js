@@ -315,6 +315,15 @@ const components = {
       },
     },
 
+  },
+  MuiFormControlLabel: {
+    styleOverrides: {
+      root: {
+        "& .MuiTypography-root": {
+          fontSize: "14px",
+        },
+      },
+    },
   }
 };
 

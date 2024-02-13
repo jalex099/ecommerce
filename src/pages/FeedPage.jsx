@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useUIState } from "#/stores/UIState.js";
 import Container from "@mui/material/Container";
 import SliderComponent from "#/components/domain/feed/SliderComponent.jsx";
@@ -14,11 +14,16 @@ import PendingOrdersAdvise from "#/components/domain/feed/PendingOrdersAdvise.js
 const FeedPage = () => {
   const ui = useUIState();
   const cart = useCartState();
-  const { pendingOrdersLength } = OrderService();
+  const { allOrders } = OrderService();
 
   useEffect(() => {
     ui?.setTitle("Feed");
   }, []);
+
+  const pendingOrdersLength = useMemo(()=> {
+    return allOrders?.filter(order => order?.status === "PENDING")?.length || 0
+  }, [allOrders?.length])
+
   return (
     <Container sx={style.container}>
       <HelmetMeta page="feed" />

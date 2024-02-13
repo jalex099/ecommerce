@@ -31,7 +31,7 @@ const CartAdvise = () => {
        <Badge badgeContent={badgeContent} color="secondary" variant="standard">
         <CartIcon className={"w-8 h-8"}/>
       </Badge>
-       <Box className={"text-center relative"}>
+       <Box className={"text-right relative"}>
          <Regular14>
            &#191;Terminaste de comprar?
          </Regular14>

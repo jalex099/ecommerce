@@ -250,8 +250,6 @@ const components = {
         minHeight: "48px",
         padding: "8px 16px",
         fontSize: "14px",
-        backgroundColor: "#FFFFFF",
-        border: "1px solid #DBDBDB",
         "& .MuiChip-label": {
           padding: "0px",
           // fontWeight: "bold",

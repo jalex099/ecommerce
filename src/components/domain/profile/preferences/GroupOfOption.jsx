@@ -59,6 +59,8 @@ export default function GroupOfOption({
               padding: "0px",
               fontWeight: "bold",
             },
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #DBDBDB",
           }}
         />
       </motion.li>

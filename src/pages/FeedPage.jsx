@@ -10,11 +10,16 @@ import { useCartState } from "#/stores/cart";
 import CartAdvise from "#/components/domain/feed/CartAdvise.jsx";
 import OrderService from "#/services/OrderService.js";
 import NotFinishedOrdersAdvise from "#/components/domain/feed/NotFinishedOrdersAdvise.jsx";
+import ClientFavoriteProductsService
+  from "#/services/ClientFavoriteProductsService.js";
+import FavoritesShortcutContainer
+  from "#/components/domain/feed/FavoritesShortcutContainer.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
   const cart = useCartState();
   const { notFinishedOrders} = OrderService();
+  const { favoriteProducts } = ClientFavoriteProductsService();
 
   useEffect(() => {
     ui?.setTitle("Feed");
@@ -26,10 +31,13 @@ const FeedPage = () => {
       <Box className="w-full flex flex-col gap-6">
         <SliderComponent />
         {
-          notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
+          cart?.getItemsCounter() > 0 && <CartAdvise />
         }
         {
-          cart?.getItemsCounter() > 0 && <CartAdvise />
+          favoriteProducts?.length > 0 && <FavoritesShortcutContainer favorites={favoriteProducts} />
+        }
+        {
+          notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
         }
         <OffersContainer />
       </Box>

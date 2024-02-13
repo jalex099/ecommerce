@@ -6,13 +6,19 @@ import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { ORDER_STEPS } from "#/config/constants.js";
 
 const PendingOrdersAdvise = () => {
   const navigate = useNavigate();
 
   const handleClickGoToOrders = () => {
-    navigate("/perfil/ordenes-y-mensajes");
+    navigate({
+      pathname: "/perfil/ordenes-y-mensajes",
+      search: `?${createSearchParams({
+        "estado-orden": ["PENDING", "INPROCESS", "ONTHEWAY"]
+      })}`
+    });
   }
 
   return (

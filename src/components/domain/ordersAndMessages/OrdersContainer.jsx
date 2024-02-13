@@ -9,29 +9,22 @@ import { useHookstate } from "@hookstate/core";
 import * as _ from "lodash";
 import OrdersFilters
   from "#/components/domain/ordersAndMessages/OrdersFilters.jsx";
-import DialogOrdersFilter
-  from "#/components/domain/ordersAndMessages/DialogOrdersFilter.jsx";
 import { ORDER_STEPS, PAYMENT_METHODS } from "#/config/constants.js";
-import serializeState from "#/utils/serializeState.js";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const OrdersContainer = () => {
   const { allOrders } = OrderService();
   const searchOrdersRef = useRef();
   const ordersFiltered = useHookstate(null);
   const filters = useHookstate(null);
-  const params = useParams()
-
-  const pendingOrders = useMemo(()=>{
-    return allOrders?.filter(order => order?.status === "PENDING") || []
-  }, [allOrders?.length])
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearch = _.debounce(() => {
     findByFiltersAndSearch();
   }, 500);
 
   const findByFiltersOnly = () => {
-    ordersFiltered?.set( pendingOrders?.filter((item) => filters?.value?.status?.includes(item?.status) && filters?.value?.paymentMethod?.includes(item?.paymentMethod)) );
+    ordersFiltered?.set( allOrders?.filter((item) => filters?.value?.status?.includes(item?.status) && filters?.value?.paymentMethod?.includes(item?.paymentMethod)) );
   }
 
   const findByFiltersAndSearch = () => {
@@ -41,7 +34,7 @@ const OrdersContainer = () => {
       return;
     }
     ordersFiltered?.set(
-      pendingOrders
+      allOrders
         ?.filter((a) => {
           return ['code', 'date'].some((prop) => _.includes(_.toLower(a[prop]), _.toLower(search))) ||
             (a.menu && a.menu.some(product => _.includes(_.toLower((product?.product?.name || '').replace(/\s/g, '')), _.toLower(search.replace(/\s/g, ''))))
@@ -63,9 +56,11 @@ const OrdersContainer = () => {
 
   //* Use effect para inicializar el filtro
   useEffect(() => {
+    const status = searchParams?.getAll("estado-orden");
+    const paymentMethod = searchParams?.getAll("estado-pago");
     let initialFilters = {
-      status: params?.estado ? [params?.estado] : ORDER_STEPS?.map(step => step?.value),
-      paymentMethod: params?.metodoPago ? [params?.metodoPago] : PAYMENT_METHODS?.map(method => method?.code),
+      status: status?.length > 0 ? status : ORDER_STEPS?.map(step => step?.value),
+      paymentMethod: paymentMethod?.length > 0 ? [paymentMethod] : PAYMENT_METHODS?.map(method => method?.code),
     }
     filters?.set(initialFilters);
   }, []);
@@ -77,7 +72,7 @@ const OrdersContainer = () => {
       return;
     }
     findByFiltersOnly();
-  }, [pendingOrders?.length])
+  }, [allOrders?.length])
 
 
   return (

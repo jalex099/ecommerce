@@ -60,7 +60,11 @@ const OrderCard = ({ order, isLastItem = false }) => {
            </Regular12>
            <Box
              sx={{
-               bgcolor: order?.status === "PENDING" ? 'green10.main' : "neutral40",
+               bgcolor:
+                 order?.status === "PENDING" ? 'green10.main' :
+                   order?.status === "INPROCESS" ? 'yellow10.main' :
+                     order?.status === "ONTHEWAY" ? 'blue10.main' :
+                       order?.status === "FINISHED" ? 'green10.main' : "neutral40",
              }}
              className={"max-w-[120px] px-2 py-1 rounded-2xl"}
            >

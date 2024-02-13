@@ -13,7 +13,7 @@ import { useMemo } from "react";
 const OrderDetailContainer = ({ order }) => {
 
   const activeStepIndex = useMemo(()=>{
-    return ORDER_STEPS.findIndex(step => step?.value === order?.deliveryStatus)
+    return ORDER_STEPS.findIndex(step => step?.value === order?.status)
   }, [order?.status])
 
   return (
@@ -25,7 +25,7 @@ const OrderDetailContainer = ({ order }) => {
             {ORDER_STEPS[activeStepIndex]?.msg}
           </SemiBold18>
           <Regular14 styles={{color: t => t?.palette?.neutral60?.main}}>
-            Entrega estimada: {format(new Date(order?.deliveryDate), "dd/MM - HH:mm a")}
+            Entrega estimada: {format(new Date(order?.deliveryDate), "dd/MM - hh:mm a")}
           </Regular14>
         </Box>
         <OrderGeneralDetails order={order}/>

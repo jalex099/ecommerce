@@ -14,6 +14,7 @@ import { DELIVERY_METHODS } from "#/config/constants.js";
 import DataService from "#/services/DataService.js";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import { format } from "date-fns";
+import es from "date-fns/locale/es";
 
 const OrderGeneralDetails = ({ order }) => {
   const { shops, meetups } = DataService();
@@ -72,6 +73,14 @@ const OrderGeneralDetails = ({ order }) => {
             </Box>
             <Box className={"flex flex-col justify-start w-full"}>
               <SemiBold14>
+                Fecha de compra:
+              </SemiBold14>
+              <Regular14>
+                {format(new Date(order?.date), "dd 'de' MMMM/yyyy - hh:mm a", {locale: es})}
+              </Regular14>
+            </Box>
+            <Box className={"flex flex-col justify-start w-full"}>
+              <SemiBold14>
                 Nombre completo:
               </SemiBold14>
               <Regular14>
@@ -116,10 +125,13 @@ const OrderGeneralDetails = ({ order }) => {
         <AccordionDetails>
           <Box className={"w-full flex flex-col gap-2"}>
             <Box className={"flex flex-col justify-start w-full"}>
-              <SemiBold14 className={" uppercase"}>
-                {deliveryMethod}
+              <SemiBold14>
+                M&eacute;todo de entrega:
               </SemiBold14>
               <Regular14>
+                {deliveryMethod}
+              </Regular14>
+              <Regular14 styles={{color: t => t?.palette?.neutral50?.main}}>
                 {
                   order?.deliveryMethod === "PICKUP" && shopOnPickup
                 }
@@ -136,7 +148,7 @@ const OrderGeneralDetails = ({ order }) => {
                 Fecha de entrega:
               </SemiBold14>
               <Regular14>
-                {format(new Date(order?.deliveryDate), "dd/MM/yyyy - HH:mm a")}
+                {format(new Date(order?.deliveryDate), "dd/MM/yyyy - hh:mm a")}
               </Regular14>
             </Box>
           </Box>

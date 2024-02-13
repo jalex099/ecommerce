@@ -9,20 +9,16 @@ import OffersContainer from "#/components/domain/feed/OffersContainer.jsx";
 import { useCartState } from "#/stores/cart";
 import CartAdvise from "#/components/domain/feed/CartAdvise.jsx";
 import OrderService from "#/services/OrderService.js";
-import PendingOrdersAdvise from "#/components/domain/feed/PendingOrdersAdvise.jsx";
+import NotFinishedOrdersAdvise from "#/components/domain/feed/NotFinishedOrdersAdvise.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
   const cart = useCartState();
-  const { allOrders } = OrderService();
+  const { notFinishedOrders} = OrderService();
 
   useEffect(() => {
     ui?.setTitle("Feed");
   }, []);
-
-  const pendingOrdersLength = useMemo(()=> {
-    return allOrders?.filter(order => order?.status === "PENDING")?.length || 0
-  }, [allOrders?.length])
 
   return (
     <Container sx={style.container}>
@@ -30,7 +26,7 @@ const FeedPage = () => {
       <Box className="w-full flex flex-col gap-6">
         <SliderComponent />
         {
-          pendingOrdersLength > 0 && <PendingOrdersAdvise />
+          notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
         }
         {
           cart?.getItemsCounter() > 0 && <CartAdvise />

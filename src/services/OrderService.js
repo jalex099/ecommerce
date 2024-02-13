@@ -6,6 +6,7 @@ import useCartState from "#/stores/cart.js";
 import { addToast } from "#/stores/UIState.js";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "#/stores/AuthState.js";
+import { useMemo } from "react";
 
 const OrderService = ()=>{
   const {
@@ -75,10 +76,15 @@ const OrderService = ()=>{
     }
   })
 
+  const notFinishedOrders = useMemo(()=>{
+    return allOrders?.data?.filter(order=> order?.status !== "FINISHED") || []
+  }, [allOrders?.data])
+
   return {
     getOrder,
     saveOrder,
     pendingOrders: pendingOrders?.data || [],
+    notFinishedOrders,
     allOrders: allOrders?.data || [],
     isLoadingAllOrders,
     isLoadingPendingOrders

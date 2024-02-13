@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ORDER_STEPS } from "#/config/constants.js";
 
-const PendingOrdersAdvise = () => {
+const NotFinishedOrdersAdvise = () => {
   const navigate = useNavigate();
 
   const handleClickGoToOrders = () => {
@@ -52,4 +52,4 @@ const style = {
   },
 };
 
-export default PendingOrdersAdvise;
+export default NotFinishedOrdersAdvise;

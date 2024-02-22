@@ -23,9 +23,9 @@ const ProductsView = ({ products }) => {
           products.map((prd, index) => (
             <Box
               key={index}
-              className={"w-full h-[92px] flex items-start gap-4  py-2 px-4"}
+              className={"w-full min-h-[92px] flex items-start gap-4  py-2 px-4"}
             >
-              <Box className={"h-full"}>
+              <Box className={"h-[72px]"}>
                 <Picture
                   alt={prd.name}
                   webp={findImage(prd?._id, "PRD", "webp")}

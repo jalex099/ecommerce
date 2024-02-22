@@ -51,6 +51,7 @@ export default function useOrderParser() {
       paymentMethod: PAYMENT_METHODS?.find(
         (method) => method?.value === checkout?.paymentMethod
       )?.code,
+      total: cart?.getTotal(),
     };
 
     //* Comentarios extras de la orden

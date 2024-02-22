@@ -57,13 +57,12 @@ const OrderService = ()=>{
   const saveOrder = useMutation({
     mutationFn: _saveOrder,
     onSuccess: ({data})=>{
-      console.log(data);
       cart?.clean()
       checkout?.clearState();
       location?.clearState();
       location?.clearDateTime();
       // Invalidate pending orders query
-      queryClient.invalidateQueries(["orders-pending", "specific-order"], {});
+      queryClient.invalidateQueries(["orders-pending", "specific-order", "orders-all"], {});
       addToast("Tu orden se ha guardado correctamente", "success")
       if(data?._id)
         navigate(`/rastreo-de-orden/${data._id}`, {replace: true})

@@ -9,6 +9,10 @@ import OrderGeneralDetails
   from "#/components/domain/orderTracking/OrderGeneralDetails.jsx";
 import Divider from "@mui/material/Divider";
 import { useMemo } from "react";
+import OrderProductsDetails
+  from "#/components/domain/orderTracking/OrderProductsDetails.jsx";
+import { formatCurrency } from "#/utils/currency.js";
+import SemiBold20 from "#/components/shared/fonts/SemiBold20.jsx";
 
 const OrderDetailContainer = ({ order }) => {
 
@@ -28,6 +32,10 @@ const OrderDetailContainer = ({ order }) => {
             Entrega estimada: {format(new Date(order?.deliveryDate), "dd/MM - hh:mm a")}
           </Regular14>
         </Box>
+        <OrderProductsDetails menu={order?.menu}/>
+        <SemiBold20 className={'text-right'}>
+          Total: {formatCurrency(order?.total || 0)}
+        </SemiBold20>
         <OrderGeneralDetails order={order}/>
       </Box>
       <Divider/>

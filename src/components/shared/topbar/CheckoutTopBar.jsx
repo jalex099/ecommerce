@@ -19,7 +19,7 @@ function CheckoutTopBar() {
     checkoutState?.setActiveStep(index);
   }
   return (
-    <Box>
+    <Box className={"flex justify-center"}>
       <Fade
         in={true}
         timeout={{
@@ -28,6 +28,7 @@ function CheckoutTopBar() {
         }}
       >
         <Toolbar
+          className={"w-full lg:w-[800px]"}
           sx={{
             gridTemplateColumns: "32px 1fr",
           }}

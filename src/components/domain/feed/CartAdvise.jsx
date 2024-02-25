@@ -26,7 +26,7 @@ const CartAdvise = () => {
   }
 
   return (
-    <Box sx={style.container} className={"px-6 py-4 rounded-2xl w-full flex flex-col gap-4 items-center"}>
+    <Box sx={style.container} className={"px-6 py-4 rounded-2xl w-full flex flex-col gap-4 items-center justify-center"}>
      <Box className={"flex gap-2 justify-between items-center w-full"}>
        <Badge badgeContent={badgeContent} color="secondary" variant="standard">
         <CartIcon className={"w-8 h-8"}/>

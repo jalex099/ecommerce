@@ -6,7 +6,7 @@ import Fade from "@mui/material/Fade";
 
 function DefaultTopBar({ title }) {
   return (
-    <Box>
+    <Box className={"flex justify-center"}>
       <Fade
         in={true}
         timeout={{
@@ -14,7 +14,7 @@ function DefaultTopBar({ title }) {
           exit: 0,
         }}
       >
-        <Toolbar>
+        <Toolbar className={"w-full lg:w-[1000px]"}>
           <GoBackIcon />
           {title && <SemiBold18 className="text-center">{title}</SemiBold18>}
         </Toolbar>

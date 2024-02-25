@@ -58,7 +58,7 @@ function ProfileTopBar() {
   };
 
   return (
-    <Box>
+    <Box className={"flex justify-center"}>
       <ConfirmDialog
         isOpen={openConfirmDialog?.value}
         title="Cerrar sesión"
@@ -74,7 +74,7 @@ function ProfileTopBar() {
           exit: 0,
         }}
       >
-        <Toolbar>
+        <Toolbar className={"w-full lg:w-[1000px]"}>
           <IconButton
             aria-label="go-back"
             variant="contained"

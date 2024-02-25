@@ -125,7 +125,7 @@ function CartTopBar({ title }) {
         handleCancel={handleCloseConfirmDialog}
         onClose={handleCloseConfirmDialog}
       />
-      <Box>
+      <Box className={"flex justify-center"}>
         <Fade
           in={true}
           timeout={{
@@ -133,7 +133,7 @@ function CartTopBar({ title }) {
             exit: 0,
           }}
         >
-          <Toolbar>
+          <Toolbar className={"w-full lg:w-[1000px]"}>
             <IconButton
               aria-label="go-back"
               variant="contained"

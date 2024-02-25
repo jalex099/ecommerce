@@ -177,6 +177,7 @@ const components = {
   MuiContainer: {
     styleOverrides: {
       root: {
+        maxWidth: "1000px !important",
         padding: "8px 24px",
       },
     },
@@ -194,6 +195,7 @@ const components = {
             maxWidth: "4px",
             width: "100%",
             backgroundColor: "#614FE0",
+
           },
         },
       },
@@ -218,9 +220,9 @@ const components = {
       paper: {
         borderRadius: "24px 24px 0px 0px ",
         position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
+        bottom: { xs: 0, lg: "auto"},
+        left: { xs: 0, lg: "auto"},
+        right: { xs: 0, lg: "auto"},
         margin: 0,
         minHeight: "200px",
         padding: "8px 24px",

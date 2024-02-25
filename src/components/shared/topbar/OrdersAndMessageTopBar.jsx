@@ -30,7 +30,7 @@ const OrdersAndMessageTopBar = ()=> {
   }
 
   return (
-    <Box>
+    <Box className={"flex justify-center"}>
       <Fade
         in={true}
         timeout={{
@@ -38,7 +38,7 @@ const OrdersAndMessageTopBar = ()=> {
           exit: 0,
         }}
       >
-        <Toolbar>
+        <Toolbar className={"w-full lg:w-[1000px]"}>
           <IconButton
             aria-label="go-back"
             variant="contained"

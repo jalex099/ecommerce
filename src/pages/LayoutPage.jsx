@@ -82,7 +82,7 @@ const LayoutPage = () => {
     <>
       {isSuccess && (
         <>
-          <header>
+          <header className={"flex"}>
             <TopBarContainer />
           </header>
           <Box

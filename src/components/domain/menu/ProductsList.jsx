@@ -30,7 +30,6 @@ const style = {
     gridTemplateColumns: {
       xs: "1fr 1fr",
       lg: "1fr 1fr 1fr",
-      xl: "1fr 1fr 1fr 1fr",
     },
     gridGap: "8px",
   },

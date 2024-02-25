@@ -23,7 +23,7 @@ const NotFinishedOrdersAdvise = () => {
   }
 
   return (
-    <Box sx={style.container} className={"px-6 py-4 rounded-2xl w-full flex flex-col gap-4 items-center"}>
+    <Box sx={style.container} className={"px-6 py-4 rounded-2xl w-full flex flex-col gap-4 items-center justify-center"}>
       <Box className={"w-full flex flex-row gap-2 justify-between items-center"}>
         <BoxIcon className={"w-8 h-8"}/>
         <Box className={"text-end flex flex-col gap-0 w-3/4"}>

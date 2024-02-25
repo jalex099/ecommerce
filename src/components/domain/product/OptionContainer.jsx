@@ -16,8 +16,11 @@ import Box from "@mui/material/Box";
 import Regular12 from "#/components/shared/fonts/Regular12";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "#/components/shared/icons/CloseIcon";
+import { useMediaQuery } from "@mui/material";
 
 function OptionContainer({ label, options, index, className }) {
+
+  const isLg = useMediaQuery(theme => theme.breakpoints.up('lg'));
   const isDialogOpen = useHookstate(false);
   const {
     getIndexOptionRepeated,
@@ -74,10 +77,10 @@ function OptionContainer({ label, options, index, className }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         PaperProps={{
-          style: { padding: "8px 0px" },
+          style: { padding: "8px 0px" , minWidth: !isLg ? "100%" : "500px", maxWidth: !isLg ? "100%" : "500px" },
         }}
       >
-        <DialogTitle>
+        <DialogTitle className={"cursor-default"}>
           <Regular14>{labelToShow}</Regular14>
         </DialogTitle>
         <IconButton
@@ -95,7 +98,7 @@ function OptionContainer({ label, options, index, className }) {
         <DialogContent sx={style.dialogContent}>
           {isSomePrefered && (
             <Box
-              className="w-full flex  items-center gap-2 justify-center py-1"
+              className="w-full flex  items-center gap-2 justify-center py-1 cursor-default"
               sx={{ bgcolor: (theme) => theme.palette.opacity5.main }}
             >
               <Regular12>

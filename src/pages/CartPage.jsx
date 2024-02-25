@@ -64,6 +64,7 @@ const style = {
     paddingTop: "16px",
     flexGrow: 1,
     px: "0 !important",
+    position: "relative",
   },
 };
 

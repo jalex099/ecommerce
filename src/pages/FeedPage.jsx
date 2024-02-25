@@ -30,14 +30,16 @@ const FeedPage = () => {
       <HelmetMeta page="feed" />
       <Box className="w-full flex flex-col gap-6">
         <SliderComponent />
-        {
-          cart?.getItemsCounter() > 0 && <CartAdvise />
-        }
+        <Box className={"w-full flex flex-col gap-6 lg:flex-row"}>
+          {
+            cart?.getItemsCounter() > 0 && <CartAdvise />
+          }
+          {
+            notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
+          }
+        </Box>
         {
           favoriteProducts?.length > 0 && <FavoritesShortcutContainer favorites={favoriteProducts} />
-        }
-        {
-          notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
         }
         <OffersContainer />
       </Box>

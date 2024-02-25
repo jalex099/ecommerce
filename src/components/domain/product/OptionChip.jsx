@@ -21,7 +21,7 @@ function OptionChip({ option, isSelected, onSelect }) {
   };
   return (
     <motion.div
-      className={`text-sm rounded-md flex flex-row items-center justify-between gap-3 p-4 ${
+      className={`text-sm rounded-md flex flex-row items-center justify-between gap-3 p-4 cursor-pointer ${
         isSelected ? "_primary-bg " : ""
       }`}
       style={style.content}

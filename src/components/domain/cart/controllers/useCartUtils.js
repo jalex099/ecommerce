@@ -130,6 +130,7 @@ export default function useCartUtils() {
           quantity: cartItemProduct?.quantity,
           options,
           discount,
+          nonOfferPrice: product?.price + aditionalPrice,
         },
       ];
     }, []);

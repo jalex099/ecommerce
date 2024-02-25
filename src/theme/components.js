@@ -218,7 +218,7 @@ const components = {
   MuiDialog: {
     styleOverrides: {
       paper: {
-        borderRadius: "24px 24px 0px 0px ",
+        borderRadius: { xs: "24px 24px 0px 0px ", lg: "24px"},
         position: "absolute",
         bottom: { xs: 0, lg: "auto"},
         left: { xs: 0, lg: "auto"},

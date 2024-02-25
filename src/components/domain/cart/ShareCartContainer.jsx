@@ -33,7 +33,6 @@ export default function ShareCartContainer({
   };
 
   const backspaceLongPress = useLongPress(handleLongPress, 500);
-
   return (
     <Dialog
       open={isOpen}
@@ -49,7 +48,7 @@ export default function ShareCartContainer({
             Comparte el c&oacute;digo de tu carrito para que puedan agregar tus
             productos a su carrito.
           </Regular16>
-          {auth?.isAuthenticated && (
+          {auth?.isAuthenticated && cart?.getCartId() && (
             <>
               <Box
                 className="w-full flex flex-col items-center justify-center gap-4 "
@@ -81,7 +80,12 @@ export default function ShareCartContainer({
               </Regular12>
             </>
           )}
-          {!auth?.isAuthenticated && (
+          {auth?.isAuthenticated && !cart?.getCartId() && (
+            <Regular12>
+              Debes guardar el carrito para poder compartirlo
+            </Regular12>
+          )}
+            {!auth?.isAuthenticated && (
             <>
               <Regular12>
                 Para compartir tu carrito debes{" "}

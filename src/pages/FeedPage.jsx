@@ -38,9 +38,9 @@ const FeedPage = () => {
             notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
           }
         </Box>
-        {
-          favoriteProducts?.length > 0 && <FavoritesShortcutContainer favorites={favoriteProducts} />
-        }
+        {/*{*/}
+        {/*  favoriteProducts?.length > 0 && <FavoritesShortcutContainer favorites={favoriteProducts} />*/}
+        {/*}*/}
         <OffersContainer />
       </Box>
       <NewContent />

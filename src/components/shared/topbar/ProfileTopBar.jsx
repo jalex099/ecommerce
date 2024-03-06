@@ -11,17 +11,20 @@ import { useState } from "react";
 import AuthService from "#/services/AuthService.js";
 import ConfirmDialog from "#/components/shared/ConfirmDialog";
 import { useHookstate } from "@hookstate/core";
+import { useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 function ProfileTopBar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openConfirmDialog = useHookstate(false);
   const { logout } = AuthService();
+  const navigate = useNavigate();
 
   const options = [
     {
       name: "Ajustes",
       action: () => {
+        handleGoToSettings();
         handleCloseMenu();
       },
     },
@@ -56,6 +59,10 @@ function ProfileTopBar() {
     await logout();
     handleCloseConfirmDialog();
   };
+
+  const handleGoToSettings = () => {
+    navigate("/ajustes")
+  }
 
   return (
     <Box className={"flex justify-center"}>

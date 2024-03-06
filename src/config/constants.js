@@ -58,7 +58,8 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/metodo-de-entrega",
   "/fecha-y-hora",
   "/rastreo-de-orden",
-  "/perfil/ordenes-y-mensajes"
+  "/perfil/ordenes-y-mensajes",
+  "/ajustes"
 ];
 
 export const CHECKOUT_STEPS = {
@@ -147,6 +148,10 @@ export const PAGES = {
   delivery: {
     title: "Método de Entrega",
     desc: `Pagina de método de entrega de ${COMPANY}`,
+  },
+  settings: {
+    title: "Ajustes",
+    desc: `Pagina de ajustes de ${COMPANY}`,
   },
   signup: {
     title: "Registro",

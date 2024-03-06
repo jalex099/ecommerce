@@ -94,6 +94,12 @@ const OrderTrackingPage = () => (
   </DynamicImport>
 );
 
+const SettingsPage = () => (
+  <DynamicImport load={() => import("#/pages/SettingsPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -143,6 +149,14 @@ const RoutesApp = () => {
           path="/rastreo-de-orden/:id"
           element={<OrderTrackingPage />}
         />
+        {/* SETTINGS */}
+        <Route
+          path="/ajustes/*"
+          element={
+            <ProtectedAuthRoute auth={auth}>
+              <SettingsPage />
+            </ProtectedAuthRoute>
+          } />
       </Route>
     </Routes>
   );

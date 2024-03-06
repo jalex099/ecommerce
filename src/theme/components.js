@@ -220,9 +220,9 @@ const components = {
       paper: {
         borderRadius: { xs: "24px 24px 0px 0px ", lg: "24px"},
         position: "absolute",
-        bottom: { xs: 0, lg: "auto"},
-        left: { xs: 0, lg: "auto"},
-        right: { xs: 0, lg: "auto"},
+        bottom: 0,
+        left:0,
+        right: 0,
         margin: 0,
         minHeight: "200px",
         padding: "8px 24px",

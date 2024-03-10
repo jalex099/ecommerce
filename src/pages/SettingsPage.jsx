@@ -17,34 +17,34 @@ const settings = [
   {
     title: "Cuenta",
     items: [
-      { name: "Información personal", to: "/ajustes/cuenta", id: "INFORMACION_PERSONAL" },
-      { name: "Métodos de pago", to: "/ajustes/metodos-de-pago", id: "METODOS_DE_PAGO" },
+      { name: "Información personal", to: "/ajustes/cuenta", id: "INFORMACION_PERSONAL", isActive: true },
+      { name: "Métodos de pago", to: "/ajustes/metodos-de-pago", id: "METODOS_DE_PAGO", isActive: true },
     ],
   },
   {
-    title: "Notificaciones",
+    title: "Centro de notificaciones",
     items: [
-      { name: "Notificaciones", to: "/ajustes/notificaciones", id: "NOTIFICACIONES" },
+      { name: "Notificaciones", to: "/ajustes/notificaciones", id: "NOTIFICACIONES", isActive: false },
     ],
   },
   {
     title: "Soporte",
     items: [
-      { name: "Ayuda", to: "/ajustes/ayuda", id: "AYUDA" },
-      { name: "Contáctanos", to: "/ajustes/contacto", id: "CONTACTO" },
+      { name: "Ayuda", to: "/ajustes/ayuda", id: "AYUDA", isActive: true },
+      { name: "Contáctanos", to: "/ajustes/contacto", id: "CONTACTO", isActive: true },
     ],
   },
   {
     title: "Legal",
     items: [
-      { name: "Términos y condiciones", to: "/ajustes/terminos-y-condiciones" , id: "TERMINOS_Y_CONDICIONES"},
-      { name: "Política de privacidad", to: "/ajustes/privacidad", id: "PRIVACIDAD" },
+      { name: "Términos y condiciones", to: "/ajustes/terminos-y-condiciones" , id: "TERMINOS_Y_CONDICIONES", isActive: true},
+      { name: "Política de privacidad", to: "/ajustes/privacidad", id: "PRIVACIDAD", isActive: true },
     ],
   },
   {
     title: "Sobre nosotros",
     items: [
-      { name: "Acerca de", to: "/ajustes/sobre-nosotros", id: "ACERCA_DE" },
+      { name: "Acerca de", to: "/ajustes/sobre-nosotros", id: "ACERCA_DE", isActive: true },
     ],
   }
 ]
@@ -56,7 +56,7 @@ const SettingsPage = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    ui?.setTitle("Ajustes");
+    ui?.setTitle("");
   }, []);
 
   useEffect(() => {
@@ -96,6 +96,7 @@ const SettingsPage = () => {
                     {item?.items?.map((subitem, indexSubitem) => (
                       <ListItemButton key={`item-${indexSubitem}`}
                                       onClick={() => handleClick(subitem)}
+                                      disabled={!subitem?.isActive}
                       >
                         <ListItemText primary={subitem?.name} />
                       </ListItemButton>
@@ -106,20 +107,6 @@ const SettingsPage = () => {
             </List>
           )
         }
-        {
-          selected?.value && (
-            <Breadcrumbs aria-label="breadcrumb"  className={"lowercase"}>
-              <Link underline="hover" to="/ajustes">
-                Ajustes
-              </Link>
-              <Regular16>
-                {settings?.find(section => section?.items?.find(item => item?.id === selected?.value))?.items?.find(item => item?.id === selected?.value)?.name}
-              </Regular16>
-            </Breadcrumbs>
-          )
-        }
-
-        <Outlet />
       </Box>
     </Container>
   );

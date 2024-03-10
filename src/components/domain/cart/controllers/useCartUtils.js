@@ -144,6 +144,8 @@ export default function useCartUtils() {
 
   const handleRemoveAllFromCart = () => {
     cart?.removeAllFromCart();
+    if(cart?.getSyncable())
+      cart?.setSyncable(false);
   };
 
   return {

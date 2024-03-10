@@ -324,7 +324,18 @@ const components = {
         },
       },
     },
-  }
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+      //   disabled
+        "&.Mui-disabled": {
+          backgroundColor: "transparent !important",
+          opacity: "0.3",
+        },
+      },
+    },
+  },
 };
 
 export default components;

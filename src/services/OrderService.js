@@ -62,7 +62,7 @@ const OrderService = ()=>{
       location?.clearState();
       location?.clearDateTime();
       // Invalidate pending orders query
-      queryClient.invalidateQueries(["orders-pending", "specific-order", "orders-all"], {});
+      queryClient.invalidateQueries(["orders-all"], {});
       addToast("Tu orden se ha guardado correctamente", "success")
       if(data?._id)
         navigate(`/rastreo-de-orden/${data._id}`, {replace: true})

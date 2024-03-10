@@ -100,6 +100,18 @@ const SettingsPage = () => (
   </DynamicImport>
 );
 
+const SettingsActionsPage = () => (
+  <DynamicImport load={() => import("#/pages/SettingsActionsPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
+const NotFoundPage = () => (
+  <DynamicImport load={() => import("#/pages/NotFoundPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -150,14 +162,21 @@ const RoutesApp = () => {
           element={<OrderTrackingPage />}
         />
         {/* SETTINGS */}
+        <Route path={"/ajustes/:section"} element={
+          <ProtectedAuthRoute auth={auth}>
+            <SettingsActionsPage />
+          </ProtectedAuthRoute>}
+        />
         <Route
-          path="/ajustes/*"
+          path="/ajustes"
           element={
             <ProtectedAuthRoute auth={auth}>
               <SettingsPage />
             </ProtectedAuthRoute>
           } />
       </Route>
+      <Route path="/404" element={<NotFoundPage/>} />
+      <Route path={"*"} element={<Navigate to="/404" />} />
     </Routes>
   );
 };

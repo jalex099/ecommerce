@@ -8,10 +8,11 @@ import DataService from "#/services/DataService";
 import { useHookstate } from "@hookstate/core";
 import RedirectionService from "#/services/RedirectionService";
 import { getCategory } from "#/utils/directoryUtils";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const MenuPage = () => {
   const { categories, menu, offers } = DataService();
+
   const selected = useHookstate(null);
   const ui = useUIState();
   const { redirectToProduct, redirectToFirstCategory, redirectTo } =
@@ -22,6 +23,7 @@ const MenuPage = () => {
   useEffect(() => {
     ui?.setTitle("Menú");
   }, []);
+
 
   useEffect(() => {
     category && selected.set(category._id); // Si existe, la selecciona en las tabs

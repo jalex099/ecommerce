@@ -17,6 +17,7 @@ import { ORDER_STEPS } from "#/config/constants.js";
 import Bold12 from "#/components/shared/fonts/Bold12.jsx";
 import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 import TouchRippleEffect from "#/components/shared/TouchRippleEffect.jsx";
+import {PAYMENT_METHODS} from "#/config/constants.js";
 
 const OrderCard = ({ order, isLastItem = false }) => {
   const { findImage } = ImageService();
@@ -49,14 +50,14 @@ const OrderCard = ({ order, isLastItem = false }) => {
            // onClick={() => redirectToProduct(productsIdsForImages[0])}
          />
          <Box className={"flex-grow text-right flex flex-col items-end justify-start gap-1 max-w-[60%]"}>
-           <SemiBold18 className={"capitalize"}>
+           <SemiBold18 className={"capitalize min-h-[28px] whitespace-nowrap overflow-hidden overflow-ellipsis w-full"}>
              { formatDistance(new Date(order?.date), new Date(), {locale: es})} atr&aacute;s
            </SemiBold18>
            {/*<Regular12>*/}
            {/*  {format(new Date(order?.date), "dd 'de' MMMM", {locale: es})}*/}
            {/*</Regular12>*/}
            <Regular12>
-            {order?.code}
+            {order?.code} | {PAYMENT_METHODS?.find(method => method?.code === order?.paymentMethod)?.label}
            </Regular12>
            <Box
              sx={{
@@ -64,7 +65,7 @@ const OrderCard = ({ order, isLastItem = false }) => {
                  order?.status === "PENDING" ? 'green10.main' :
                    order?.status === "INPROCESS" ? 'yellow10.main' :
                      order?.status === "ONTHEWAY" ? 'blue10.main' :
-                       order?.status === "FINISHED" ? 'green10.main' : "neutral40",
+                       order?.status === "FINISHED" ? 'red10.main' : "neutral40",
              }}
              className={"max-w-[120px] px-2 py-1 rounded-2xl"}
            >

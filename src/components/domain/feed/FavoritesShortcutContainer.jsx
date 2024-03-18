@@ -16,7 +16,7 @@ const FavoritesShortcutContainer = ({ favorites }) => {
       <SemiBold18>
         Favoritos
       </SemiBold18>
-      <HorizontalScroller separate>
+      <HorizontalScroller separate showScrollbar>
         {
           favorites?.map((favorite, index) => (
             <FavoritesCard key={index} favorite={favorite}

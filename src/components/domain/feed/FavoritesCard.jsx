@@ -17,7 +17,7 @@ const FavoritesCard = ({ favorite , ...props}) => {
   }, [favorite]);
 
   return (
-    <Box {...props} className={"h-[120px] min-w-[250px] flex flex-row gap-4 p-2 shadow-md justify-center items-center"}>
+    <Box {...props} className={"h-[120px] min-w-[250px] max-w-[250px] flex flex-row gap-4 p-2 shadow-md justify-center items-center lg:min-w-[300px] lg:max-w-[300px] lg:h-[160px] lg:p-4"}>
       <Picture
         webp={findImage(product?._id, "PRD", "webp")}
         jpg={findImage(product?._id, "PRD", "jpg")}

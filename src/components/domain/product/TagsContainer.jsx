@@ -15,7 +15,7 @@ function TagsContainer({ tags, ...props }) {
 
   const handleClickTag = (tag) => {
     //* Ir al menu, e introducir el tag en el buscador
-    redirectToFirstCategory({searchParams: `tag=${tag}`});
+    redirectToFirstCategory(`tag=${tag}`);
   }
 
   return (

@@ -21,7 +21,6 @@ export const stopLoading = () => {
 };
 
 export const addToast = (text, type = "success") => {
-  console.log(text, type);
   toast[type](text);
 };
 

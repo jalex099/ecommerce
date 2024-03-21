@@ -13,7 +13,6 @@ export default function SearchContainer() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    console.log("Entro")
     const search = searchParams.get("tag");
     if (search) {
       searchRef.current.value = search;

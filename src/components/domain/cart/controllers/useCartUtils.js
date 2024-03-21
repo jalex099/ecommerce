@@ -146,6 +146,10 @@ export default function useCartUtils() {
     cart?.removeAllFromCart();
     if(cart?.getSyncable())
       cart?.setSyncable(false);
+    if(cart?.getCartId())
+      cart?.setCartId(null);
+    if(cart?.getCartCode())
+      cart?.setCartCode(null);
   };
 
   return {

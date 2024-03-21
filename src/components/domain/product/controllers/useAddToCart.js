@@ -16,7 +16,6 @@ export default function useAddToCart() {
   const addToCart = () => {
     if (!validateProduct()) return;
     const itemToAdd = serializeState(temp);
-    console.log(itemToAdd)
     let aditionalPrice = 0;
     const options = itemToAdd?.options?.reduce((acc, option) => {
       const selectedOption = option?.options?.find(

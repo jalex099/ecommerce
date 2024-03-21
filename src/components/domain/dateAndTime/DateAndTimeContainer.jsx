@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 import { useHookstate } from "@hookstate/core";
 import { format, parse } from "date-fns";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { DEFAULT_DAYS_TO_DELIVER, MIN_TIME_HOUR, MAX_TIME_HOUR } from "#/config/constants.js";
 import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
 import { Button } from "@mui/material";
@@ -21,6 +21,7 @@ const DateAndTimeContainer = () => {
     // Sumarle a la fecha actual los días de entrega por defecto
     const date = new Date();
     date.setDate(date.getDate() + DEFAULT_DAYS_TO_DELIVER);
+    date.setHours(0, 0, 0, 0);
     minDate.set(date);
     minTime.set(parse(MIN_TIME_HOUR, "HH:mm", new Date()), "HH:mm");
     maxTime.set(parse(MAX_TIME_HOUR, "HH:mm", new Date()), "HH:mm");
@@ -44,6 +45,16 @@ const DateAndTimeContainer = () => {
     location?.fillDateTime(tempDate?.value)
     location?.continueFromDateTime();
   }
+
+  const isValidDate = useMemo(() => {
+    if (tempDate?.value === null) return false;
+    if (tempDate?.value < minDate?.value) return false;
+    if (tempDate?.value.getHours() < minTime?.value.getHours()) return false;
+    if (tempDate?.value.getHours() === minTime?.value.getHours() && tempDate?.value.getMinutes() < minTime?.value.getMinutes()) return false;
+    if (tempDate?.value.getHours() > maxTime?.value.getHours()) return false;
+    if (tempDate?.value.getHours() === maxTime?.value.getHours() && tempDate?.value.getMinutes() > maxTime?.value.getMinutes()) return false;
+    return true;
+  }, [tempDate?.value]);
 
 
   return (
@@ -89,6 +100,7 @@ const DateAndTimeContainer = () => {
         variant={"contained"}
         color={"primary"}
         fullWidth
+        disabled={!isValidDate}
         onClick={handleConfirm}
       >
         Continuar

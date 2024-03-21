@@ -37,6 +37,11 @@ const CartService = () => {
   const saveCart = useMutation({
     mutationFn: _saveCart,
     onSuccess: ({ data }) => {
+      if(data === null) {
+        queryClient.invalidateQueries(["auth_getCarts"], {});
+        cart?.clean();
+        return;
+      }
       fillFromApi(data);
       cart?.setDirty(false);
     },

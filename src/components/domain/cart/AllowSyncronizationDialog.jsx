@@ -6,7 +6,7 @@ import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Regular16 from "#/components/shared/fonts/Regular16";
 import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import useCartSyncUtils from "#/components/domain/cart/controllers/useCartSyncUtils";
 import { useCartState } from "#/stores/cart";
@@ -17,6 +17,7 @@ const AllowSyncronizationDialog = ({ isOpen, handleClose }) => {
   const { saveCartFirstTime } = useCartSyncUtils();
   const cart = useCartState();
   const queryClient = useQueryClient();
+
 
   const handleSyncCart = () => {
     const name = nameRef?.current?.value;
@@ -52,6 +53,7 @@ const AllowSyncronizationDialog = ({ isOpen, handleClose }) => {
             autoComplete="off"
             sx={{ width: "100%" }}
             inputRef={nameRef}
+            autoFocus={isOpen}
           />
         </Box>
       </DialogContent>

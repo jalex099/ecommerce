@@ -7,6 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail
 } from "firebase/auth";
 import { removeKey, setKey } from "#/utils/localStorageHelper";
 import { useAuthState } from "#/stores/AuthState";
@@ -168,6 +169,18 @@ const AuthService = () => {
     }
   };
 
+  const sendEmailResetPassword = async (email) => {
+    try {
+      startLoading();
+      await sendPasswordResetEmail(auth, email);
+      addToast("Se ha enviado un correo para restablecer tu contraseña", "success");
+    } catch (error) {
+      onError(error);
+    } finally {
+      stopLoading();
+    }
+  }
+
   return {
     loginWithEmailAndPassword,
     loginWithGoogle,
@@ -175,6 +188,7 @@ const AuthService = () => {
     logout,
     verifyAuth,
     registerWithEmailAndPassword,
+    sendEmailResetPassword
   };
 };
 

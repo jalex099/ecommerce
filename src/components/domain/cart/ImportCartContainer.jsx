@@ -53,6 +53,7 @@ export default function ImportCartContainer({
                 autoComplete="off"
                 sx={{ width: "100%" }}
                 inputRef={codeRef}
+                autoFocus={isOpen}
               />
               <Button
                 variant="contained"

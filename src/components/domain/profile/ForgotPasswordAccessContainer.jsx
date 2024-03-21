@@ -1,10 +1,8 @@
 import Box from "@mui/material/Box";
 import Regular14 from "#/components/shared/fonts/Regular14";
+import AuthService from "#/services/AuthService";
 
-function ForgotPasswordAccessContainer() {
-  const handleForgotPassword = () => {
-    console.log("Forgot Password");
-  };
+function ForgotPasswordAccessContainer({handleForgotPassword}) {
 
   return (
     <Box sx={style.container}>

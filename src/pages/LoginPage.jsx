@@ -29,6 +29,10 @@ export default function LoginPage() {
     navigate("/registro");
   };
 
+  const handleForgotPassword = () => {
+    navigate("/olvide-mi-contrasena");
+  };
+
   const handleGoogleLogin = async () => {
     await loginWithGoogle();
   };
@@ -44,6 +48,7 @@ export default function LoginPage() {
       {auth?.isVerified && (
         <SignInOptions
           handleRegister={handleRegister}
+          handleForgotPassword={handleForgotPassword}
           handleGoogleLogin={handleGoogleLogin}
           handleFacebookLogin={handleFacebookLogin}
         />

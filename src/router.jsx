@@ -58,6 +58,12 @@ const RegisterPage = () => (
   </DynamicImport>
 );
 
+const ForgotPasswordPage = () => (
+  <DynamicImport load={() => import("#/pages/ForgotPasswordPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const CartPage = () => (
   <DynamicImport load={() => import("#/pages/CartPage.jsx")}>
     {(Component) => (Component === null ? <></> : <Component />)}
@@ -112,6 +118,7 @@ const NotFoundPage = () => (
   </DynamicImport>
 );
 
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -126,6 +133,7 @@ const RoutesApp = () => {
         {/* AUTHENTICATION AND REGISTER */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
+        <Route path="/olvide-mi-contrasena" element={<ForgotPasswordPage />} />
         {/* PROFILE */}
         <Route
           path="/perfil"

@@ -7,12 +7,12 @@ import EmailAndPasswordLoginForm from "#/components/domain/profile/EmailAndPassw
 import ForgotPasswordAccessContainer from "#/components/domain/profile/ForgotPasswordAccessContainer";
 import FacebookLoginButton from "#/components/domain/profile/FacebookLoginButton";
 
-function SignInOptions({ handleRegister, handleGoogleLogin, handleFacebookLogin }) {
+function SignInOptions({ handleRegister, handleForgotPassword, handleGoogleLogin, handleFacebookLogin }) {
   return (
     <Box sx={style.container}>
       <EmailAndPasswordLoginForm />
       <Box sx={style.subcontainer}>
-        <ForgotPasswordAccessContainer />
+        <ForgotPasswordAccessContainer handleForgotPassword={handleForgotPassword} />
         <RegisterAccessContainer handleRegister={handleRegister} />
       </Box>
       <Box sx={style.o}>

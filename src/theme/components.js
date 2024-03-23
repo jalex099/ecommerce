@@ -336,6 +336,15 @@ const components = {
       },
     },
   },
+  MuiSelect: {
+    styleOverrides: {
+      select: {
+        "&:focus": {
+          backgroundColor: "transparent",
+        },
+      },
+    },
+  },
 };
 
 export default components;

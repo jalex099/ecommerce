@@ -31,7 +31,7 @@ const ClientUserDetailService = () => {
   });
 
   return {
-    userDetail: data?.data,
+    userDetail: data?.data && data?.data?.length > 0 ? data?.data[0] : null,
     isLoading,
     isRefetching,
     save,

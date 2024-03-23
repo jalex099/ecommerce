@@ -6,9 +6,11 @@ import { useEffect } from "react";
 import { useAuthState } from "#/stores/AuthState.js";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import InputMask from "react-input-mask";
+import ClientUserDetailService from "#/services/ClientUserDetailService.js";
 
 const GeneralInformationForm = ()=> {
   const auth = useAuthState();
+  const { userDetail} = ClientUserDetailService();
   const checkoutState = useCheckoutState();
 
   useEffect(() => {
@@ -19,6 +21,13 @@ const GeneralInformationForm = ()=> {
       checkoutState?.setCompleteName(auth?.currentUser?.displayName);
     }
   }, [auth?.currentUser?.email, auth?.currentUser?.displayName]);
+
+  useEffect(() => {
+    if(!userDetail) return;
+    if(userDetail?.phone){
+      checkoutState?.setPhone(userDetail?.phone);
+    }
+  }, [userDetail]);
 
 
   const handleChangeCompleteName = (e) => {

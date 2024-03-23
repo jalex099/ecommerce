@@ -28,7 +28,7 @@ const AccountSettingsContainer = () => {
     accountData?.country?.set(userDetail?.country || '');
     accountData?.invoiceName?.set(userDetail?.invoiceName || '');
     accountData?.invoiceNumber?.set(userDetail?.invoiceNumber || '');
-  }, []);
+  }, [userDetail]);
 
   useEffect(() => {
     // Remover del telefono los simbolos

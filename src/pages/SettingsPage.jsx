@@ -18,7 +18,7 @@ const settings = [
     title: "Cuenta",
     items: [
       { name: "Información personal", to: "/ajustes/cuenta", id: "INFORMACION_PERSONAL", isActive: true },
-      { name: "Métodos de pago", to: "/ajustes/metodos-de-pago", id: "METODOS_DE_PAGO", isActive: true },
+      { name: "Métodos de pago", to: "/ajustes/metodos-de-pago", id: "METODOS_DE_PAGO", isActive: false },
     ],
   },
   {
@@ -30,7 +30,7 @@ const settings = [
   {
     title: "Soporte",
     items: [
-      { name: "Ayuda", to: "/ajustes/ayuda", id: "AYUDA", isActive: true },
+      { name: "Ayuda", to: "/ajustes/ayuda", id: "AYUDA", isActive: false },
       { name: "Contáctanos", to: "/ajustes/contacto", id: "CONTACTO", isActive: true },
     ],
   },

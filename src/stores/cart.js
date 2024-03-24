@@ -250,6 +250,13 @@ const addCart = (state) => ({
 
   // //* Setea el nombre del carrito
   setName: (name) => state.name.set(name),
+
+  // //* Limpia los estados de sincronizacion
+  cleanSync: () => {
+    state.IsSyncable.set(false);
+    state._id.set(null);
+    state.code.set(null);
+  },
 });
 
 export const useCartState = () => {

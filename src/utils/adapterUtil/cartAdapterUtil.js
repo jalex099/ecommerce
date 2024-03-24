@@ -8,8 +8,9 @@ export const parseMenu = (menu) => {
         return [
           ...accOpt,
           {
-            option: opt?.option,
+            label: opt?.label,
             selected: opt?.selected,
+            aditionalPrice: opt?.aditionalPrice,
           },
         ];
       }, []),

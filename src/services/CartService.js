@@ -38,16 +38,18 @@ const CartService = () => {
     mutationFn: _saveCart,
     onSuccess: ({ data }) => {
       if(data === null) {
-        queryClient.invalidateQueries(["auth_getCarts"], {});
         cart?.clean();
+        cart?.addToLocalStorage();
+        queryClient.invalidateQueries(["auth_getCarts"], {});
         return;
       }
       fillFromApi(data);
       cart?.setDirty(false);
     },
     onError: (error) => {
-      console.log(error?.response?.data);
       addToast("Hubo un error al guardar el carrito", "error");
+      cart?.cleanSync();
+      cart?.addToLocalStorage();
     },
   });
 

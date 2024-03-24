@@ -67,10 +67,10 @@ const LayoutPage = () => {
     if (pathname === "/carrito") return;
     if (!cart?.getDirty()) return;
     saveCartExisting({
-      onSuccess: () => {
+      onSuccess: (data) => {
         cart?.setDirty(false);
-        cart?.setSyncable(true);
-      },
+        cart?.setSyncable(!!data);
+      }
     });
   }, [cart?.getItemsCounter(), pathname]);
 

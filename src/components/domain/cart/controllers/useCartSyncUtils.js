@@ -26,6 +26,7 @@ export default function useCartSyncUtils() {
   };
 
   const saveCartExisting = ({ onSuccess }) => {
+    // if(!cart?.getCartId()) return;
     _saveCart.mutate(
       {
         _id: cart?.getCartId(),

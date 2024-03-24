@@ -33,7 +33,7 @@ export default function useCartUtils() {
     const options = product?.options;
     if (!options) return [];
     return optionsSavedOnCart?.reduce((acc, optionSavedOnCart, index) => {
-      const selectedDetail = options[index]?.options?.find(
+      const selectedDetail = options[index]?.subOptions?.find(
         (option) => option?._id === optionSavedOnCart?.selected
       );
       let response = {
@@ -76,20 +76,19 @@ export default function useCartUtils() {
           // Encontrar la opcion seleccionada dentro del cartItemProduct
           const selectedOption = cartItemProduct?.options?.find(
             (cartItemOption, index) =>
-              cartItemOption?.option === productOption?._id &&
+              cartItemOption?.label === productOption?.label &&
               indexProductOption === index
           );
           // Detalles de la opcion seleccionada
-          const selectedDetail = productOption?.options?.find(
+          const selectedDetail = productOption?.subOptions?.find(
             (option) => option?._id === selectedOption?.selected
           );
-
           if (!selectedOption) return accOption;
           aditionalPrice += selectedDetail?.aditionalPrice || 0;
           return [
             ...accOption,
             {
-              option: productOption?._id,
+              label: productOption?.label,
               selected: selectedOption?.selected,
               aditionalPrice: selectedDetail?.aditionalPrice,
             },
@@ -138,7 +137,7 @@ export default function useCartUtils() {
     cart?.setCartCode(cartCode);
     cart?.setItems(menuItems);
     cart?.setName(cartName);
-    cart?.setSyncable(true);
+    cart?.setSyncable(!!cartId);
     cart?.updateOrdenAgregado(menuItems?.length);
   };
 

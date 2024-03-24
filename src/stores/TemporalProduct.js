@@ -50,11 +50,10 @@ export const useTemporalProduct = () => {
     state.options?.set(
       options?.reduce((acc, option) => {
         const opt = {
-          _id: option?._id,
           label: option?.label,
           selected: null,
           options: orderBy(
-            option?.options?.reduce((acc, suboption) => {
+            option?.subOptions?.reduce((acc, suboption) => {
               const opt = {
                 ...suboption,
                 suggest: preferences?.values?.includes(suboption?.option?._id),

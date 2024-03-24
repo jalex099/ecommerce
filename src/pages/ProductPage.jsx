@@ -23,13 +23,14 @@ import DiscountChipContainer from "#/components/domain/product/DiscountChipConta
 import { useMediaQuery } from "@mui/material";
 import SemiBold24 from "#/components/shared/fonts/SemiBold24.jsx";
 import Bold20 from "#/components/shared/fonts/Bold20.jsx";
+import ProductCounter from "#/components/domain/product/ProductCounter.jsx";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
   const { findImage } = ImageService();
   const { id } = useParams();
   const ui = useUIState();
-  const { initTemp, clearTemp, temporal, getOptionsSubtotal, handleAddToCart } =
+  const { initTemp, clearTemp, temporal, getOptionsSubtotal, handleAddToCart, handleDecrement, handleIncrement } =
     ProductController();
   const isLg = useMediaQuery(theme => theme.breakpoints.up('lg'));
 
@@ -70,14 +71,16 @@ const ProductPage = () => {
             borderRadius: "16px",
           }}
         />
-        <ProductDetails temporal={temporal} optionsSubtotal={optionsSubtotal} handleAddToCart={handleAddToCart} isLg={isLg}/>
+        <ProductDetails temporal={temporal} optionsSubtotal={optionsSubtotal} handleAddToCart={handleAddToCart} isLg={isLg}
+          handleDecrement={handleDecrement} handleIncrement={handleIncrement}
+        />
       </Box>
 
     </Container>
   );
 };
 
-const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg }) => {
+const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, handleDecrement, handleIncrement }) => {
   return (
     <Box className={"flex-1 flex flex-col gap-[24px]"}>
       <Box className="flex flex-col gap-1 relative">
@@ -123,7 +126,10 @@ const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg }) =>
       </Box>
       <ProductConfigContainer options={temporal?.options} />
 
-      <AddToCartButton onClick={handleAddToCart} />
+      <Box className={"flex flex-row gap-3 items-center justify-center h-[70px]"}>
+        <ProductCounter quantity={temporal?.quantity} handleDecrement={handleDecrement} handleIncrement={handleIncrement} />
+        <AddToCartButton onClick={handleAddToCart} />
+      </Box>
       {optionsSubtotal > 0 && (
         <Regular12 className="w-full opacity-70">
           * Los precios pueden variar seg&uacute;n tu selecci&oacute;n de

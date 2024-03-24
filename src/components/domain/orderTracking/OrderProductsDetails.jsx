@@ -7,6 +7,7 @@ import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import Bold16 from "#/components/shared/fonts/Bold16.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
+import { formatCurrency } from "#/utils/currency.js";
 
 
 const OrderProductsDetails = ({ menu : menuOrder }) => {
@@ -26,13 +27,21 @@ const OrderProductsDetails = ({ menu : menuOrder }) => {
                   className={"w-full h-full object-cover rounded-2xl"}
                 />
               </Box>
-              <Box className={"flex flex-row gap-1"}>
-                <SemiBold14>
-                  {product?.quantity} x
-                </SemiBold14>
-                <Regular14>
-                  {productData?.name}
-                </Regular14>
+              <Box className={"flex flex-col gap-0"}>
+                <Box className={"flex flex-row gap-1"}>
+                  <SemiBold14>
+                    {product?.quantity} x
+                  </SemiBold14>
+                  <Regular14>
+                    {productData?.name}
+                  </Regular14>
+                </Box>
+                <Box className={"text-right"}>
+                  <Regular14 className={"opacity-80"}>
+                    {formatCurrency(product?.total || 0)}
+                  </Regular14>
+                </Box>
+
               </Box>
             </Box>
           )

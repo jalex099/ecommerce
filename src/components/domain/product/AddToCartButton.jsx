@@ -18,7 +18,7 @@ const AddToCartButton = ({ ...props }) => {
 
 const style = {
   container: {
-    minHeight: "32px",
+    height: '50px',
     width: "80vw",
     maxWidth: "400px",
     margin: "0 auto",

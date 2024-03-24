@@ -8,7 +8,7 @@ import DataService from "#/services/DataService";
 import { isPast, parseISO } from "date-fns";
 
 const ProductController = () => {
-  const { temp, setSelectedOption, clear, fill, updatePriceFromOffer } =
+  const { temp, setSelectedOption, clear, fill, updatePriceFromOffer, increment, decrement } =
     useTemporalProduct();
   const { addToCart } = useAddToCart();
   const { findProductByUrlNameOrId } = RedirectionService();
@@ -88,7 +88,6 @@ const ProductController = () => {
     const optionsPrice = getOptionsSubtotal();
     return basePrice + optionsPrice;
   };
-
   const areAllOptionsSelected = () => {
     return temp?.options?.every((option) => option?.selected !== null);
   };
@@ -109,6 +108,14 @@ const ProductController = () => {
     addToCart();
   };
 
+  const handleIncrement = () => {
+    increment();
+  };
+
+  const handleDecrement = () => {
+    decrement();
+  }
+
   return {
     initTemp,
     clearTemp,
@@ -122,6 +129,8 @@ const ProductController = () => {
     handleAddToCart,
     isOptionSelected,
     areAllOptionsSelected,
+    handleIncrement,
+    handleDecrement,
   };
 };
 

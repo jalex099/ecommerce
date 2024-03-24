@@ -13,6 +13,7 @@ const temporalProduct = hookstate({
   tags: [],
   isOffer: false,
   discount: 0,
+  quantity: 1,
 });
 
 export const useTemporalProduct = () => {
@@ -30,6 +31,7 @@ export const useTemporalProduct = () => {
     state.tags.set([]);
     state.isOffer.set(false);
     state.discount.set(0);
+    state.quantity.set(1);
   };
 
   const fill = ({
@@ -47,6 +49,7 @@ export const useTemporalProduct = () => {
     state.description.set(description);
     state.price.set(price);
     state.category.set(category);
+    state.quantity.set(1);
     state.options?.set(
       options?.reduce((acc, option) => {
         const opt = {
@@ -114,6 +117,16 @@ export const useTemporalProduct = () => {
     }
   };
 
+  const increment = () => {
+    if (state.quantity.get() === 10) return;
+    state.quantity.set(state.quantity.get() + 1);
+  };
+
+  const decrement = () => {
+    if (state.quantity.get() === 1) return;
+    state.quantity.set(state.quantity.get() - 1);
+  };
+
   return {
     clear,
     fill,
@@ -121,5 +134,7 @@ export const useTemporalProduct = () => {
     setSelectedOption,
     preparedDataToServer,
     updatePriceFromOffer,
+    increment,
+    decrement,
   };
 };

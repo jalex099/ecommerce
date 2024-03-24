@@ -24,21 +24,22 @@ const OrderTrackingPage = () => {
   useEffect(() => {
     if(!id) {
       alert("Error al obtener la orden")
-      navigate("/", { replace: true });
+      navigate(-1);
       return;
     }
     getOrder?.mutate(id, {
       onSuccess: ({ data }) => {
-        order.set(data);
         if(!data) {
           alert("Error al obtener la orden")
-          navigate("/", { replace: true });
+          navigate(-1);
+          return;
         }
+        order.set(data);
       },
       onError: (error) => {
         console.log(error)
         alert("Error al obtener la orden")
-        navigate("/", { replace: true });
+        navigate(-1);
         return;
       }
     })

@@ -26,7 +26,7 @@ const Picture = ({
           ...imgStyle,
         }}
         layout
-        whileTap={blockAnimation ? {} : { scale: 0.95 }}
+        whileTap={blockAnimation ? {} : { scale: 1.05 }}
         onContextMenu={(e) => e.preventDefault()}
       />
     </picture>

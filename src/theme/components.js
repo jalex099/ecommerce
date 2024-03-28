@@ -286,6 +286,10 @@ const components = {
       root: {
         padding: "0px",
         color: "#0E0E10",
+        "&.Mui-disabled": {
+          backgroundColor: "transparent !important",
+          opacity: "0.2",
+        }
       },
     },
   },

@@ -15,14 +15,9 @@ export default function ProductCounter({ quantity, handleDecrement, handleIncrem
       className="flex flex-row items-center h-[50px] w-[140px] gap-0 m-0 rounded-md"
       sx={{ bgcolor: (theme) => theme.palette.neutral5.main }}
     >
-      {quantity === 1 && (
-        <IconButton sx={style.button}>
-          <Box className={"w-4 h-4"} />
-        </IconButton>
-      )}
 
-      {quantity > 1 && (
-        <IconButton sx={style.button} onClick={handleDecrement}>
+      {quantity !== null && (
+        <IconButton sx={style.button} onClick={handleDecrement} disabled={quantity === 1}>
           <MinusIcon className="w-4 h-4" />
         </IconButton>
       )}
@@ -39,7 +34,7 @@ export default function ProductCounter({ quantity, handleDecrement, handleIncrem
 
 const style = {
   button: {
-    height: "100%",
     width: "32px",
+    height: "32px",
   },
 };

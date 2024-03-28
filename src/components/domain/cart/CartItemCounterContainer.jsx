@@ -53,7 +53,7 @@ export default function CartItemCounterContainer({ _id, index, quantity }) {
 
 const style = {
   button: {
-    height: "100%",
     width: "32px",
+    height: "32px",
   },
 };

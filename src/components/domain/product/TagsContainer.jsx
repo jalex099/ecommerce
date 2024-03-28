@@ -25,7 +25,9 @@ function TagsContainer({ tags, ...props }) {
         aria-controls="panel-tags-content"
         id="panel-tags-header"
       >
-        <Regular18>Tags</Regular18>
+        <Regular18>
+          Etiquetas
+        </Regular18>
       </AccordionSummary>
       <AccordionDetails>
         <Box className="flex flex-row gap-2 w-full flex-wrap" sx={style.tag}>

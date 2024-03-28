@@ -6,8 +6,13 @@ import MinusIcon from "#/components/shared/icons/MinusIcon.jsx";
 import Box from "@mui/material/Box";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import AddIcon from "#/components/shared/icons/AddIcon.jsx";
+import { MAX_ITEMS_COUNTER } from "#/config/constants.js";
 
-export default function ProductCounter({ quantity, handleDecrement, handleIncrement}) {
+export default function ProductCounter({ quantity, handleDecrement, handleIncrement : handleIncrementParent}) {
+  const handleIncrement = () => {
+    if (quantity >= MAX_ITEMS_COUNTER) return;
+    handleIncrementParent();
+  }
   return (
     <ButtonGroup
       variant="text"
@@ -25,7 +30,7 @@ export default function ProductCounter({ quantity, handleDecrement, handleIncrem
       <Box className="flex-1 text-center">
         <SemiBold14>{quantity}</SemiBold14>
       </Box>
-      <IconButton sx={style.button} onClick={handleIncrement}>
+      <IconButton sx={style.button} onClick={handleIncrement} disabled={quantity >= MAX_ITEMS_COUNTER} >
         <AddIcon className="w-4 h-4" />
       </IconButton>
     </ButtonGroup>

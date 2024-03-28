@@ -50,6 +50,8 @@ export const DEFAULT_DAYS_TO_DELIVER = 2;
 export const MIN_TIME_HOUR = "08:00";
 export const MAX_TIME_HOUR = "18:00";
 
+export const MAX_ITEMS_COUNTER = 10;
+
 export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/perfil/agregar-direccion",
   "/producto/",

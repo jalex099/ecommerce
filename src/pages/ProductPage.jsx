@@ -128,7 +128,7 @@ const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, hand
 
       <Box className={"flex flex-row gap-3 items-center justify-center h-[70px]"}>
         <ProductCounter quantity={temporal?.quantity} handleDecrement={handleDecrement} handleIncrement={handleIncrement} />
-        <AddToCartButton onClick={handleAddToCart} />
+        <AddToCartButton onClick={handleAddToCart} total={formatCurrency((temporal?.price + optionsSubtotal) * temporal?.quantity)}/>
       </Box>
       {optionsSubtotal > 0 && (
         <Regular12 className="w-full opacity-70">

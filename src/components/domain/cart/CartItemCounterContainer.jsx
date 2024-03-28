@@ -6,11 +6,13 @@ import AddIcon from "#/components/shared/icons/AddIcon";
 import TrashIcon from "#/components/shared/icons/TrashIcon";
 import MinusIcon from "#/components/shared/icons/MinusIcon";
 import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
+import { MAX_ITEMS_COUNTER } from "#/config/constants.js";
 
 export default function CartItemCounterContainer({ _id, index, quantity }) {
   const { handleRemoveFromCart, handleUpdateQuantity } = useCartUtils();
 
   const handleAdd = () => {
+    if (quantity >= MAX_ITEMS_COUNTER) return;
     handleUpdateQuantity("add", index);
   };
 
@@ -44,7 +46,9 @@ export default function CartItemCounterContainer({ _id, index, quantity }) {
       <Box className="flex-1 text-center">
         <SemiBold14>{quantity}</SemiBold14>
       </Box>
-      <IconButton sx={style.button} onClick={handleAdd}>
+      <IconButton sx={style.button} onClick={handleAdd}
+        disabled={quantity >= MAX_ITEMS_COUNTER}
+      >
         <AddIcon className="w-4 h-4" />
       </IconButton>
     </ButtonGroup>

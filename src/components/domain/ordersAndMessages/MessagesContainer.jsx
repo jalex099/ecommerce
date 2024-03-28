@@ -8,7 +8,7 @@ const MessagesContainer = () => {
       <Regular20>
         &Eacute;sta funcionalidad a&uacute;n no est&aacute; disponible.
       </Regular20>
-    <NotAvailableIcon className={"w-24"}/>
+    <NotAvailableIcon className={"w-16"}/>
     </Box>
   )
 }

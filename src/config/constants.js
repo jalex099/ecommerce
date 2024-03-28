@@ -23,6 +23,7 @@ export const IMAGES_TYPES = {
 };
 
 export const SUPPORT_EMAIL = "javiermoralesmelara@gmail.com";
+export const SUPPORT_WHATSAPP = "50372709725";
 
 export const FADE_ANIMATION = {
   initial: { opacity: 0, scale: 0.85 },

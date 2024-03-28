@@ -10,11 +10,12 @@ import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import SemiBold20 from "#/components/shared/fonts/SemiBold20.jsx";
 import { useMemo } from "react";
-import { DELIVERY_METHODS } from "#/config/constants.js";
+import { DELIVERY_METHODS, PAYMENT_METHODS } from "#/config/constants.js";
 import DataService from "#/services/DataService.js";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
+import { formatCurrency } from "#/utils/currency.js";
 
 const OrderGeneralDetails = ({ order }) => {
   const { shops, meetups } = DataService();
@@ -108,6 +109,55 @@ const OrderGeneralDetails = ({ order }) => {
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded?.value === 1} onChange={handleChange(1)}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="payment-info"
+          id="panel-payment-info"
+        >
+          <Box className={"w-full flex flex-row gap-2"}>
+            <SemiBold16  className={"flex-1"} >
+              Pago
+            </SemiBold16>
+            <Regular14 styles={{color: t=>t?.palette?.neutral40?.main}}>
+              Total y forma de pago
+            </Regular14>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box className={"w-full flex flex-col gap-2"}>
+            <Box className={"flex flex-col justify-start w-full"}>
+              <SemiBold14>
+                Total pagado:
+              </SemiBold14>
+              <Regular14>
+                {formatCurrency(order?.total || 0)}
+              </Regular14>
+            </Box>
+            <Box className={"flex flex-col justify-start w-full"}>
+              <SemiBold14>
+                Forma de pago:
+              </SemiBold14>
+              <Regular14>
+                {
+                  PAYMENT_METHODS?.find(method => method?.code === order?.paymentMethod)?.label || "No identificado"
+                }
+                { " " }
+                {
+                  order?.paymentStatus !== "PAID" ? "(Pendiente)" : "(Pagado)"
+                }
+              </Regular14>
+              {
+                order?.paymentDate !== null && (
+                  <Regular12>
+                    {format(new Date(order?.paymentDate), "dd/MM/yyyy - hh:mm a")}
+                  </Regular12>
+                )
+              }
+            </Box>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded={expanded?.value === 2} onChange={handleChange(2)}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="delivery-info"

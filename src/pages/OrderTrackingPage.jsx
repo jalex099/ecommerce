@@ -59,7 +59,7 @@ const OrderTrackingPage = () => {
         <OrderDetailContainer order={order?.value}/>
       </Box>
       <Box
-        className={"sticky bottom-0 left-0 right-0 w-full"}>
+        className={"sticky bottom-2 left-0 right-0 w-full"}>
         <Button variant="contained" color="primary" onClick={handleGoHome} fullWidth>
           Ir al inicio
         </Button>

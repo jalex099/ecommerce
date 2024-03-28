@@ -9,6 +9,7 @@ function GoBackIcon({ styles = {}, containerStyle = {} }) {
   const locationState = useLocationState();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const params = new URLSearchParams(location.search);
   const handleClick = () => {
     if (pathname === "/pago" && checkoutState?.activeStep !== 0) {
       checkoutState?.handlePreviousStep();
@@ -21,6 +22,14 @@ function GoBackIcon({ styles = {}, containerStyle = {} }) {
       }
       locationState?.prevStep();
       return
+    }
+    if(params.get("back") && params.get("back") === 'disabled'){
+      const pathnameToGo = params.get("pathname");
+      if(!pathnameToGo) {
+        navigate("/", { replace: true });
+        return;
+      }
+      navigate(pathnameToGo, { replace: true });
     }
     navigate(-1);
   };

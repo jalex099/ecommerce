@@ -65,7 +65,7 @@ const OrderService = ()=>{
       queryClient.invalidateQueries(["orders-all"], {});
       addToast("Tu orden se ha guardado correctamente", "success")
       if(data?._id)
-        navigate(`/rastreo-de-orden/${data._id}`, {replace: true})
+        navigate(`/rastreo-de-orden/${data._id}?back=disabled&pathname=/`, {replace: true})
       else
         navigate(`/`, {replace: true})
     },

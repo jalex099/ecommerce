@@ -48,6 +48,7 @@ const OrderTrackingPage = () => {
 
 
   const handleGoHome = () => {
+
     navigate("/");
   };
   if(!order?.value) return <></>

@@ -58,6 +58,12 @@ const RegisterPage = () => (
   </DynamicImport>
 );
 
+const ForgotPasswordPage = () => (
+  <DynamicImport load={() => import("#/pages/ForgotPasswordPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 const CartPage = () => (
   <DynamicImport load={() => import("#/pages/CartPage.jsx")}>
     {(Component) => (Component === null ? <></> : <Component />)}
@@ -88,6 +94,31 @@ const DateAndTimePage = () => (
   </DynamicImport>
 );
 
+const OrderTrackingPage = () => (
+  <DynamicImport load={() => import("#/pages/OrderTrackingPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
+const SettingsPage = () => (
+  <DynamicImport load={() => import("#/pages/SettingsPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
+const SettingsActionsPage = () => (
+  <DynamicImport load={() => import("#/pages/SettingsActionsPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
+const NotFoundPage = () => (
+  <DynamicImport load={() => import("#/pages/NotFoundPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
+
 const RoutesApp = () => {
   const auth = useAuthState();
   return (
@@ -102,6 +133,7 @@ const RoutesApp = () => {
         {/* AUTHENTICATION AND REGISTER */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
+        <Route path="/olvide-mi-contrasena" element={<ForgotPasswordPage />} />
         {/* PROFILE */}
         <Route
           path="/perfil"
@@ -132,7 +164,27 @@ const RoutesApp = () => {
         <Route path="/carrito" element={<CartPage />} />
         {/* CHECKOUT */}
         <Route path="/pago" element={<CheckoutPage />} />
+        {/* ORDER CONFIRMATION */}
+        <Route
+          path="/rastreo-de-orden/:id"
+          element={<OrderTrackingPage />}
+        />
+        {/* SETTINGS */}
+        <Route path={"/ajustes/:section"} element={
+          <ProtectedAuthRoute auth={auth}>
+            <SettingsActionsPage />
+          </ProtectedAuthRoute>}
+        />
+        <Route
+          path="/ajustes"
+          element={
+            <ProtectedAuthRoute auth={auth}>
+              <SettingsPage />
+            </ProtectedAuthRoute>
+          } />
       </Route>
+      <Route path="/404" element={<NotFoundPage/>} />
+      <Route path={"*"} element={<Navigate to="/404" />} />
     </Routes>
   );
 };

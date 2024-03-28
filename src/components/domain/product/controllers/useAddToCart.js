@@ -26,7 +26,7 @@ export default function useAddToCart() {
       return [
         ...acc,
         {
-          option: option?._id,
+          label: option?.label,
           selected: option?.selected,
           aditionalPrice: selectedOption?.aditionalPrice,
         },
@@ -35,6 +35,7 @@ export default function useAddToCart() {
     cart?.add({
       _id: itemToAdd?._id,
       name: itemToAdd?.name,
+      nonOfferPrice: (itemToAdd?.price + aditionalPrice + itemToAdd?.discount) || itemToAdd?.price,
       basePrice: itemToAdd?.price,
       quantity: itemToAdd?.quantity || 1,
       aditionalPrice,
@@ -76,7 +77,7 @@ export default function useAddToCart() {
       const selected = option?.selected;
       const existsSelectedInMenuItem = itemInMenu?.options?.[
         index
-      ]?.options?.find((subopt) => subopt?._id === selected);
+      ]?.subOptions?.find((subopt) => subopt?._id === selected);
       return existsSelectedInMenuItem;
     });
     if (!optionsAreValid) {

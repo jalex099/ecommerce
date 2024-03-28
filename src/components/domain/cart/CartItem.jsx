@@ -16,6 +16,7 @@ function CartItem({
   _id,
   index,
   name,
+  nonOfferPrice,
   basePrice,
   aditionalPrice,
   quantity,
@@ -73,7 +74,7 @@ function CartItem({
             />
           </Box>
           <Box className="flex flex-col justify-center items-center text-right gap-0">
-            <Regular16>{formatCurrency(individualPrice)}</Regular16>
+            <Regular16>{formatCurrency(nonOfferPrice)}</Regular16>
             {!!discount && discount > 0 && (
               <SemiBold12 className="w-full" styles={{ color: "#FF7C5A" }}>
                 - {formatCurrency(discount)}

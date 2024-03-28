@@ -5,8 +5,19 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import { useNavigate } from "react-router-dom";
+import RedirectionService from "#/services/RedirectionService.js";
 
 function TagsContainer({ tags, ...props }) {
+  const navigate = useNavigate()
+  const { redirectToFirstCategory } =
+    RedirectionService();
+
+  const handleClickTag = (tag) => {
+    //* Ir al menu, e introducir el tag en el buscador
+    redirectToFirstCategory(`tag=${tag}`);
+  }
+
   return (
     <Accordion {...props}>
       <AccordionSummary
@@ -14,12 +25,14 @@ function TagsContainer({ tags, ...props }) {
         aria-controls="panel-tags-content"
         id="panel-tags-header"
       >
-        <Regular18>Tags</Regular18>
+        <Regular18>
+          Etiquetas
+        </Regular18>
       </AccordionSummary>
       <AccordionDetails>
         <Box className="flex flex-row gap-2 w-full flex-wrap" sx={style.tag}>
           {tags?.map((tag, index) => {
-            return <Regular12 key={index}>{tag}</Regular12>;
+            return <Regular12 key={index} onClick={()=> handleClickTag(tag)}>{tag}</Regular12>;
           })}
         </Box>
       </AccordionDetails>

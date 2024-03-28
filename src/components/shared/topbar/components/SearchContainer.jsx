@@ -2,15 +2,27 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import * as _ from "lodash";
 import DataService from "#/services/DataService";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useHookstate } from "@hookstate/core";
+import { useSearchParams } from "react-router-dom";
 
 export default function SearchContainer() {
   const { menu } = DataService();
   const results = useHookstate([]);
   const searchRef = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSearch = _.debounce(() => {
+  useEffect(() => {
+    const search = searchParams.get("tag");
+    if (search) {
+      searchRef.current.value = search;
+      results.set(
+        menu?.filter((a) => _.values(a).some((b) => _.includes(_.toLower(b), _.toLower(search))))
+      );
+    }
+  }, []);
+
+  const handleSearch = _.debounce(() => {console.log()
     const search = searchRef.current.value;
     if (search.length < 3) {
       results.set([]);

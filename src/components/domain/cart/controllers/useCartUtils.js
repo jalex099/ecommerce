@@ -1,6 +1,7 @@
 import { useCartState } from "#/stores/cart";
 import DataService from "#/services/DataService";
 import serializeState from "#/utils/serializeState";
+import { isPast, parseISO } from "date-fns";
 export default function useCartUtils() {
   const cart = useCartState();
   const { menu, isLoading, offers } = DataService();
@@ -32,7 +33,7 @@ export default function useCartUtils() {
     const options = product?.options;
     if (!options) return [];
     return optionsSavedOnCart?.reduce((acc, optionSavedOnCart, index) => {
-      const selectedDetail = options[index]?.options?.find(
+      const selectedDetail = options[index]?.subOptions?.find(
         (option) => option?._id === optionSavedOnCart?.selected
       );
       let response = {
@@ -75,20 +76,19 @@ export default function useCartUtils() {
           // Encontrar la opcion seleccionada dentro del cartItemProduct
           const selectedOption = cartItemProduct?.options?.find(
             (cartItemOption, index) =>
-              cartItemOption?.option === productOption?._id &&
+              cartItemOption?.label === productOption?.label &&
               indexProductOption === index
           );
           // Detalles de la opcion seleccionada
-          const selectedDetail = productOption?.options?.find(
+          const selectedDetail = productOption?.subOptions?.find(
             (option) => option?._id === selectedOption?.selected
           );
-
           if (!selectedOption) return accOption;
           aditionalPrice += selectedDetail?.aditionalPrice || 0;
           return [
             ...accOption,
             {
-              option: productOption?._id,
+              label: productOption?.label,
               selected: selectedOption?.selected,
               aditionalPrice: selectedDetail?.aditionalPrice,
             },
@@ -99,7 +99,10 @@ export default function useCartUtils() {
       // Verifica si, la cantidad de opciones mapeadas es igual a la cantidad de opciones del producto
       if (options?.length !== product?.options?.length) return acc;
       // Verifica si hay ofertas para ese producto
-      const offer = offers?.find((offer) => offer?.product === product?._id);
+      const offer = offers?.find(
+        (offer) =>
+          offer?.product === product?._id && !isPast(parseISO(offer?.to))
+      );
       // Si hay oferta, se calcula el precio con la oferta
       let discount = 0;
       if (offer) {
@@ -126,6 +129,7 @@ export default function useCartUtils() {
           quantity: cartItemProduct?.quantity,
           options,
           discount,
+          nonOfferPrice: product?.price + aditionalPrice,
         },
       ];
     }, []);
@@ -133,12 +137,18 @@ export default function useCartUtils() {
     cart?.setCartCode(cartCode);
     cart?.setItems(menuItems);
     cart?.setName(cartName);
-    cart?.setSyncable(true);
+    cart?.setSyncable(!!cartId);
     cart?.updateOrdenAgregado(menuItems?.length);
   };
 
   const handleRemoveAllFromCart = () => {
     cart?.removeAllFromCart();
+    if(cart?.getSyncable())
+      cart?.setSyncable(false);
+    if(cart?.getCartId())
+      cart?.setCartId(null);
+    if(cart?.getCartCode())
+      cart?.setCartCode(null);
   };
 
   return {

@@ -11,31 +11,25 @@ import { motion } from "framer-motion";
 import useValidateCheckout
   from "#/components/domain/checkout/controllers/useValidateCheckout.js";
 import { addToast } from "#/stores/UIState.js";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
+import { useMemo } from "react";
 
-export default function StepperIndicator() {
-  const checkoutState = useCheckoutState();
-  const { isValidStep } = useValidateCheckout();
-
-  const handleClick = (index) => {
-    if (!isValidStep()){
-      addToast("Debes completar los campos requeridos", "error");
-      return
-    }
-    checkoutState?.setActiveStep(index);
-  }
+export default function StepperIndicator({steps, activeStep, handleClick = null}) {
 
   return (
     <Stepper
-      activeStep={checkoutState?.activeStep}
+      activeStep={activeStep}
       connector={<QontoConnector />}
       className="w-full"
     >
-      {Object?.keys(CHECKOUT_STEPS)?.map((value, index) => (
-        <Step key={value}>
+      {Object?.keys(steps)?.map((value, index) => (
+        <Step key={index}>
           <StepLabel
             StepIconComponent={QontoStepIcon}
-            onClick={() => handleClick(index)}
-          ></StepLabel>
+            className={"flex-col"}
+            onClick={handleClick ? () => handleClick(index) : null}
+          >
+          </StepLabel>
         </Step>
       ))}
     </Stepper>
@@ -117,7 +111,7 @@ function QontoStepIcon(props) {
           animate={{ scale: 1 }}
         />
       ) : (
-        <div className="QontoStepIcon-circle">
+        <div className="QontoStepIcon-circle ">
           <span>
             <span />
           </span>

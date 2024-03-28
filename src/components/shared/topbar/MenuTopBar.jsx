@@ -6,7 +6,7 @@ import GoBackIcon from "#/components/shared/GoBackIcon";
 import SearchContainer from "#/components/shared/topbar/components/SearchContainer";
 function MenuTopBar() {
   return (
-    <Box>
+    <Box className={"flex justify-center"}>
       <Fade
         in={true}
         timeout={{
@@ -14,7 +14,7 @@ function MenuTopBar() {
           exit: 0,
         }}
       >
-        <Toolbar>
+        <Toolbar className={"w-full lg:w-[1000px]"}>
           <GoBackIcon />
           {/* <IconButton aria-label="cart" variant="contained" className="w-8 h-8">
             <ShoppingBagOutlinedIcon fontSize="32px" />

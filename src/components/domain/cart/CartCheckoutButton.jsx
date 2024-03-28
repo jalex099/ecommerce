@@ -11,8 +11,8 @@ function CartCheckoutButton({ total = null }) {
     <Button
       variant="contained"
       color="primary"
-      fullWidth
-      className="flex gap-2"
+      className="flex gap-2 w-full lg:w-[400px]"
+      sx={{ margin: "auto" }}
       onClick={handleClick}
     >
       <span>Ir a pagar</span>

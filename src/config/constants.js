@@ -1,5 +1,5 @@
 // export const API_URL = "http://localhost:3001/apitest";
-export const API_URL = "https://ws-ecommerce.onrender.com/apitest";
+export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";
@@ -23,12 +23,19 @@ export const IMAGES_TYPES = {
 };
 
 export const SUPPORT_EMAIL = "javiermoralesmelara@gmail.com";
+export const SUPPORT_WHATSAPP = "50372709725";
 
 export const FADE_ANIMATION = {
   initial: { opacity: 0, scale: 0.85 },
   animate: { opacity: 1, scale: 1 },
   transition: { duration: 0.3 },
   exit: { opacity: 0, scale: 0.85 },
+};
+
+export const SLIDE_UP_ANIMATION = {
+  initial: { y: 10, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  exit: { y: 10, opacity: 0 },
 };
 
 export const CURRENCY = "USD";
@@ -40,9 +47,11 @@ export const COMPANY = "Ale Art";
 
 export const PHONE_REGEX = /^\([0-9]{3}\)\s[0-9]{4}-[0-9]{4}$/;
 
-export const DEFAULT_DAYS_TO_DELIVER = 5;
+export const DEFAULT_DAYS_TO_DELIVER = 2;
 export const MIN_TIME_HOUR = "08:00";
 export const MAX_TIME_HOUR = "18:00";
+
+export const MAX_ITEMS_COUNTER = 10;
 
 export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/perfil/agregar-direccion",
@@ -51,6 +60,9 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/pago",
   "/metodo-de-entrega",
   "/fecha-y-hora",
+  "/rastreo-de-orden",
+  "/perfil/ordenes-y-mensajes",
+  "/ajustes"
 ];
 
 export const CHECKOUT_STEPS = {
@@ -59,29 +71,25 @@ export const CHECKOUT_STEPS = {
   REVIEW: 2,
 };
 
+
 export const DELIVERY_METHODS = [
-  {
-    label: "Delivery",
-    value: 0,
-    description: "Recibe tu pedido en la puerta de tu casa",
-  },
-  {
-    label: "Pickup",
-    value: 1,
-    description: "Recoge tu pedido en la tienda",
-  },
-  {
-    label: "Meetup",
-    value: 2,
-    description: "Encuentro en un lugar público",
-  },
-];
+  { label: "Recoger en tienda", value: "PICKUP" },
+  // { label: "Entrega a domicilio", value: "DELIVERY" },
+  { label: "Punto de encuentro", value: "MEETUP" },
+]
 
 export const PAYMENT_METHODS = [
-  { label: "Efectivo", value: 0 },
-  // { label: "Tarjeta", value: 1 },
-  { label: "Transferencia Bancaria", value: 2 }
-]
+  { label: "Efectivo", value: 0, code: "CASH" },
+  // { label: "Tarjeta", value: 1, code: "CARD" },
+  { label: "Transferencia Bancaria", value: 2, code: "TRANSFER" },
+];
+
+export const ORDER_STEPS = [
+  { label: "Pendiente", value: "PENDING", msg: "Tu pedido está pendiente de aprobación" },
+  { label: "En Proceso", value: "INPROCESS", msg: "Tu pedido está siendo elaborado" },
+  { label: "En Camino", value: "ONTHEWAY", msg: "Tu pedido está en camino" },
+  { label: "Finalizada", value: "FINISHED", msg: "Tu pedido ha sido entregado" },
+];
 
 export const PAGES = {
   feed: {
@@ -116,6 +124,10 @@ export const PAGES = {
     title: "Fecha y Hora",
     desc: `Pagina de fecha y hora en ${COMPANY}`,
   },
+  orderConfirmation: {
+    title: "Confirmación de Orden",
+    desc: `Pagina de confirmación de orden en ${COMPANY}`,
+  },
   cart: {
     title: "Carrito",
     desc: `Pagina de carrito en ${COMPANY}`,
@@ -139,6 +151,10 @@ export const PAGES = {
   delivery: {
     title: "Método de Entrega",
     desc: `Pagina de método de entrega de ${COMPANY}`,
+  },
+  settings: {
+    title: "Ajustes",
+    desc: `Pagina de ajustes de ${COMPANY}`,
   },
   signup: {
     title: "Registro",

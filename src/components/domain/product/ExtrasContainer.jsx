@@ -12,15 +12,18 @@ function ExtrasContainer({ tags = [] }) {
 
   return (
     <Box className="">
-      <TagsContainer
-        tags={tags}
-        expanded={expanded.get() === 0}
-        onChange={handleChange(0)}
-      />
-      <ShippingAndReturnPolicy
-        expanded={expanded.get() === 1}
-        onChange={handleChange(1)}
-      />
+      {
+        tags?.length > 0 &&
+        <TagsContainer
+          tags={tags}
+          expanded={expanded.get() === 0}
+          onChange={handleChange(0)}
+        />
+      }
+      {/*<ShippingAndReturnPolicy*/}
+      {/*  expanded={expanded.get() === 1}*/}
+      {/*  onChange={handleChange(1)}*/}
+      {/*/>*/}
     </Box>
   );
 }

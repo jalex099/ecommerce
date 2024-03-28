@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 export const uiState = hookstate({
   loading: 0,
   title: "",
+  ordAndMesTopBarSelection: null
 });
 
 export const startLoading = () => {
@@ -20,7 +21,6 @@ export const stopLoading = () => {
 };
 
 export const addToast = (text, type = "success") => {
-  console.log(text, type);
   toast[type](text);
 };
 
@@ -33,5 +33,9 @@ export const useUIState = () => {
     setTitle: (title) => {
       state.title.set(title);
     },
+    ordAndMesTopBarSelection: state.ordAndMesTopBarSelection.value,
+    setOrdAndMesTopBarSelection: (selection) => {
+      state.ordAndMesTopBarSelection.set(selection);
+    }
   };
 };

@@ -24,7 +24,8 @@ function BottomBarContainer() {
     else if (
       pathname.startsWith("/perfil") ||
       pathname.startsWith("/login") ||
-      pathname.startsWith("/registro")
+      pathname.startsWith("/registro") ||
+      pathname.startsWith("/olvide-mi-contrasena")
     )
       value.set(2);
     else value.set(0);

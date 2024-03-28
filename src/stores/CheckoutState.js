@@ -4,7 +4,6 @@ import AES from "crypto-js/aes.js";
 import Utf8 from "crypto-js/enc-utf8.js";
 import { stateToString } from "#/utils/adapterUtil/index.js";
 
-
 const getCheckoutFromCrypt = () => {
   const checkout = window.localStorage.getItem("checkout-state");
   if (!checkout) return null;
@@ -15,16 +14,17 @@ const getCheckoutFromCrypt = () => {
   var checkoutText = bytes.toString(Utf8);
   return JSON.parse(checkoutText);
 };
-export const checkoutState = hookstate(()=>{
+export const checkoutState = hookstate(() => {
   const checkout = getCheckoutFromCrypt();
   return {
-    activeStep: checkout?.activeStep || CHECKOUT_STEPS?.ADDRESS,
-    paymentMethod: checkout?.paymentMethod != null ? checkout?.paymentMethod : null,
-    completeName: checkout?.completeName || '',
-    email: checkout?.email || '',
-    phone: checkout?.phone || '',
-    discountCode: checkout?.discountCode || '',
-  }
+    activeStep: CHECKOUT_STEPS?.ADDRESS,
+    paymentMethod:
+      checkout?.paymentMethod != null ? checkout?.paymentMethod : null,
+    completeName: checkout?.completeName || "",
+    email: checkout?.email || "",
+    phone: checkout?.phone || "",
+    comments: checkout?.comments || "",
+  };
 });
 
 export const useCheckoutState = () => {
@@ -64,6 +64,19 @@ export const useCheckoutState = () => {
     state.activeStep.set(Object?.values(CHECKOUT_STEPS)[previousStepIndex]);
   };
 
+  //* Reset the active step
+  const resetActiveStep = () => {
+    state.activeStep.set(CHECKOUT_STEPS?.ADDRESS);
+  };
+
+  //* Limpia el estado de checkout
+  const clearState = () => {
+    state?.paymentMethod.set(null);
+    state?.completeName.set("");
+    state?.email.set("");
+    state?.phone.set("");
+    state?.comments.set("");
+  };
 
   return {
     activeStep: state.activeStep.get(),
@@ -78,9 +91,11 @@ export const useCheckoutState = () => {
     setEmail: (email) => state.email.set(email),
     phone: state.phone.get(),
     setPhone: (phone) => state.phone.set(phone),
-    discountCode: state.discountCode.get(),
-    setDiscountCode: (code) => state.discountCode.set(code),
+    comments: state.comments.get(),
+    setComments: (comments) => state.comments.set(comments),
     addToLocalStorage,
     hash: () => stateToString(state.get()),
+    resetActiveStep,
+    clearState,
   };
 };

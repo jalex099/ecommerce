@@ -24,10 +24,10 @@ const RedirectionService = () => {
     return product;
   };
 
-  const redirectToFirstCategory = () => {
+  const redirectToFirstCategory = (searchParams = '') => {
     const firstCat = categories?.sort((a, b) => a?.order - b?.order)?.[0];
     if (!firstCat) return;
-    return navigate(`/menu/categorias${getRoute(firstCat?.name)}`);
+    return navigate(`/menu/categorias${getRoute(firstCat?.name)}?${searchParams}`);
   };
 
   const redirectToCategory = (id, replace = false) => {

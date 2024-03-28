@@ -10,25 +10,25 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { useCartState } from "#/stores/cart";
-import GeneralInformationForm
-  from "#/components/domain/checkout/GeneralInformationForm.jsx";
-import DeliveryInfoContainer
-  from "#/components/domain/checkout/DeliveryInfoContainer.jsx";
+import GeneralInformationForm from "#/components/domain/checkout/GeneralInformationForm.jsx";
+import DeliveryInfoContainer from "#/components/domain/checkout/DeliveryInfoContainer.jsx";
 import Divider from "@mui/material/Divider";
-import DateAndTimeInfoContainer
-  from "#/components/domain/checkout/DateAndTimeInfoContainer.jsx";
+import DateAndTimeInfoContainer from "#/components/domain/checkout/DateAndTimeInfoContainer.jsx";
 import { useLocationState } from "#/stores/LocationState.js";
-import useValidateCheckout
-  from "#/components/domain/checkout/controllers/useValidateCheckout.js";
+import useValidateCheckout from "#/components/domain/checkout/controllers/useValidateCheckout.js";
 import ReviewContainer from "#/components/domain/checkout/ReviewContainer.jsx";
+import useOrderParser from "#/components/domain/checkout/controllers/useOrderParser.js";
+import OrderService from "#/services/OrderService.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
   const checkoutState = useCheckoutState();
   const locationState = useLocationState();
-  const { isValidStep} = useValidateCheckout()
+  const { isValidStep } = useValidateCheckout();
   const cart = useCartState();
   const navigate = useNavigate();
+  const { parseOrder } = useOrderParser();
+  const { saveOrder } = OrderService();
 
   useEffect(() => {
     ui?.setTitle("Pago");
@@ -40,11 +40,22 @@ const CheckoutPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    return () => {
+      checkoutState?.resetActiveStep();
+    };
+  }, []);
+
+  const handleConfirmOrder = () => {
+    const order = parseOrder();
+    saveOrder?.mutate(order);
+  };
+
   return (
     <Container sx={style.container}>
       <HelmetMeta page="checkout" />
       {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
-        <Box className={'flex flex-col gap-4 w-full flex-1'}>
+        <Box className={"flex flex-col gap-4 w-full flex-1"}>
           <DeliveryInfoContainer />
           <Divider />
           <DateAndTimeInfoContainer />
@@ -55,22 +66,24 @@ const CheckoutPage = () => {
       {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (
         <PaymentContainer />
       )}
-      {
-        checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW && (
-          <ReviewContainer />
-        )
-      }
+      {checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW && (
+        <ReviewContainer />
+      )}
       <Box className="sticky bottom-0 left-0 right-0 z-10 w-full">
         <Button
           variant="contained"
           color="primary"
           fullWidth
           disabled={!isValidStep()}
-          onClick={checkoutState?.handleNextStep}
-        >
-          {
-            checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW ? 'Confirmar y pagar' : 'Continuar'
+          onClick={
+            checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW
+              ? handleConfirmOrder
+              : checkoutState?.handleNextStep
           }
+        >
+          {checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW
+            ? "Confirmar y pagar"
+            : "Continuar"}
         </Button>
       </Box>
     </Container>

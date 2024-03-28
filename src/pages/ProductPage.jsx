@@ -20,14 +20,19 @@ import Regular12 from "#/components/shared/fonts/Regular12";
 // import { motion, AnimatePresence } from "framer-motion";
 import FavoriteToogleContainer from "#/components/domain/product/FavoriteToogleContainer";
 import DiscountChipContainer from "#/components/domain/product/DiscountChipContainer";
+import { useMediaQuery } from "@mui/material";
+import SemiBold24 from "#/components/shared/fonts/SemiBold24.jsx";
+import Bold20 from "#/components/shared/fonts/Bold20.jsx";
+import ProductCounter from "#/components/domain/product/ProductCounter.jsx";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
   const { findImage } = ImageService();
   const { id } = useParams();
   const ui = useUIState();
-  const { initTemp, clearTemp, temporal, getOptionsSubtotal, handleAddToCart } =
+  const { initTemp, clearTemp, temporal, getOptionsSubtotal, handleAddToCart, handleDecrement, handleIncrement } =
     ProductController();
+  const isLg = useMediaQuery(theme => theme.breakpoints.up('lg'));
 
   useEffect(() => {
     ui?.setTitle("");
@@ -54,22 +59,51 @@ const ProductPage = () => {
   return (
     <Container sx={style.container}>
       <HelmetMeta page="product" product={temporal} />
-      <Picture
-        webp={findImage(temporal?._id, "PRD", "webp")}
-        jpg={findImage(temporal?._id, "PRD", "jpg")}
-        alt={temporal?.name}
-        imgStyle={{
-          width: "100%",
-          aspectRatio: "1/1",
-          borderRadius: "16px",
-        }}
-      />
+      <Box className={"flex flex-col gap-6 lg:flex-row lg:gap-6"}>
+        <Picture
+          webp={findImage(temporal?._id, "PRD", "webp")}
+          jpg={findImage(temporal?._id, "PRD", "jpg")}
+          alt={temporal?.name}
+          style={{ width: !isLg ? "100%" : "400px", height: !isLg ? "auto" : "400px"}}
+          imgStyle={{
+            width: "100%",
+            aspectRatio: "1/1",
+            borderRadius: "16px",
+          }}
+        />
+        <ProductDetails temporal={temporal} optionsSubtotal={optionsSubtotal} handleAddToCart={handleAddToCart} isLg={isLg}
+          handleDecrement={handleDecrement} handleIncrement={handleIncrement}
+        />
+      </Box>
+
+    </Container>
+  );
+};
+
+const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, handleDecrement, handleIncrement }) => {
+  return (
+    <Box className={"flex-1 flex flex-col gap-[24px]"}>
       <Box className="flex flex-col gap-1 relative">
-        <SemiBold18> {temporal?.name}</SemiBold18>
-        <Bold16>
-          {formatCurrency(temporal?.price + optionsSubtotal)}
-          {optionsSubtotal > 0 && <span>*</span>}
-        </Bold16>
+        {
+          !isLg ? (
+            <>
+              <SemiBold18> {temporal?.name}</SemiBold18>
+              <Bold16>
+                {formatCurrency(temporal?.price + optionsSubtotal)}
+                {optionsSubtotal > 0 && <span>*</span>}
+              </Bold16>
+            </>
+          ) : (
+            <>
+              <SemiBold24> {temporal?.name}</SemiBold24>
+              <Bold20>
+                {formatCurrency(temporal?.price + optionsSubtotal)}
+                {optionsSubtotal > 0 && <span>*</span>}
+              </Bold20>
+            </>
+          )
+        }
+
         {temporal?.isOffer && !!temporal?.discount && (
           <DiscountChipContainer
             price={temporal?.price}
@@ -92,7 +126,10 @@ const ProductPage = () => {
       </Box>
       <ProductConfigContainer options={temporal?.options} />
 
-      <AddToCartButton onClick={handleAddToCart} />
+      <Box className={"flex flex-row gap-3 items-center justify-center h-[70px]"}>
+        <ProductCounter quantity={temporal?.quantity} handleDecrement={handleDecrement} handleIncrement={handleIncrement} />
+        <AddToCartButton onClick={handleAddToCart} total={formatCurrency((temporal?.price + optionsSubtotal) * temporal?.quantity)}/>
+      </Box>
       {optionsSubtotal > 0 && (
         <Regular12 className="w-full opacity-70">
           * Los precios pueden variar seg&uacute;n tu selecci&oacute;n de
@@ -106,9 +143,9 @@ const ProductPage = () => {
         <Divider />
         <ExtrasContainer tags={temporal?.tags} />
       </Box>
-    </Container>
+    </Box>
   );
-};
+}
 
 const style = {
   container: {
@@ -118,5 +155,7 @@ const style = {
     position: "relative",
   },
 };
+
+
 
 export default ProductPage;

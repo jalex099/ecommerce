@@ -1,7 +1,9 @@
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import Button from "@mui/material/Button";
+import Regular14 from "#/components/shared/fonts/Regular14.jsx";
+import { motion } from "framer-motion";
 
-const AddToCartButton = ({ ...props }) => {
+const AddToCartButton = ({ total = "", ...props }) => {
   return (
     <Button
       sx={style?.container}
@@ -9,16 +11,21 @@ const AddToCartButton = ({ ...props }) => {
       disableElevation
       fullWidth
       {...props}
-      className="flex justify-center items-center  cursor-pointer "
+      className="flex justify-between items-center  cursor-pointer gap-2"
     >
-      <SemiBold14>Agregar al carrito</SemiBold14>
+      <SemiBold14>Agregar al carrito </SemiBold14>
+      <motion.div>
+        <Regular14 className={"opacity-80"}>
+          {total}
+        </Regular14>
+      </motion.div>
     </Button>
   );
 };
 
 const style = {
   container: {
-    minHeight: "32px",
+    height: '50px',
     width: "80vw",
     maxWidth: "400px",
     margin: "0 auto",

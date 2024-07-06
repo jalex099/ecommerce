@@ -1,5 +1,5 @@
-// export const API_URL = "http://localhost:3001/apitest";
-export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+export const API_URL = "http://localhost:3001/apitest";
+// export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";
@@ -67,8 +67,7 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
 
 export const CHECKOUT_STEPS = {
   ADDRESS: 0,
-  PAYMENT: 1,
-  REVIEW: 2,
+  REVIEW: 1,
 };
 
 
@@ -80,7 +79,7 @@ export const DELIVERY_METHODS = [
 
 export const PAYMENT_METHODS = [
   { label: "Efectivo", value: 0, code: "CASH" },
-  // { label: "Tarjeta", value: 1, code: "CARD" },
+  { label: "Tarjeta de crédito/débito", value: 1, code: "CARD" },
   { label: "Transferencia Bancaria", value: 2, code: "TRANSFER" },
 ];
 
@@ -219,5 +218,9 @@ export const PAGES = {
   delete_account: {
     title: "Eliminar Cuenta",
     desc: `Pagina de eliminación de cuenta de usuario de ${COMPANY}`,
+  },
+  choose_payment_method: {
+    title: "Elegir Método de Pago",
+    desc: `Pagina de elección de método de pago de ${COMPANY}`,
   },
 };

@@ -14,10 +14,10 @@ const GeneralInformationForm = ()=> {
   const checkoutState = useCheckoutState();
 
   useEffect(() => {
-    if(checkoutState?.email === ''){
+    if(!checkoutState?.email || checkoutState?.email === ''){
       checkoutState?.setEmail(auth?.currentUser?.email);
     }
-    if(checkoutState?.completeName === ''){
+    if(!checkoutState?.completeName || checkoutState?.completeName === ''){
       checkoutState?.setCompleteName(auth?.currentUser?.displayName);
     }
   }, [auth?.currentUser?.email, auth?.currentUser?.displayName]);

@@ -16,9 +16,9 @@ import Divider from "@mui/material/Divider";
 import DateAndTimeInfoContainer from "#/components/domain/checkout/DateAndTimeInfoContainer.jsx";
 import { useLocationState } from "#/stores/LocationState.js";
 import useValidateCheckout from "#/components/domain/checkout/controllers/useValidateCheckout.js";
-import ReviewContainer from "#/components/domain/checkout/ReviewContainer.jsx";
 import useOrderParser from "#/components/domain/checkout/controllers/useOrderParser.js";
 import OrderService from "#/services/OrderService.js";
+import ReviewContainer from "../components/domain/checkout/ReviewContainer.jsx";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -63,9 +63,9 @@ const CheckoutPage = () => {
           <GeneralInformationForm />
         </Box>
       )}
-      {checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (
-        <PaymentContainer />
-      )}
+      {/*{checkoutState?.activeStep === CHECKOUT_STEPS?.PAYMENT && (*/}
+      {/*  <PaymentContainer />*/}
+      {/*)}*/}
       {checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW && (
         <ReviewContainer />
       )}

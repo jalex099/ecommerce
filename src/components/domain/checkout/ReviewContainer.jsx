@@ -15,7 +15,10 @@ import { useLocationState } from "#/stores/LocationState.js";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import PaymentInfo from "#/components/domain/checkout/review/PaymentInfo.jsx";
-
+import PaymentContainer from "#/components/domain/checkout/PaymentContainer.jsx";
+import PaymentMethodSelectorContainer from "#/components/domain/checkout/PaymentMethodSelectorContainer.jsx";
+import HavingTroublesContainer from "#/components/shared/HavingTroublesContainer.jsx";
+import PaymentDetailContainer from "#/components/domain/checkout/PaymentDetailContainer.jsx";
 
 const ReviewContainer = () => {
   const cart = useCartState();
@@ -34,6 +37,8 @@ const ReviewContainer = () => {
         Confirmaci&oacute;n de pedido
       </SemiBold16>
       <ProductsView products={itemsToShow}/>
+      <Divider/>
+      <PaymentDetailContainer paymentValue={checkout?.paymentMethod} />
       <Divider/>
       <OrderInfo info={{ ...checkout, ...location }}/>
       <Divider/>

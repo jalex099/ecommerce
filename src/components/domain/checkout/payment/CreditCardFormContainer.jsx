@@ -6,6 +6,8 @@ import Stack from "@mui/material/Stack";
 import { usePaymentInputs } from 'react-payment-inputs';
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 import CardFillView from "./CardFillView.jsx";
+import Button from "@mui/material/Button";
+import { PAYMENT_METHODS } from "../../../../config/constants.js";
 
 const ERROR_MESSAGES = {
   emptyCardNumber: 'El número de la tarjeta es inválido',
@@ -43,6 +45,9 @@ const CreditCardFormContainer = () => {
     checkoutState?.setCardHolderName(e.target.value)
   }
 
+  const handleAddCard = () => {
+    checkoutState?.encryptCardPayment();
+  }
 
   return (
     <Box className={"flex-1 w-full flex flex-col gap-4"}>
@@ -63,7 +68,7 @@ const CreditCardFormContainer = () => {
           inputProps={{
             ...getCardNumberProps({ onChange: handleChangeCardNumber, value: checkoutState?.cardNumber }),
           }}
-          error={touchedInputs?.cardNumber && erroredInputs?.cardNumber}
+          error={!!(touchedInputs?.cardNumber && erroredInputs?.cardNumber)}
           helperText={touchedInputs?.cardNumber && erroredInputs?.cardNumber && meta?.error}
         />
         <TextField
@@ -87,7 +92,7 @@ const CreditCardFormContainer = () => {
               ...getExpiryDateProps({ onChange: handleChangeExpiryDate, value: checkoutState?.cardExpiration }),
             }}
             variant="standard"
-            error={touchedInputs?.expiryDate && erroredInputs?.expiryDate}
+            error={!!(touchedInputs?.expiryDate && erroredInputs?.expiryDate)}
             helperText={touchedInputs?.expiryDate && erroredInputs?.expiryDate && meta?.error}
           />
           <TextField
@@ -100,11 +105,19 @@ const CreditCardFormContainer = () => {
             inputProps={{
               ...getCVCProps({ onChange: handleChangeCVC, value: checkoutState?.cardCVC }),
             }}
-            error={touchedInputs?.cvc && erroredInputs?.cvc}
+            error={!!(touchedInputs?.cvc && erroredInputs?.cvc)}
             helperText={touchedInputs?.cvc && erroredInputs?.cvc && meta?.error}
           />
         </Stack>
       </Stack>
+      <Button
+        variant={"outlined"}
+        color={"primary"}
+        onClick={handleAddCard}
+        disabled={erroredInputs?.cardNumber || erroredInputs?.expiryDate || erroredInputs?.cvc || !checkoutState?.cardHolderName}
+      >
+        Agregar tarjeta
+      </Button>
     </Box>
   );
 };

@@ -20,6 +20,8 @@ import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import PaymentMethodSelectorContainer from "#/components/domain/checkout/PaymentMethodSelectorContainer.jsx";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import CloseIcon from "#/components/shared/icons/CloseIcon.jsx";
+import AES from "crypto-js/aes.js";
+import { ENCRYPT_KEY } from "#/config/constants.js";
 
 const PaymentDetailContainer = ({ paymentValue }) => {
 
@@ -28,7 +30,7 @@ const PaymentDetailContainer = ({ paymentValue }) => {
   const isOpen = useHookstate(false);
 
   const payment = useMemo(()=>{
-    return PAYMENT_METHODS?.find(({value}) => value === paymentValue)
+    return PAYMENT_METHODS?.find(({value}) => value === paymentValue) || null
   }, [paymentValue])
 
   const handleOpen = () => {
@@ -36,6 +38,7 @@ const PaymentDetailContainer = ({ paymentValue }) => {
   }
 
   const handleClose = () => {
+    checkout?.encryptCardPayment();
     isOpen.set(false);
   }
 
@@ -49,16 +52,17 @@ const PaymentDetailContainer = ({ paymentValue }) => {
           { payment?.value === 0 && (<CashIcon className={"w-6 "}/>) }
           { payment?.value === 1 && (<CardIcon className={"w-6 "}/>) }
           { payment?.value === 2 && (<BankIcon className={"w-6 "}/>) }
+          { payment == null && (<CloseIcon className={"w-6 "}/>) }
          <Box
           className={"flex flex-col gap-0"}
          >
            <Regular16>
-             {payment?.label}
+             {payment?.label || "No seleccionado"}
            </Regular16>
            {
-             payment?.code === "CARD" && checkout?.cardNumber && checkout?.cardNumber?.replaceAll(" ", "")?.length === 16 && (
+             payment?.code === "CARD" && checkout?.cardNumber && checkout?.showedCardNumber && (
                <Regular12>
-                 {checkout?.cardNumber ? `**** **** **** ${checkout.cardNumber.slice(-4)}` : ''}
+                 {checkout?.showedCardNumber}
                </Regular12>
              )
            }

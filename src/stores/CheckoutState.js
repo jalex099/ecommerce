@@ -3,44 +3,47 @@ import { CHECKOUT_STEPS, ENCRYPT_KEY } from "#/config/constants.js";
 import AES from "crypto-js/aes.js";
 import Utf8 from "crypto-js/enc-utf8.js";
 import { stateToString } from "#/utils/adapterUtil/index.js";
+import { PAYMENT_METHODS } from "#/config/constants.js";
 
 const getCheckoutFromCrypt = () => {
-  const checkout = window.localStorage.getItem("checkout-state");
-  if (!checkout) return null;
+  const state = window.localStorage.getItem("state-state");
+  if (!state) return null;
   var bytes = AES.decrypt(
-    window.localStorage.getItem("checkout-state"),
+    window.localStorage.getItem("state-state"),
     ENCRYPT_KEY
   );
-  var checkoutText = bytes.toString(Utf8);
-  return JSON.parse(checkoutText);
+  var stateText = bytes.toString(Utf8);
+  return JSON.parse(stateText);
 };
-export const checkoutState = hookstate(() => {
-  const checkout = getCheckoutFromCrypt();
+export const stateState = hookstate(() => {
+  const state = getCheckoutFromCrypt();
   return {
     activeStep: CHECKOUT_STEPS?.ADDRESS,
     paymentMethod:
-      checkout?.paymentMethod != null ? checkout?.paymentMethod : null,
-    cardNumber: "",
-    cardExpiration: "",
-    cardCVC: "",
-    cardHolderName: "",
-    completeName: checkout?.completeName || "",
-    email: checkout?.email || "",
-    phone: checkout?.phone || "",
-    comments: checkout?.comments || "",
+      state?.paymentMethod != null ? state?.paymentMethod : null,
+    cardNumber: state?.cardNumber || "",
+    showedCardNumber: state?.showedCardNumber || "",
+    cardExpiration: state?.cardExpiration || "",
+    cardCVC: state?.cardCVC || "",
+    cardHolderName: state?.cardHolderName || "",
+    isFinishedAddedCard: state?.isFinishedAddedCard || false,
+    completeName: state?.completeName || "",
+    email: state?.email || "",
+    phone: state?.phone || "",
+    comments: state?.comments || "",
   };
 });
 
 export const useCheckoutState = () => {
-  const state = useHookstate(checkoutState);
+  const state = useHookstate(stateState);
 
   //* Funcion para guardar el estado en el localstorage
   const addToLocalStorage = () => {
-    const checkout_enc = AES.encrypt(
+    const state_enc = AES.encrypt(
       JSON.stringify(state?.value),
       ENCRYPT_KEY
     ).toString();
-    window.localStorage.setItem("checkout-state", checkout_enc);
+    window.localStorage.setItem("state-state", state_enc);
   };
 
   //* Set active the next step
@@ -73,7 +76,7 @@ export const useCheckoutState = () => {
     state.activeStep.set(CHECKOUT_STEPS?.ADDRESS);
   };
 
-  //* Limpia el estado de checkout
+  //* Limpia el estado de state
   const clearState = () => {
     state?.paymentMethod.set(null);
     state?.completeName.set("");
@@ -84,6 +87,40 @@ export const useCheckoutState = () => {
     state?.cardExpiration.set("");
     state?.cardCVC.set("");
     state?.cardHolderName.set("");
+    state?.showedCardNumber.set("");
+    state?.isFinishedAddedCard.set(false);
+  };
+
+  const encryptCardPayment = () => {
+    if (
+      state?.paymentMethod?.get() === PAYMENT_METHODS?.find(({ code }) => code === "CARD")?.value &&
+      state?.cardNumber?.get()?.replaceAll(" ", "")?.length >= 16 &&
+      !state?.isFinishedAddedCard?.get() &&
+      state?.cardExpiration?.get() &&
+      state?.cardCVC?.get() &&
+      state?.cardHolderName?.get()
+    ) {
+      const showedCardNumber = `**** **** **** ${state?.cardNumber?.get().slice(-4)}`
+      const cardNumberEncrypted = AES.encrypt(JSON.stringify(state?.cardNumber?.get()),ENCRYPT_KEY).toString();
+      const cardHolderNameEncrypted = AES.encrypt(JSON.stringify(state?.cardHolderName?.get()),ENCRYPT_KEY).toString();
+      const cardExpirationEncrypted = AES.encrypt(JSON.stringify(state?.cardExpiration?.get()),ENCRYPT_KEY).toString();
+      const cardCVCEncrypted = AES.encrypt(JSON.stringify(state?.cardCVC?.get()),ENCRYPT_KEY).toString();
+      state?.cardNumber.set(cardNumberEncrypted);
+      state?.cardHolderName.set(cardHolderNameEncrypted);
+      state?.cardExpiration.set(cardExpirationEncrypted);
+      state?.cardCVC.set(cardCVCEncrypted);
+      state?.showedCardNumber.set(showedCardNumber);
+      state?.isFinishedAddedCard.set(true);
+    }
+  }
+
+  const cleanCardPayment = () => {
+    state?.cardNumber.set("");
+    state?.cardExpiration.set("");
+    state?.cardCVC.set("");
+    state?.cardHolderName.set("");
+    state?.showedCardNumber.set("");
+    state?.isFinishedAddedCard.set(false);
   };
 
   return {
@@ -108,6 +145,11 @@ export const useCheckoutState = () => {
     setCardCVC: (cardCVC) => state.cardCVC.set(cardCVC),
     cardHolderName: state.cardHolderName.get(),
     setCardHolderName: (cardHolderName) => state.cardHolderName.set(cardHolderName),
+    showedCardNumber: state.showedCardNumber.get(),
+    setShowedCardNumber: (showedCardNumber) => state.showedCardNumber.set(showedCardNumber),
+    isFinishedAddedCard: state.isFinishedAddedCard.get(),
+    encryptCardPayment,
+    cleanCardPayment,
     setComments: (comments) => state.comments.set(comments),
     addToLocalStorage,
     hash: () => stateToString(state.get()),

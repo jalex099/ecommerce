@@ -16,10 +16,17 @@ import DataService from "#/services/DataService.js";
 import BankAccount from "#/components/domain/checkout/payment/BankAccount.jsx";
 import Button from "@mui/material/Button";
 import CreditCardFormContainer from "#/components/domain/checkout/payment/CreditCardFormContainer.jsx";
+import { useCheckoutState } from "#/stores/CheckoutState.js";
+import SemiBold12 from "../../shared/fonts/SemiBold12.jsx";
 
 const PaymentMethodCard = ({ paymentMethod, isSelected, handleChange }) => {
 
+  const checkoutState = useCheckoutState();
   const { parameters } = DataService();
+
+  const handleCleanCardPayment = ()=>{
+    checkoutState?.cleanCardPayment();
+  }
 
   return (
     <Accordion
@@ -69,7 +76,30 @@ const PaymentMethodCard = ({ paymentMethod, isSelected, handleChange }) => {
               animate={{ translateY: 0, opacity: 1 }}
               exit={{ translateY: -20, opacity: 0 }}
             >
-              <CreditCardFormContainer />
+              {
+                checkoutState?.isFinishedAddedCard && checkoutState?.cardNumber ? (
+                  <Box className={"flex flex-row justify-between gap-4"}>
+                    <Box className={"flex flex-col gap-2"}>
+                      <SemiBold12>
+                        Tarjeta seleccionada
+                      </SemiBold12>
+                      <Regular12>
+                        {checkoutState?.showedCardNumber}
+                      </Regular12>
+                    </Box>
+                    <Button
+                      variant="text"
+                      color="primary"
+                      onClick={handleCleanCardPayment}
+                      size={"small"}
+                    >
+                      Cambiar
+                    </Button>
+                  </Box>
+                ) : (
+                  <CreditCardFormContainer />
+                )
+              }
             </motion.div>
           )
         }

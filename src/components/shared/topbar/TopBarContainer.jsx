@@ -11,6 +11,7 @@ import CartTopBar from "#/components/shared/topbar/CartTopBar.jsx";
 import CheckoutTopBar from "#/components/shared/topbar/CheckoutTopBar.jsx";
 import OrdersAndMessageTopBar
   from "#/components/shared/topbar/OrdersAndMessageTopBar.jsx";
+import OnlyTitleTopBar from "./OnlyTitleTopBar.jsx";
 
 function TopBarContainer(props) {
   const ui = useUIState();
@@ -33,9 +34,9 @@ function TopBarContainer(props) {
           ) : pathname === "/perfil/ordenes-y-mensajes" ? (
             <OrdersAndMessageTopBar />
           ) : pathname === "/confirmacion-de-pago-en-linea" ? (
-            <></>
+            <OnlyTitleTopBar />
           )
-          (
+          : (
             <DefaultTopBar title={ui?.title} />
           )}
         </AppBar>

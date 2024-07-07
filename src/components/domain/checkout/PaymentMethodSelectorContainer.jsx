@@ -25,9 +25,6 @@ const PaymentMethodSelectorContainer = ({handleClose})=>{
     checkoutState?.setPaymentMethod(paymentMethod);
   }
 
-  const handleAddCard = () => {
-    console.log("Add card");
-  }
 
   return (
     <Box className={"w-full flex flex-col gap-4"}>

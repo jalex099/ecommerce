@@ -110,7 +110,6 @@ export default function useValidateCheckout(){
   }
 
   const isValidCard = () => {
-    console.log(checkoutState?.cardExpiration);
     if(
       !checkoutState?.cardNumber ||
       !checkoutState?.cardHolderName ||
@@ -119,30 +118,12 @@ export default function useValidateCheckout(){
     ){
       return false;
     }
-    if(checkoutState?.cardNumber?.replaceAll(" ", "")?.length !== 16){
-      return false
-    }
-    if(isCardExpired(checkoutState?.cardExpiration)){
-      return false;
-    }
     return true;
   }
 
   const isValidTransfer = () => {
     return true;
   }
-
-  const isCardExpired = (expirationDate) => {
-    const [expMonth, expYear] = expirationDate?.replaceAll(" ", "")?.split('/')?.map(Number);
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear() % 100; // Get last two digits of the year
-    const currentMonth = currentDate.getMonth() + 1; // getMonth() is zero-based
-
-    if (expYear > currentYear || (expYear === currentYear && expMonth >= currentMonth)) {
-      return false; // Card is not expired
-    }
-    return true; // Card is expired
-  };
 
   return {
     isValidStep

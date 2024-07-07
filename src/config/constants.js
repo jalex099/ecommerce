@@ -1,5 +1,5 @@
-export const API_URL = "http://localhost:3001/apitest";
-// export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+// export const API_URL = "http://localhost:3001/apitest";
+export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";
@@ -62,7 +62,8 @@ export const BOTTOM_BAR_HIDDEN_PATHS = [
   "/fecha-y-hora",
   "/rastreo-de-orden",
   "/perfil/ordenes-y-mensajes",
-  "/ajustes"
+  "/ajustes",
+  "/confirmacion-de-pago-en-linea",
 ];
 
 export const CHECKOUT_STEPS = {

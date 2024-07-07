@@ -41,8 +41,8 @@ const ReviewContainer = () => {
       <PaymentDetailContainer paymentValue={checkout?.paymentMethod} />
       <Divider/>
       <OrderInfo info={{ ...checkout, ...location }}/>
-      <Divider/>
-      <PaymentInfo paymentMethod={checkout?.paymentMethod}/>
+      {/*<Divider/>*/}
+      {/*<PaymentInfo paymentMethod={checkout?.paymentMethod}/>*/}
       <Divider/>
       <CheckoutCartResumeInfo
         numberOfItems={cart?.getItemsCounter()}

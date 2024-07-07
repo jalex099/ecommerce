@@ -16,7 +16,6 @@ import DataService from "#/services/DataService.js";
 import BankAccount from "#/components/domain/checkout/payment/BankAccount.jsx";
 import Button from "@mui/material/Button";
 import CreditCardFormContainer from "#/components/domain/checkout/payment/CreditCardFormContainer.jsx";
-import CreditCardFormWrapper from "./payment/CreditCardFormWrapper.jsx";
 
 const PaymentMethodCard = ({ paymentMethod, isSelected, handleChange }) => {
 
@@ -70,9 +69,7 @@ const PaymentMethodCard = ({ paymentMethod, isSelected, handleChange }) => {
               animate={{ translateY: 0, opacity: 1 }}
               exit={{ translateY: -20, opacity: 0 }}
             >
-              <CreditCardFormWrapper>
-                <CreditCardFormContainer />
-              </CreditCardFormWrapper>
+              <CreditCardFormContainer />
             </motion.div>
           )
         }

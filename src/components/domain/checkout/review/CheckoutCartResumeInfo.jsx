@@ -6,8 +6,12 @@ import Divider from "@mui/material/Divider";
 import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import Bold16 from "#/components/shared/fonts/Bold16.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
+import { useMemo } from "react";
 
 const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discount = 0, total = 0 }) => {
+
+  const isDiscount = useMemo(() => discount > 0 && subtotal !== total, [discount, subtotal, total]);
+
   return (
     <Box className={"w-full  flex flex-col gap-4"}>
       <SemiBold16>
@@ -23,7 +27,6 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discoun
         {/*  ))*/}
         {/*}*/}
         {/*<Divider sx={{borderStyle:'dashed'}}/>*/}
-        {!!discount && discount > 0 && subtotal !== total && (
           <>
             <Box className="flex flex-row justify-between items-center">
               <Regular14>Subtotal</Regular14>
@@ -32,15 +35,20 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discoun
             <Box
               className="flex flex-row justify-between items-center"
               sx={{
-                color: (theme) => theme.palette.secondary.main,
+                color: (theme) => isDiscount ? theme.palette.secondary.main : theme.palette.grey[500]
               }}
             >
               <Regular14>Ahorro</Regular14>
-              <Regular14>- {formatCurrency(discount)}</Regular14>
+              {
+                isDiscount ? (
+                  <Regular14>- {formatCurrency(discount)}</Regular14>
+                ) : (
+                  <Regular14>0</Regular14>
+                )
+              }
             </Box>
             <Divider sx={{borderStyle:'dashed'}}/>
           </>
-        )}
         <Box className="flex flex-row justify-between items-center">
           <Bold16>Total a pagar</Bold16>
           <Bold16>{formatCurrency(total)}</Bold16>

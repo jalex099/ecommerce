@@ -32,7 +32,9 @@ function TopBarContainer(props) {
             <CheckoutTopBar />
           ) : pathname === "/perfil/ordenes-y-mensajes" ? (
             <OrdersAndMessageTopBar />
-          ) :
+          ) : pathname === "/confirmacion-de-pago-en-linea" ? (
+            <></>
+          )
           (
             <DefaultTopBar title={ui?.title} />
           )}

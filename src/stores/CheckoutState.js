@@ -20,6 +20,10 @@ export const checkoutState = hookstate(() => {
     activeStep: CHECKOUT_STEPS?.ADDRESS,
     paymentMethod:
       checkout?.paymentMethod != null ? checkout?.paymentMethod : null,
+    cardNumber: "",
+    cardExpiration: "",
+    cardCVC: "",
+    cardHolderName: "",
     completeName: checkout?.completeName || "",
     email: checkout?.email || "",
     phone: checkout?.phone || "",
@@ -76,6 +80,10 @@ export const useCheckoutState = () => {
     state?.email.set("");
     state?.phone.set("");
     state?.comments.set("");
+    state?.cardNumber.set("");
+    state?.cardExpiration.set("");
+    state?.cardCVC.set("");
+    state?.cardHolderName.set("");
   };
 
   return {
@@ -92,6 +100,14 @@ export const useCheckoutState = () => {
     phone: state.phone.get(),
     setPhone: (phone) => state.phone.set(phone),
     comments: state.comments.get(),
+    cardNumber: state.cardNumber.get(),
+    setCardNumber: (cardNumber) => state.cardNumber.set(cardNumber),
+    cardExpiration: state.cardExpiration.get(),
+    setCardExpiration: (cardExpiration) => state.cardExpiration.set(cardExpiration),
+    cardCVC: state.cardCVC.get(),
+    setCardCVC: (cardCVC) => state.cardCVC.set(cardCVC),
+    cardHolderName: state.cardHolderName.get(),
+    setCardHolderName: (cardHolderName) => state.cardHolderName.set(cardHolderName),
     setComments: (comments) => state.comments.set(comments),
     addToLocalStorage,
     hash: () => stateToString(state.get()),

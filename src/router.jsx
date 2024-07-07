@@ -118,6 +118,12 @@ const NotFoundPage = () => (
   </DynamicImport>
 );
 
+const OnlinePaymentConfirmationPage = () => (
+  <DynamicImport load={() => import("#/pages/OnlinePaymentConfirmationPage.jsx")}>
+    {(Component) => (Component === null ? <></> : <Component />)}
+  </DynamicImport>
+);
+
 
 const RoutesApp = () => {
   const auth = useAuthState();
@@ -183,6 +189,7 @@ const RoutesApp = () => {
             </ProtectedAuthRoute>
           } />
       </Route>
+      <Route path="/confirmacion-de-pago-en-linea" element={<OnlinePaymentConfirmationPage />} />
       <Route path="/404" element={<NotFoundPage/>} />
       <Route path={"*"} element={<Navigate to="/404" />} />
     </Routes>

@@ -1,141 +1,112 @@
-import Box from '@mui/material/Box';
+import {
+  TextField,
+  Box,
+} from "@mui/material";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import LockIcon from '@mui/icons-material/Lock';
-import PersonIcon from '@mui/icons-material/Person';
 import { usePaymentInputs } from 'react-payment-inputs';
-import { useHookstate } from "@hookstate/core";
-import { useEffect } from 'react';
-import { useFormContext, Controller } from "react-hook-form";
+import { useCheckoutState } from "#/stores/CheckoutState.js";
+import CardFillView from "./CardFillView.jsx";
+
+const ERROR_MESSAGES = {
+  emptyCardNumber: 'El número de la tarjeta es inválido',
+  invalidCardNumber: 'El número de la tarjeta es inválido',
+  emptyExpiryDate: 'La fecha de expiración es inválida',
+  monthOutOfRange: 'El mes de expiración debe estar entre 01 y 12',
+  yearOutOfRange: 'El año de expiración no puede estar en el pasado',
+  dateOutOfRange: 'La fecha de expiración no puede estar en el pasado',
+  invalidExpiryDate: 'La fecha de expiración es inválida',
+  emptyCVC: 'El código de seguridad es inválido',
+  invalidCVC: 'El código de seguridad es inválido'
+}
 
 const CreditCardFormContainer = () => {
-  const { meta, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
+  const { meta, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs({
+    errorMessages: ERROR_MESSAGES
+  });
+
   const { erroredInputs, touchedInputs } = meta;
-  const {
-    register,
-    errors: formErrors,
-    formState,
-    triggerValidation,
-    setValue
-  } = useFormContext();
 
-  const validation = (name, e) => {
-    setValue(name, e.target.value, false);
-    triggerValidation(name);
-  };
+  const checkoutState = useCheckoutState();
+  const handleChangeCardNumber = (e) => {
+    checkoutState?.setCardNumber(e.target.value);
+  }
 
-  useEffect(() => {
-    register(
-      { name: "payment.cardnumber" },
-      { required: "Enter a card number" }
-    );
-    register({ name: "payment.expiry" }, { required: "Enter an expiry date" });
-    register({ name: "payment.ccv" }, { required: "Enter a CVC" });
-    register(
-      { name: "payment.accountHolderName" },
-      { required: "Name required" }
-    );
-  }, [register]);
+  const handleChangeExpiryDate = (e) => {
+    checkoutState?.setCardExpiration(e.target.value)
+  }
+
+  const handleChangeCVC = (e) => {
+    checkoutState?.setCardCVC(e.target.value)
+  }
+
+  const handleChangeCardHolderName = (e) => {
+    checkoutState?.setCardHolderName(e.target.value)
+  }
+
 
   return (
-    <Box className={"w-full flex flex-col"} component={"form"}>
+    <Box className={"flex-1 w-full flex flex-col gap-4"}>
+      <CardFillView
+        cardNumber={checkoutState?.cardNumber}
+        cardHolderName={checkoutState?.cardHolderName}
+        cardExpiration={checkoutState?.cardExpiration}
+        cardCVC={checkoutState?.cardCVC}
+        cardType={meta?.cardType?.displayName}
+      />
       <Stack spacing={2}>
         <TextField
-          {...getCardNumberProps({
-            refKey: "inputRef",
-            onChange: validation.bind(null, "payment.cardnumber")
-          })}
-          inputRef={getCardNumberProps({ register }).ref}
           fullWidth
-          type="tel"
-          label="Credit card number"
-          name="payment.cardnumber"
+          label="Número de tarjeta"
+          name="ccnumber"
+          autoComplete="cc-number"
           variant="standard"
-          error={
-            (erroredInputs.cardNumber && touchedInputs.cardNumber) ||
-            !!formErrors?.payment?.cardnumber?.message
-          }
-          helperText={
-            (erroredInputs.cardNumber &&
-              touchedInputs.cardNumber &&
-              erroredInputs.cardNumber) ||
-            formErrors?.payment?.cardnumber?.message
-          }
-          sx={{ input: { color: 'text.primary' } }}
+          inputProps={{
+            ...getCardNumberProps({ onChange: handleChangeCardNumber, value: checkoutState?.cardNumber }),
+          }}
+          error={touchedInputs?.cardNumber && erroredInputs?.cardNumber}
+          helperText={touchedInputs?.cardNumber && erroredInputs?.cardNumber && meta?.error}
         />
         <TextField
           fullWidth
-          variant="filled"
+          variant="standard"
           type="text"
-          label="Name on Card"
-          placeholder="Name on Card"
-          name="payment.accountHolderName"
-          inputRef={register}
-          error={!!formErrors.payment?.accountHolderName?.message}
-          helperText={formErrors.payment?.accountHolderName?.message}
-          onChange={validation.bind(null, "payment.accountHolderName")}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PersonIcon />
-              </InputAdornment>
-            ),
-          }}
-          sx={{ input: { color: 'text.primary' } }}
+          label="Nombre del titular"
+          name={"ccname"}
+          autoComplete="cc-name"
+          value={checkoutState?.cardHolderName}
+          onChange={handleChangeCardHolderName}
         />
-        <Stack spacing={2} direction={"row"}>
+        <Stack spacing={2} direction="row">
           <TextField
-            {...getExpiryDateProps({
-              refKey: "inputRef",
-              onChange: validation.bind(null, "payment.expiry")
-            })}
-            inputRef={getExpiryDateProps().ref}
             fullWidth
             type="tel"
-            label="Expiry date"
-            name="payment.expiry"
+            label="Fecha de expiración"
+            name={"ccexpiry"}
+            autoComplete="cc-exp"
+            inputProps={{
+              ...getExpiryDateProps({ onChange: handleChangeExpiryDate, value: checkoutState?.cardExpiration }),
+            }}
             variant="standard"
-            error={
-              (erroredInputs.expiryDate && touchedInputs.expiryDate) ||
-              !!formErrors?.payment?.expiry?.message
-            }
-            helperText={
-              (erroredInputs.expiryDate &&
-                touchedInputs.expiryDate &&
-                erroredInputs.expiryDate) ||
-              formErrors?.payment?.expiry?.message
-            }
-            sx={{ input: { color: 'text.primary' } }}
+            error={touchedInputs?.expiryDate && erroredInputs?.expiryDate}
+            helperText={touchedInputs?.expiryDate && erroredInputs?.expiryDate && meta?.error}
           />
           <TextField
-            {...getCVCProps({
-              refKey: "inputRef",
-              onChange: validation.bind(null, "payment.cvv"),
-              onBlur: handleBlur
-            })}
-            inputRef={getCVCProps().ref}
             fullWidth
             type="tel"
             label="CVV"
-            name="payment.cvv"
-            variant="standard"
-            error={
-              (erroredInputs.cvc && touchedInputs.cvc) ||
-              !!formErrors?.payment?.ccv?.message
-            }
-            helperText={
-              (erroredInputs.cvc && touchedInputs.cvc && erroredInputs.cvc) ||
-              formErrors?.payment?.ccv?.message
-            }
-            sx={{ input: { color: 'text.primary' } }}
+            name={"cccvv"}
+            variant={"standard"}
+            autoComplete="cc-csc"
+            inputProps={{
+              ...getCVCProps({ onChange: handleChangeCVC, value: checkoutState?.cardCVC }),
+            }}
+            error={touchedInputs?.cvc && erroredInputs?.cvc}
+            helperText={touchedInputs?.cvc && erroredInputs?.cvc && meta?.error}
           />
         </Stack>
       </Stack>
-      {meta.isTouched && meta.error && <span>Error: {meta.error}</span>}
     </Box>
-  )
-}
+  );
+};
 
 export default CreditCardFormContainer;

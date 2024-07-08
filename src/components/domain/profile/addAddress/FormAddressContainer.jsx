@@ -13,11 +13,12 @@ function FormAddressContainer({
   isOpen,
   longitude,
   latitude,
+  addressStreet,
   handleSubmit,
   handleClose,
 }) {
   return (
-    <Dialog onClose={handleClose} open={isOpen} sx={style.dialog}>
+    <Dialog onClose={handleClose} open={isOpen} PaperProps={{ sx: style.dialog }}>
       <DialogTitle>
         <SemiBold14>Detalles extras</SemiBold14>
       </DialogTitle>
@@ -42,6 +43,7 @@ function FormAddressContainer({
               variant="standard"
               autoComplete="address-street"
               sx={{ width: "100%" }}
+              defaultValue={addressStreet}
               required
             />
             <TextField
@@ -97,12 +99,8 @@ function FormAddressContainer({
 
 const style = {
   dialog: {
-    minHeight: "200px",
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    minHeight: "300px",
+    width: "100%",position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
   },
   form: { mb: 2 },
 };

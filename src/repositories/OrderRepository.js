@@ -27,11 +27,18 @@ const OrderRepository = () => {
     });
   }
 
+  const confirmPayment = async (data) => {
+    return await API.post(`/orders/${data?.idTransaccion}/confirm`, data, {
+      await: true,
+    });
+  }
+
   return {
     getOrder,
     getAllOrders,
     getOrdersPending,
     saveOrder,
+    confirmPayment
   }
 }
 

@@ -47,7 +47,7 @@ const PaymentDetailContainer = ({ paymentValue }) => {
       <SemiBold16>
         M&eacute;todo de pago
       </SemiBold16>
-      <Box className={"flex flex-row gap-4"} onClick={handleOpen}>
+      <Box className={"flex flex-row gap-4 cursor-pointer"} onClick={handleOpen}>
         <Box className={"flex flex-row gap-4 flex-grow"}>
           { payment?.value === 0 && (<CashIcon className={"w-6 "}/>) }
           { payment?.value === 1 && (<CardIcon className={"w-6 "}/>) }
@@ -107,11 +107,8 @@ const style = {
   button: {},
   dialog: {
     minHeight: "400px",
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    maxHeight: { xs: "calc(100dvh - 200px)", lg: "80dvh" },
+    width: { xs: "100%", lg: "500px" },position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
   },
 };
 

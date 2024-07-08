@@ -26,6 +26,11 @@ export const stateState = hookstate(() => {
     cardExpiration: state?.cardExpiration || "",
     cardCVC: state?.cardCVC || "",
     cardHolderName: state?.cardHolderName || "",
+    paymentAddress: state?.paymentAddress || "",
+    paymentCountry: state?.paymentCountry || "",
+    paymentRegion: state?.paymentRegion || "",
+    paymentCity: state?.paymentCity || "",
+    paymentPostalCode: state?.paymentPostalCode || "",
     isFinishedAddedCard: state?.isFinishedAddedCard || false,
     completeName: state?.completeName || "",
     email: state?.email || "",
@@ -87,6 +92,10 @@ export const useCheckoutState = () => {
     state?.cardExpiration.set("");
     state?.cardCVC.set("");
     state?.cardHolderName.set("");
+    state?.paymentAddress.set("");
+    state?.paymentCountry.set("");
+    state?.paymentRegion.set("");
+    state?.paymentCity.set("");
     state?.showedCardNumber.set("");
     state?.isFinishedAddedCard.set(false);
   };
@@ -120,6 +129,10 @@ export const useCheckoutState = () => {
     state?.cardCVC.set("");
     state?.cardHolderName.set("");
     state?.showedCardNumber.set("");
+    state?.paymentCountry.set("");
+    state?.paymentRegion.set("");
+    state?.paymentAddress.set("");
+    state?.paymentCity.set("");
     state?.isFinishedAddedCard.set(false);
   };
 
@@ -145,6 +158,14 @@ export const useCheckoutState = () => {
     setCardCVC: (cardCVC) => state.cardCVC.set(cardCVC),
     cardHolderName: state.cardHolderName.get(),
     setCardHolderName: (cardHolderName) => state.cardHolderName.set(cardHolderName),
+    paymentAddress: state.paymentAddress.get(),
+    setPaymentAddress: (paymentAddress) => state.paymentAddress.set(paymentAddress),
+    paymentCountry: state.paymentCountry.get(),
+    setPaymentCountry: (paymentCountry) => state.paymentCountry.set(paymentCountry),
+    paymentRegion: state.paymentRegion.get(),
+    setPaymentRegion: (paymentRegion) => state.paymentRegion.set(paymentRegion),
+    paymentCity: state.paymentCity.get(),
+    setPaymentCity: (paymentCity) => state.paymentCity.set(paymentCity),
     showedCardNumber: state.showedCardNumber.get(),
     setShowedCardNumber: (showedCardNumber) => state.showedCardNumber.set(showedCardNumber),
     isFinishedAddedCard: state.isFinishedAddedCard.get(),

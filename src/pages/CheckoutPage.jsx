@@ -8,7 +8,7 @@ import ShippingContainer from "#/components/domain/delivery/ShippingContainer.js
 import PaymentContainer from "#/components/domain/checkout/PaymentContainer";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCartState } from "#/stores/cart";
 import GeneralInformationForm from "#/components/domain/checkout/GeneralInformationForm.jsx";
 import DeliveryInfoContainer from "#/components/domain/checkout/DeliveryInfoContainer.jsx";
@@ -18,7 +18,10 @@ import { useLocationState } from "#/stores/LocationState.js";
 import useValidateCheckout from "#/components/domain/checkout/controllers/useValidateCheckout.js";
 import useOrderParser from "#/components/domain/checkout/controllers/useOrderParser.js";
 import OrderService from "#/services/OrderService.js";
-import ReviewContainer from "../components/domain/checkout/ReviewContainer.jsx";
+import ReviewContainer from "#/components/domain/checkout/ReviewContainer.jsx";
+import { addToast } from "#/stores/UIState.js";
+import ClientUserDetailService from "#/services/ClientUserDetailService.js";
+import { useAuthState } from "#/stores/AuthState.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -29,6 +32,9 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const { parseOrder } = useOrderParser();
   const { saveOrder } = OrderService();
+  const [searchParams] = useSearchParams();
+  const { userDetail} = ClientUserDetailService();
+  const auth = useAuthState();
 
   useEffect(() => {
     ui?.setTitle("Pago");
@@ -41,10 +47,42 @@ const CheckoutPage = () => {
   }, []);
 
   useEffect(() => {
+    if (searchParams?.get("errorPago")) {
+      addToast("Hubo un error al procesar el pago", "error");
+      checkoutState?.setActiveStep(CHECKOUT_STEPS?.REVIEW);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     return () => {
       checkoutState?.resetActiveStep();
     };
   }, []);
+
+  useEffect(() => {
+    if(!checkoutState?.email || checkoutState?.email === ''){
+      checkoutState?.setEmail(auth?.currentUser?.email);
+    }
+    if(!checkoutState?.completeName || checkoutState?.completeName === ''){
+      checkoutState?.setCompleteName(auth?.currentUser?.displayName);
+    }
+  }, [auth?.currentUser?.email, auth?.currentUser?.displayName]);
+
+  useEffect(() => {
+    if(!userDetail) return;
+    if(userDetail?.phone){
+      checkoutState?.setPhone(userDetail?.phone);
+    }
+    if(userDetail?.paymentAddress){
+      checkoutState?.setPaymentAddress(userDetail?.paymentAddress);
+    }
+    if(userDetail?.paymentCountry){
+      checkoutState?.setPaymentCountry(userDetail?.paymentCountry);
+    }
+    if(userDetail?.paymentRegion){
+      checkoutState?.setPaymentRegion(userDetail?.paymentRegion);
+    }
+  }, [userDetail]);
 
   const handleConfirmOrder = () => {
     const order = parseOrder();

@@ -40,7 +40,7 @@ function FavoritesDialog() {
           {favoriteProducts?.length !== 1 ? "s" : ""}
         </SemiBold12>
       </Button>
-      <Dialog onClose={handleClose} open={isOpen.get()} sx={style.dialog}>
+      <Dialog onClose={handleClose} open={isOpen.get()} PaperProps={{ sx: style.dialog }}>
         <DialogTitle>
           <SemiBold14>Favoritos</SemiBold14>
         </DialogTitle>
@@ -90,12 +90,8 @@ const list = {
 const style = {
   button: {},
   dialog: {
-    minHeight: "200px",
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    minHeight: "250px",
+    width: "100%",position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
   },
 };
 

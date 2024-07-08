@@ -17,7 +17,7 @@ const NotFinishedOrdersAdvise = () => {
     navigate({
       pathname: "/perfil/ordenes-y-mensajes",
       search: `?${createSearchParams({
-        "estado-orden": ["PENDING", "INPROCESS", "ONTHEWAY"]
+        "estado-orden": ["PENDING", "CONFIRMED", "INPROCESS", "ONTHEWAY"]
       })}`
     });
   }

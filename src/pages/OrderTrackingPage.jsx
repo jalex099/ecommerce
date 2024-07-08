@@ -3,7 +3,7 @@ import HelmetMeta from "#/components/shared/HelmetMeta.jsx";
 import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useUIState } from "#/stores/UIState.js";
+import { useUIState, addToast } from "#/stores/UIState.js";
 import OrderService from "#/services/OrderService.js";
 import { useHookstate } from "@hookstate/core";
 import Box from "@mui/material/Box";
@@ -23,14 +23,14 @@ const OrderTrackingPage = () => {
 
   useEffect(() => {
     if(!id) {
-      alert("Error al obtener la orden")
+      addToast("Error al obtener la orden", "error");
       navigate(-1);
       return;
     }
     getOrder?.mutate(id, {
       onSuccess: ({ data }) => {
         if(!data) {
-          alert("Error al obtener la orden")
+          addToast("Error al obtener la orden", "error");
           navigate(-1);
           return;
         }
@@ -38,7 +38,7 @@ const OrderTrackingPage = () => {
       },
       onError: (error) => {
         console.log(error)
-        alert("Error al obtener la orden")
+        addToast("Error al obtener la orden", "error");
         navigate(-1);
         return;
       }
@@ -48,7 +48,6 @@ const OrderTrackingPage = () => {
 
 
   const handleGoHome = () => {
-
     navigate("/");
   };
   if(!order?.value) return <></>

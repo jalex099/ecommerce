@@ -3,6 +3,7 @@ import { useCheckoutState } from "#/stores/CheckoutState.js";
 import { useLocationState } from "#/stores/LocationState.js";
 import { parseMenu } from "#/utils/adapterUtil/cartAdapterUtil.js";
 import { PAYMENT_METHODS } from "#/config/constants.js";
+import { findKey } from "#/utils/localStorageHelper.js";
 
 export default function useOrderParser() {
   const cart = useCartState();
@@ -52,6 +53,13 @@ export default function useOrderParser() {
         (method) => method?.value === checkout?.paymentMethod
       )?.code,
       total: cart?.getTotal(),
+      ccNumber: checkout?.cardNumber || null,
+      ccExp: checkout?.cardExpiration || null,
+      ccCsc: checkout?.cardCVC || null,
+      ccName: checkout?.cardHolderName || null,
+      payAddress: checkout?.paymentAddress || null,
+      payCountry: checkout?.paymentCountry || null,
+      payRegion: checkout?.paymentRegion || null
     };
 
     //* Comentarios extras de la orden
@@ -60,6 +68,7 @@ export default function useOrderParser() {
     };
 
     return {
+      _id: findKey('order') || null,
       menu,
       ...userGeneralData,
       ...deliveryData,

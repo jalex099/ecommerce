@@ -126,7 +126,7 @@ const DialogOrdersFilter = ({ isOpen, handleClose, filters, handleFilterChange }
 }
 const style = {
   dialog: {
-    minHeight: "200px",
+    minHeight: "200px",position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
   },
   link: {
     color: (theme) => theme.palette.primary120.main,

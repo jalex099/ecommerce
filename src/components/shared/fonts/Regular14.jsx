@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-function Regular14({ children, className, styles }) {
+function Regular14({ children, className, styles, ...props }) {
   return (
     <Typography
       fontSize="14px"
@@ -8,6 +8,7 @@ function Regular14({ children, className, styles }) {
       className={className}
       fontFamily="Intro"
       sx={styles}
+      {...props}
     >
       {children}
     </Typography>

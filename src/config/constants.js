@@ -1,11 +1,15 @@
-// export const API_URL = "http://localhost:3001/apitest";
-export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+export const API_URL = "http://localhost:3001/apitest";
+// export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+
+export const IPAPI_URL = "https://ipapi.co/json/";
+export const GEOCODING_URL = "https://maps.googleapis.com/maps/api";
 
 export const OAUTH_API_CLIENT_ID =
   "394101880841-slcv06f3d8s3v9fspicvdnqnp26hs95r.apps.googleusercontent.com";
 
 export const MAPBOX_ACCESS_TOKEN =
   "pk.eyJ1IjoianZycm1ybHMiLCJhIjoiY2xucnpyOHhmMDNkaDJyazR1c2lteXdiNCJ9.1ilke9VVwHOQX15P3OzuVg";
+export const GEOCODING_API_KEY = "AIzaSyAqNLAo2mPO1vwJov20YmhyDXACB6ZCU5A";
 export const MAPBOX_ZOOM = 16;
 
 export const THEMES = {
@@ -86,6 +90,7 @@ export const PAYMENT_METHODS = [
 
 export const ORDER_STEPS = [
   { label: "Pendiente", value: "PENDING", msg: "Tu pedido está pendiente de aprobación" },
+  { label: "Confirmado", value: "CONFIRMED", msg: "Tu pedido ha sido confirmado" },
   { label: "En Proceso", value: "INPROCESS", msg: "Tu pedido está siendo elaborado" },
   { label: "En Camino", value: "ONTHEWAY", msg: "Tu pedido está en camino" },
   { label: "Finalizada", value: "FINISHED", msg: "Tu pedido ha sido entregado" },

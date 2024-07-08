@@ -7,15 +7,18 @@ import GeolocationService from "#/services/GeolocationService";
 import { useHookstate } from "@hookstate/core";
 import Button from "@mui/material/Button";
 import ClientAddressService from "#/services/ClientAddressService";
-import FormAddressContainer from "../components/domain/profile/addAddress/FormAddressContainer";
+import FormAddressContainer from "#/components/domain/profile/addAddress/FormAddressContainer";
 import { addToast } from "#/stores/UIState.js";
+import GeocodingService from "#/services/GeocodingService.js";
 
 function AddAddressPage() {
   const ui = useUIState();
   const { getLatLong } = GeolocationService();
   const location = useHookstate(null);
+  const addressStreet = useHookstate("");
   const { add } = ClientAddressService();
   const isFormAddressOpen = useHookstate(false);
+  const { getReverseGeocoding } = GeocodingService();
 
   useEffect(() => {
     ui?.setTitle("Agregar dirección");
@@ -32,6 +35,15 @@ function AddAddressPage() {
         latitude: coords?.lat,
         longitude: coords?.long,
       });
+      getReverseGeocoding.mutate(location?.value, {
+        onSuccess: ({data}) => {
+          if(!data) return;
+          addressStreet?.set(data?.results?.find((item) => item?.types?.includes("route"))?.formatted_address || "");
+        },
+        onError: (error) => {
+          console.log(error)
+        }
+      });
     } catch (error) {
       addToast("No se pudo obtener tu ubicación", "error");
       console.log(error);
@@ -42,6 +54,15 @@ function AddAddressPage() {
     location.set({
       latitude: lngLat?.lat,
       longitude: lngLat?.lng,
+    });
+    getReverseGeocoding.mutate(location?.value, {
+      onSuccess: ({data}) => {
+        if(!data) return;
+        addressStreet?.set(data?.results?.find((item) => item?.types?.includes("route"))?.formatted_address || "");
+      },
+      onError: (error) => {
+        console.log(error)
+      }
     });
   };
 
@@ -106,6 +127,7 @@ function AddAddressPage() {
         isOpen={isFormAddressOpen.value}
         latitude={location?.value?.latitude}
         longitude={location?.value?.longitude}
+        addressStreet={addressStreet?.value}
         handleSubmit={handleSubmit}
         handleClose={handleToogleFormAddress}
       />

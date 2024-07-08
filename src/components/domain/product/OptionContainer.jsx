@@ -77,7 +77,7 @@ function OptionContainer({ label, options, index, className }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         PaperProps={{
-          style: { padding: "8px 0px" , minWidth: !isLg ? "100%" : "500px", maxWidth: !isLg ? "100%" : "500px" },
+          sx: { padding: "8px 0px" , minWidth: { xs: "100%", lg: "500px" }, maxWidth: { xs: "100%", lg: "500px" }, position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0},
         }}
       >
         <DialogTitle className={"cursor-default"}>
@@ -132,9 +132,7 @@ function OptionContainer({ label, options, index, className }) {
 const style = {
   dialogContent: {
     minHeight: "100px",
-    maxHeight: "300px",
-    p: 0,
-    m: 0,
+    maxHeight: { xs: "calc(100vh - 200px)", lg: "500px" },
   },
   selectedOption: {
     // opacity: 0.75,

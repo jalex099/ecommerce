@@ -20,7 +20,7 @@ const ProductsView = ({ products }) => {
     <Box className={"w-full flex flex-col gap-4"}>
       <Box className={"w-full flex justify-center flex-col gap-2"}>
         {
-          products.map((prd, index) => (
+          products?.map((prd, index) => (
             <Box
               key={index}
               className={"w-full min-h-[92px] flex items-start gap-4  py-2 px-4"}

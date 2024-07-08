@@ -219,7 +219,7 @@ const components = {
     styleOverrides: {
       paper: {
         borderRadius: { xs: "24px 24px 0px 0px ", lg: "24px"},
-        position: "absolute",
+        position: { xs: "absolute" , lg: "relative"},
         bottom: 0,
         left:0,
         right: 0,

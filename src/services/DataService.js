@@ -99,6 +99,14 @@ const DataService = () => {
     return data?.data?.parameters || [];
   }, [data]);
 
+  const countries = useMemo(() => {
+    return data?.data?.countries || [];
+  }, [data]);
+
+  const regions = useMemo(() => {
+    return data?.data?.regions || [];
+  }, [data]);
+
   return {
     categories,
     menu,
@@ -117,6 +125,8 @@ const DataService = () => {
     isFetching,
     refetch,
     groupsOfOptions,
+    countries,
+    regions,
   };
 };
 

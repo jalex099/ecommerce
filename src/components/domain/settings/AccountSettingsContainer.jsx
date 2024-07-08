@@ -13,21 +13,25 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl, InputLabel, Select } from "@mui/material";
 // import file json with countries
-import countries from "#/assets/files/countries.json";
+import countriesJson from "#/assets/files/countries.json";
 import ClientUserDetailService from "#/services/ClientUserDetailService.js";
+import DataService from "#/services/DataService.js";
 
 const AccountSettingsContainer = () => {
-  const accountData = useHookstate({phone: '', alias: '', country: '', invoiceName: '', invoiceNumber: ''});
+  const accountData = useHookstate({phone: '', alias: '', paymentCountry: '', paymentRegion: '', paymentAddress:'', invoiceName: '', invoiceNumber: ''});
   const phoneAreaCode =useHookstate(null);
   const {userDetail, save} = ClientUserDetailService();
+  const { countries, regions } = DataService();
 
   useEffect(() => {
     if(!userDetail) return;
     accountData?.phone?.set(userDetail?.phone || '');
     accountData?.alias?.set(userDetail?.alias || '');
-    accountData?.country?.set(userDetail?.country || '');
+    accountData?.paymentCountry?.set(userDetail?.paymentCountry || '');
     accountData?.invoiceName?.set(userDetail?.invoiceName || '');
     accountData?.invoiceNumber?.set(userDetail?.invoiceNumber || '');
+    accountData?.paymentRegion?.set(userDetail?.paymentRegion || '');
+    accountData?.paymentAddress?.set(userDetail?.paymentAddress || '');
   }, [userDetail]);
 
   useEffect(() => {
@@ -36,7 +40,9 @@ const AccountSettingsContainer = () => {
       const phone = accountData?.phone?.value.replace(/\D/g, '');
       if(phone?.length > 3) return
     }
-    accountData?.phone?.set(`(${phoneAreaCode?.value}) `);
+    if(phoneAreaCode?.value === null) return;
+    const paddedPhoneAreaCode = String(phoneAreaCode.value).padStart(3, '0');
+    accountData?.phone?.set(`(${paddedPhoneAreaCode}) `);
   }, [phoneAreaCode?.value]);
 
   const handleChangePhone = (e) => {
@@ -56,9 +62,18 @@ const AccountSettingsContainer = () => {
   }
 
   const handleChangeCountry = (e) => {
-    accountData.country.set(e.target.value);
-    const codeArea = countries?.find(country => country.iso2 === e.target.value)?.phone_code;
+    accountData.paymentCountry.set('');
+    accountData.paymentCountry.set(e.target.value);
+    const codeArea = countriesJson?.find(country => country.iso2 === e.target.value)?.phone_code;
     phoneAreaCode.set(codeArea || null);
+  }
+
+  const handleChangeRegion = (e) => {
+    accountData.paymentRegion.set(e.target.value);
+  }
+
+  const handleChangePaymentAddress = (e) => {
+    accountData.paymentAddress.set(e.target.value);
   }
 
 
@@ -69,6 +84,10 @@ const AccountSettingsContainer = () => {
   const handleSave = async () => {
     await save.mutate(accountData?.value)
   }
+
+  const regionsByCountry = useMemo(() => {
+    return regions?.find((region) => region?.id === accountData?.value?.paymentCountry)?.regions || [];
+  }, [accountData.value?.paymentCountry, regions]);
 
   return (
     <Box className={"w-full flex flex-col gap-4"}>
@@ -100,45 +119,68 @@ const AccountSettingsContainer = () => {
               onChange={handleChangeAlias}
             />
             <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Forma en la que quieres que se te llame en la plataforma</Regular12>
+          </Box>
+        </Box>
+        <Box className={"w-full flex flex-col gap-2"}>
+          <Box className={"w-full flex flex-col gap-0 "}>
+            <SemiBold14>
+              Datos para pago en l&iacute;nea
+            </SemiBold14>
+
+            <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>
+              Agiliza tus compras en l&iacute;nea completando los siguientes datos
+            </Regular12>
+          </Box>
+          <Box className={"w-full"}>
+            <TextField
+              label={"Dirección"}
+              name={"payment-address"}
+              variant={"standard"}
+              autoComplete={"paymentAddress"}
+              sx={{ width: "100%" }}
+              value={accountData?.value?.paymentAddress || ''}
+              onChange={handleChangePaymentAddress}
+              multiline
+              maxRows={3}
+            />
+          </Box>
+          <Box className={"w-full grid grid-cols-2 gap-4"}>
             <FormControl variant={"standard"} sx={{mt: 2}}>
-              <InputLabel id="country-label">Pa&iacute;s</InputLabel>
+              <InputLabel id="payment-country-label">Pa&iacute;s</InputLabel>
               <Select
                 label={"Pa&iacute;s"}
-                name={"country"}
+                name={"payment-country"}
                 autoComplete={"off"}
                 sx={{ width: "100%" }}
-                value={accountData?.value?.country || ''}
+                value={accountData?.value?.paymentCountry || ''}
                 onChange={handleChangeCountry}
               >
                 {
                   countries?.map(country => {
-                    return <MenuItem key={country?.iso2} value={country?.iso2}
-                    >{country?.nombre}</MenuItem>
+                    return <MenuItem key={country?.id} value={country?.id}
+                    >{country?.name}</MenuItem>
                   })
                 }
               </Select>
             </FormControl>
-          </Box>
-        </Box>
-        <Box className={"w-full flex flex-col gap-2"}>
-          <SemiBold14>
-            Datos de contacto
-          </SemiBold14>
-          <Box className={"flex flex-col gap-0 w-full"}>
-            <InputMask
-              mask="(999) 9999-9999"
-              value={accountData?.value?.phone || ''}
-              onChange={handleChangePhone}
-              maskChar=" "
-            >
-              {() => <TextField
-                label="Teléfono"
-                name="phone"
-                variant="standard" sx={{ width: "100%" }}
-                required
-                autoComplete="phone"/>}
-            </InputMask>
-            <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Formato requerido: (XXX) XXXX-XXXX</Regular12>
+            <FormControl variant={"standard"} sx={{mt: 2}}>
+              <InputLabel id="payment-region-label">Regi&oacute;n</InputLabel>
+              <Select
+                label={"Regi&oacute;n"}
+                name={"payment-region"}
+                autoComplete={"off"}
+                sx={{ width: "100%" }}
+                value={accountData?.value?.paymentRegion || ''}
+                onChange={handleChangeRegion}
+              >
+                {
+                  regionsByCountry.map(region => {
+                    return <MenuItem key={region?.id} value={region?.id}
+                    >{region?.name}</MenuItem>
+                  })
+                }
+              </Select>
+            </FormControl>
           </Box>
         </Box>
         <Box className={"w-full flex flex-col gap-2"}>
@@ -168,6 +210,28 @@ const AccountSettingsContainer = () => {
               onChange={handleChangeInvoiceNumber}
             />
             <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>N&uacute;mero de identificaci&oacute;n tributaria</Regular12>
+          </Box>
+        </Box>
+
+        <Box className={"w-full flex flex-col gap-2"}>
+          <SemiBold14>
+            Datos de contacto
+          </SemiBold14>
+          <Box className={"flex flex-col gap-0 w-full"}>
+            <InputMask
+              mask="(999) 9999-9999"
+              value={accountData?.value?.phone || ''}
+              onChange={handleChangePhone}
+              maskChar=" "
+            >
+              {() => <TextField
+                label="Teléfono"
+                name="phone"
+                variant="standard" sx={{ width: "100%" }}
+                required
+                autoComplete="phone"/>}
+            </InputMask>
+            <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Formato requerido: (XXX) XXXX-XXXX</Regular12>
           </Box>
         </Box>
       </Stack>

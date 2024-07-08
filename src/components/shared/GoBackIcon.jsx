@@ -23,6 +23,7 @@ function GoBackIcon({ styles = {}, containerStyle = {} }) {
       locationState?.prevStep();
       return
     }
+    console.log(params.get("back"));
     if(params.get("back") && params.get("back") === 'disabled'){
       const pathnameToGo = params.get("pathname");
       if(!pathnameToGo) {

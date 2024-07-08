@@ -8,7 +8,7 @@ import Bold16 from "#/components/shared/fonts/Bold16.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import { formatCurrency } from "#/utils/currency.js";
-
+import Picture from "#/components/shared/Picture.jsx";
 
 const OrderProductsDetails = ({ menu : menuOrder }) => {
   const { menu } = DataService();
@@ -21,7 +21,7 @@ const OrderProductsDetails = ({ menu : menuOrder }) => {
           return (
             <Box key={index} className={"flex flex-row gap-1 items-center my-2 justify-between px-4 w-full"}>
               <Box className={"w-12 h-12"}>
-                <motion.img
+                <Picture
                   src={findImage(productData?._id, "PRD", "jpg")}
                   alt={productData?.name}
                   className={"w-full h-full object-cover rounded-2xl"}

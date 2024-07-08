@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import HelmetMeta from "#/components/shared/HelmetMeta";
 import Box from "@mui/material/Box";
-import { useUIState } from "#/stores/UIState";
+import { useUIState, addToast } from "#/stores/UIState";
 import { useEffect, useRef } from "react";
 import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import Regular14 from "#/components/shared/fonts/Regular14";
@@ -43,7 +43,7 @@ function RegisterPage() {
     const confirmPassword = confirmPasswordRef.current.value;
 
     if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      addToast("Las contraseñas no coinciden");
       return;
     }
 

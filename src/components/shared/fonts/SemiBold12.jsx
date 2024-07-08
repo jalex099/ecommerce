@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-function SemiBold12({ children, className, styles }) {
+function SemiBold12({ children, className, styles, ...props }) {
   return (
     <Typography
       fontSize="12px"
@@ -9,6 +9,7 @@ function SemiBold12({ children, className, styles }) {
       fontFamily="Intro"
       fontWeight={600}
       sx={styles}
+      {...props}
     >
       {children}
     </Typography>

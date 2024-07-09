@@ -35,15 +35,6 @@ function AddAddressPage() {
         latitude: coords?.lat,
         longitude: coords?.long,
       });
-      getReverseGeocoding.mutate(location?.value, {
-        onSuccess: ({data}) => {
-          if(!data) return;
-          addressStreet?.set(data?.results?.find((item) => item?.types?.includes("route"))?.formatted_address || "");
-        },
-        onError: (error) => {
-          console.log(error)
-        }
-      });
     } catch (error) {
       addToast("No se pudo obtener tu ubicación", "error");
       console.log(error);
@@ -54,15 +45,6 @@ function AddAddressPage() {
     location.set({
       latitude: lngLat?.lat,
       longitude: lngLat?.lng,
-    });
-    getReverseGeocoding.mutate(location?.value, {
-      onSuccess: ({data}) => {
-        if(!data) return;
-        addressStreet?.set(data?.results?.find((item) => item?.types?.includes("route"))?.formatted_address || "");
-      },
-      onError: (error) => {
-        console.log(error)
-      }
     });
   };
 
@@ -100,7 +82,10 @@ function AddAddressPage() {
     return true;
   }
 
-  const handleToogleFormAddress = () => {
+  const handleToogleFormAddress = async () => {
+    const reverseGeoResponse = await getReverseGeocoding.mutateAsync(location?.value);
+    if(reverseGeoResponse?.data)
+      addressStreet?.set(reverseGeoResponse?.data?.results?.find((item) => item?.types?.includes("route"))?.formatted_address || "");
     isFormAddressOpen.set((prev) => !prev);
   };
 

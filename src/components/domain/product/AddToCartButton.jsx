@@ -13,7 +13,7 @@ const AddToCartButton = ({ total = "", ...props }) => {
       {...props}
       className="flex justify-between items-center  cursor-pointer gap-2"
     >
-      <SemiBold14>Agregar al carrito </SemiBold14>
+      <SemiBold14 className={"overflow-hidden whitespace-nowrap text-ellipsis"}>Agregar al carrito </SemiBold14>
       <motion.div>
         <Regular14 className={"opacity-80"}>
           {total}

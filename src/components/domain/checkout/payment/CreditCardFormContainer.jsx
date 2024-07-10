@@ -15,6 +15,7 @@ import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import { motion } from "framer-motion";
 import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 import IpInfoService from "#/services/IpInfoService.js";
+import Regular12 from "../../../shared/fonts/Regular12.jsx";
 
 const ERROR_MESSAGES = {
   emptyCardNumber: 'El número de la tarjeta es inválido',
@@ -36,6 +37,7 @@ const CreditCardFormContainer = () => {
   });
   const { erroredInputs, touchedInputs } = meta;
   const { data } = IpInfoService();
+  const checkoutState = useCheckoutState();
 
   useEffect(() => {
     if(checkoutState?.paymentCountry && checkoutState?.paymentRegion && checkoutState?.paymentCity && checkoutState?.paymentAddress) return;
@@ -50,7 +52,18 @@ const CreditCardFormContainer = () => {
       checkoutState?.setPaymentAddress(data?.city + ', ' + data?.country_name);
   }, [data]);
 
-  const checkoutState = useCheckoutState();
+  useEffect(() => {
+    const filledFields = [
+      checkoutState?.cardNumber,
+      checkoutState?.cardExpiration,
+      checkoutState?.cardCVC,
+      checkoutState?.cardHolderName
+    ].filter(field => field && field.trim() !== '').length;
+
+    // Mostrar los datos de facturación si al menos 3 campos están llenos
+    isOpenExtraPaymentFields.set(filledFields >= 3);
+  }, [checkoutState?.cardNumber, checkoutState?.cardExpiration, checkoutState?.cardCVC, checkoutState?.cardHolderName]);
+
   const handleChangeCardNumber = (e) => {
     checkoutState?.setCardNumber(e.target.value);
   }
@@ -72,7 +85,8 @@ const CreditCardFormContainer = () => {
   }
 
   const handleChangePaymentRegion = (e) => {
-    checkoutState?.setPaymentRegion(e.target.value);
+    checkoutState?.setPaymentRegionName(e.target.value)
+    checkoutState?.setPaymentRegion(regions?.find(country => country?.id === userDetail?.paymentCountry)?.regions?.find(region => region?.id === userDetail?.paymentRegion)?.name || '');
   }
 
   const handleChangePaymentAddress = (e) => {
@@ -163,7 +177,7 @@ const CreditCardFormContainer = () => {
             className={"text-right cursor-pointer"}
             onClick={() => isOpenExtraPaymentFields.set(true)}
           >
-            Mostrar campos extras
+            Mostrar datos de facturaci&oacute;n
           </SemiBold12>
         ) : (
           <motion.div
@@ -172,6 +186,9 @@ const CreditCardFormContainer = () => {
             animate={{ translateY: 0, opacity: 1 }}
             exit={{ translateY: -20, opacity: 0 }}
           >
+            <Regular12
+              styles={{ color: (theme) => theme?.palette?.opacity40?.main, textAlign: "center" }}
+            >Datos de facturaci&oacute;n</Regular12>
             <Stack spacing={2}>
               <TextField
                 multiline
@@ -221,12 +238,12 @@ const CreditCardFormContainer = () => {
                     name={"payment-region"}
                     autoComplete={"shipping address-level1"}
                     sx={{ width: "100%" }}
-                    value={checkoutState.paymentRegion || ''}
+                    value={checkoutState.paymentRegionName || ''}
                     onChange={handleChangePaymentRegion}
                   >
                     {
                       regionsByCountry.map(region => {
-                        return <MenuItem key={region?.id} value={region?.id}
+                        return <MenuItem key={region?.id} value={region?.name}
                         >{region?.name}</MenuItem>
                       })
                     }

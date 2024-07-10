@@ -22,6 +22,7 @@ import ReviewContainer from "#/components/domain/checkout/ReviewContainer.jsx";
 import { addToast } from "#/stores/UIState.js";
 import ClientUserDetailService from "#/services/ClientUserDetailService.js";
 import { useAuthState } from "#/stores/AuthState.js";
+import DataService from "#/services/DataService.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -35,6 +36,7 @@ const CheckoutPage = () => {
   const [searchParams] = useSearchParams();
   const { userDetail} = ClientUserDetailService();
   const auth = useAuthState();
+  const { regions } = DataService();
 
   useEffect(() => {
     ui?.setTitle("Pago");
@@ -81,6 +83,7 @@ const CheckoutPage = () => {
     }
     if(userDetail?.paymentRegion){
       checkoutState?.setPaymentRegion(userDetail?.paymentRegion);
+      checkoutState?.setPaymentRegionName(regions?.find(country => country?.id === userDetail?.paymentCountry)?.regions?.find(region => region?.id === userDetail?.paymentRegion)?.name || "");
     }
     if(userDetail?.paymentCity){
       checkoutState?.setPaymentCity(userDetail?.paymentCity);
@@ -113,7 +116,7 @@ const CheckoutPage = () => {
       {checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW && (
         <ReviewContainer />
       )}
-      <Box className="sticky bottom-0 left-0 right-0 z-10 w-full">
+      <Box className="sticky bottom-4 left-0 right-0 z-10 w-full">
         <Button
           variant="contained"
           color="primary"

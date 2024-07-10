@@ -29,6 +29,7 @@ export const stateState = hookstate(() => {
     paymentAddress: state?.paymentAddress || "",
     paymentCountry: state?.paymentCountry || "",
     paymentRegion: state?.paymentRegion || "",
+    paymentRegionName: state?.paymentRegionName || "",
     paymentCity: state?.paymentCity || "",
     paymentPostalCode: state?.paymentPostalCode || "",
     isFinishedAddedCard: state?.isFinishedAddedCard || false,
@@ -95,6 +96,8 @@ export const useCheckoutState = () => {
     state?.paymentAddress.set("");
     state?.paymentCountry.set("");
     state?.paymentRegion.set("");
+    state?.paymentPostalCode.set("");
+    state?.paymentRegionName.set("");
     state?.paymentCity.set("");
     state?.showedCardNumber.set("");
     state?.isFinishedAddedCard.set(false);
@@ -131,6 +134,7 @@ export const useCheckoutState = () => {
     state?.showedCardNumber.set("");
     state?.paymentCountry.set("");
     state?.paymentRegion.set("");
+    state?.paymentRegionName.set("");
     state?.paymentAddress.set("");
     state?.paymentCity.set("");
     state?.paymentPostalCode.set("");
@@ -165,6 +169,8 @@ export const useCheckoutState = () => {
     setPaymentCountry: (paymentCountry) => state.paymentCountry.set(paymentCountry),
     paymentRegion: state.paymentRegion.get(),
     setPaymentRegion: (paymentRegion) => state.paymentRegion.set(paymentRegion),
+    paymentRegionName: state.paymentRegionName.get(),
+    setPaymentRegionName: (paymentRegionName) => state.paymentRegionName.set(paymentRegionName),
     paymentCity: state.paymentCity.get(),
     setPaymentCity: (paymentCity) => state.paymentCity.set(paymentCity),
     paymentPostalCode: state.paymentPostalCode.get(),

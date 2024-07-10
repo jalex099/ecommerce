@@ -1,6 +1,6 @@
 import { useLocationState } from "#/stores/LocationState.js";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
-import { CHECKOUT_STEPS } from "#/config/constants.js";
+import { CHECKOUT_STEPS, PHONE_REGEX } from "#/config/constants.js";
 
 export default function useValidateCheckout(){
   const locationState = useLocationState();
@@ -52,7 +52,7 @@ export default function useValidateCheckout(){
   }
 
   const validateGeneralForm = () => {
-    if(!checkoutState?.completeName || !checkoutState?.email || !checkoutState?.phone){
+    if(!checkoutState?.completeName || !checkoutState?.email || !checkoutState?.phone?.match(PHONE_REGEX)){
       return false;
     }
     return true;

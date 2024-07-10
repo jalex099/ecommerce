@@ -17,7 +17,12 @@ const ConfirmDialog = ({
   ...props
 }) => {
   return (
-    <Dialog open={isOpen} {...props}>
+    <Dialog open={isOpen} {...props} PaperProps={{
+      sx: {
+        minHeight: "150px",
+        width: "100%", position: { xs: "absolute", lg: "relative" }, bottom: 0, left: 0, right: 0,
+      },
+    }}>
       <DialogTitle>
         <SemiBold14>{title}</SemiBold14>
       </DialogTitle>

@@ -30,7 +30,7 @@ const AccountSettingsContainer = () => {
     accountData?.paymentCountry?.set(userDetail?.paymentCountry || '');
     accountData?.invoiceName?.set(userDetail?.invoiceName || '');
     accountData?.invoiceNumber?.set(userDetail?.invoiceNumber || '');
-    accountData?.paymentRegion?.set(userDetail?.paymentRegion || '');
+    accountData?.paymentRegion?.set(regions?.find(country => country?.id === userDetail?.paymentCountry)?.regions?.find(region => region?.id === userDetail?.paymentRegion)?.name || '');
     accountData?.paymentAddress?.set(userDetail?.paymentAddress || '');
     accountData?.paymentCity?.set(userDetail?.paymentCity || '');
     accountData?.paymentPostalCode?.set(userDetail?.paymentPostalCode || '');
@@ -47,12 +47,6 @@ const AccountSettingsContainer = () => {
     accountData?.phone?.set(`(${paddedPhoneAreaCode}) `);
   }, [phoneAreaCode?.value]);
 
-  useEffect(() => {
-    //* Buscar en el json countriesJson, la region y setear el codigo postal si lo encuentra
-    if(accountData?.paymentRegion?.value === '') return;
-    const country = countriesJson?.find(country => country?.iso2 === accountData?.paymentCountry?.value);
-
-  }, [accountData.value?.paymentRegion]);
 
   const handleChangePhone = (e) => {
     accountData.phone.set(e.target.value);
@@ -99,10 +93,16 @@ const AccountSettingsContainer = () => {
   }, [accountData.value]);
 
   const handleSave = async () => {
-    await save.mutate(accountData?.value)
+    const payload = {
+      ...accountData?.value,
+      phone: accountData?.phone?.value.replace(/\D/g, '')?.length > 3 ? accountData?.phone?.value : '',
+      paymentRegion: regionsByCountry?.find(region => region?.name === accountData?.value?.paymentRegion)?.id || ''
+    }
+    await save.mutate(payload)
   }
 
   const regionsByCountry = useMemo(() => {
+    if(accountData?.value?.paymentCountry === '') return [];
     return regions?.find((region) => region?.id === accountData?.value?.paymentCountry)?.regions || [];
   }, [accountData.value?.paymentCountry, regions]);
 
@@ -141,11 +141,11 @@ const AccountSettingsContainer = () => {
         <Box className={"w-full flex flex-col gap-2"}>
           <Box className={"w-full flex flex-col gap-0 "}>
             <SemiBold14>
-              Datos para pago en l&iacute;nea
+              Datos de facturaci&oacute;n
             </SemiBold14>
 
             <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>
-              Agiliza tus compras en l&iacute;nea completando los siguientes datos
+              Agiliza tus compras completando el siguiente formulario
             </Regular12>
           </Box>
           <Box className={"w-full"}>
@@ -203,7 +203,7 @@ const AccountSettingsContainer = () => {
               >
                 {
                   regionsByCountry.map(region => {
-                    return <MenuItem key={region?.id} value={region?.id}
+                    return <MenuItem key={region?.id} value={region?.name}
                     >{region?.name}</MenuItem>
                   })
                 }
@@ -222,35 +222,35 @@ const AccountSettingsContainer = () => {
             />
           </Box>
         </Box>
-        <Box className={"w-full flex flex-col gap-2"}>
-          <SemiBold14>
-            Datos de facturaci&oacute;n
-          </SemiBold14>
-          <Box className={"w-full"}>
-            <TextField
-              label={"Nombre en factura"}
-              name={"invoiceName"}
-              variant={"standard"}
-              autoComplete={"billing name"}
-              sx={{ width: "100%" }}
-              value={accountData?.value?.invoiceName || ''}
-              onChange={handleChangeInvoiceName}
-            />
-            <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Nombre que aparecer&aacute; en la factura</Regular12>
-          </Box>
-          <Box className={"w-full"}>
-            <TextField
-              label={"NIT"}
-              name={"invoiceNumber"}
-              variant={"standard"}
-              autoComplete={"billing tax-id"}
-              sx={{ width: "100%" }}
-              value={accountData?.value?.invoiceNumber || ''}
-              onChange={handleChangeInvoiceNumber}
-            />
-            <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>N&uacute;mero de identificaci&oacute;n tributaria</Regular12>
-          </Box>
-        </Box>
+        {/*<Box className={"w-full flex flex-col gap-2"}>*/}
+        {/*  <SemiBold14>*/}
+        {/*    Datos de facturaci&oacute;n*/}
+        {/*  </SemiBold14>*/}
+        {/*  <Box className={"w-full"}>*/}
+        {/*    <TextField*/}
+        {/*      label={"Nombre en factura"}*/}
+        {/*      name={"invoiceName"}*/}
+        {/*      variant={"standard"}*/}
+        {/*      autoComplete={"billing name"}*/}
+        {/*      sx={{ width: "100%" }}*/}
+        {/*      value={accountData?.value?.invoiceName || ''}*/}
+        {/*      onChange={handleChangeInvoiceName}*/}
+        {/*    />*/}
+        {/*    <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Nombre que aparecer&aacute; en la factura</Regular12>*/}
+        {/*  </Box>*/}
+        {/*  <Box className={"w-full"}>*/}
+        {/*    <TextField*/}
+        {/*      label={"NIT"}*/}
+        {/*      name={"invoiceNumber"}*/}
+        {/*      variant={"standard"}*/}
+        {/*      autoComplete={"billing tax-id"}*/}
+        {/*      sx={{ width: "100%" }}*/}
+        {/*      value={accountData?.value?.invoiceNumber || ''}*/}
+        {/*      onChange={handleChangeInvoiceNumber}*/}
+        {/*    />*/}
+        {/*    <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>N&uacute;mero de identificaci&oacute;n tributaria</Regular12>*/}
+        {/*  </Box>*/}
+        {/*</Box>*/}
 
         <Box className={"w-full flex flex-col gap-2"}>
           <SemiBold14>
@@ -267,7 +267,6 @@ const AccountSettingsContainer = () => {
                 label="Teléfono"
                 name="phone"
                 variant="standard" sx={{ width: "100%" }}
-                required
                 autoComplete="tel"/>}
             </InputMask>
             <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Formato requerido: (XXX) XXXX-XXXX</Regular12>

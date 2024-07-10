@@ -28,7 +28,7 @@ const CardFillView = ({cardNumber, cardHolderName, cardExpiration, cardCVC, card
       <Box>
         <Box className={"flex flex-col gap-4 justify-center items-center flex-grow"}>
           <Regular24
-            className={"text-center"}>
+            className={"text-center overflow-hidden whitespace-nowrap text-ellipsis w-full"}>
             {cardNumber}
           </Regular24>
         </Box>
@@ -53,7 +53,9 @@ const CardFillView = ({cardNumber, cardHolderName, cardExpiration, cardCVC, card
         <Box
           className={"flex flex-row gap-4 justify-between"}
         >
-          <SemiBold16>
+          <SemiBold16
+            className={"overflow-hidden whitespace-nowrap text-ellipsis"}
+          >
             {cardHolderName}
           </SemiBold16>
 

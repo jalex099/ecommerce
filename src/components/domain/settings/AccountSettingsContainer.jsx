@@ -18,7 +18,7 @@ import ClientUserDetailService from "#/services/ClientUserDetailService.js";
 import DataService from "#/services/DataService.js";
 
 const AccountSettingsContainer = () => {
-  const accountData = useHookstate({phone: '', alias: '', paymentCountry: '', paymentRegion: '', paymentAddress:'', invoiceName: '', invoiceNumber: ''});
+  const accountData = useHookstate({phone: '', alias: '', paymentCountry: '', paymentRegion: '', paymentAddress:'', paymentCity: '', paymentPostalCode: '', invoiceName: '', invoiceNumber: ''});
   const phoneAreaCode =useHookstate(null);
   const {userDetail, save} = ClientUserDetailService();
   const { countries, regions } = DataService();
@@ -32,6 +32,8 @@ const AccountSettingsContainer = () => {
     accountData?.invoiceNumber?.set(userDetail?.invoiceNumber || '');
     accountData?.paymentRegion?.set(userDetail?.paymentRegion || '');
     accountData?.paymentAddress?.set(userDetail?.paymentAddress || '');
+    accountData?.paymentCity?.set(userDetail?.paymentCity || '');
+    accountData?.paymentPostalCode?.set(userDetail?.paymentPostalCode || '');
   }, [userDetail]);
 
   useEffect(() => {
@@ -44,6 +46,13 @@ const AccountSettingsContainer = () => {
     const paddedPhoneAreaCode = String(phoneAreaCode.value).padStart(3, '0');
     accountData?.phone?.set(`(${paddedPhoneAreaCode}) `);
   }, [phoneAreaCode?.value]);
+
+  useEffect(() => {
+    //* Buscar en el json countriesJson, la region y setear el codigo postal si lo encuentra
+    if(accountData?.paymentRegion?.value === '') return;
+    const country = countriesJson?.find(country => country?.iso2 === accountData?.paymentCountry?.value);
+
+  }, [accountData.value?.paymentRegion]);
 
   const handleChangePhone = (e) => {
     accountData.phone.set(e.target.value);
@@ -74,6 +83,14 @@ const AccountSettingsContainer = () => {
 
   const handleChangePaymentAddress = (e) => {
     accountData.paymentAddress.set(e.target.value);
+  }
+
+  const handleChangePaymentCity = (e) => {
+    accountData.paymentCity.set(e.target.value);
+  }
+
+  const handleChangePaymentPostalCode = (e) => {
+    accountData.paymentPostalCode.set(e.target.value);
   }
 
 
@@ -113,7 +130,7 @@ const AccountSettingsContainer = () => {
               label={"Alias"}
               name={"alias"}
               variant={"standard"}
-              autoComplete={"alias"}
+              autoComplete={"nickname"}
               sx={{ width: "100%" }}
               value={accountData?.value?.alias || ''}
               onChange={handleChangeAlias}
@@ -136,12 +153,23 @@ const AccountSettingsContainer = () => {
               label={"Dirección"}
               name={"payment-address"}
               variant={"standard"}
-              autoComplete={"paymentAddress"}
+              autoComplete={"shipping address-line1"}
               sx={{ width: "100%" }}
               value={accountData?.value?.paymentAddress || ''}
               onChange={handleChangePaymentAddress}
               multiline
               maxRows={3}
+            />
+          </Box>
+          <Box className={"w-full"}>
+            <TextField
+              label={"Ciudad"}
+              name={"payment-city"}
+              variant={"standard"}
+              autoComplete={"shipping address-level2"}
+              sx={{ width: "100%" }}
+              value={accountData?.value?.paymentCity || ''}
+              onChange={handleChangePaymentCity}
             />
           </Box>
           <Box className={"w-full grid grid-cols-2 gap-4"}>
@@ -150,7 +178,7 @@ const AccountSettingsContainer = () => {
               <Select
                 label={"Pa&iacute;s"}
                 name={"payment-country"}
-                autoComplete={"off"}
+                autoComplete={"shipping country"}
                 sx={{ width: "100%" }}
                 value={accountData?.value?.paymentCountry || ''}
                 onChange={handleChangeCountry}
@@ -168,7 +196,7 @@ const AccountSettingsContainer = () => {
               <Select
                 label={"Regi&oacute;n"}
                 name={"payment-region"}
-                autoComplete={"off"}
+                autoComplete={"shipping address-level1"}
                 sx={{ width: "100%" }}
                 value={accountData?.value?.paymentRegion || ''}
                 onChange={handleChangeRegion}
@@ -182,6 +210,17 @@ const AccountSettingsContainer = () => {
               </Select>
             </FormControl>
           </Box>
+          <Box className={"w-full"}>
+            <TextField
+              label={"Código postal"}
+              name={"payment-postal-code"}
+              variant={"standard"}
+              autoComplete={"shipping postal-code"}
+              sx={{ width: "100%" }}
+              value={accountData?.value?.paymentPostalCode || ''}
+              onChange={handleChangePaymentPostalCode}
+            />
+          </Box>
         </Box>
         <Box className={"w-full flex flex-col gap-2"}>
           <SemiBold14>
@@ -192,7 +231,7 @@ const AccountSettingsContainer = () => {
               label={"Nombre en factura"}
               name={"invoiceName"}
               variant={"standard"}
-              autoComplete={"invoiceName"}
+              autoComplete={"billing name"}
               sx={{ width: "100%" }}
               value={accountData?.value?.invoiceName || ''}
               onChange={handleChangeInvoiceName}
@@ -204,7 +243,7 @@ const AccountSettingsContainer = () => {
               label={"NIT"}
               name={"invoiceNumber"}
               variant={"standard"}
-              autoComplete={"invoiceNumber"}
+              autoComplete={"billing tax-id"}
               sx={{ width: "100%" }}
               value={accountData?.value?.invoiceNumber || ''}
               onChange={handleChangeInvoiceNumber}
@@ -229,7 +268,7 @@ const AccountSettingsContainer = () => {
                 name="phone"
                 variant="standard" sx={{ width: "100%" }}
                 required
-                autoComplete="phone"/>}
+                autoComplete="tel"/>}
             </InputMask>
             <Regular12 styles={{color: theme => theme?.palette?.neutral40?.main}}>Formato requerido: (XXX) XXXX-XXXX</Regular12>
           </Box>

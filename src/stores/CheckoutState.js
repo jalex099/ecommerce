@@ -133,6 +133,7 @@ export const useCheckoutState = () => {
     state?.paymentRegion.set("");
     state?.paymentAddress.set("");
     state?.paymentCity.set("");
+    state?.paymentPostalCode.set("");
     state?.isFinishedAddedCard.set(false);
   };
 
@@ -166,6 +167,8 @@ export const useCheckoutState = () => {
     setPaymentRegion: (paymentRegion) => state.paymentRegion.set(paymentRegion),
     paymentCity: state.paymentCity.get(),
     setPaymentCity: (paymentCity) => state.paymentCity.set(paymentCity),
+    paymentPostalCode: state.paymentPostalCode.get(),
+    setPaymentPostalCode: (paymentPostalCode) => state.paymentPostalCode.set(paymentPostalCode),
     showedCardNumber: state.showedCardNumber.get(),
     setShowedCardNumber: (showedCardNumber) => state.showedCardNumber.set(showedCardNumber),
     isFinishedAddedCard: state.isFinishedAddedCard.get(),

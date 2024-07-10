@@ -82,6 +82,12 @@ const CheckoutPage = () => {
     if(userDetail?.paymentRegion){
       checkoutState?.setPaymentRegion(userDetail?.paymentRegion);
     }
+    if(userDetail?.paymentCity){
+      checkoutState?.setPaymentCity(userDetail?.paymentCity);
+    }
+    if(userDetail?.paymentPostalCode){
+      checkoutState?.setPaymentPostalCode(userDetail?.paymentPostalCode);
+    }
   }, [userDetail]);
 
   const handleConfirmOrder = () => {

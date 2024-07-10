@@ -59,7 +59,8 @@ export default function useOrderParser() {
       ccName: checkout?.cardHolderName || null,
       payAddress: checkout?.paymentAddress || null,
       payCountry: checkout?.paymentCountry || null,
-      payRegion: checkout?.paymentRegion || null
+      payRegion: checkout?.paymentRegion || null,
+      payPostalCode: checkout?.paymentPostalCode || null,
     };
 
     //* Comentarios extras de la orden

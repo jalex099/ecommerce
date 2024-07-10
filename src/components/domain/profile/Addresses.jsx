@@ -68,7 +68,7 @@ function Addresses() {
 const AddNewAddressButton = ({ handleClick }) => (
   <Button
     variant="outlined"
-    sx={{ width: "100%", maxWidth: "400px" }}
+    className={"mx-auto"}
     onClick={handleClick}
   >
     Agregar dirección
@@ -87,7 +87,7 @@ const style = {
     display: "flex",
     width: "100%",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: "24px",
   },
 };

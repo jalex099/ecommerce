@@ -38,6 +38,7 @@ const CreditCardFormContainer = () => {
   const { data } = IpInfoService();
 
   useEffect(() => {
+    if(checkoutState?.paymentCountry && checkoutState?.paymentRegion && checkoutState?.paymentCity && checkoutState?.paymentAddress) return;
     if(!data) return;
     if(!checkoutState?.paymentCountry)
       checkoutState?.setPaymentCountry(data?.country_code);
@@ -46,7 +47,7 @@ const CreditCardFormContainer = () => {
     if(!checkoutState?.paymentCity)
       checkoutState?.setPaymentCity(data?.city);
     if(!checkoutState?.paymentAddress)
-    checkoutState?.setPaymentAddress(data?.city + ', ' + data?.country_name);
+      checkoutState?.setPaymentAddress(data?.city + ', ' + data?.country_name);
   }, [data]);
 
   const checkoutState = useCheckoutState();
@@ -80,6 +81,10 @@ const CreditCardFormContainer = () => {
 
   const handleChangePaymentCity = (e) => {
     checkoutState?.setPaymentCity(e.target.value);
+  }
+
+  const handleChangePaymentPostalCode = (e) => {
+    checkoutState?.setPaymentPostalCode(e.target.value);
   }
 
   const regionsByCountry = useMemo(() => {
@@ -176,7 +181,7 @@ const CreditCardFormContainer = () => {
                 type="text"
                 label="Dirección"
                 name={"payment-address"}
-                autoComplete="payment-address"
+                autoComplete={"shipping address-line1"}
                 value={checkoutState?.paymentAddress}
                 onChange={handleChangePaymentAddress}
               />
@@ -186,7 +191,7 @@ const CreditCardFormContainer = () => {
                 type="text"
                 label="Ciudad"
                 name={"payment-city"}
-                autoComplete="payment-city"
+                autoComplete={"shipping address-level2"}
                 value={checkoutState?.paymentCity}
                 onChange={handleChangePaymentCity}
               />
@@ -196,7 +201,7 @@ const CreditCardFormContainer = () => {
                   <Select
                     label={"Pa&iacute;s"}
                     name={"payment-country"}
-                    autoComplete={"off"}
+                    autoComplete={"shipping country"}
                     sx={{ width: "100%" }}
                     value={checkoutState?.paymentCountry || ''}
                     onChange={handleChangePaymentCountry}
@@ -214,7 +219,7 @@ const CreditCardFormContainer = () => {
                   <Select
                     label={"Regi&oacute;n"}
                     name={"payment-region"}
-                    autoComplete={"off"}
+                    autoComplete={"shipping address-level1"}
                     sx={{ width: "100%" }}
                     value={checkoutState.paymentRegion || ''}
                     onChange={handleChangePaymentRegion}
@@ -227,6 +232,16 @@ const CreditCardFormContainer = () => {
                     }
                   </Select>
                 </FormControl>
+                <TextField
+                  fullWidth
+                  variant="standard"
+                  type="text"
+                  label="Código postal"
+                  name={"payment-postal-code"}
+                  autoComplete={"shipping postal-code"}
+                  value={checkoutState?.paymentPostalCode}
+                  onChange={handleChangePaymentPostalCode}
+                />
               </Box>
             </Stack>
           </motion.div>
@@ -244,7 +259,9 @@ const CreditCardFormContainer = () => {
           !checkoutState?.cardHolderName ||
           !checkoutState?.paymentCountry ||
           !checkoutState?.paymentRegion ||
-          !checkoutState?.paymentAddress
+          !checkoutState?.paymentAddress ||
+          !checkoutState?.paymentCity ||
+          !checkoutState?.paymentPostalCode
       }
       >
         Agregar tarjeta

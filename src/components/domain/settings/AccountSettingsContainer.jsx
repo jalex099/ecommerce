@@ -88,10 +88,6 @@ const AccountSettingsContainer = () => {
   }
 
 
-  const validData = useMemo(() => {
-    return accountData?.phone?.value != ''
-  }, [accountData.value]);
-
   const handleSave = async () => {
     const payload = {
       ...accountData?.value,
@@ -273,9 +269,7 @@ const AccountSettingsContainer = () => {
           </Box>
         </Box>
       </Stack>
-      <Button variant={"contained"} fullWidth onClick={handleSave}
-              disabled={!validData}
-      >Guardar cambios</Button>
+      <Button variant={"contained"} fullWidth onClick={handleSave} >Guardar cambios</Button>
     </Box>
   )
 }

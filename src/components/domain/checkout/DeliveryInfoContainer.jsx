@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import DataService from "#/services/DataService.js";
+import { motion } from "framer-motion";
+import { SLIDE_UP_ANIMATION } from "#/config/constants.js";
 
 const DeliveryInfoContainer = () => {
   const location = useLocationState()
@@ -18,7 +20,12 @@ const DeliveryInfoContainer = () => {
 
 
     return (
-      <Box className="w-full rounded-md gap-2 flex flex-col">
+      <motion.div className="w-full rounded-md gap-2 flex flex-col"
+                  initial={SLIDE_UP_ANIMATION.initial}
+                  animate={SLIDE_UP_ANIMATION.animate}
+                  transition={SLIDE_UP_ANIMATION.transition}
+                  exit={SLIDE_UP_ANIMATION.exit}
+      >
         <SemiBold16>
           M&eacute;todo de entrega
         </SemiBold16>
@@ -44,7 +51,7 @@ const DeliveryInfoContainer = () => {
           </Button>
         </Box>
 
-      </Box>
+      </motion.div>
     )
 }
 

@@ -10,6 +10,8 @@ import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsServ
 import FavProductContainer from "#/components/domain/profile/FavProductContainer";
 import { motion } from "framer-motion";
 import Box from "@mui/material/Box";
+import CloseIcon from "#/components/shared/icons/CloseIcon.jsx";
+import IconButton from "@mui/material/IconButton";
 
 function FavoritesDialog() {
   const { favoriteProducts, remove } = ClientFavoriteProductsService();
@@ -44,6 +46,18 @@ function FavoritesDialog() {
         <DialogTitle>
           <SemiBold14>Favoritos</SemiBold14>
         </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 16,
+            top: 16,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon className="w-6 h-6" />
+        </IconButton>
         <DialogContent>
           {
             //* If there are no favorites

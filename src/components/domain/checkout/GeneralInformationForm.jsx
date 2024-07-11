@@ -4,6 +4,8 @@ import { useCheckoutState } from "#/stores/CheckoutState.js";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import Regular12 from "#/components/shared/fonts/Regular12.jsx";
 import InputMask from "react-input-mask";
+import { motion } from "framer-motion";
+import { SLIDE_UP_ANIMATION } from "#/config/constants.js";
 
 const GeneralInformationForm = ()=> {
   const checkoutState = useCheckoutState();
@@ -26,7 +28,12 @@ const GeneralInformationForm = ()=> {
   }
 
     return (
-      <Box className={"w-full flex flex-col gap-4"}>
+      <motion.div className={"w-full flex flex-col gap-4"}
+                  initial={SLIDE_UP_ANIMATION.initial}
+                  animate={SLIDE_UP_ANIMATION.animate}
+                  transition={SLIDE_UP_ANIMATION.transition}
+                  exit={SLIDE_UP_ANIMATION.exit}
+      >
         <SemiBold16>Datos personales</SemiBold16>
          <TextField
            label="Nombre completo"
@@ -94,7 +101,7 @@ const GeneralInformationForm = ()=> {
         <Regular12 className={"opacity-60"}>
           * Campos obligatorios
         </Regular12>
-      </Box>
+      </motion.div>
     )
 }
 

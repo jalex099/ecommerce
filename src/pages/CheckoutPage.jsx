@@ -23,6 +23,8 @@ import { addToast } from "#/stores/UIState.js";
 import ClientUserDetailService from "#/services/ClientUserDetailService.js";
 import { useAuthState } from "#/stores/AuthState.js";
 import DataService from "#/services/DataService.js";
+import { authState } from "#/stores/AuthState.js";
+import AlreadyHaveAccount from "#/components/domain/checkout/AlreadyHaveAccount.jsx";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -107,6 +109,13 @@ const CheckoutPage = () => {
           <Divider />
           <DateAndTimeInfoContainer />
           <Divider />
+          {
+            !auth?.isAuthenticated && !!auth?.isVerified && (
+              <>
+                <AlreadyHaveAccount />
+              </>
+            )
+          }
           <GeneralInformationForm />
         </Box>
       )}

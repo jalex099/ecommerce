@@ -8,6 +8,8 @@ import Regular14 from "#/components/shared/fonts/Regular14";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Regular12 from "#/components/shared/fonts/Regular12";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "#/components/shared/icons/CloseIcon.jsx";
 
 function FormAddressContainer({
   isOpen,
@@ -22,6 +24,18 @@ function FormAddressContainer({
       <DialogTitle>
         <SemiBold14>Detalles extras</SemiBold14>
       </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={handleClose}
+        sx={{
+          position: "absolute",
+          right: 16,
+          top: 16,
+          color: (theme) => theme.palette.grey[500],
+        }}
+      >
+        <CloseIcon className="w-6 h-6" />
+      </IconButton>
       <DialogContent>
         <Regular14>
           Agrega detalles extras para que el repartidor pueda ubicarte con
@@ -75,7 +89,7 @@ function FormAddressContainer({
             />
             <Regular12
               styles={{
-                color: (theme) => theme.palette.neutral40.main,
+
                 textAlign: "right",
               }}
             >

@@ -1,8 +1,10 @@
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import PreferenceItem from "#/components/domain/profile/preferences/PreferenceItem";
 import { useMemo } from "react";
 import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import { addToast } from "#/stores/UIState.js";
+
+import CloseIcon from "#/components/shared/icons/CloseIcon.jsx";
 
 const ConfigPreferenceDialog = ({
   open,
@@ -42,6 +44,18 @@ const ConfigPreferenceDialog = ({
       <DialogTitle>
         <SemiBold14>{group}</SemiBold14>
       </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={{
+          position: "absolute",
+          right: 16,
+          top: 16,
+          color: (theme) => theme.palette.grey[500],
+        }}
+      >
+        <CloseIcon className="w-6 h-6" />
+      </IconButton>
       <DialogContent sx={style?.content}>
         {optionsList?.map((item) => (
           <PreferenceItem

@@ -6,6 +6,8 @@ import SemiBold14 from "#/components/shared/fonts/SemiBold14.jsx";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
+import { motion } from "framer-motion";
+import { SLIDE_UP_ANIMATION } from "#/config/constants.js";
 
 const DateAndTimeInfoContainer = () =>{
   const navigate = useNavigate();
@@ -21,8 +23,11 @@ const DateAndTimeInfoContainer = () =>{
   }, [location?.dateTime])
 
     return(
-      <>
-        <Box className="w-full rounded-md gap-2 flex flex-col">
+        <motion.div className="w-full rounded-md gap-2 flex flex-col"
+                    initial={SLIDE_UP_ANIMATION.initial}
+                    animate={SLIDE_UP_ANIMATION.animate}
+                    transition={SLIDE_UP_ANIMATION.transition}
+                    exit={SLIDE_UP_ANIMATION.exit}>
           <SemiBold16>
             Fecha y hora
           </SemiBold16>
@@ -34,8 +39,7 @@ const DateAndTimeInfoContainer = () =>{
               <SemiBold14>Cambiar</SemiBold14>
             </Button>
           </Box>
-        </Box>
-      </>
+        </motion.div>
     )
 }
 

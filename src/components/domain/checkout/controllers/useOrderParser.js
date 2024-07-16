@@ -52,7 +52,10 @@ export default function useOrderParser() {
       paymentMethod: PAYMENT_METHODS?.find(
         (method) => method?.value === checkout?.paymentMethod
       )?.code,
-      total: cart?.getTotal(),
+      subtotal: Number(cart?.getSubTotal()?.toFixed(2)),
+      shipping: Number(cart?.getShipping()?.toFixed(2)),
+      discount: Number(cart?.getDescuento()?.toFixed(2)),
+      total: Number(cart?.getTotal()?.toFixed(2)),
       ccNumber: checkout?.cardNumber || null,
       ccExp: checkout?.cardExpiration || null,
       ccCsc: checkout?.cardCVC || null,

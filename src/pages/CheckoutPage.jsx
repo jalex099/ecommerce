@@ -25,6 +25,7 @@ import { useAuthState } from "#/stores/AuthState.js";
 import DataService from "#/services/DataService.js";
 import { authState } from "#/stores/AuthState.js";
 import AlreadyHaveAccount from "#/components/domain/checkout/AlreadyHaveAccount.jsx";
+import serializeState from "#/utils/serializeState.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -38,7 +39,7 @@ const CheckoutPage = () => {
   const [searchParams] = useSearchParams();
   const { userDetail} = ClientUserDetailService();
   const auth = useAuthState();
-  const { regions } = DataService();
+  const { regions, parameters } = DataService();
 
   useEffect(() => {
     ui?.setTitle("Pago");
@@ -94,6 +95,17 @@ const CheckoutPage = () => {
       checkoutState?.setPaymentPostalCode(userDetail?.paymentPostalCode);
     }
   }, [userDetail]);
+
+  useEffect(() => {
+    const shouldAddDeliveryCost = locationState?.delivery !== null && (cart?.getShipping() === 0);
+    const shouldRemoveDeliveryCost = locationState?.delivery === null && (cart?.getShipping() !== 0);
+
+    if (shouldAddDeliveryCost) {
+      cart?.addShipping(Number(parameters?.find(param => param?.name === 'DELIVERY_COST')?.value) || 0);
+    } else if (shouldRemoveDeliveryCost) {
+      cart?.removeShipping();
+    }
+  }, [locationState?.selected]);
 
   const handleConfirmOrder = () => {
     const order = parseOrder();

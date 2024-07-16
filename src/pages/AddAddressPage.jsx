@@ -89,6 +89,10 @@ function AddAddressPage() {
     isFormAddressOpen.set((prev) => !prev);
   };
 
+  const handleCloseFormAddress = () => {
+    isFormAddressOpen.set(false);
+  }
+
   if (!location?.value) return <></>;
   return (
     <Container sx={style.container}>
@@ -114,7 +118,7 @@ function AddAddressPage() {
         longitude={location?.value?.longitude}
         addressStreet={addressStreet?.value}
         handleSubmit={handleSubmit}
-        handleClose={handleToogleFormAddress}
+        handleClose={handleCloseFormAddress}
       />
     </Container>
   );

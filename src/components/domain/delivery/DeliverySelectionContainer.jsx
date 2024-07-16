@@ -45,6 +45,7 @@ const DeliveryMethodSelection = () => {
   }, [auth]);
 
   const handleSelectFromMap = () => {
+    location?.clearState();
     selectFromMap.set(true);
   }
 

@@ -14,13 +14,19 @@ import ContinueButtonContainer
 import serializeState from "#/utils/serializeState.js";
 import DeliveryExtraPaymentAdvise
   from "#/components/domain/delivery/DeliveryExtraPaymentAdvise.jsx";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import GeocodingService from "#/services/GeocodingService.js";
 
 const DeliverySelectionFromMapContainer = () => {
 
   const location = useLocationState();
   const tempLocation = useHookstate(null);
+  const isOpenDetailLocation = useHookstate(false);
   const errorOnGeolocation = useHookstate(false);
   const { getLatLong } = GeolocationService();
+  const { getReverseGeocoding } = GeocodingService();
 
   useEffect(() => {
     //* Si ya tiene una dirección de delivery, la usa
@@ -80,10 +86,18 @@ const DeliverySelectionFromMapContainer = () => {
   }
 
 const handleContinue = () => {
-    if(!validForm) return;
-    location?.fillFromDeliveryAddress(serializeState(tempLocation?.value));
-    location?.nextStep();
+    isOpenDetailLocation?.set(true);
 }
+
+  const handleToogleFormAddress = async () => {
+    const reverseGeoResponse = await getReverseGeocoding.mutateAsync(tempLocation?.value);
+    if(reverseGeoResponse?.data)
+      tempLocation.set((prev) => ({
+        ...prev,
+        street: reverseGeoResponse?.data?.results?.find((item) => item?.types?.includes("route"))?.formatted_address || "",
+      }));
+    isOpenDetailLocation?.set(true);
+  };
 
 const validForm  = useMemo(() => {
   return !(!tempLocation?.value?.longitude ||
@@ -93,68 +107,37 @@ const validForm  = useMemo(() => {
 
 }, [tempLocation?.value])
 
+  const handleCloseDetailDialog = () => {
+    isOpenDetailLocation?.set(false);
+  }
+
+  const handleConfirm = ()=> {
+    if(!validForm) return;
+    location?.fillFromDeliveryAddress(serializeState(tempLocation?.value));
+    location?.nextStep();
+  }
+
   return (
-    <Box className={"flex flex-col gap-4 flex-1"}>
+    <Box className={"flex flex-col gap-4 flex-1"} sx={style?.container}>
       {
         !errorOnGeolocation?.value && (
           <>
-            <Box
-              sx={{
-                width: "100%",flex:1,  minHeight: "200px",
-              }}
-            >
               {tempLocation?.value?.longitude && tempLocation?.value?.latitude && (
                 <MapContainer
                   latitude={tempLocation?.value?.latitude}
                   longitude={tempLocation?.value?.longitude}
-                  styles={{
-                    borderRadius: "8px",
-                  }}
                   handleLocationChange={handleChange}
                 />
               )}
-
-            </Box>
-            <Stack spacing={2}>
-              <TextField
-                label="Calle o Avenida"
-                name="address-street"
-                variant="standard"
-                autoComplete="address-street"
-                InputLabelProps={{ shrink: true }}
-                sx={{ width: "100%" }}
-                required
-                value={tempLocation?.value?.street || ""}
-                onChange={handleChangeStreet}
-              />
-              <TextField
-                label="Número de casa / piso"
-                name="address-house-number"
-                variant="standard"
-                autoComplete="address-house-number"
-                InputLabelProps={{ shrink: true }}
-                sx={{ width: "100%" }}
-                required
-                value={tempLocation?.value?.houseNumber || ""}
-                onChange={handleChangeHouseNumber}
-              />
-              <TextField
-                label="Referencia"
-                name="address-reference"
-                variant="standard"
-                autoComplete="address-reference"
-                InputLabelProps={{ shrink: true }}
-                multiline
-                minRows={1}
-                maxRows={3}
-                sx={{ width: "100%" }}
-                value={tempLocation?.value?.reference || ""}
-                onChange={handleChangeReference}
-              />
-            </Stack>
-            <DeliveryExtraPaymentAdvise/>
-
-            <ContinueButtonContainer onClick={handleContinue} isDisabled={!validForm}/>
+              <Button
+                variant="outlined"
+                color="primary"
+                className="w-44 mx-auto"
+                onClick={handleToogleFormAddress}
+                sx={style.button}
+              >
+                Continuar
+              </Button>
           </>
         )
       }
@@ -168,14 +151,103 @@ const validForm  = useMemo(() => {
               variant="outlined"
               color={"primary"}
               onClick={handleRetry}
+              sx={style.button}
             >
               Intentar de nuevo
             </Button>
           </Box>
         )
       }
+      <Dialog
+        open = {isOpenDetailLocation?.value}
+        onClose = {handleCloseDetailDialog}
+        PaperProps={{ sx: style.dialog }}
+      >
+        <DialogTitle>
+          Detalles de la ubicación
+        </DialogTitle>
+        <DialogContent>
+         <Box
+          className={"pb-4"}
+         >
+           <Stack spacing={2}>
+             <TextField
+               label="Calle o Avenida"
+               name="address-street"
+               variant="standard"
+               autoComplete="address-street"
+               InputLabelProps={{ shrink: true }}
+               sx={{ width: "100%" }}
+               required
+               value={tempLocation?.value?.street || ""}
+               onChange={handleChangeStreet}
+             />
+             <TextField
+               label="Número de casa / piso"
+               name="address-house-number"
+               variant="standard"
+               autoComplete="address-house-number"
+               InputLabelProps={{ shrink: true }}
+               sx={{ width: "100%" }}
+               required
+               value={tempLocation?.value?.houseNumber || ""}
+               onChange={handleChangeHouseNumber}
+             />
+             <TextField
+               label="Referencia"
+               name="address-reference"
+               variant="standard"
+               autoComplete="address-reference"
+               InputLabelProps={{ shrink: true }}
+               multiline
+               minRows={1}
+               maxRows={3}
+               sx={{ width: "100%" }}
+               value={tempLocation?.value?.reference || ""}
+               onChange={handleChangeReference}
+             />
+           </Stack>
+           <DeliveryExtraPaymentAdvise/>
+         </Box>
+          <Button
+            onClick={handleConfirm}
+            disabled={!validForm}
+            fullWidth
+            variant="contained"
+            color="primary"
+            >
+            Confirmar
+          </Button>
+        </DialogContent>
+      </Dialog>
     </Box>
   )
 }
 
+const style = {
+  dialog: {
+    // minHeight: "250px",
+    width: "100%",
+    padding: '24px',
+    position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "16px",
+    padding: 0,
+    width: "100%",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  button: {
+    position: "absolute",
+    bottom: "32px",
+  },
+}
 export default DeliverySelectionFromMapContainer;

@@ -24,6 +24,7 @@ export const cartStore = hookstate(() => {
     items: cart?.items || [],
     subTotal: 0,
     total: 0,
+    shipping: 0,
     orderAgregado: cart?.orderAgregado || 0,
     isPedidoFuturoOpen: false,
     isReadCart: false,
@@ -62,6 +63,7 @@ const addCart = (state) => ({
         items: [],
         subTotal: 0,
         total: 0,
+        shipping: 0,
         orderAgregado: 0,
         isPedidoFuturoOpen: false,
         isReadCart: true,
@@ -95,6 +97,7 @@ const addCart = (state) => ({
     state.items.set([]);
     state.subTotal.set(0);
     state.total.set(0);
+    state.shipping.set(0);
     state.orderAgregado.set(0);
     state._id.set(null);
     state.code.set(null);
@@ -102,7 +105,7 @@ const addCart = (state) => ({
     state.IsSyncable.set(false);
   },
 
-  hash: () => stateToString(state.items.get()),
+  hash: () => stateToString({ items: state.items.get(), shipping: state.shipping.get() }),
 
 // //* retorna si el carrito tiene identificacion
   isIdentified: () => state._id.get() !== null,
@@ -192,6 +195,19 @@ const addCart = (state) => ({
     state.items.set(newList);
   },
 
+  // //* Agrega el costo de envio en el carrito
+  addShipping: (cost) => {
+    state.shipping.set(cost);
+  },
+
+  // //* Remueve el costo de envio en el carrito
+  removeShipping: () => {
+    state.shipping.set(0);
+  },
+
+  // //* Retorna el total de envio
+  getShipping: () => state.shipping.get(),
+
   // //* Actualiza el SUBTOTAL en carrito calculando sus items
   addSubTotal: () => {
     const calcCartItemsSubTotal = state?.items?.get()?.reduce((acc, item) => {
@@ -221,7 +237,7 @@ const addCart = (state) => ({
 
   // //* Actualiza el SUBTOTAL en carrito calculando sus items - DESCUENTOS
   addTotal: () => {
-    const calcCartItemsTotal = state?.items?.get()?.reduce((acc, item) => {
+    let calcCartItemsTotal = state?.items?.get()?.reduce((acc, item) => {
       if (item?.options?.length > 0) {
         let aditionalPrice = item?.options?.reduce((acc, option) => {
           return acc + option?.aditionalPrice || 0;
@@ -230,6 +246,8 @@ const addCart = (state) => ({
       }
       return acc + item?.basePrice * item?.quantity;
     }, 0);
+    //* Agregar el shipping
+    calcCartItemsTotal += state?.shipping?.get() || 0;
     state?.total?.set(calcCartItemsTotal);
   },
 

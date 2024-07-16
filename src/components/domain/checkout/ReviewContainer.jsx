@@ -47,6 +47,7 @@ const ReviewContainer = () => {
       <CheckoutCartResumeInfo
         numberOfItems={cart?.getItemsCounter()}
         products={itemsToShow}
+        shipping={cart?.getShipping()}
         subtotal={cart?.getSubTotal()}
         discount={cart?.getDescuento()}
         total={cart?.getTotal()}/>

@@ -1,5 +1,5 @@
-// export const API_URL = "http://localhost:3001/apitest";
-export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+export const API_URL = "http://localhost:3001/apitest";
+// export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const IPAPI_URL = "https://ipapi.co/json/";
 export const GEOCODING_URL = "https://maps.googleapis.com/maps/api";
@@ -78,7 +78,7 @@ export const CHECKOUT_STEPS = {
 
 export const DELIVERY_METHODS = [
   { label: "Recoger en tienda", value: "PICKUP" },
-  // { label: "Entrega a domicilio", value: "DELIVERY" },
+  { label: "Entrega a domicilio", value: "DELIVERY" },
   { label: "Punto de encuentro", value: "MEETUP" },
 ]
 

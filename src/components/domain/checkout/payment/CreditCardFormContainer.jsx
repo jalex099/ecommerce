@@ -270,7 +270,7 @@ const CreditCardFormContainer = () => {
         color={"primary"}
         onClick={handleAddCard}
         disabled={
-          erroredInputs?.cardNumber ||
+          Boolean(erroredInputs?.cardNumber ||
           erroredInputs?.expiryDate ||
           erroredInputs?.cvc ||
           !checkoutState?.cardHolderName ||
@@ -278,7 +278,7 @@ const CreditCardFormContainer = () => {
           !checkoutState?.paymentRegion ||
           !checkoutState?.paymentAddress ||
           !checkoutState?.paymentCity ||
-          !checkoutState?.paymentPostalCode
+          !checkoutState?.paymentPostalCode)
       }
       >
         Agregar tarjeta

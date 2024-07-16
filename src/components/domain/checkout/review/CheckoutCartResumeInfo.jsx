@@ -8,7 +8,7 @@ import Bold16 from "#/components/shared/fonts/Bold16.jsx";
 import SemiBold16 from "#/components/shared/fonts/SemiBold16.jsx";
 import { useMemo } from "react";
 
-const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discount = 0, total = 0 }) => {
+const CheckoutCartResumeInfo = ({ numberOfItems, products, shipping = 0, subtotal = 0, discount = 0, total = 0 }) => {
 
   const isDiscount = useMemo(() => discount > 0 && subtotal !== total, [discount, subtotal, total]);
 
@@ -32,6 +32,10 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discoun
               <Regular14>Subtotal</Regular14>
               <Regular14>{formatCurrency(subtotal)}</Regular14>
             </Box>
+            <Box className="flex flex-row justify-between items-center">
+              <Regular14>Env&iacute;o</Regular14>
+              <Regular14>{formatCurrency(shipping)}</Regular14>
+            </Box>
             <Box
               className="flex flex-row justify-between items-center"
               sx={{
@@ -39,14 +43,9 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, subtotal = 0, discoun
               }}
             >
               <Regular14>Ahorro</Regular14>
-              {
-                isDiscount ? (
-                  <Regular14>- {formatCurrency(discount)}</Regular14>
-                ) : (
-                  <Regular14>0</Regular14>
-                )
-              }
+              <Regular14>{isDiscount ? `- ${formatCurrency(discount)}` : formatCurrency(discount)}</Regular14>
             </Box>
+
             <Divider sx={{borderStyle:'dashed'}}/>
           </>
         <Box className="flex flex-row justify-between items-center">

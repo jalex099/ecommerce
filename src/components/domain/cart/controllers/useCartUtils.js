@@ -10,7 +10,7 @@ export default function useCartUtils() {
     if (isLoading) return undefined;
     const items = cart?.get();
     if (items?.length === 0) return undefined;
-    return items;
+    return items?.filter((item) => item?.type !== "DELIVERY");
   };
 
   const handleRemoveFromCart = (idProduct, index) => {

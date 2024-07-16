@@ -73,9 +73,10 @@ export const useLocationState = () => {
   };
 
   //* Funcion para ir al siguiente paso
-  const nextStep = () => {
+  const nextStep = async () => {
     if (state?.step.value === 1) {
       navigate(-1, { replace: true });
+      await new Promise((resolve) => setTimeout(resolve, 100));
       state?.step.set(0);
       return;
     }

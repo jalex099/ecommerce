@@ -34,7 +34,7 @@ export default function useCartUtils() {
     if (!options) return [];
     return optionsSavedOnCart?.reduce((acc, optionSavedOnCart, index) => {
       const selectedDetail = options[index]?.subOptions?.find(
-        (option) => option?._id === optionSavedOnCart?.selected
+        (option) => option?.option?._id === optionSavedOnCart?.selected
       );
       let response = {
         name: selectedDetail?.option?.cartName,

@@ -27,7 +27,7 @@ export default function useAddToCart() {
         ...acc,
         {
           label: option?.label,
-          selected: option?.selected,
+          selected: selectedOption?.option?._id,
           aditionalPrice: selectedOption?.aditionalPrice,
         },
       ];

@@ -1,6 +1,6 @@
 export const parseMenu = (menu) => {
   return menu?.reduce((acc, item) => {
-    const unitPrice = (item?.basePrice + item?.aditionalPrice) - (item?.discount || 0);
+    const unitPrice = (item?.basePrice + item?.aditionalPrice) /*- (item?.discount || 0)*/;
     const product = {
       product: item?._id,
       quantity: item?.quantity,

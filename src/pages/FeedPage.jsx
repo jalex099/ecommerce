@@ -10,15 +10,14 @@ import { useCartState } from "#/stores/cart";
 import CartAdvise from "#/components/domain/feed/CartAdvise.jsx";
 import OrderService from "#/services/OrderService.js";
 import NotFinishedOrdersAdvise from "#/components/domain/feed/NotFinishedOrdersAdvise.jsx";
-import ClientFavoriteProductsService
-  from "#/services/ClientFavoriteProductsService.js";
-import FavoritesShortcutContainer
-  from "#/components/domain/feed/FavoritesShortcutContainer.jsx";
+import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService.js";
+import FavoritesShortcutContainer from "#/components/domain/feed/FavoritesShortcutContainer.jsx";
+import Waves from "#/components/shared/Waves.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
   const cart = useCartState();
-  const { notFinishedOrders} = OrderService();
+  const { notFinishedOrders } = OrderService();
   const { favoriteProducts } = ClientFavoriteProductsService();
 
   useEffect(() => {
@@ -28,19 +27,16 @@ const FeedPage = () => {
   return (
     <Container sx={style.container}>
       <HelmetMeta page="feed" />
+      <Waves/>
       <Box className="w-full flex flex-col gap-6">
         <SliderComponent />
         <Box className={"w-full flex flex-col gap-6 lg:flex-row"}>
-          {
-            cart?.getItemsCounter() > 0 && <CartAdvise />
-          }
-          {
-            notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />
-          }
+          {cart?.getItemsCounter() > 0 && <CartAdvise />}
+          {notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />}
         </Box>
-        {
-          favoriteProducts?.length > 0 && <FavoritesShortcutContainer favorites={favoriteProducts} />
-        }
+        {favoriteProducts?.length > 0 && (
+          <FavoritesShortcutContainer favorites={favoriteProducts} />
+        )}
         <OffersContainer />
       </Box>
       <NewContent />

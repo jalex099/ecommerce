@@ -8,7 +8,12 @@ import { Fade } from "@mui/material";
 
 function FeedTopBar({ title }) {
   return (
-    <Box>
+    <Box
+      sx={{
+        background: (theme) => 'linear-gradient(180deg, ' + theme.palette.primary.main + ' 0%, ' + theme.palette.primary80.main + ' 60%)',
+        color: (theme) => theme.palette.neutral0.main,
+      }}
+    >
       <Fade
         in={true}
         timeout={{

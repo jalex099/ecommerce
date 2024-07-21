@@ -94,7 +94,8 @@ export default ChangeSelectedCartDialog;
 
 const style = {
   dialog: {
-    minHeight: "150px",
+    minHeight: "200px",
+    width: "100%",position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
   },
   link: {
     color: (theme) => theme.palette.primary120.main,

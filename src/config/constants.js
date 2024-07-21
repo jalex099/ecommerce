@@ -75,12 +75,11 @@ export const CHECKOUT_STEPS = {
   REVIEW: 1,
 };
 
-
 export const DELIVERY_METHODS = [
   { label: "Recoger en tienda", value: "PICKUP" },
   { label: "Entrega a domicilio", value: "DELIVERY" },
   { label: "Punto de encuentro", value: "MEETUP" },
-]
+];
 
 export const PAYMENT_METHODS = [
   { label: "Efectivo", value: 0, code: "CASH" },
@@ -89,11 +88,27 @@ export const PAYMENT_METHODS = [
 ];
 
 export const ORDER_STEPS = [
-  { label: "Pendiente", value: "PENDING", msg: "Tu pedido está pendiente de aprobación" },
-  { label: "Confirmado", value: "CONFIRMED", msg: "Tu pedido ha sido confirmado" },
-  { label: "En Proceso", value: "INPROCESS", msg: "Tu pedido está siendo elaborado" },
+  {
+    label: "Pendiente",
+    value: "PENDING",
+    msg: "Tu pedido está pendiente de aprobación",
+  },
+  {
+    label: "Confirmado",
+    value: "CONFIRMED",
+    msg: "Tu pedido ha sido confirmado",
+  },
+  {
+    label: "En Proceso",
+    value: "INPROCESS",
+    msg: "Tu pedido está siendo elaborado",
+  },
   { label: "En Camino", value: "ONTHEWAY", msg: "Tu pedido está en camino" },
-  { label: "Finalizada", value: "FINISHED", msg: "Tu pedido ha sido entregado" },
+  {
+    label: "Finalizada",
+    value: "FINISHED",
+    msg: "Tu pedido ha sido entregado",
+  },
 ];
 
 export const PAGES = {

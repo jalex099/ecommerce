@@ -36,6 +36,6 @@ const ClientUserDetailService = () => {
     isRefetching,
     save,
   };
-}
+};
 
 export default ClientUserDetailService;

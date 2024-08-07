@@ -4,7 +4,7 @@ const components = {
       {
         props: { variant: "contained", color: "primary" },
         style: {
-          backgroundColor: "#614FE0",
+          backgroundColor: "#283a4f",
           fontWeight: "600",
           color: "#FFFFFF",
           padding: "12px 32px",
@@ -12,7 +12,7 @@ const components = {
           borderRadius: "12px",
           "&:hover": {
             boxShadow: "none",
-            backgroundColor: "#614FE0",
+            backgroundColor: "#283a4f",
           },
         },
       },
@@ -111,9 +111,9 @@ const components = {
         borderRadius: "16px", // Cambia el radio del borde
         border: "none", // Elimina el borde
         fontSize: "14px", // Cambia el tamaño de la fuente
-        "input": {
+        input: {
           padding: "8px 12px",
-        }
+        },
         // Agrega aquí los estilos adicionales que desees
       },
       underline: {
@@ -156,7 +156,7 @@ const components = {
       root: {
         color: "#9F9F9F",
         "&.Mui-selected": {
-          color: "#614FE0",
+          color: "#283a4f",
         },
         "& .MuiBottomNavigationAction-label": {
           fontSize: "12px",
@@ -194,8 +194,7 @@ const components = {
           "& > div": {
             maxWidth: "4px",
             width: "100%",
-            backgroundColor: "#614FE0",
-
+            backgroundColor: "#283a4f",
           },
         },
       },
@@ -218,10 +217,10 @@ const components = {
   MuiDialog: {
     styleOverrides: {
       paper: {
-        borderRadius: { xs: "24px 24px 0px 0px ", lg: "24px"},
-        position: { xs: "absolute" , lg: "relative"},
+        borderRadius: { xs: "24px 24px 0px 0px ", lg: "24px" },
+        position: { xs: "absolute", lg: "relative" },
         bottom: 0,
-        left:0,
+        left: 0,
         right: 0,
         margin: 0,
         minHeight: "200px",
@@ -289,7 +288,7 @@ const components = {
         "&.Mui-disabled": {
           backgroundColor: "transparent !important",
           opacity: "0.2",
-        }
+        },
       },
     },
   },
@@ -314,11 +313,9 @@ const components = {
         padding: "0px",
         "& .MuiStepLabel-iconContainer": {
           padding: "0px",
-
-        }
+        },
       },
     },
-
   },
   MuiFormControlLabel: {
     styleOverrides: {
@@ -332,7 +329,7 @@ const components = {
   MuiListItemButton: {
     styleOverrides: {
       root: {
-      //   disabled
+        //   disabled
         "&.Mui-disabled": {
           backgroundColor: "transparent !important",
           opacity: "0.3",

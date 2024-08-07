@@ -14,7 +14,7 @@ function ProductConfigContainer({ options }) {
       {options?.map((option, index) => {
         return (
           <OptionContainer
-            key={option?._id + index}
+            key={option?.label + index}
             className={`${
               options?.length === 1 ? "min-w-1/2 w-1/2 max-w-1/2" : ""
             }`}

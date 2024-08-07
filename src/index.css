@@ -89,7 +89,7 @@ body {
 }
 
 ._primary-bg {
-  background-color: #604fe01f;
+  background-color: #283a4f1f;
 }
 
 ._shadow {
@@ -103,7 +103,7 @@ body {
 .three-body {
   --uib-size: 35px;
   --uib-speed: 0.8s;
-  --uib-color: #614fe0;
+  --uib-color: #283a4f;
   position: relative;
   display: inline-block;
   height: var(--uib-size);

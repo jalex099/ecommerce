@@ -1,6 +1,6 @@
 export default {
   primary: {
-    main: "#614FE0",
+    main: "#283a4f",
   },
   secondary: {
     main: "#FF7C5A",
@@ -54,31 +54,31 @@ export default {
     main: "#0A0816",
   },
   primary180: {
-    main: "#1B163F",
+    main: "#1B1329",
   },
   primary160: {
-    main: "#2D2467",
+    main: "#1D1833",
   },
   primary140: {
-    main: "#3E338F",
+    main: "#1D1E3C",
   },
   primary120: {
-    main: "#5041B8",
+    main: "#222B46",
   },
   primary80: {
-    main: "#7D6FE6",
+    main: "#2c4560",
   },
   primary60: {
-    main: "#9A8EEB",
+    main: "#3c638d",
   },
   primary40: {
-    main: "#86AEF1",
+    main: "#719abf",
   },
   primary20: {
-    main: "#D3CEF6",
+    main: "#cedbe9",
   },
   primary10: {
-    main: "#EFEDFC",
+    main: "#e9eef5",
   },
   secondary190: {
     main: "#1A08C09",

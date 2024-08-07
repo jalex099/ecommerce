@@ -41,7 +41,7 @@ const style = {
     minHeight: "180px",
   },
   altImgText: {
-    backgroundColor: "#EFEDFC",
+    backgroundColor: "#e9eef5",
   },
 };
 

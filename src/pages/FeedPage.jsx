@@ -13,22 +13,34 @@ import NotFinishedOrdersAdvise from "#/components/domain/feed/NotFinishedOrdersA
 import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService.js";
 import FavoritesShortcutContainer from "#/components/domain/feed/FavoritesShortcutContainer.jsx";
 import Waves from "#/components/shared/Waves.jsx";
+import WelcomeContainer from "#/components/domain/feed/WelcomeContainer";
+import { useAuthState } from "#/stores/AuthState";
+import ClientUserDetailService from "#/services/ClientUserDetailService.js";
+import { COMPANY } from "#/config/constants";
+import CategoriesFeedLink from "#/components/domain/feed/CategoriesFeedLink.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
   const cart = useCartState();
   const { notFinishedOrders } = OrderService();
   const { favoriteProducts } = ClientFavoriteProductsService();
+  const auth = useAuthState();
+  const { userDetail, isLoading } = ClientUserDetailService();
 
   useEffect(() => {
-    ui?.setTitle("Feed");
+    ui?.setTitle(COMPANY);
   }, []);
 
   return (
     <Container sx={style.container}>
       <HelmetMeta page="feed" />
-      <Waves/>
       <Box className="w-full flex flex-col gap-6">
+        <WelcomeContainer
+          name={userDetail?.alias}
+          isLoading={isLoading}
+          isAuthenticated={auth?.isAuthenticated && auth?.isVerified}
+        />
+        <CategoriesFeedLink />
         <SliderComponent />
         <Box className={"w-full flex flex-col gap-6 lg:flex-row"}>
           {cart?.getItemsCounter() > 0 && <CartAdvise />}

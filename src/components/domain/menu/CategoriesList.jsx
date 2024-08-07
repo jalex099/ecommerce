@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 function CategoriesList({ items, selected, handleChange }) {
   return (
     <Tabs
-      value={selected}
+      value={selected || false}
       onChange={handleChange}
       variant="scrollable"
       scrollButtons="auto"

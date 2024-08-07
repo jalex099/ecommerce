@@ -4,16 +4,13 @@ import SemiBold18 from "#/components/shared/fonts/SemiBold18";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { Fade } from "@mui/material";
+import { motion } from "framer-motion";
+import { COMPANY_LOGO } from "#/config/constants";
 // import IconButton from "@mui/material/IconButton";
 
 function FeedTopBar({ title }) {
   return (
-    <Box
-      sx={{
-        background: (theme) => 'linear-gradient(180deg, ' + theme.palette.primary.main + ' 0%, ' + theme.palette.primary80.main + ' 60%)',
-        color: (theme) => theme.palette.neutral0.main,
-      }}
-    >
+    <Box>
       <Fade
         in={true}
         timeout={{
@@ -29,7 +26,12 @@ function FeedTopBar({ title }) {
           >
             <ShoppingBagOutlinedIcon />
           </IconButton> */}
-          <Box />
+          {/* <Box /> */}
+          <motion.img
+            src={COMPANY_LOGO}
+            alt="logo"
+            className="w-8 h-8 mx-auto"
+          />
           <SemiBold18 className="text-center">{title}</SemiBold18>
           {/* <IconButton
             aria-label="search"

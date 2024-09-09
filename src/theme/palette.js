@@ -96,19 +96,19 @@ export default {
     main: "#D1664A",
   },
   secondary80: {
-    main: "#FF9478",
+    main: "#f4b655",
   },
   secondary60: {
-    main: "#FFAB95",
+    main: "#f8d38f",
   },
   secondary40: {
-    main: "#FFC3B3",
+    main: "#fbe9ca",
   },
   secondary20: {
-    main: "#FFDAD1",
+    main: "#fef7ec",
   },
   secondary10: {
-    main: "#FFF2EF",
+    main: "#fef7ec",
   },
   yellow100: {
     main: "#FFBF5C",

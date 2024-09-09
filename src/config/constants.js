@@ -43,6 +43,7 @@ export const SLIDE_UP_ANIMATION = {
 };
 
 export const CURRENCY = "USD";
+export const COUNTRY = "SV";
 export const LANGUAGE = "es-SV";
 
 export const SEARCH_PLACEHOLDER = "Buscar...";

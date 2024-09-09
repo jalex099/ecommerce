@@ -170,10 +170,15 @@ export const useLocationState = () => {
     return true;
   };
 
+  const clearShop = () => {
+    state?.shop.set(null);
+  };
+
   return {
     addToLocalStorage,
     clearState,
     clearDateTime,
+    clearShop,
     delivery: state?.delivery.value,
     shop: state?.shop.value,
     meetup: state?.meetup.value,

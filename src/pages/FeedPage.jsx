@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useUIState } from "#/stores/UIState.js";
 import Container from "@mui/material/Container";
 import SliderComponent from "#/components/domain/feed/SliderComponent.jsx";
@@ -12,12 +12,13 @@ import OrderService from "#/services/OrderService.js";
 import NotFinishedOrdersAdvise from "#/components/domain/feed/NotFinishedOrdersAdvise.jsx";
 import ClientFavoriteProductsService from "#/services/ClientFavoriteProductsService.js";
 import FavoritesShortcutContainer from "#/components/domain/feed/FavoritesShortcutContainer.jsx";
-import Waves from "#/components/shared/Waves.jsx";
+// import Waves from "#/components/shared/Waves.jsx";
 import WelcomeContainer from "#/components/domain/feed/WelcomeContainer";
 import { useAuthState } from "#/stores/AuthState";
 import ClientUserDetailService from "#/services/ClientUserDetailService.js";
 import { COMPANY } from "#/config/constants";
 import CategoriesFeedLink from "#/components/domain/feed/CategoriesFeedLink.jsx";
+import SuggestionsContainer from "#/components/domain/feed/SuggestionsContainer.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
@@ -34,13 +35,15 @@ const FeedPage = () => {
   return (
     <Container sx={style.container}>
       <HelmetMeta page="feed" />
-      <Box className="w-full flex flex-col gap-6">
-        <WelcomeContainer
-          name={userDetail?.alias}
-          isLoading={isLoading}
-          isAuthenticated={auth?.isAuthenticated && auth?.isVerified}
-        />
-        <CategoriesFeedLink />
+      <Box className="w-full flex flex-col gap-8">
+        <Box className="w-full flex flex-col gap-2">
+          <WelcomeContainer
+            name={userDetail?.alias}
+            isLoading={isLoading}
+            isAuthenticated={auth?.isAuthenticated && auth?.isVerified}
+          />
+          {/* <CategoriesFeedLink /> */}
+        </Box>
         <SliderComponent />
         <Box className={"w-full flex flex-col gap-6 lg:flex-row"}>
           {cart?.getItemsCounter() > 0 && <CartAdvise />}
@@ -50,6 +53,7 @@ const FeedPage = () => {
           <FavoritesShortcutContainer favorites={favoriteProducts} />
         )}
         <OffersContainer />
+        <SuggestionsContainer />
       </Box>
       <NewContent />
     </Container>

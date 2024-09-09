@@ -28,6 +28,7 @@ const Picture = ({
         layout
         whileTap={blockAnimation ? {} : { scale: 1.05 }}
         onContextMenu={(e) => e.preventDefault()}
+        loading="lazy"
       />
     </picture>
   );

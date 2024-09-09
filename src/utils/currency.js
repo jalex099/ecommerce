@@ -11,3 +11,7 @@ export function formatCurrency(value) {
   }
   return val;
 }
+
+export function formatNumber(value) {
+  return new Intl.NumberFormat(LANGUAGE).format(value);
+}

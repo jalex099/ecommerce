@@ -26,6 +26,9 @@ import DataService from "#/services/DataService.js";
 import { authState } from "#/stores/AuthState.js";
 import AlreadyHaveAccount from "#/components/domain/checkout/AlreadyHaveAccount.jsx";
 import serializeState from "#/utils/serializeState.js";
+import ConfirmPaymentButton from "#/components/domain/checkout/payment/ConfirmPaymentButton";
+import ContinueButton from "#/components/domain/checkout/payment/ContinueButton";
+import { DEFAULT_DAYS_TO_DELIVER } from "#/config/constants.js";
 
 const CheckoutPage = () => {
   const ui = useUIState();
@@ -37,9 +40,9 @@ const CheckoutPage = () => {
   const { parseOrder } = useOrderParser();
   const { saveOrder } = OrderService();
   const [searchParams] = useSearchParams();
-  const { userDetail} = ClientUserDetailService();
+  const { userDetail } = ClientUserDetailService();
   const auth = useAuthState();
-  const { regions, parameters } = DataService();
+  const { regions, parameters, shops } = DataService();
 
   useEffect(() => {
     ui?.setTitle("Pago");
@@ -65,47 +68,78 @@ const CheckoutPage = () => {
   }, []);
 
   useEffect(() => {
-    if(!checkoutState?.email || checkoutState?.email === ''){
+    if (!checkoutState?.email || checkoutState?.email === "") {
       checkoutState?.setEmail(auth?.currentUser?.email);
     }
-    if(!checkoutState?.completeName || checkoutState?.completeName === ''){
+    if (!checkoutState?.completeName || checkoutState?.completeName === "") {
       checkoutState?.setCompleteName(auth?.currentUser?.displayName);
     }
   }, [auth?.currentUser?.email, auth?.currentUser?.displayName]);
 
   useEffect(() => {
-    if(!userDetail) return;
-    if(userDetail?.phone){
+    if (!userDetail) return;
+    if (userDetail?.phone) {
       checkoutState?.setPhone(userDetail?.phone);
     }
-    if(userDetail?.paymentAddress){
+    if (userDetail?.paymentAddress) {
       checkoutState?.setPaymentAddress(userDetail?.paymentAddress);
     }
-    if(userDetail?.paymentCountry){
+    if (userDetail?.paymentCountry) {
       checkoutState?.setPaymentCountry(userDetail?.paymentCountry);
     }
-    if(userDetail?.paymentRegion){
+    if (userDetail?.paymentRegion) {
       checkoutState?.setPaymentRegion(userDetail?.paymentRegion);
-      checkoutState?.setPaymentRegionName(regions?.find(country => country?.id === userDetail?.paymentCountry)?.regions?.find(region => region?.id === userDetail?.paymentRegion)?.name || "");
+      checkoutState?.setPaymentRegionName(
+        regions
+          ?.find((country) => country?.id === userDetail?.paymentCountry)
+          ?.regions?.find((region) => region?.id === userDetail?.paymentRegion)
+          ?.name || ""
+      );
     }
-    if(userDetail?.paymentCity){
+    if (userDetail?.paymentCity) {
       checkoutState?.setPaymentCity(userDetail?.paymentCity);
     }
-    if(userDetail?.paymentPostalCode){
+    if (userDetail?.paymentPostalCode) {
       checkoutState?.setPaymentPostalCode(userDetail?.paymentPostalCode);
     }
   }, [userDetail]);
 
   useEffect(() => {
-    const shouldAddDeliveryCost = locationState?.delivery !== null && (cart?.getShipping() === 0);
-    const shouldRemoveDeliveryCost = locationState?.delivery === null && (cart?.getShipping() !== 0);
+    const shouldAddDeliveryCost =
+      locationState?.delivery !== null && cart?.getShipping() === 0;
+    const shouldRemoveDeliveryCost =
+      locationState?.delivery === null && cart?.getShipping() !== 0;
 
     if (shouldAddDeliveryCost) {
-      cart?.addShipping(Number(parameters?.find(param => param?.name === 'DELIVERY_COST')?.value) || 0);
+      cart?.addShipping(
+        Number(
+          parameters?.find((param) => param?.name === "DELIVERY_COST")?.value
+        ) || 0
+      );
     } else if (shouldRemoveDeliveryCost) {
       cart?.removeShipping();
     }
   }, [locationState?.selected]);
+
+  // Verifica si la hora seleccionada es pasada o no cumple con el mínimo de tiempo requerido, y resetea la hora si es necesario
+  useEffect(() => {
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() + DEFAULT_DAYS_TO_DELIVER);
+
+    if (locationState?.dateTime && locationState.dateTime <= minDate) {
+      locationState.clearDateTime();
+    }
+  }, [locationState]);
+
+  useEffect(() => {
+    // Verifica si la tienda seleccionada no está en la lista de tiendas y resetea la tienda si es necesario
+    if (locationState?.shop?._id) {
+      const shopExists = shops?.some((s) => s?._id === locationState.shop._id);
+      if (!shopExists) {
+        locationState.clearShop();
+      }
+    }
+  }, [locationState?.shop, shops]);
 
   const handleConfirmOrder = () => {
     const order = parseOrder();
@@ -121,13 +155,11 @@ const CheckoutPage = () => {
           <Divider />
           <DateAndTimeInfoContainer />
           <Divider />
-          {
-            !auth?.isAuthenticated && !!auth?.isVerified && (
-              <>
-                <AlreadyHaveAccount />
-              </>
-            )
-          }
+          {!auth?.isAuthenticated && !!auth?.isVerified && (
+            <>
+              <AlreadyHaveAccount />
+            </>
+          )}
           <GeneralInformationForm />
         </Box>
       )}
@@ -138,7 +170,20 @@ const CheckoutPage = () => {
         <ReviewContainer />
       )}
       <Box className="sticky bottom-4 left-0 right-0 z-10 w-full">
-        <Button
+        {checkoutState?.activeStep === CHECKOUT_STEPS?.ADDRESS && (
+          <ContinueButton
+            disabled={!isValidStep()}
+            handleClick={checkoutState?.handleNextStep}
+          />
+        )}
+        {checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW && (
+          <ConfirmPaymentButton
+            disabled={!isValidStep()}
+            handleClick={handleConfirmOrder}
+          />
+        )}
+
+        {/* <Button
           variant="contained"
           color="primary"
           fullWidth
@@ -152,7 +197,7 @@ const CheckoutPage = () => {
           {checkoutState?.activeStep === CHECKOUT_STEPS?.REVIEW
             ? "Confirmar y pagar"
             : "Continuar"}
-        </Button>
+        </Button> */}
       </Box>
     </Container>
   );

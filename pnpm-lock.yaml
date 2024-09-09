@@ -14,6 +14,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.1(@types/react@18.2.17)(react@18.2.0))(@types/react@18.2.17)(react@18.2.0)
+      '@google-pay/button-react':
+        specifier: ^3.1.0
+        version: 3.1.0(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@hookstate/core':
         specifier: ^4.0.1
         version: 4.0.1(react@18.2.0)
@@ -53,6 +56,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      lottie-react:
+        specifier: ^2.4.0
+        version: 2.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       mapbox-gl:
         specifier: ^2.15.0
         version: 2.15.0
@@ -1284,6 +1290,15 @@ packages:
   '@floating-ui/utils@0.2.1':
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
 
+  '@google-pay/button-react@3.1.0':
+    resolution: {integrity: sha512-RweK+Lr7aFhl1fFuhvaxLiuBXm0SoeqD3ZIhfz0YeMOtIvTNX6lDcFqcWbHC11DOu2V7hxBMBAuSSzkf68gjXA==}
+    engines: {node: '>=8.0.0'}
+    peerDependencies:
+      '@types/react': '>=16.0.0'
+      '@types/react-dom': '>=16.0.0'
+      react: '>=16.3.0'
+      react-dom: '>=16.3.0'
+
   '@grpc/grpc-js@1.8.21':
     resolution: {integrity: sha512-KeyQeZpxeEBSqFVTi3q2K7PiPXmgBfECc4updA1ejCLjYmoAlvvM3ZMp5ztTDUCUQmoY3CpDxvchjO1+rFkoHg==}
     engines: {node: ^8.13.0 || >=10.10.0}
@@ -1802,6 +1817,9 @@ packages:
 
   '@types/geojson@7946.0.11':
     resolution: {integrity: sha512-L7A0AINMXQpVwxHJ4jxD6/XjZ4NDufaRlUJHjNIFKYUFBH1SvOW+neaqb0VTRSLW5suSrSu19ObFEFnfNcr+qg==}
+
+  '@types/googlepay@0.7.6':
+    resolution: {integrity: sha512-5003wG+qvf4Ktf1hC9IJuRakNzQov00+Xf09pAWGJLpdOjUrq0SSLCpXX7pwSeTG9r5hrdzq1iFyZcW7WVyr4g==}
 
   '@types/istanbul-lib-coverage@2.0.4':
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -3139,6 +3157,15 @@ packages:
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
+
+  lottie-react@2.4.0:
+    resolution: {integrity: sha512-pDJGj+AQlnlyHvOHFK7vLdsDcvbuqvwPZdMlJ360wrzGFurXeKPr8SiRCjLf3LrNYKANQtSsh5dz9UYQHuqx4w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  lottie-web@5.12.2:
+    resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -5818,6 +5845,14 @@ snapshots:
 
   '@floating-ui/utils@0.2.1': {}
 
+  '@google-pay/button-react@3.1.0(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@types/googlepay': 0.7.6
+      '@types/react': 18.2.17
+      '@types/react-dom': 18.2.7
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
   '@grpc/grpc-js@1.8.21':
     dependencies:
       '@grpc/proto-loader': 0.7.8
@@ -6463,6 +6498,8 @@ snapshots:
       react-native: 0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9(@babel/core@7.22.9))(react@18.2.0)
 
   '@types/geojson@7946.0.11': {}
+
+  '@types/googlepay@0.7.6': {}
 
   '@types/istanbul-lib-coverage@2.0.4': {}
 
@@ -7989,6 +8026,14 @@ snapshots:
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
+
+  lottie-react@2.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      lottie-web: 5.12.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
+  lottie-web@5.12.2: {}
 
   lru-cache@5.1.1:
     dependencies:

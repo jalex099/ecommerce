@@ -3,8 +3,17 @@ import Regular16 from "#/components/shared/fonts/Regular16";
 import Lottie from "lottie-react";
 import animationData from "#/assets/animations/suggestion.json";
 import { useRef } from "react";
+import Suggestion from "#/components/domain/feed/Suggestion";
+import DataService from "#/services/DataService";
+import { useMemo } from "react";
 
-const SuggestionsContainer = ({ suggestions }) => {
+const SuggestionsContainer = () => {
+  const { menu } = DataService();
+
+  const suggestions = useMemo(() => {
+    return menu?.filter((item) => !!item?.isNew);
+  }, [menu]);
+
   return (
     <Box sx={style.container}>
       <Box sx={style.subcontainer}>
@@ -12,10 +21,14 @@ const SuggestionsContainer = ({ suggestions }) => {
           <Lottie animationData={animationData} loop={true} />
         </Box>
         <Regular16>
-          Si me permites una sugerencia, te recomendaría estos productos:
+          Los siguientes productos son tendencia, ¡no te los pierdas!
         </Regular16>
       </Box>
-      <Box>asdasdasd</Box>
+      <Box className="w-full grid grid-cols-2 gap-4">
+        {suggestions?.map((suggestion) => (
+          <Suggestion key={suggestion?._id} suggestion={suggestion} />
+        ))}
+      </Box>
     </Box>
   );
 };

@@ -64,6 +64,7 @@ function SliderComponent() {
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
+        className="w-full lg:h-[400px]"
       >
         {carousel?.map((item, index) => {
           return (

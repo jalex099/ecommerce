@@ -23,49 +23,57 @@ const CartAdvise = () => {
 
   const handleClickGoToCart = () => {
     navigate("/carrito");
-  }
+  };
 
   return (
-    <Box sx={style.container} className={"px-6 py-4 rounded-2xl w-full flex flex-col gap-4 items-center justify-center"}>
-     <Box className={"flex gap-2 justify-between items-center w-full"}>
-       <Badge badgeContent={badgeContent} color="secondary" variant="standard">
-        <CartIcon className={"w-8 h-8"}/>
-      </Badge>
-       <Box className={"text-right relative"}>
-         <Regular14>
-           &#191;Terminaste de comprar?
-         </Regular14>
-         <motion.div
-           initial={SLIDE_UP_ANIMATION.initial}
-           animate={SLIDE_UP_ANIMATION.animate}
-           transition={SLIDE_UP_ANIMATION.transition}
-           exit={SLIDE_UP_ANIMATION.exit}
-         >
-           <SemiBold18>
-             &#161;Vamos al carrito&#33;
-           </SemiBold18>
-         </motion.div>
-       </Box>
-     </Box>
-      <Regular12 styles={{color: theme => theme?.palette?.neutral60?.main}}>
-        Tienes {badgeContent} producto {badgeContent > 1 && 's'} en tu carrito
-      </Regular12>
-      <Button
-        variant="contained"
-        size={"small"}
-        color="primary"
-        onClick={handleClickGoToCart}
-      >
-        Ir ahora
-      </Button>
+    <Box
+      sx={style.container}
+      className={
+        "px-6 py-4 rounded-2xl w-full flex items-center justify-center "
+      }
+    >
+      <Box className="w-full lg:w-[400px] flex flex-col gap-4 items-center justify-center ">
+        <Box className={"flex gap-2 justify-between items-center w-full"}>
+          <Badge
+            badgeContent={badgeContent}
+            color="secondary"
+            variant="standard"
+          >
+            <CartIcon className={"w-8 h-8"} />
+          </Badge>
+          <Box className={"text-right relative"}>
+            <Regular14>&#191;Terminaste de comprar?</Regular14>
+            <motion.div
+              initial={SLIDE_UP_ANIMATION.initial}
+              animate={SLIDE_UP_ANIMATION.animate}
+              transition={SLIDE_UP_ANIMATION.transition}
+              exit={SLIDE_UP_ANIMATION.exit}
+            >
+              <SemiBold18>&#161;Vamos al carrito&#33;</SemiBold18>
+            </motion.div>
+          </Box>
+        </Box>
+        <Regular12
+          styles={{ color: (theme) => theme?.palette?.neutral60?.main }}
+        >
+          Tienes {badgeContent} producto{badgeContent > 1 && "s"} en tu carrito
+        </Regular12>
+        <Button
+          variant="contained"
+          size={"small"}
+          color="primary"
+          onClick={handleClickGoToCart}
+        >
+          Ir ahora
+        </Button>
+      </Box>
     </Box>
-  )
-}
-
+  );
+};
 
 const style = {
   container: {
-    backgroundColor: theme => theme?.palette?.primary10?.main
+    backgroundColor: (theme) => theme?.palette?.primary10?.main,
   },
 };
 

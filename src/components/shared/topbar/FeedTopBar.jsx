@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { Fade } from "@mui/material";
 import { motion } from "framer-motion";
-import { COMPANY_LOGO } from "#/config/constants";
+import { COMPANY_LOGO, FADE_ANIMATION } from "#/config/constants";
 // import IconButton from "@mui/material/IconButton";
 
 function FeedTopBar({ title }) {
@@ -26,13 +26,17 @@ function FeedTopBar({ title }) {
           >
             <ShoppingBagOutlinedIcon />
           </IconButton> */}
-          {/* <Box /> */}
+          <Box />
           <motion.img
             src={COMPANY_LOGO}
+            initial={FADE_ANIMATION.initial}
+            animate={FADE_ANIMATION.animate}
+            transition={FADE_ANIMATION.transition}
+            exit={FADE_ANIMATION.exit}
             alt="logo"
-            className="w-8 h-8 mx-auto"
+            className="h-[48px] mx-auto"
           />
-          <SemiBold18 className="text-center">{title}</SemiBold18>
+          {/* <SemiBold18 className="text-center">{title}</SemiBold18> */}
           {/* <IconButton
             aria-label="search"
             variant="contained"

@@ -63,7 +63,7 @@ const WelcomeContainer = ({ name, isLoading, isAuthenticated }) => {
       animate={SLIDE_UP_ANIMATION.animate}
       transition={SLIDE_UP_ANIMATION.transition}
       exit={SLIDE_UP_ANIMATION.exit}
-      className="flex flex-row items-start justify-between gap-2"
+      className="flex flex-row items-center justify-between gap-2"
     >
       {/* <Regular24
         styles={{

@@ -5,8 +5,12 @@ import animationData from "#/assets/animations/feed-friends1.json";
 
 const FeedFriends1 = () => {
   return (
-    <Box className="w-[200px] lg:w-[400px] max-h-[200px] lg:max-h-[400px]">
-      <Lottie animationData={animationData} loop={true} />
+    <Box className="w-[200px] lg:w-[400px] max-h-[200px]">
+      <Lottie
+        animationData={animationData}
+        loop={true}
+        style={{ height: "200px" }}
+      />
     </Box>
   );
 };

@@ -22,7 +22,8 @@ const OrderProductsDetails = ({ menu : menuOrder }) => {
             <Box key={index} className={"flex flex-row gap-1 items-center my-2 justify-between px-4 w-full"}>
               <Box className={"w-12 h-12"}>
                 <Picture
-                  src={findImage(productData?._id, "PRD", "jpg")}
+                  jpg={findImage(productData?._id, "PRD", "jpg")}
+                  webp={findImage(productData?._id, "PRD", "webp")}
                   alt={productData?.name}
                   className={"w-full h-full object-cover rounded-2xl"}
                 />

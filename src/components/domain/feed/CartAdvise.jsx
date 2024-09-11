@@ -29,10 +29,10 @@ const CartAdvise = () => {
     <Box
       sx={style.container}
       className={
-        "px-6 py-4 rounded-2xl w-full flex items-center justify-center "
+        "px-6 py-4 rounded-2xl w-full flex items-center justify-center  lg:w-[400px] min-h-[200px]"
       }
     >
-      <Box className="w-full lg:w-[400px] flex flex-col gap-4 items-center justify-center ">
+      <Box className="w-full flex flex-col gap-4 items-center justify-center ">
         <Box className={"flex gap-2 justify-between items-center w-full"}>
           <Badge
             badgeContent={badgeContent}

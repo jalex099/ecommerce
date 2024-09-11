@@ -51,7 +51,7 @@ const FeedPage = () => {
           {/* <CategoriesFeedLink /> */}
         </Box>
         <SliderComponent />
-        <Box className={"w-full flex flex-col gap-6 lg:flex-row"}>
+        <Box className={"w-full flex flex-col gap-6 lg:flex-row justify-center items-start"}>
           {cart?.getItemsCounter() > 0 && <CartAdvise />}
           {notFinishedOrders?.length > 0 && <NotFinishedOrdersAdvise />}
         </Box>

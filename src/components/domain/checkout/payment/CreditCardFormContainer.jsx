@@ -15,7 +15,9 @@ import Regular14 from "#/components/shared/fonts/Regular14.jsx";
 import { motion } from "framer-motion";
 import SemiBold12 from "#/components/shared/fonts/SemiBold12.jsx";
 import IpInfoService from "#/services/IpInfoService.js";
-import Regular12 from "../../../shared/fonts/Regular12.jsx";
+import Regular12 from "#/components/shared/fonts/Regular12.jsx";
+import VisaIcon from "#/components/shared/icons/VisaIcon.jsx";
+import MasterCardIcon from "#/components/shared/icons/MasterCardIcon.jsx";
 
 const ERROR_MESSAGES = {
   emptyCardNumber: 'El número de la tarjeta es inválido',
@@ -264,6 +266,10 @@ const CreditCardFormContainer = () => {
           </motion.div>
         )
       }
+      <Box className={"flex flex-row gap-4 justify-end"}>
+              <VisaIcon className={"w-8 h-8"} />
+              <MasterCardIcon className={"w-8 h-8"} />
+            </Box>
 
       <Button
         variant={"outlined"}

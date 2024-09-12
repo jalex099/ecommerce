@@ -61,7 +61,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "calc(100dvh - 80px - 70px)",
+    height: "calc(100vh - 80px - 70px)",
     width: "100%",
     padding: "0 24px",
   },

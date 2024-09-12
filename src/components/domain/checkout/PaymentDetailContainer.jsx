@@ -106,8 +106,8 @@ const PaymentDetailContainer = ({ paymentValue }) => {
 const style = {
   button: {},
   dialog: {
-    minHeight: "400px",
-    maxHeight: { xs: "calc(100dvh - 200px)", lg: "80dvh" },
+    minHeight: "300px",
+    maxHeight: { xs: "calc(100vh - 200px)", lg: "80vh" },
     width: { xs: "100%", lg: "500px" },position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0
   },
 };

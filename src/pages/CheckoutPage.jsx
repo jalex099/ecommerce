@@ -211,7 +211,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    minHeight: "calc(100dvh - 70px)",
+    minHeight: "calc(100vh - 70px)",
     flexGrow: 1,
     gap: "32px",
     justifyContent: "flex-start",

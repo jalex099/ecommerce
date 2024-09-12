@@ -77,7 +77,7 @@ const style = {
     alignItems: "center",
     justifyContent: "flex-start",
     gap: "16px",
-    minHeight: "calc(100dvh - 70px)",
+    minHeight: "calc(100vh - 70px)",
     flexGrow: 1,
   },
 };

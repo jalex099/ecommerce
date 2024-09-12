@@ -24,7 +24,7 @@ const style = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100dvh",
+    height: "100vh",
     zIndex: "tooltip",
     backgroundColor: "transparent",
     backdropFilter: "blur(4px)",

@@ -124,6 +124,7 @@ const CheckoutPage = () => {
   // Verifica si la hora seleccionada es pasada o no cumple con el mínimo de tiempo requerido, y resetea la hora si es necesario
   useEffect(() => {
     const minDate = new Date();
+    minDate?.setHours(0, 0, 0, 0);
     minDate.setDate(minDate.getDate() + DEFAULT_DAYS_TO_DELIVER);
 
     if (locationState?.dateTime && locationState.dateTime <= minDate) {

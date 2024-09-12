@@ -77,7 +77,7 @@ function OptionContainer({ label, options, index, className }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         PaperProps={{
-          sx: { padding: "8px 0px" , minWidth: { xs: "100%", lg: "500px" }, maxWidth: { xs: "100%", lg: "500px" }, position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0},
+          sx: { padding: "8px 0px" , minWidth: { xs: "100%", lg: "500px" }, maxWidth: { xs: "100%", lg: "500px" }, position: { xs: "absolute" , lg: "relative"}, bottom: 0, left:0, right: 0, maxHeight: { xs: "60vh", lg: "500px" }},
         }}
       >
         <DialogTitle className={"cursor-default"}>

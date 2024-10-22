@@ -1,6 +1,6 @@
 const typography = {
   //familia de fuentes por defecto
-  fontFamily: ["Intro", "GTWalsheim", "Roboto"].join(","),
+  fontFamily: ["Fira Code", "Roboto"].join(","),
 };
 
 export default typography;

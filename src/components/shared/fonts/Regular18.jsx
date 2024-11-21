@@ -6,7 +6,7 @@ function Regular18({ children, className, styles }) {
       fontSize="18px"
       lineHeight="28px"
       className={className}
-      fontFamily="Intro"
+      fontFamily="Comfortaa"
       fontWeight={400}
       sx={styles}
     >

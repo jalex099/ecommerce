@@ -6,7 +6,7 @@ function ExtraBold24({ children, className, styles, ...props }) {
       className={className}
       fontSize="24px"
       lineHeight="34px"
-      fontFamily="Intro"
+      fontFamily="Comfortaa"
       fontWeight={600}
       sx={styles}
       {...props}

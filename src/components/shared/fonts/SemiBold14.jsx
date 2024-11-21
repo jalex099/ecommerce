@@ -6,7 +6,7 @@ function SemiBold14({ children, className, styles }) {
       fontSize="14px"
       lineHeight="24px"
       className={className}
-      fontFamily="Intro"
+      fontFamily="Comfortaa"
       fontWeight={600}
       sx={styles}
     >

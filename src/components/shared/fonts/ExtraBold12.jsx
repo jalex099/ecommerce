@@ -6,7 +6,7 @@ function ExtraBold12({ children, className }) {
       fontSize="12px"
       lineHeight="22px"
       className={className}
-      fontFamily="Intro"
+      fontFamily="Comfortaa"
       fontWeight={800}
     >
       {children}

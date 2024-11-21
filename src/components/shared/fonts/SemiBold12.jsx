@@ -6,7 +6,7 @@ function SemiBold12({ children, className, styles, ...props }) {
       fontSize="12px"
       lineHeight="22px"
       className={className}
-      fontFamily="Intro"
+      fontFamily="Comfortaa"
       fontWeight={600}
       sx={styles}
       {...props}

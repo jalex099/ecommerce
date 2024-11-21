@@ -6,7 +6,7 @@ function Bold18({ children, className }) {
       fontSize="18px"
       lineHeight="28px"
       className={className}
-      fontFamily="Intro"
+      fontFamily="Comfortaa"
       fontWeight={700}
     >
       {children}

@@ -6,7 +6,7 @@ function Regular14({ children, className, styles, ...props }) {
       fontSize="14px"
       lineHeight="24px"
       className={className}
-      fontFamily="Comfortaa"
+      fontFamily="Poppins"
       sx={styles}
       {...props}
     >

@@ -9,6 +9,7 @@ import { useHookstate } from "@hookstate/core";
 import RedirectionService from "#/services/RedirectionService";
 import { getCategory } from "#/utils/directoryUtils";
 import { useLocation, useSearchParams } from "react-router-dom";
+import GoToCartButton from  "#/components/domain/cart/GoToCartButton.jsx";
 
 const MenuPage = () => {
   const { categories, menu, offers } = DataService();
@@ -40,7 +41,7 @@ const MenuPage = () => {
   };
 
   return (
-    <Container sx={style.container}>
+    <Container sx={style.container} className={ "relative flex-grow"}>
       <HelmetMeta page="menu" />
         {categories?.length !== 0 && selected.get() !== null && (
           <>
@@ -57,6 +58,8 @@ const MenuPage = () => {
             />
           </>
         )}
+
+        <GoToCartButton/>
     </Container>
   );
 };

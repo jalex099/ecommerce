@@ -6,8 +6,8 @@ function Bold14({ children, className, styles }) {
       fontSize="14px"
       lineHeight="24px"
       className={className}
-      fontFamily="Comfortaa"
-      fontWeight={700}
+      fontFamily="Poppins"
+      fontWeight={600}
       sx={styles}
     >
       {children}

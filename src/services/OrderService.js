@@ -58,8 +58,8 @@ const OrderService = () => {
     onSuccess: ({ data }) => {
       if (data?.urlCompletePayment != null && !data?.isFinished) {
         setKey("order", data?._id);
-        const urlCompletePayment = data?.urlCompletePayment;
-        window.location.href = urlCompletePayment;
+        // const urlCompletePayment = data?.urlCompletePayment;
+        // window.location.href = urlCompletePayment;
         return;
       }
       finishOrder(data, true);

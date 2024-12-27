@@ -6,8 +6,8 @@ function SemiBold20({ children, className, styles }) {
       fontSize="20px"
       lineHeight="30px"
       className={className}
-      fontFamily="Comfortaa"
-      fontWeight={600}
+      fontFamily="Poppins"
+      fontWeight={500}
       sx={styles}
     >
       {children}

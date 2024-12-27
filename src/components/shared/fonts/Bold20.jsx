@@ -6,8 +6,8 @@ function Bold20({ children, className }) {
       fontSize="20px"
       lineHeight="30px"
       className={className}
-      fontFamily="Comfortaa"
-      fontWeight={700}
+      fontFamily="Poppins"
+      fontWeight={600}
     >
       {children}
     </Typography>

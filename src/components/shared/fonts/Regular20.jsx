@@ -6,7 +6,7 @@ function Regular20({ children, className, styles }) {
       fontSize="20px"
       lineHeight="30px"
       className={className}
-      fontFamily="Comfortaa"
+      fontFamily="Poppins"
       fontWeight={400}
       sx={styles}
     >

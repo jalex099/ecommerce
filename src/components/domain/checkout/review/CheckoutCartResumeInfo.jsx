@@ -27,16 +27,17 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, shipping = 0, subtota
         {/*  ))*/}
         {/*}*/}
         {/*<Divider sx={{borderStyle:'dashed'}}/>*/}
-          <>
-            <Box className="flex flex-row justify-between items-center">
-              <Regular14>Subtotal</Regular14>
-              <Regular14>{formatCurrency(subtotal)}</Regular14>
-            </Box>
-            <Box className="flex flex-row justify-between items-center">
-              <Regular14>Env&iacute;o</Regular14>
-              <Regular14>{formatCurrency(shipping)}</Regular14>
-            </Box>
-            <Box
+        <>
+          <Box className="flex flex-row justify-between items-center">
+            <Regular14>Subtotal</Regular14>
+            <Regular14>{formatCurrency(subtotal)}</Regular14>
+          </Box>
+          <Box className="flex flex-row justify-between items-center">
+            <Regular14>Env&iacute;o</Regular14>
+            <Regular14>{formatCurrency(shipping)}</Regular14>
+          </Box>
+          {
+            isDiscount && (<Box
               className="flex flex-row justify-between items-center"
               sx={{
                 color: (theme) => isDiscount ? theme.palette.secondary.main : theme.palette.grey[500]
@@ -44,7 +45,9 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, shipping = 0, subtota
             >
               <Regular14>Ahorro</Regular14>
               <Regular14>{isDiscount ? `- ${formatCurrency(discount)}` : formatCurrency(discount)}</Regular14>
-            </Box>
+            </Box>)
+            }
+
 
             <Divider sx={{borderStyle:'dashed'}}/>
           </>

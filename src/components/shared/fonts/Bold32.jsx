@@ -6,8 +6,8 @@ function Bold32({ children, className }) {
       className={className}
       fontSize="32px"
       lineHeight="44px"
-      fontFamily="Comfortaa"
-      fontWeight={700}
+      fontFamily="Poppins"
+      fontWeight={600}
     >
       {children}
     </Typography>

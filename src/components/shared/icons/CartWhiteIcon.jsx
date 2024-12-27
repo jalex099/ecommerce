@@ -1,10 +1,10 @@
-import CartIconSvg from "#/assets/icons/cart.svg";
+import CartWhiteIconSvg from "#/assets/icons/cart-white.svg";
 import { motion } from "framer-motion";
 
-function CartIcon({ ...props }) {
+function CartWhiteIcon({ ...props }) {
   return (
     <motion.img
-      src={CartIconSvg}
+      src={CartWhiteIconSvg}
       alt="cart"
       {...props}
       initial={{ scale: 0.5 }}
@@ -19,4 +19,4 @@ function CartIcon({ ...props }) {
   );
 }
 
-export default CartIcon;
+export default CartWhiteIcon;

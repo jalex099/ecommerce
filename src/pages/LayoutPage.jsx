@@ -19,6 +19,7 @@ import CartService from "#/services/CartService.js";
 import useCartSyncUtils from "#/components/domain/cart/controllers/useCartSyncUtils.js";
 import { useLocationState } from "#/stores/LocationState.js";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
+import GoToCartButton from  "#/components/domain/cart/GoToCartButton.jsx";
 
 mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const LayoutPage = () => {
@@ -57,22 +58,22 @@ const LayoutPage = () => {
     checkout?.addToLocalStorage();
   }, [checkout?.hash()])
 
-  useEffect(() => {
-    cart?.setDirty(true);
-  }, [cart?.getItemsCounter()]);
+//  useEffect(() => {
+//    cart?.setDirty(true);
+//  }, [cart?.getItemsCounter()]);
 
-  useEffect(() => {
-    if (isLoadingCarts || isErrorCarts || cart?.getItemsCounter() < 0) return;
-    if (!cart?.getSyncable()) return;
-    if (pathname === "/carrito") return;
-    if (!cart?.getDirty()) return;
-    saveCartExisting({
-      onSuccess: (data) => {
-        cart?.setDirty(false);
-        cart?.setSyncable(!!data);
-      }
-    });
-  }, [cart?.getItemsCounter(), pathname]);
+//  useEffect(() => {
+//    if (isLoadingCarts || isErrorCarts || cart?.getItemsCounter() < 0) return;
+//    if (!cart?.getSyncable()) return;
+//    if (pathname === "/carrito") return;
+//    if (!cart?.getDirty()) return;
+//    saveCartExisting({
+//      onSuccess: (data) => {
+//        cart?.setDirty(false);
+//        cart?.setSyncable(!!data);
+//      }
+//    });
+//  }, [cart?.getItemsCounter(), pathname]);
 
   const isHidden = useMemo(() => {
     return BOTTOM_BAR_HIDDEN_PATHS.some((path) => pathname.startsWith(path));
@@ -87,7 +88,7 @@ const LayoutPage = () => {
           </header>
           <Box
             component="main"
-            className="container relative mx-auto"
+            className="container relative mx-auto flex"
             sx={{
               paddingBottom: !isHidden && "96px",
               flex: 1
@@ -95,6 +96,8 @@ const LayoutPage = () => {
           >
             <Outlet />
             {ui?.isLoadingForeground && <Loading />}
+
+            <GoToCartButton/>
             {/* <Toaster
         toastOptions={{
           style: {

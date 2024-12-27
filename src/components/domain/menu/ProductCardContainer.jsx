@@ -1,5 +1,5 @@
 import Regular16 from "#/components/shared/fonts/Regular16";
-import Bold14 from "#/components/shared/fonts/Bold14";
+import SemiBold14 from "#/components/shared/fonts/SemiBold14";
 import { motion } from "framer-motion";
 import ImageService from "#/services/ImageService.js";
 import { formatCurrency } from "#/utils/currency";
@@ -55,13 +55,13 @@ function ProductCardContainer({
         />
         <Regular16>{product?.name}</Regular16>
         <Box className="flex flex-row gap-2">
-          <Bold14 className={`${offer ? "text-gray-500 line-through" : ""} `}>
+          <SemiBold14 className={`${offer ? "text-gray-500 line-through" : ""} `}>
             {formatCurrency(product?.price)}
-          </Bold14>
+          </SemiBold14>
           {!!priceAfterDiscount && (
-            <Bold14 styles={style.offer}>
+            <SemiBold14 styles={style.offer}>
               {formatCurrency(priceAfterDiscount)}
-            </Bold14>
+            </SemiBold14>
           )}
         </Box>
         {!!showOfferExpiration && !!offer && (

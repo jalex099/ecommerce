@@ -6,7 +6,7 @@ function Regular8({ children, className, styles, ...props }) {
       fontSize="8px"
       lineHeight="16px"
       className={className}
-      fontFamily="Comfortaa"
+      fontFamily="Poppins"
       fontWeight={400}
       sx={styles}
       {...props}

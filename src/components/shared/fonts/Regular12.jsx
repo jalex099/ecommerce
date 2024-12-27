@@ -6,7 +6,7 @@ function Regular12({ children, className, styles, ...props }) {
       fontSize="12px"
       lineHeight="22px"
       className={className}
-      fontFamily="Comfortaa"
+      fontFamily="Poppins"
       fontWeight={400}
       sx={styles}
       {...props}

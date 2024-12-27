@@ -6,8 +6,8 @@ function ExtraBold32({ children, className, styles }) {
       className={className}
       fontSize="32px"
       lineHeight="44px"
-      fontFamily="Comfortaa"
-      fontWeight={600}
+      fontFamily="Poppins"
+      fontWeight={500}
       sx={styles}
     >
       {children}

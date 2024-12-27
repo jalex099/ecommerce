@@ -4,6 +4,7 @@ import AES from "crypto-js/aes.js";
 import Utf8 from "crypto-js/enc-utf8.js";
 import { stateToString } from "#/utils/adapterUtil/index.js";
 import { PAYMENT_METHODS } from "#/config/constants.js";
+import CryptoJS from "crypto-js";
 
 const getCheckoutFromCrypt = () => {
   const state = window.localStorage.getItem("state-state");
@@ -113,10 +114,10 @@ export const useCheckoutState = () => {
       state?.cardHolderName?.get()
     ) {
       const showedCardNumber = `**** **** **** ${state?.cardNumber?.get().slice(-4)}`
-      const cardNumberEncrypted = AES.encrypt(JSON.stringify(state?.cardNumber?.get()),ENCRYPT_KEY).toString();
-      const cardHolderNameEncrypted = AES.encrypt(JSON.stringify(state?.cardHolderName?.get()),ENCRYPT_KEY).toString();
-      const cardExpirationEncrypted = AES.encrypt(JSON.stringify(state?.cardExpiration?.get()),ENCRYPT_KEY).toString();
-      const cardCVCEncrypted = AES.encrypt(JSON.stringify(state?.cardCVC?.get()),ENCRYPT_KEY).toString();
+      const cardNumberEncrypted = cifrarHex(JSON.stringify(state?.cardNumber?.get()),ENCRYPT_KEY).toString();
+      const cardHolderNameEncrypted = cifrarHex(JSON.stringify(state?.cardHolderName?.get()),ENCRYPT_KEY).toString();
+      const cardExpirationEncrypted = cifrarHex(JSON.stringify(state?.cardExpiration?.get()),ENCRYPT_KEY).toString();
+      const cardCVCEncrypted = cifrarHex(JSON.stringify(state?.cardCVC?.get()),ENCRYPT_KEY).toString();
       state?.cardNumber.set(cardNumberEncrypted);
       state?.cardHolderName.set(cardHolderNameEncrypted);
       state?.cardExpiration.set(cardExpirationEncrypted);
@@ -140,6 +141,21 @@ export const useCheckoutState = () => {
     state?.paymentPostalCode.set("");
     state?.isFinishedAddedCard.set(false);
   };
+
+  const cifrarHex = (data, key) => {
+    const secretKey = key;
+
+    const keySha1 = CryptoJS.SHA1(secretKey)
+      .toString(CryptoJS.enc.Hex)
+      .slice(0, 32);
+
+      const encrypted = CryptoJS.AES.encrypt(data, CryptoJS.enc.Hex.parse(keySha1), {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7,
+      });
+
+      return encrypted.toString();
+  }
 
   return {
     activeStep: state.activeStep.get(),

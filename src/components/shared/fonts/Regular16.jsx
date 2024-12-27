@@ -6,7 +6,7 @@ function Regular16({ children, className, styles }) {
       fontSize="16px"
       lineHeight="26px"
       className={className}
-      fontFamily="Comfortaa"
+      fontFamily="Poppins"
       fontWeight={400}
       sx={styles}
     >

@@ -15,23 +15,15 @@ import ConfirmDialog from "#/components/shared/ConfirmDialog";
 import useCartUtils from "#/components/domain/cart/controllers/useCartUtils";
 import { useCartState } from "#/stores/cart";
 import { useNavigate } from "react-router-dom";
-import ImportCartContainer from "#/components/domain/cart/ImportCartContainer";
 import { useAuthState } from "#/stores/AuthState";
-import AllowSyncronizationDialog from "#/components/domain/cart/AllowSyncronizationDialog";
-import ChangeSelectedCartDialog from "#/components/domain/cart/ChangeSelectedCartDialog";
 
 const ITEM_HEIGHT = 48;
 function CartTopBar({ title }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const isOpenShareDialog = useHookstate(false);
-  const isOpenImportDialog = useHookstate(false);
-  const isOpenAllowSyncronizationDialog = useHookstate(false);
-  const isOpenChangeSelectedCartDialog = useHookstate(false);
   const openConfirmDialog = useHookstate(false);
   const { handleRemoveAllFromCart } = useCartUtils();
   const cart = useCartState();
   const navigate = useNavigate();
-  const auth = useAuthState();
 
   const open = Boolean(anchorEl);
 
@@ -48,23 +40,6 @@ function CartTopBar({ title }) {
     handleOpenConfirmDialog();
   };
 
-  const handleImportCart = () => {
-    handleCloseMenu();
-    isOpenImportDialog.set(true);
-  };
-
-  const handleCloseImportDialog = () => {
-    isOpenImportDialog.set(false);
-  };
-
-  const handleShareCart = () => {
-    handleCloseMenu();
-    isOpenShareDialog.set(true);
-  };
-
-  const handleCloseShareDialog = () => {
-    isOpenShareDialog.set(false);
-  };
 
   const handleOpenConfirmDialog = () => {
     openConfirmDialog.set(true);
@@ -74,31 +49,6 @@ function CartTopBar({ title }) {
     openConfirmDialog.set(false);
   };
 
-  const handleSyncronization = () => {
-    handleCloseMenu();
-    handleOpenAllowSyncronizationDialog();
-  };
-
-  const handleOpenAllowSyncronizationDialog = () => {
-    isOpenAllowSyncronizationDialog.set(true);
-  };
-
-  const handleCloseAllowSyncronizationDialog = () => {
-    isOpenAllowSyncronizationDialog.set(false);
-  };
-
-  const handleOpenChangeSelectedCartDialog = () => {
-    isOpenChangeSelectedCartDialog.set(true);
-  };
-
-  const handleCloseChangeSelectedCartDialog = () => {
-    isOpenChangeSelectedCartDialog.set(false);
-  };
-
-  const handleChangeCart = () => {
-    handleCloseMenu();
-    handleOpenChangeSelectedCartDialog();
-  };
 
   const handleRemoveAllFromCartThis = () => {
     handleRemoveAllFromCart();
@@ -106,9 +56,6 @@ function CartTopBar({ title }) {
   };
 
   const handleGoToProfile = () => {
-    handleCloseShareDialog();
-    handleCloseImportDialog();
-    handleCloseAllowSyncronizationDialog();
     handleCloseMenu();
     navigate("/perfil");
   };
@@ -172,30 +119,6 @@ function CartTopBar({ title }) {
                   },
                 }}
               >
-                {auth?.isAuthenticated && auth?.isVerified && (
-                  <MenuItem onClick={handleChangeCart}>
-                    <Regular14>Carritos guardados</Regular14>
-                  </MenuItem>
-                )}
-                {auth?.isAuthenticated &&
-                  auth?.isVerified &&
-                  cart?.getItemsCounter() > 0 &&
-                  cart?.getCartId() === null &&
-                  cart?.getCartCode() === null &&
-                  !cart?.getSyncable() && (
-                    <MenuItem onClick={handleSyncronization}>
-                      <Regular14>Habiliar sincronizacion</Regular14>
-                    </MenuItem>
-                  )}
-                <MenuItem onClick={handleImportCart}>
-                  <Regular14>Importar</Regular14>
-                </MenuItem>
-
-                {cart?.getItemsCounter() > 0 && (
-                  <MenuItem onClick={handleShareCart}>
-                    <Regular14>Compartir</Regular14>
-                  </MenuItem>
-                )}
                 {cart?.getItemsCounter() > 0 && (
                   <MenuItem onClick={handleEmptyCart}>
                     <Regular14>Vaciar</Regular14>
@@ -206,25 +129,6 @@ function CartTopBar({ title }) {
           </Toolbar>
         </Fade>
       </Box>
-      <ShareCartContainer
-        isOpen={isOpenShareDialog.get()}
-        handleClose={handleCloseShareDialog}
-        handleGoToProfile={handleGoToProfile}
-      />
-      <ImportCartContainer
-        isOpen={isOpenImportDialog.get()}
-        handleClose={handleCloseImportDialog}
-        handleGoToProfile={handleGoToProfile}
-      />
-      <AllowSyncronizationDialog
-        isOpen={isOpenAllowSyncronizationDialog.get()}
-        handleClose={handleCloseAllowSyncronizationDialog}
-      />
-      <ChangeSelectedCartDialog
-        isOpen={isOpenChangeSelectedCartDialog.get()}
-        handleClose={handleCloseChangeSelectedCartDialog}
-        cart={cart?.get()}
-      />
     </>
   );
 }

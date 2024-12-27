@@ -33,7 +33,7 @@ const FavoritesCard = ({ favorite, ...props }) => {
       />
       <Box className={"flex-grow w-1/2"}>
         <Regular16>{product?.name}</Regular16>
-        <Regular12 className="overflow-hidden overflow-ellipsis whitespace-normal line-clamp-3">
+        <Regular12 className="overflow-hidden overflow-ellipsis whitespace-normal line-clamp-2">
           {product?.description}
         </Regular12>
       </Box>

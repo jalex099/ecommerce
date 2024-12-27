@@ -22,7 +22,8 @@ import FavoriteToogleContainer from "#/components/domain/product/FavoriteToogleC
 import DiscountChipContainer from "#/components/domain/product/DiscountChipContainer";
 import { useMediaQuery } from "@mui/material";
 import SemiBold24 from "#/components/shared/fonts/SemiBold24.jsx";
-import Bold20 from "#/components/shared/fonts/Bold20.jsx";
+import SemiBold20 from "#/components/shared/fonts/SemiBold20.jsx";
+import SemiBold16 from  "#/components/shared/fonts/SemiBold16.jsx";
 import ProductCounter from "#/components/domain/product/ProductCounter.jsx";
 
 const ProductPage = () => {
@@ -88,18 +89,18 @@ const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, hand
           !isLg ? (
             <>
               <SemiBold18> {temporal?.name}</SemiBold18>
-              <Bold16>
+              <SemiBold16>
                 {formatCurrency(temporal?.price + optionsSubtotal)}
                 {optionsSubtotal > 0 && <span>*</span>}
-              </Bold16>
+              </SemiBold16>
             </>
           ) : (
             <>
               <SemiBold24> {temporal?.name}</SemiBold24>
-              <Bold20>
+              <SemiBold20>
                 {formatCurrency(temporal?.price + optionsSubtotal)}
                 {optionsSubtotal > 0 && <span>*</span>}
-              </Bold20>
+              </SemiBold20>
             </>
           )
         }

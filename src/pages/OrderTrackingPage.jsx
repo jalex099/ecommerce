@@ -36,7 +36,7 @@ const OrderTrackingPage = () => {
         order.set(data);
       },
       onError: (error) => {
-        console.log(error);
+        // console.log(error);
         addToast("Error al obtener la orden", "error");
         navigate(-1);
         return;

@@ -26,7 +26,7 @@ const ClientUserDetailService = () => {
     },
     onError: (error) => {
       addToast("Hubo un error al guardar los datos", "error");
-      console.log(error);
+      // console.log(error);
     },
   });
 

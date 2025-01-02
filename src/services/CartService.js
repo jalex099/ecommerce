@@ -60,7 +60,7 @@ const CartService = () => {
       queryClient.invalidateQueries(["auth_getCarts"], {});
     },
     onError: (error) => {
-      console.log(error?.response?.data);
+      // console.log(error?.response?.data);
       addToast("Hubo un error al clonar el carrito", "error");
     },
   });
@@ -71,7 +71,7 @@ const CartService = () => {
       queryClient.invalidateQueries(["auth_getCarts"], {});
     },
     onError: (error) => {
-      console.log(error?.response?.data);
+      // console.log(error?.response?.data);
       addToast("Hubo un error al eliminar el carrito", "error");
     },
   });

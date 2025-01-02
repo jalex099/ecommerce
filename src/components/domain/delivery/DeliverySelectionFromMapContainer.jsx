@@ -48,7 +48,6 @@ const DeliverySelectionFromMapContainer = () => {
     } catch (error) {
       //   addToast("No se pudo obtener tu ubicación", "error");
       errorOnGeolocation.set(true);
-      console.log(error);
     }
   };
 

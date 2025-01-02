@@ -27,7 +27,7 @@ const ClientFavoriteProductsService = () => {
       });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
 
@@ -42,7 +42,7 @@ const ClientFavoriteProductsService = () => {
       });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
 

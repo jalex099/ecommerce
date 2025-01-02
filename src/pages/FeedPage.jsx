@@ -19,6 +19,7 @@ import ClientUserDetailService from "#/services/ClientUserDetailService.js";
 import { COMPANY } from "#/config/constants";
 import CategoriesFeedLink from "#/components/domain/feed/CategoriesFeedLink.jsx";
 import SuggestionsContainer from "#/components/domain/feed/SuggestionsContainer.jsx";
+import SearchContainer from "#/components/shared/topbar/components/SearchContainer.jsx";
 
 const FeedPage = () => {
   const ui = useUIState();
@@ -37,12 +38,13 @@ const FeedPage = () => {
       <HelmetMeta page="feed" />
       <Box className="w-full flex flex-col gap-8">
         <Box
-          className="flex flex-col gap-2 px-6 py-1 w-full"
+          className="flex flex-col gap-3 px-6 py-1 w-full"
           // style={{
           //   backgroundImage:
           //     "radial-gradient(800px at 0 150%, #e9eef5 0, transparent 100%)",
           // }}
         >
+          <SearchContainer />
           <WelcomeContainer
             name={userDetail?.alias}
             isLoading={isLoading}

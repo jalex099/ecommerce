@@ -36,7 +36,7 @@ const ClientPreferenceService = () => {
     },
     onError: (error) => {
       addToast(`Hubo un error`, "error");
-      console.log(error);
+      // console.log(error);
     },
   });
 

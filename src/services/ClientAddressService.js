@@ -26,7 +26,7 @@ const ClientAddressService = () => {
     },
     onError: (error) => {
       addToast("Hubo un error al agregar la dirección", "error");
-      console.log(error);
+      // console.log(error);
     },
   });
 
@@ -38,7 +38,7 @@ const ClientAddressService = () => {
     },
     onError: (error) => {
       addToast("Hubo un error al eliminar la dirección", "error");
-      console.log(error);
+      // console.log(error);
     },
   });
 

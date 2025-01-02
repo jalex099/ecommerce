@@ -1,4 +1,4 @@
-//export const API_URL = "http://localhost:3001/apitest";
+// export const API_URL = "http://localhost:3001/apitest";
 export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
 
 export const IPAPI_URL = "https://ipapi.co/json/";
@@ -40,6 +40,8 @@ export const SLIDE_UP_ANIMATION = {
   initial: { y: 10, opacity: 0 },
   animate: { y: 0, opacity: 1 },
   exit: { y: 10, opacity: 0 },
+  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: -30 },
 };
 
 export const CURRENCY = "USD";

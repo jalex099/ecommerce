@@ -126,7 +126,7 @@ const AuthService = () => {
       })
       .catch((error) => {
         addToast("Error al cerrar sesión", "error");
-        console.log(error);
+        // console.log(error);
       })
       .finally(() => {
         stopLoading();

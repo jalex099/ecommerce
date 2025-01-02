@@ -37,7 +37,7 @@ const OrderService = () => {
     staleTime: Infinity,
     enabled: auth?.isAuthenticated && auth?.isVerified,
     onError: (error) => {
-      console.log(error?.response?.data);
+      // console.log(error?.response?.data);
       addToast("Hubo un error al obtener las ordenes pendientes", "error");
     },
   });
@@ -48,7 +48,7 @@ const OrderService = () => {
     staleTime: Infinity,
     enabled: auth?.isAuthenticated && auth?.isVerified,
     onError: (error) => {
-      console.log(error?.response?.data);
+      // console.log(error?.response?.data);
       addToast("Hubo un error al obtener las ordenes", "error");
     },
   });
@@ -65,7 +65,7 @@ const OrderService = () => {
       finishOrder(data, true);
     },
     onError: (error) => {
-      console.log(error?.response?.data);
+      // console.log(error?.response?.data);
       addToast("Hubo un error al guardar la orden", "error");
     },
   });
@@ -80,7 +80,7 @@ const OrderService = () => {
       finishOrder(data, false);
     },
     onError: (error) => {
-      console.log(error?.response?.data);
+      // console.log(error?.response?.data);
       addToast("Hubo un error al guardar la orden", "error");
     },
   });

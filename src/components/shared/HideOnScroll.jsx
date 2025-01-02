@@ -7,7 +7,7 @@ function HideOnScroll({ children, window, direction = "down" }) {
     target: window ? window() : undefined,
   });
   return (
-    <Slide appear={false} direction={direction} in={!trigger}>
+    <Slide appear={true} direction={direction} in={!trigger}>
       {children}
     </Slide>
   );

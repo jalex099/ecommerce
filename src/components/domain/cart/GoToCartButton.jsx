@@ -42,7 +42,7 @@ const GoToCartButton = ()=>{
             <motion.div
                 className= "w-[250px] lg:w-[350px] h-[72px] rounded-xl shadow-lg fixed bottom-[16px] left-0 right-0 m-auto overflow-hidden"
                 layout
-                transition={{duration: 0.3}}
+                transition={{duration: 0.2}}
                 style={{
                     marginBottom: !trigger ?  '80px' : '0px'
                   }}

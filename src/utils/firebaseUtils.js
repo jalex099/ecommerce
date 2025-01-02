@@ -1,5 +1,5 @@
 export const getMessageFromFirebaseAuthError = (code) => {
-  console.log(code)
+  // console.log(code)
   switch (code) {
     case "auth/claims-too-large":
       return "Reclamación muy grande.";

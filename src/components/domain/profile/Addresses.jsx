@@ -16,11 +16,11 @@ function Addresses() {
   };
 
   const handleMarkAsMain = (addressId) => {
-    console.log(addressId);
+    // console.log(addressId);
   };
 
   const handleEditAddress = (addressId) => {
-    console.log(addressId);
+    // console.log(addressId);
   };
 
   const handleDeleteAddress = async (addressId) => {

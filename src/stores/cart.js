@@ -57,7 +57,7 @@ const addCart = (state) => ({
       const cart = getCartFromCrypt();
       state.set({ ...cart, isReadCart: true });
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       window.localStorage.removeItem("cart-state");
       state.set({
         items: [],

@@ -37,7 +37,7 @@ function AddAddressPage() {
       });
     } catch (error) {
       addToast("No se pudo obtener tu ubicación", "error");
-      console.log(error);
+      // console.log(error);
     }
   };
 

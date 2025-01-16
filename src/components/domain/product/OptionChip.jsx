@@ -25,7 +25,7 @@ function OptionChip({ option, isSelected, onSelect }) {
         isSelected ? "_primary-bg " : ""
       }`}
       style={style.content}
-      onClick={() => onSelect(option?._id)}
+      onClick={() => onSelect(option?.idpod)}
       // whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
@@ -38,10 +38,10 @@ function OptionChip({ option, isSelected, onSelect }) {
             />
           )}
 
-          <Regular14>{option?.option?.name}</Regular14>
+          <Regular14>{option?.name}</Regular14>
         </Box>
-        {option?.aditionalPrice > 0 && (
-          <SemiBold12> +{formatCurrency(option?.aditionalPrice)}</SemiBold12>
+        {option?.additionalPrice > 0 && (
+          <SemiBold12> +{formatCurrency(option?.additionalPrice)}</SemiBold12>
         )}
       </Box>
 

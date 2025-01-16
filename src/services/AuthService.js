@@ -19,6 +19,19 @@ import { getMessageFromFirebaseAuthError } from "#/utils/firebaseUtils.js";
 import { useLocationState } from "#/stores/LocationState.js";
 import { useCheckoutState } from "#/stores/CheckoutState.js";
 
+const authOutside = getAuth();
+
+export const refreshToken = async () => {
+  try {
+    const user = authOutside.currentUser;
+    if (!user) return;
+    const idToken = await user.getIdToken();
+    setKey("token", idToken);
+  } catch (error) {
+    //console.log(error);
+  }
+};
+
 const AuthService = () => {
   const auth = getAuth();
   const authState = useAuthState();
@@ -181,6 +194,19 @@ const AuthService = () => {
     }
   }
 
+  const refreshToken = async () => {
+    try {
+      const user = auth.currentUser;
+      console.log(user)
+      if (user) {
+        const idToken = await user.getIdToken();
+        setAuthentication(idToken, user.displayName, user.email);
+      }
+    } catch (error) {
+      onError(error);
+    }
+  };
+
   return {
     loginWithEmailAndPassword,
     loginWithGoogle,
@@ -188,7 +214,8 @@ const AuthService = () => {
     logout,
     verifyAuth,
     registerWithEmailAndPassword,
-    sendEmailResetPassword
+    sendEmailResetPassword,
+    refreshToken
   };
 };
 

@@ -7,7 +7,7 @@ function ProductConfigContainer({ options }) {
       className={`${
         options?.length === 1
           ? "flex justify-center items-center "
-          : "grid grid-cols-2 gap-x-2 gap-y-4 md:grid-cols-3 lg:grid-cols-4"
+          : "grid grid-cols-2 gap-x-2 gap-y-4 md:grid-cols-2 lg:grid-cols-3"
       }`}
       sx={style.container}
     >

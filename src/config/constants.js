@@ -1,5 +1,6 @@
-// export const API_URL = "http://localhost:3001/apitest";
-export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+// export const API_URL = "http://localhost:9090";
+// export const API_URL = "https://api-digfrqbsta-uc.a.run.app/apitest";
+export const API_URL = "http://3.145.186.207:9090";
 
 export const IPAPI_URL = "https://ipapi.co/json/";
 export const GEOCODING_URL = "https://maps.googleapis.com/maps/api";
@@ -52,7 +53,7 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
 export const COMPANY_LOGO =
-  "https://resources.aleartsv.com/cp-light-base-logo.png";
+  "https://cloud.aleartsv.com/cp-light-base-logo.png";
 
 export const PHONE_REGEX = /^\([0-9]{3}\)\s[0-9]{4}-[0-9]{4}$/;
 

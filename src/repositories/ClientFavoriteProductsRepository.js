@@ -2,14 +2,14 @@ import API from "#/repositories/API.js";
 
 const ClientFavoriteProductsRepository = () => {
   const getFavoriteProducts = async () => {
-    return await API.get("/client/favorite-products", {
+    return await API.get("/clients/favorite-products", {
       secure: true,
     });
   };
 
   const addFavoriteProduct = async (product) => {
     return await API.post(
-      "/client/favorite-products",
+      "/clients/favorite-products",
       {
         product,
       },
@@ -20,7 +20,7 @@ const ClientFavoriteProductsRepository = () => {
   };
 
   const removeFavoriteProduct = async (product) => {
-    return await API.delete("/client/favorite-products/" + product, {
+    return await API.delete("/clients/favorite-products/" + product, {
       secure: true,
     });
   };

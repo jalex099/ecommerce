@@ -16,17 +16,18 @@ import Box from "@mui/material/Box";
 import Regular12 from "#/components/shared/fonts/Regular12";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "#/components/shared/icons/CloseIcon";
-import { useMediaQuery } from "@mui/material";
+import {motion} from "framer-motion";
+import { formatCurrency } from "#/utils/currency.js";
 
 function OptionContainer({ label, options, index, className }) {
 
-  const isLg = useMediaQuery(theme => theme.breakpoints.up('lg'));
   const isDialogOpen = useHookstate(false);
   const {
     getIndexOptionRepeated,
     getSelectedOption,
     setSelection,
     getSelectedOptionName,
+    getSelectedOptionAdditionalPrice,
     isOptionSelected,
   } = ProductController();
 
@@ -48,6 +49,10 @@ function OptionContainer({ label, options, index, className }) {
     return `${label} ${indexOptionRepeated}`;
   }, [options]);
 
+  const optionAdditionalCostValue = useMemo(()=>{
+    return getSelectedOptionAdditionalPrice(index)
+  }, [])
+
   const handleCloseDialog = () => {
     isDialogOpen.set(false);
   };
@@ -63,13 +68,24 @@ function OptionContainer({ label, options, index, className }) {
         variant="outlined"
         color="primary"
         onClick={handleClickOption}
-        className={`flex flex-col items-center justify-center px-1 h-[60px] ${className}`}
+        className={`relative flex flex-col items-center justify-center px-1 h-[80px] lg:h-[100px] ${className}`}
       >
         {isOptionSelected(index) ? (
           <LabelSelected text={getSelectedOptionName(index)} />
         ) : (
           <LabelNoSelected text={labelToShow} />
         )}
+        {
+          null != optionAdditionalCostValue && optionAdditionalCostValue != 0 && (
+            <motion.div
+              className={"opacity-70"}
+            >
+              <Regular12>
+                +{formatCurrency(optionAdditionalCostValue)}
+              </Regular12>
+            </motion.div>
+          )
+        }
       </Button>
       <Dialog
         open={isDialogOpen.get()}
@@ -115,9 +131,9 @@ function OptionContainer({ label, options, index, className }) {
             {options?.map((opt) => {
               return (
                 <OptionChip
-                  key={opt?._id}
+                  key={opt?.idpod}
                   option={opt}
-                  isSelected={getSelectedOption(index) === opt?._id}
+                  isSelected={getSelectedOption(index) === opt?.idpod}
                   onSelect={handleSelectOption}
                 />
               );

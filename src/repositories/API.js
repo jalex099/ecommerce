@@ -2,6 +2,8 @@ import axios from "axios";
 import { API_URL } from "#/config/constants.js";
 import { startLoading, stopLoading } from "#/stores/UIState.js";
 import { findKey, removeKey } from "#/utils/localStorageHelper.js";
+import { refreshToken } from "#/services/AuthService.js";
+
 
 const API = axios.create({
   baseURL: API_URL,
@@ -33,13 +35,28 @@ API.interceptors.response.use(
     }
     return response?.data;
   },
-  (error) => {
-    if (error.config?.background !== true) stopLoading();
+  async (error) => {
+    const { config, response: { status } } = error;
+    const originalRequest = config;
 
-    if (error?.response?.status === 401 || error?.response?.status === 403) {
-      removeKey("token");
-      removeKey("refreshToken");
+    if (originalRequest?.background !== true) stopLoading();
+
+    if (status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await refreshToken();
+        const newToken = findKey("token");
+        if (newToken) {
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return axios(originalRequest);
+        }
+      } catch (err) {
+        removeKey("token");
+        removeKey("refreshToken");
+        return Promise.reject(err);
+      }
     }
+
     return Promise.reject(error);
   }
 );

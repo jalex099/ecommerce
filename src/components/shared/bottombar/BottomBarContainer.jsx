@@ -62,7 +62,7 @@ function BottomBarContainer() {
           bottom: 0,
           left: 0,
           right: 0,
-          height: "80px",
+          height: "80px"
         }}
         className="flex justify-around items-center grow"
         elevation={3}

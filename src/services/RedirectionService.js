@@ -6,26 +6,27 @@ const RedirectionService = () => {
   const navigate = useNavigate();
   const { menu, categories } = DataService();
   const redirectToProduct = (id, replace = false) => {
-    const prd = menu?.find((product) => product._id === id);
+    const prd = menu?.find((product) => product.idprs === id);
     if (!prd) return;
-    if (!prd?._id) return;
+    if (!prd?.idprs) return;
     //* If there is a urlName defined, redirect to the product page with the urlName
     if (prd?.urlName) return navigate(`/producto/${prd?.urlName}`);
     //* Else, redirect to the product page with the id
-    return navigate(`/producto/${prd?._id}`, { replace });
+    return navigate(`/producto/${prd?.idprs}`, { replace });
   };
 
   const findProductByUrlNameOrId = (urlNameOrId) => {
     const product = menu?.find(
       (product) =>
-        product._id === urlNameOrId || product.urlName === urlNameOrId
+        product.idprs == urlNameOrId || product.urlName == urlNameOrId
     );
     if (!product) return null;
     return product;
   };
 
   const redirectToFirstCategory = (searchParams = '') => {
-    const firstCat = categories?.sort((a, b) => a?.order - b?.order)?.[0];
+
+    const firstCat = categories?.sort((a, b) => a?.sort - b?.sort)?.[0];
     if (!firstCat) return;
     return navigate(`/menu/categorias${getRoute(firstCat?.name)}?${searchParams}`);
   };

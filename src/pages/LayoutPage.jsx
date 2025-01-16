@@ -30,8 +30,8 @@ const LayoutPage = () => {
   const { isError, isLoading, isRefetching, isFetching, isSuccess, refetch } =
     DataService();
   const { isSuccess: isSuccessPreferences } = ClientPreferenceService();
-  const { isLoading: isLoadingCarts, isError: isErrorCarts } = CartService();
-  const { saveCartExisting } = useCartSyncUtils();
+  // const { isLoading: isLoadingCarts, isError: isErrorCarts } = CartService();
+  // const { saveCartExisting } = useCartSyncUtils();
   const location = useLocationState();
   const checkout = useCheckoutState();
 
@@ -112,7 +112,7 @@ const LayoutPage = () => {
             {/* <OverwriteCartContainer /> */}
             <ToasterCustom />
           </Box>
-          <footer className="fixed bottom-0 left-0 right-0">
+          <footer className="fixed bottom-0 left-0 right-0 z-[100]">
             <BottomBarContainer />
           </footer>
         </>

@@ -9,6 +9,8 @@ import { useMemo } from "react";
 import Box from "@mui/material/Box";
 import { hoursRemainingUntilDate } from "#/utils/datetimeUtils.js";
 import Regular12 from "#/components/shared/fonts/Regular12";
+import Regular14 from "#/components/shared/fonts/Regular14";
+import { useMediaQuery } from '@mui/material';
 
 function ProductCardContainer({
   product,
@@ -17,6 +19,7 @@ function ProductCardContainer({
   showOfferExpiration = false,
 }) {
   const { findImage } = ImageService();
+  const isLg = useMediaQuery(theme => theme.breakpoints.up('lg'));
   const priceAfterDiscount = useMemo(() => {
     if (!offer) return null;
     switch (offer?.behavior) {
@@ -44,16 +47,19 @@ function ProductCardContainer({
       animate={{ opacity: 1, y: 0 }}
       style={style.container}
       className="rounded-md p-2  shadow-md relative select-none h-full"
-      onClick={() => handleClick(product?._id)}
+      onClick={() => handleClick(product?.idprs)}
     >
       <TouchRippleEffect className="flex flex-col gap-1 items-start justify-start rounded-md min-h-[150px] h-full">
         <Picture
-          webp={findImage(product?._id, "PRD", "webp")}
-          jpg={findImage(product?._id, "PRD", "jpg")}
+          webp={findImage(product?.idprs, "PRD", "webp")}
+          jpg={findImage(product?.idprs, "PRD", "jpg")}
           alt={`Imagen de ${product?.name}`}
           className="w-full aspect-square lg:h-64 object-cover rounded-md mb-2 overflow-hidden"
         />
         <Regular16>{product?.name}</Regular16>
+
+        {!!isLg && <Regular14 className={"opacity-80 lg:line-clamp-3 lg:overflow-hidden lg:overflow-ellipsis lg:whitespace-normal "}>{product?.description}</Regular14>}
+
         <Box className="flex flex-row gap-2">
           <SemiBold14 className={`${offer ? "text-gray-500 line-through" : ""} `}>
             {formatCurrency(product?.price)}

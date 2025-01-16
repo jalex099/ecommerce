@@ -11,7 +11,7 @@ function CategoriesList({ items, selected, handleChange }) {
       TabIndicatorProps={{ children: <div /> }}
     >
       {items.map((item, index) => (
-        <Tab key={index} label={item.name} value={item._id} disableRipple />
+        <Tab key={index} label={item.name} value={item.idcat} disableRipple />
       ))}
     </Tabs>
   );

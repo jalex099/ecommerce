@@ -44,10 +44,10 @@ const ProductCard = ({ id, name, description, handleClose }) => {
       }}
       onClick={handleClick}
     >
-      <SemiBold16>
+      <SemiBold16 className={"cursor-pointer"}>
         {name}
       </SemiBold16>
-      <Regular12 className={"overflow-hidden overflow-ellipsis whitespace-normal line-clamp-2"}>
+      <Regular12 className={"overflow-hidden overflow-ellipsis whitespace-normal line-clamp-2 cursor-pointer"}>
         {description}
       </Regular12>
     </Box>

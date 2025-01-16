@@ -214,7 +214,7 @@ const addCart = (state) => ({
       // Recorrer las opciones si tienen precio adicional
       if (item?.options?.length > 0) {
         let aditionalPrice = item?.options?.reduce((acc, option) => {
-          return acc + option?.aditionalPrice || 0;
+          return acc + option?.additionalPrice || 0;
         }, 0);
         return (
           acc +
@@ -240,7 +240,7 @@ const addCart = (state) => ({
     let calcCartItemsTotal = state?.items?.get()?.reduce((acc, item) => {
       if (item?.options?.length > 0) {
         let aditionalPrice = item?.options?.reduce((acc, option) => {
-          return acc + option?.aditionalPrice || 0;
+          return acc + option?.additionalPrice || 0;
         }, 0);
         return acc + (item?.basePrice + aditionalPrice) * item?.quantity;
       }

@@ -3,7 +3,7 @@ import ClientPreferenceService from "#/services/ClientPreferenceService";
 import { orderBy } from "lodash";
 
 const temporalProduct = hookstate({
-  _id: "",
+  idprs: "",
   name: "",
   description: "",
   price: "",
@@ -21,7 +21,7 @@ export const useTemporalProduct = () => {
   const { preferences } = ClientPreferenceService();
 
   const clear = () => {
-    state._id.set("");
+    state.idprs.set("");
     state.name.set("");
     state.description.set("");
     state.price.set("");
@@ -35,7 +35,7 @@ export const useTemporalProduct = () => {
   };
 
   const fill = ({
-    _id,
+    idprs,
     name,
     description,
     price,
@@ -44,7 +44,7 @@ export const useTemporalProduct = () => {
     isNew,
     tags,
   }) => {
-    state._id.set(_id);
+    state.idprs.set(idprs);
     state.name.set(name);
     state.description.set(description);
     state.price.set(price);
@@ -53,13 +53,13 @@ export const useTemporalProduct = () => {
     state.options?.set(
       options?.reduce((acc, option) => {
         const opt = {
-          label: option?.label,
+          label: option?.name,
           selected: null,
           options: orderBy(
-            option?.subOptions?.reduce((acc, suboption) => {
+            option?.suboptions?.reduce((acc, suboption) => {
               const opt = {
                 ...suboption,
-                suggest: preferences?.values?.includes(suboption?.option?._id),
+                suggest: preferences?.values?.includes(suboption?.option?.idopt) ?? null,
               };
               acc.push(opt);
               return acc;
@@ -79,14 +79,14 @@ export const useTemporalProduct = () => {
   const preparedDataToServer = () => {
     let options = state.options?.get()?.reduce((acc, option) => {
       const opt = {
-        _id: option?._id,
+        _id: option?.idpop,
         selected: option?.selected,
       };
       acc.push(opt);
       return acc;
     }, []);
     return {
-      _id: state._id?.get(),
+      _id: state.idprs?.get(),
       quantity: 1,
       order: 0,
       options,

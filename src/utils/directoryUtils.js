@@ -56,7 +56,7 @@ export const getCategory = (categories, pathname) => {
           ?.replaceAll("-", " ")
     ) ||
     categories?.find(
-      (cat) => cat?.CODIGO_URL === decodeURI(pathname?.split("/")[3])
+      (cat) => cat?.codigoUrl === decodeURI(pathname?.split("/")[3])
     );
   return cat;
 };

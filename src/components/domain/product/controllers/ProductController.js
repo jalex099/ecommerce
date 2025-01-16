@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import serializeState from "#/utils/serializeState";
 import DataService from "#/services/DataService";
 import { isPast, parseISO } from "date-fns";
+import { formatCurrency } from "#/utils/currency.js";
 
 const ProductController = () => {
   const { temp, setSelectedOption, clear, fill, updatePriceFromOffer, increment, decrement } =
@@ -32,7 +33,7 @@ const ProductController = () => {
     // If the product is in the offers, then we update the price
     const offer = offers?.find(
       (offer) =>
-        offer?.product === productFromMenu?._id && !isPast(parseISO(offer?.to))
+        offer?.product === productFromMenu?.idprs && !isPast(parseISO(offer?.to))
     );
     if (offer) updatePriceFromOffer(offer);
   };
@@ -71,13 +72,23 @@ const ProductController = () => {
     const selectedOptionId = getSelectedOption(optionIndex);
     const option = temp?.options[optionIndex];
     const selectedOption = option?.options?.find(
-      (option) => option?._id === selectedOptionId
+      (option) => option?.idpod === selectedOptionId
     );
     if (!selectedOption) return "";
-    if (maxLength && selectedOption?.option?.name?.length > maxLength + 5) {
-      return `${selectedOption?.option?.name?.substring(0, maxLength)}...`;
+    if (maxLength && selectedOption?.name?.length > maxLength + 5) {
+      return `${selectedOption?.name?.substring(0, maxLength)}...`;
     }
-    return selectedOption?.option?.name;
+    return selectedOption?.name;
+  };
+
+  const getSelectedOptionAdditionalPrice = (optionIndex) => {
+    const selectedOptionId = getSelectedOption(optionIndex);
+    const option = temp?.options[optionIndex];
+    const selectedOption = option?.options?.find(
+      (option) => option?.idpod === selectedOptionId
+    );
+    if (!selectedOption) return null;
+    return selectedOption?.additionalPrice;
   };
 
   const isOptionSelected = (optionIndex) =>
@@ -96,10 +107,10 @@ const ProductController = () => {
     return (
       temp?.options?.reduce((acc, option) => {
         const selectedOption = option?.options?.find(
-          (subopt) => subopt?._id === option?.selected
+          (subopt) => subopt?.idpod === option?.selected
         );
         if (!selectedOption) return acc;
-        return acc + (selectedOption?.aditionalPrice || 0);
+        return acc + (selectedOption?.additionalPrice || 0);
       }, 0) || 0
     );
   };
@@ -124,6 +135,7 @@ const ProductController = () => {
     getSelectedOption,
     setSelection,
     getSelectedOptionName,
+    getSelectedOptionAdditionalPrice,
     getTotal,
     getOptionsSubtotal,
     handleAddToCart,

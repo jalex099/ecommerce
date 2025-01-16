@@ -37,7 +37,7 @@ const GoToCartButton = ()=>{
     if (!show) return null;
     return (
         <div
-            className= "cursor-pointer"
+            className= "cursor-pointer z-[100]"
         >
             <motion.div
                 className= "w-[250px] lg:w-[350px] h-[72px] rounded-xl shadow-lg fixed bottom-[16px] left-0 right-0 m-auto overflow-hidden"
@@ -64,7 +64,7 @@ const GoToCartButton = ()=>{
                                 Ir al carrito
                             </SemiBold14>
                             <Regular12>
-                                Subtotal: {formatCurrency(cart?.getSubTotalFixed())}
+                                Subtotal: {formatCurrency(cart?.getTotalFixed())}
                             </Regular12>
                         </motion.div>
                         <Badge

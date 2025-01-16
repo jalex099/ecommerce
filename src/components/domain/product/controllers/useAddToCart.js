@@ -16,29 +16,29 @@ export default function useAddToCart() {
   const addToCart = () => {
     if (!validateProduct()) return;
     const itemToAdd = serializeState(temp);
-    let aditionalPrice = 0;
+    let additionalPrice = 0;
     const options = itemToAdd?.options?.reduce((acc, option) => {
       const selectedOption = option?.options?.find(
-        (subopt) => subopt?._id === option?.selected
+        (subopt) => subopt?.idpod === option?.selected
       );
       if (!selectedOption) return acc;
-      aditionalPrice += selectedOption?.aditionalPrice || 0;
+      additionalPrice += selectedOption?.additionalPrice || 0;
       return [
         ...acc,
         {
           label: option?.label,
-          selected: selectedOption?.option?._id,
-          aditionalPrice: selectedOption?.aditionalPrice,
+          selected: selectedOption?.idpod,
+          additionalPrice: selectedOption?.additionalPrice,
         },
       ];
     }, []);
     cart?.add({
-      _id: itemToAdd?._id,
+      idprs: itemToAdd?.idprs,
       name: itemToAdd?.name,
-      nonOfferPrice: (itemToAdd?.price + aditionalPrice + itemToAdd?.discount) || itemToAdd?.price,
+      nonOfferPrice: (itemToAdd?.price + additionalPrice + itemToAdd?.discount) || itemToAdd?.price,
       basePrice: itemToAdd?.price,
       quantity: itemToAdd?.quantity || 1,
-      aditionalPrice,
+      additionalPrice,
       orden: cart?.getOrdenAgregado(),
       options,
       discount: itemToAdd?.discount,
@@ -51,7 +51,7 @@ export default function useAddToCart() {
   const validateProduct = () => {
     const itemToAdd = serializeState(temp);
     // Validate if the products exists and are in the menu
-    const itemInMenu = menu?.find((item) => item?._id === itemToAdd?._id);
+    const itemInMenu = menu?.find((item) => item?.idprs === itemToAdd?.idprs);
     if (!itemInMenu) {
       addToast("El producto no se encuentra disponible", "error");
       return false;
@@ -77,7 +77,7 @@ export default function useAddToCart() {
       const selected = option?.selected;
       const existsSelectedInMenuItem = itemInMenu?.options?.[
         index
-      ]?.subOptions?.find((subopt) => subopt?._id === selected);
+      ]?.suboptions?.find((subopt) => subopt?.idpod === selected);
       return existsSelectedInMenuItem;
     });
     if (!optionsAreValid) {

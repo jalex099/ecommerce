@@ -39,11 +39,8 @@ const CheckoutCartResumeInfo = ({ numberOfItems, products, shipping = 0, subtota
           {
             isDiscount && (<Box
               className="flex flex-row justify-between items-center"
-              sx={{
-                color: (theme) => isDiscount ? theme.palette.secondary.main : theme.palette.grey[500]
-              }}
             >
-              <Regular14>Ahorro</Regular14>
+              <Regular14>Descuento en productos</Regular14>
               <Regular14>{isDiscount ? `- ${formatCurrency(discount)}` : formatCurrency(discount)}</Regular14>
             </Box>)
             }

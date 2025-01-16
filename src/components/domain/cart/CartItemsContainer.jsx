@@ -15,14 +15,14 @@ function CartItemsContainer({ products, getDetails }) {
           products?.map((product, index) => {
             return (
               <CartItem
-                key={product?._id + product?.orden || "0" + index}
+                key={product?.idprs + product?.orden || "0" + index}
                 index={index}
-                _id={product?._id}
+                _id={product?.idprs}
                 name={product?.name}
                 nonOfferPrice={product?.nonOfferPrice}
                 basePrice={product?.basePrice}
                 quantity={product?.quantity}
-                aditionalPrice={product?.aditionalPrice}
+                aditionalPrice={product?.additionalPrice}
                 options={product?.options}
                 discount={product?.discount}
                 getDetails={getDetails}

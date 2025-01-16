@@ -2,14 +2,14 @@ import API from "#/repositories/API.js";
 
 const ClientPreferenceRepository = () => {
   const getPreferences = async () => {
-    return await API.get("/client/preferences", {
+    return await API.get("/clients/preferences", {
       secure: true,
     });
   };
 
   const addOrRemovePreferences = async ({ action, value }) => {
     return await API.post(
-      `/client/preferences/${action}`,
+      `/clients/preferences/${action}`,
       { value },
       {
         secure: true,

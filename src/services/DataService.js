@@ -25,7 +25,7 @@ const DataService = () => {
     const categoriesWithProducts = data?.data?.categories?.reduce(
       (acc, cat) => {
         // If the category almost has one product, add it to the list
-        if (data?.data?.menu?.some((prd) => prd?.category === cat?._id)) {
+        if (data?.data?.menu?.some((prd) => prd?.idcat === cat?.idcat)) {
           acc.push(cat);
         }
         return acc;

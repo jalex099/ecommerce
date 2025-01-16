@@ -2,14 +2,14 @@ import API from "#/repositories/API.js";
 
 const ClientUserDetailRepository = () => {
   const getUserDetail = async () => {
-    return await API.get("/client/user-details", {
+    return await API.get("/clients/user-details", {
       secure: true,
     });
   };
 
   const saveUserDetail = async (userDetail) => {
     return await API.post(
-      "/client/user-details",
+      "/clients/user-details",
       userDetail,
       {
         secure: true,

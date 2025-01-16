@@ -25,6 +25,8 @@ import SemiBold24 from "#/components/shared/fonts/SemiBold24.jsx";
 import SemiBold20 from "#/components/shared/fonts/SemiBold20.jsx";
 import SemiBold16 from  "#/components/shared/fonts/SemiBold16.jsx";
 import ProductCounter from "#/components/domain/product/ProductCounter.jsx";
+import SemiBold32 from "#/components/shared/fonts/SemiBold32.jsx";
+import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
@@ -62,8 +64,8 @@ const ProductPage = () => {
       <HelmetMeta page="product" product={temporal} />
       <Box className={"flex flex-col gap-6 lg:flex-row lg:gap-6"}>
         <Picture
-          webp={findImage(temporal?._id, "PRD", "webp")}
-          jpg={findImage(temporal?._id, "PRD", "jpg")}
+          webp={findImage(temporal?.idprs, "PRD", "webp")}
+          jpg={findImage(temporal?.idprs, "PRD", "jpg")}
           alt={temporal?.name}
           style={{ width: !isLg ? "100%" : "400px", height: !isLg ? "auto" : "400px"}}
           imgStyle={{
@@ -90,17 +92,17 @@ const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, hand
             <>
               <SemiBold18> {temporal?.name}</SemiBold18>
               <SemiBold16>
-                {formatCurrency(temporal?.price + optionsSubtotal)}
+                {formatCurrency(temporal?.price)}
                 {optionsSubtotal > 0 && <span>*</span>}
               </SemiBold16>
             </>
           ) : (
             <>
-              <SemiBold24> {temporal?.name}</SemiBold24>
-              <SemiBold20>
-                {formatCurrency(temporal?.price + optionsSubtotal)}
+              <SemiBold32> {temporal?.name}</SemiBold32>
+              <SemiBold24>
+                {formatCurrency(temporal?.price)}
                 {optionsSubtotal > 0 && <span>*</span>}
-              </SemiBold20>
+              </SemiBold24>
             </>
           )
         }
@@ -111,6 +113,7 @@ const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, hand
             amount={temporal?.discount}
           />
         )}
+
         {/* <AnimatePresence>
             {getOptionsSubtotal() > 0 && (
               <motion.div

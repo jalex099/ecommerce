@@ -4,7 +4,7 @@ import ShippingAndReturnPolicy from "#/components/domain/product/ShippingAndRetu
 import { useHookstate } from "@hookstate/core";
 
 function ExtrasContainer({ tags = [] }) {
-  const expanded = useHookstate(null);
+  const expanded = useHookstate(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
     expanded?.set(newExpanded ? panel : false);

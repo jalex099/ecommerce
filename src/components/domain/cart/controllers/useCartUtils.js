@@ -15,7 +15,7 @@ export default function useCartUtils() {
 
   const handleRemoveFromCart = (idProduct, index) => {
     const itemsToKeep = cart?.get()?.reduce((acc, item, i) => {
-      if (i !== index || item._id !== idProduct) {
+      if (i !== index || item.idprs !== idProduct) {
         acc.push(item);
       }
       return acc;
@@ -28,17 +28,17 @@ export default function useCartUtils() {
   };
 
   const getDetails = (idProduct, optionsSavedOnCart) => {
-    const product = menu?.find((product) => product?._id === idProduct);
+    const product = menu?.find((product) => product?.idprs === idProduct);
     if (!product) return [];
     const options = product?.options;
     if (!options) return [];
     return optionsSavedOnCart?.reduce((acc, optionSavedOnCart, index) => {
-      const selectedDetail = options[index]?.subOptions?.find(
-        (option) => option?.option?._id === optionSavedOnCart?.selected
+      const selectedDetail = options[index]?.suboptions?.find(
+        (option) => option?.idpod === optionSavedOnCart?.selected
       );
       let response = {
-        name: selectedDetail?.option?.cartName,
-        aditionalPrice: selectedDetail?.aditionalPrice,
+        name: selectedDetail?.cartName || selectedDetail?.name,
+        aditionalPrice: selectedDetail?.additionalPrice,
       };
       return [...acc, response];
     }, []);

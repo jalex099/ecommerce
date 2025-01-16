@@ -27,7 +27,7 @@ const MenuPage = () => {
 
 
   useEffect(() => {
-    category && selected.set(category._id); // Si existe, la selecciona en las tabs
+    category && selected.set(category.idcat); // Si existe, la selecciona en las tabs
     !category && redirectToFirstCategory(); // Si no existe, redirige a la primera categoria
   }, [category]);
 

@@ -17,6 +17,8 @@ import Regular12 from "#/components/shared/fonts/Regular12";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "#/components/shared/icons/CloseIcon";
 import { useMediaQuery } from "@mui/material";
+import {motion} from "framer-motion";
+import { formatCurrency } from "#/utils/currency.js";
 
 function OptionContainer({ label, options, index, className }) {
 
@@ -28,6 +30,7 @@ function OptionContainer({ label, options, index, className }) {
     setSelection,
     getSelectedOptionName,
     isOptionSelected,
+    getSelectedOptionAdditionalPrice
   } = ProductController();
 
   const indexOptionRepeated = useMemo(() => {
@@ -42,6 +45,10 @@ function OptionContainer({ label, options, index, className }) {
   const handleClickOption = () => {
     isDialogOpen.set(true);
   };
+
+  const optionAdditionalCostValue = useMemo(()=>{
+    return getSelectedOptionAdditionalPrice(index)
+  }, [])
 
   const labelToShow = useMemo(() => {
     if (indexOptionRepeated === -1) return label;
@@ -63,13 +70,24 @@ function OptionContainer({ label, options, index, className }) {
         variant="outlined"
         color="primary"
         onClick={handleClickOption}
-        className={`flex flex-col items-center justify-center px-1 h-[60px] ${className}`}
+        className={`relative flex flex-col items-center justify-center px-1 h-[80px] lg:h-[100px] ${className}`}
       >
         {isOptionSelected(index) ? (
           <LabelSelected text={getSelectedOptionName(index)} />
         ) : (
           <LabelNoSelected text={labelToShow} />
         )}
+        {
+          null != optionAdditionalCostValue && optionAdditionalCostValue != 0 && (
+            <motion.div
+              className={"opacity-70"}
+            >
+              <Regular12>
+                +{formatCurrency(optionAdditionalCostValue)}
+              </Regular12>
+            </motion.div>
+          )
+        }
       </Button>
       <Dialog
         open={isDialogOpen.get()}

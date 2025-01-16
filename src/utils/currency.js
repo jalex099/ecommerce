@@ -1,6 +1,7 @@
 import { LANGUAGE, CURRENCY } from "#/config/constants";
 
 export function formatCurrency(value) {
+  if(value == 0) return "GRATIS";
   const val = new Intl.NumberFormat(LANGUAGE, {
     style: "currency",
     currency: CURRENCY,

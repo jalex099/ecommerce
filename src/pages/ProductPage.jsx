@@ -25,6 +25,8 @@ import SemiBold24 from "#/components/shared/fonts/SemiBold24.jsx";
 import SemiBold20 from "#/components/shared/fonts/SemiBold20.jsx";
 import SemiBold16 from  "#/components/shared/fonts/SemiBold16.jsx";
 import ProductCounter from "#/components/domain/product/ProductCounter.jsx";
+import SemiBold32 from "#/components/shared/fonts/SemiBold32.jsx";
+import Regular16 from "#/components/shared/fonts/Regular16.jsx";
 
 const ProductPage = () => {
   const { isLoading } = DataService();
@@ -90,17 +92,17 @@ const ProductDetails = ({ temporal, optionsSubtotal, handleAddToCart, isLg, hand
             <>
               <SemiBold18> {temporal?.name}</SemiBold18>
               <SemiBold16>
-                {formatCurrency(temporal?.price + optionsSubtotal)}
+                {formatCurrency(temporal?.price)}
                 {optionsSubtotal > 0 && <span>*</span>}
               </SemiBold16>
             </>
           ) : (
             <>
-              <SemiBold24> {temporal?.name}</SemiBold24>
-              <SemiBold20>
-                {formatCurrency(temporal?.price + optionsSubtotal)}
+              <SemiBold32> {temporal?.name}</SemiBold32>
+              <SemiBold24>
+                {formatCurrency(temporal?.price)}
                 {optionsSubtotal > 0 && <span>*</span>}
-              </SemiBold20>
+              </SemiBold24>
             </>
           )
         }

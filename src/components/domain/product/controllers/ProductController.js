@@ -80,6 +80,16 @@ const ProductController = () => {
     return selectedOption?.option?.name;
   };
 
+  const getSelectedOptionAdditionalPrice = (optionIndex) => {
+    const selectedOptionId = getSelectedOption(optionIndex);
+    const option = temp?.options[optionIndex];
+    const selectedOption = option?.options?.find(
+      (option) => option?._id === selectedOptionId
+    );
+    if (!selectedOption) return null;
+    return selectedOption?.aditionalPrice;
+  };
+
   const isOptionSelected = (optionIndex) =>
     temp?.options[optionIndex]?.selected !== null;
 
@@ -124,6 +134,7 @@ const ProductController = () => {
     getSelectedOption,
     setSelection,
     getSelectedOptionName,
+    getSelectedOptionAdditionalPrice,
     getTotal,
     getOptionsSubtotal,
     handleAddToCart,

@@ -52,7 +52,7 @@ export const SEARCH_PLACEHOLDER = "Buscar...";
 
 export const COMPANY = "Ale Art";
 export const COMPANY_LOGO =
-  "https://resources.aleartsv.com/cp-light-base-logo.png";
+  "https://cloud.aleartsv.com/cp-light-base-logo.png";
 
 export const PHONE_REGEX = /^\([0-9]{3}\)\s[0-9]{4}-[0-9]{4}$/;
 

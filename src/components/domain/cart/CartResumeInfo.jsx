@@ -9,7 +9,7 @@ import Bold16 from "#/components/shared/fonts/Bold16";
 function CartResumeInfo({ subtotal = 0, discount = 0, total = 0 }) {
   return (
     <motion.div
-      className="sticky bottom-0 left-0 right-0 z-10 p-6 flex flex-col gap-4 w-screen lg:w-[100%]"
+      className="sticky bottom-0 left-0 right-0 z-10 p-6 flex flex-col gap-4 w-screen lg:w-[600px]"
       style={{
         backdropFilter: "blur(8px)",
         backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -18,27 +18,24 @@ function CartResumeInfo({ subtotal = 0, discount = 0, total = 0 }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Box className="flex flex-col gap-1">
+      <Box className="flex flex-col gap-1 p-0 lg:pb-4">
         {!!discount && discount > 0 && subtotal !== total && (
           <>
-            <Box className="flex flex-row justify-between lg:justify-around items-center">
-              <Regular16>Subtotal</Regular16>
+            <Box className="flex flex-row justify-between items-center">
+              <Regular16>Productos</Regular16>
               <Regular16>{formatCurrency(subtotal)}</Regular16>
             </Box>
             <Box
-              className="flex flex-row justify-between lg:justify-around items-center"
-              sx={{
-                color: (theme) => theme.palette.secondary.main,
-              }}
+              className="flex flex-row justify-between items-center"
             >
-              <Regular16>Ahorro</Regular16>
+              <Regular16>Descuento en productos</Regular16>
               <Regular16>- {formatCurrency(discount)}</Regular16>
             </Box>
             <Divider />
           </>
         )}
-        <Box className="flex flex-row justify-between lg:justify-around items-center">
-          <Bold16>Total</Bold16>
+        <Box className="flex flex-row justify-between items-center">
+          <Bold16>Subtotal</Bold16>
           <Bold16>{formatCurrency(total)}</Bold16>
         </Box>
       </Box>

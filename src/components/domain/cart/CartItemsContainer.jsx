@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 function CartItemsContainer({ products, getDetails }) {
   return (
     <Container className="w-full container flex-grow">
-      <motion.ul
+      <motion.div
         variants={list}
         initial="hidden"
         animate="visible"
@@ -30,7 +30,7 @@ function CartItemsContainer({ products, getDetails }) {
               />
             );
           })}
-      </motion.ul>
+      </motion.div>
     </Container>
   );
 }

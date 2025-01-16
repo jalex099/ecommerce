@@ -12,6 +12,7 @@ import Regular16 from "#/components/shared/fonts/Regular16";
 import CartItemCounterContainer from "#/components/domain/cart/CartItemCounterContainer";
 import SemiBold12 from "#/components/shared/fonts/SemiBold12";
 import { useHookstate } from "@hookstate/core";
+import Bold12 from "#/components/shared/fonts/Bold12.jsx";
 
 function CartItem({
   _id,
@@ -28,6 +29,7 @@ function CartItem({
 }) {
   const { findImage } = ImageService();
   const isTrashing = useHookstate(false);
+  const isOpen = useHookstate(false);
 
   const optionsSelectedDetails = useMemo(() => {
     return getDetails(_id, options);
@@ -37,84 +39,104 @@ function CartItem({
     return (basePrice + aditionalPrice) * quantity;
   }, [basePrice, aditionalPrice, quantity]);
 
-  const individualPrice = useMemo(() => {
-    return basePrice + aditionalPrice;
-  }, [basePrice, aditionalPrice]);
-
   const toogleTrash = () => {
     isTrashing.set(!isTrashing.get());
   }
 
-  const descriptionOptions = useMemo(() => {
-    return optionsSelectedDetails?.map(({ name }, index) => {
-      return index !== optionsSelectedDetails.length - 1
-        ? `${name} - `
-        : name;
-    });
+  const optionsSelected = useMemo(() => {
+    return optionsSelectedDetails?.map(({ name }) => name);
   }, [optionsSelectedDetails]);
+
+  const handleToogleShowOptions = () => {
+    isOpen.set(!isOpen.get());
+  }
 
   return (
     <>
-      <motion.li
+      <motion.div
         layout
         variants={item}
-        className="w-full flex flex-col gap-4 justify-start items-start"
+        transition={transition}
+        style={{
+          overflow: "hidden",
+        }}
       >
-        <Box className={`w-full min-h-[96px] flex flex-row gap-3 justify-start items-start ${!!isTrashing?.value && 'opacity-50 grayscale'}`}>
-          <Box className="flex w-24 rounded-md overflow-hidden">
-            <Picture
-              webp={findImage(_id, "PRD", "webp")}
-              jpg={findImage(_id, "PRD", "jpg")}
-              alt={`Imagen de ${name}`}
-              className="h-full aspect-square object-cover "
-            />
-          </Box>
-          <Box className="flex-1 flex justify-between flex-col gap-2 ">
-            <Box className="flex flex-col lg:max-w-[500px]">
-              <SemiBold16>{name}</SemiBold16>
-              <Regular12 className={`opacity-80`}>
-                {descriptionOptions}
-              </Regular12>
+        <motion.div layout="position" transition={transition} className={`flex gap-6 flex-col  ${!!isTrashing?.value && "opacity-50 grayscale"}`}>
+          <Box
+            className={`w-full min-h-[96px] flex flex-row gap-3 justify-start items-start`}>
+            <Box className="flex w-24 rounded-md overflow-hidden">
+              <Picture
+                webp={findImage(_id, "PRD", "webp")}
+                jpg={findImage(_id, "PRD", "jpg")}
+                alt={`Imagen de ${name}`}
+                className="h-full aspect-square object-cover "
+              />
+            </Box>
+            <Box className="flex-1 flex justify-between flex-col gap-2 ">
+              <Box className="flex flex-col lg:max-w-[500px] gap-2">
+                <SemiBold16>{name}</SemiBold16>
+                { optionsSelected?.length > 0 && (
+                  <Bold12
+                    className={"underline cursor-pointer"}
+                    onClick={handleToogleShowOptions}>
+                    {isOpen?.value ? "Leer menos" : "Leer más..."}
+                  </Bold12>
+                )}
+              </Box>
             </Box>
 
-
+            <Box className="flex flex-col justify-center items-right text-right gap-2">
+              <div className="flex flex-col justify-center items-right text-right gap-0">
+                <SemiBold16>{formatCurrency(subtotal)}</SemiBold16>
+                {!!discount && discount > 0 && (
+                  <>
+                    <motion.div
+                      key={discount}
+                      variants={variants}
+                      animate="show"
+                      initial="hide"
+                      className="inline-flex justify-center items-center gap-2 px-2 rounded-md ml-auto"
+                      style={{ backgroundColor: "#f8d38f" }}
+                    >
+                      <SemiBold12 styles={{ color: theme => theme?.palette?.neutral90?.main }}>
+                        {formatCurrency(discount * quantity)} OFF
+                      </SemiBold12>
+                    </motion.div>
+                    {/*<Regular12 className={"line-through opacity-70"}>*/}
+                    {/*  {formatCurrency(nonOfferPrice)}*/}
+                    {/*</Regular12>*/}
+                  </>
+                )}
+              </div>
+              <CartItemCounterContainer
+                _id={_id}
+                index={index}
+                quantity={quantity}
+                toogleTrash={toogleTrash}
+              />
+            </Box>
           </Box>
-
-          <Box className="flex flex-col justify-center items-right text-right gap-1">
-            <SemiBold16>{formatCurrency(subtotal)}</SemiBold16>
-            {!!discount && discount > 0 && (
-              <>
-                <motion.div
-                  key={discount}
-                  variants={variants}
-                  animate="show"
-                  initial="hide"
-                  className="inline-flex justify-center items-center gap-2 px-2 rounded-md ml-auto"
-                  style={{ backgroundColor: "#f8d38f" }}
-                >
-                  <SemiBold12 styles={{ color: theme => theme?.palette?.neutral90?.main }}>
-                    {formatCurrency(discount * quantity)} OFF
-                  </SemiBold12>
-                </motion.div>
-                <Regular12 className={"line-through opacity-70"}>
-                  {formatCurrency(nonOfferPrice)}
-                </Regular12>
-              </>
-            )}
-            <CartItemCounterContainer
-              _id={_id}
-              index={index}
-              quantity={quantity}
-              toogleTrash={toogleTrash}
-            />
-          </Box>
-        </Box>
-      </motion.li>
+          {
+            isOpen?.value && optionsSelected?.length > 0 && (
+              <ul className={"list-disc pl-5 opacity-60"}>
+                {optionsSelected?.map((item, index) => (
+                  <li key={index}>
+                    <Regular12>{item}</Regular12>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </motion.div>
+      </motion.div>
 
       {!isLastItem && <Divider />}
     </>
   );
 }
+const transition = {
+  duration: 0.3
+};
 
 const variants = {
   show: {
@@ -131,9 +153,10 @@ const variants = {
   },
 };
 
+
 const item = {
   visible: { opacity: 1, y: 0 },
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 40 },
 };
 
 export default CartItem;

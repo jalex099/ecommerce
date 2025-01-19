@@ -25,7 +25,10 @@ const authOutside = getAuth();
 export const refreshToken = async () => {
   try {
     const user = authOutside.currentUser;
-    if (!user) return;
+    if (!user) {
+      removeKey("token");
+      return;
+    }
     const idToken = await user.getIdToken();
     setKey("token", idToken);
   } catch (error) {
